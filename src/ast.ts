@@ -1,5 +1,6 @@
 import {ParseTree} from "antlr4ts/tree";
 import {ParserRuleContext} from "antlr4ts";
+import {Position} from "./position";
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -109,6 +110,8 @@ export abstract class Node {
     parent: Node;
     parseTreeNode?: ParseTree;
 
+    constructor(protected specifiedPosition?: Position) {}
+
     get children(): Node[] {
         const names = this.getChildNames();
         const children = [];
@@ -171,12 +174,16 @@ export abstract class Node {
         this.parent = parent;
         return this;
     }
+
+    get position(): Position | undefined {
+        return this.specifiedPosition || Position.ofParseTree(this.parseTreeNode);
+    }
 }
 
 export class NodeVisitor {
-    visit(ast: Node): void {
-        this.visitNode(ast);
-        this.visitChildren(ast);
+    visit(node: Node): void {
+        this.visitNode(node);
+        this.visitChildren(node);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -184,11 +191,10 @@ export class NodeVisitor {
         //By default, do nothing
     }
 
-    protected visitChildren(ast: Node): void {
-        ast.children.forEach(c => this.visit(c));
+    protected visitChildren(node: Node): void {
+        node.children.forEach(c => this.visit(c));
     }
 }
 
 @ASTNodeFor(ParserRuleContext)
-export class GenericNode extends Node {
-}
+export class GenericNode extends Node {}
