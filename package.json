@@ -3,15 +3,16 @@
 	"description": "Generic AST implementation for TypeScript, inspired by Kolasu and integrated with ANTLR4.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"license": "GPL-3.0-or-later",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/strumenta/at-strumenta-ast-typescript"
 	},
 	"files": ["dist", "src", "package.json"],
-	"module": "dist/ast.js",
-	"types": "dist/ast.d.ts",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"dependencies": {
 		"@types/node": "^13.9.8",
 		"antlr4ts": "^0.5.0-alpha.4"
@@ -19,10 +20,9 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"build": "tsc",
-		"lint": "eslint src",
-		"test": "mocha -r ts-node/register tests/**/*.test.ts",
-		"prepare-dist": "cp package.json dist && cp -r src/* dist && rimraf dist/grammar/gen",
-		"dist": "yarn run clean && yarn run lint && yarn run build && yarn pack"
+		"lint": "eslint src tests",
+		"test": "cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha -r ts-node/register tests/**/*.test.ts",
+		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn pack"
 	},
 	"devDependencies": {
 		"@tsconfig/recommended": "^1.0.1",
@@ -32,14 +32,13 @@
 		"@typescript-eslint/parser": "^4.11.0",
 		"antlr4ts-cli": "^0.5.0-alpha.3",
 		"chai": "^4.2.0",
+		"cross-env": "^7.0.3",
 		"eslint": "^7.16.0",
 		"merge-options": "^2.0.0",
 		"mocha": "^6.2.2",
 		"rimraf": "^3.0.0",
 		"ts-loader": "^6.2.2",
 		"ts-node": "^8.8.2",
-		"typescript": "^3.8.3",
-		"webpack": "^4.42.1",
-		"webpack-cli": "^3.3.11"
+		"typescript": "^3.8.3"
 	}
 }

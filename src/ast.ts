@@ -14,6 +14,9 @@ export function registerNodeFactory<T extends ParseTree>(type: new (...args: any
 }
 
 export function registerNodeChild<T extends Node>(type: new (...args: any[]) => T, methodName: string, path: string = methodName): void {
+    if(methodName == "parent" || methodName == "children") {
+        throw new Error(`Can't register the ${methodName} property as a child`);
+    }
     if (!type[CHILD_PROPERTIES_SYMBOL]) {
         type[CHILD_PROPERTIES_SYMBOL] = {};
     }
@@ -107,7 +110,7 @@ export abstract class Node {
     parseTreeNode?: ParseTree;
 
     get children(): Node[] {
-        const names = Object.getOwnPropertyNames(this[CHILD_PROPERTIES_SYMBOL] || {});
+        const names = this.getChildNames();
         const children = [];
 
         function addChildren(child) {
@@ -122,6 +125,46 @@ export abstract class Node {
 
         names.forEach(n => addChildren(this[n]));
         return children;
+    }
+
+    private getChildNames() {
+        return Object.getOwnPropertyNames(this[CHILD_PROPERTIES_SYMBOL] || {});
+    }
+
+    isChild(name: string): boolean {
+        return this.getChildNames().indexOf(name) >= 0;
+    }
+
+    setChild(name: string, child: Node): void {
+        if(!this.isChild(name)) {
+            throw new Error("Not a child: " + name);
+        }
+        if(Array.isArray(this[name])) {
+            throw new Error(name + " is a collection, use addChild");
+        }
+        if(child.parent && child.parent != this) {
+            throw new Error("Child already has a different parent");
+        }
+        if(this[name] instanceof Node) {
+            this[name].parent = undefined;
+        }
+        this[name] = child.withParent(this);
+    }
+
+    addChild(name: string, child: Node): void {
+        if(!this.isChild(name)) {
+            throw new Error("Not a child: " + name);
+        }
+        if(this[name] && !Array.isArray(this[name])) {
+            throw new Error(name + " is not a collection, use setChild");
+        }
+        if(child.parent && child.parent != this) {
+            throw new Error("Child already has a different parent");
+        }
+        if(!this[name]) {
+            this[name] = [];
+        }
+        this[name].push(child.withParent(this));
     }
 
     withParent(parent: Node): this {
