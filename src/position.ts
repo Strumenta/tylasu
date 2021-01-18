@@ -1,5 +1,5 @@
 import {ParseTree} from "antlr4ts/tree";
-import {Lexer, ParserRuleContext, Token} from "antlr4ts";
+import {ParserRuleContext, Token} from "antlr4ts";
 
 export class Point {
     constructor(public readonly line: number, public readonly column: number) {

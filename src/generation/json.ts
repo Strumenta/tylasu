@@ -3,7 +3,7 @@ import {Node} from "../ast";
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
 export class JSONGenerator {
-    toJSON(node: Node) {
+    toJSON(node: Node): any {
         return node[TO_JSON_SYMBOL]();
     }
 }

@@ -7,6 +7,6 @@
 		"strict": false,
 		"outDir": "dist"
 	},
-	"include": ["src/ast.ts"],
+	"include": ["src/index.ts"],
 	"exclude": ["node_modules"]
 }
