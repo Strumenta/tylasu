@@ -1,109 +1,26 @@
 import {ParseTree} from "antlr4ts/tree";
-import {ParserRuleContext} from "antlr4ts";
 import {Position} from "./position";
 
-//-----------------------------------//
-// Factory and metadata registration //
-//-----------------------------------//
+export const CHILD_PROPERTIES_SYMBOL = Symbol("childProperties");
+export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
-const NODE_FACTORY_SYMBOL = Symbol("nodeFactory");
-const INIT_SYMBOL = Symbol("init");
-const CHILD_PROPERTIES_SYMBOL = Symbol("childProperties");
+export const NODE_TYPES: { [name: string]: { [name: string]: new (...args: any[]) => Node } } = {
+    "": {}
+};
 
-export function registerNodeFactory<T extends ParseTree>(type: new (...args: any[]) => T, factory: (tree: T) => Node): void {
-    type.prototype[NODE_FACTORY_SYMBOL] = factory;
-}
+export type NodeDefinition = { package: string, name: string };
 
-export function registerNodeChild<T extends Node>(type: new (...args: any[]) => T, methodName: string, path: string = methodName): void {
-    if(methodName == "parent" || methodName == "children") {
-        throw new Error(`Can't register the ${methodName} property as a child`);
-    }
-    if (!type[CHILD_PROPERTIES_SYMBOL]) {
-        type[CHILD_PROPERTIES_SYMBOL] = {};
-    }
-    type[CHILD_PROPERTIES_SYMBOL][methodName] = { path: path || methodName };
-}
-
-export function registerInitializer<T extends Node>(type: new (...args: any[]) => T, methodName: string): void {
-    type[INIT_SYMBOL] = methodName;
-}
-
-//------------//
-// Decorators //
-//------------//
-
-export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
-    return function (target: new () => Node): void {
-        registerNodeFactory(type, () => new target());
-    };
-}
-
-export function Child(path?: string): (target, methodName: string) => void {
-    return function (target, methodName: string) {
-        registerNodeChild(target, methodName, path);
-    };
-}
-
-// Since target is any-typed (see https://www.typescriptlang.org/docs/handbook/decorators.html),
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function Init(target, methodName: string): void {
-    registerInitializer(target, methodName);
-}
-
-//-----//
-// AST //
-//-----//
-
-export function fillChildAST(node: Node, property: string, tree: ParseTree): Node[] {
-    const childPath = node[CHILD_PROPERTIES_SYMBOL][property].path;
-    if (childPath && childPath.length > 0) {
-        const path = childPath.split(".");
-        for (const segment in path) {
-            if (tree && (tree[path[segment]] instanceof Function)) {
-                tree = tree[path[segment]]();
-            } else {
-                tree = null;
-                break;
-            }
+export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
+    if(node instanceof Node) {
+        const nodeType = Object.getPrototypeOf(node).constructor;
+        let definition = nodeType[NODE_DEFINITION_SYMBOL];
+        if(!definition) {
+            definition = registerNodeDefinition(nodeType);
         }
-        if (tree) {
-            if (Array.isArray(tree)) {
-                node[property] = [];
-                for (const i in tree) {
-                    node[property].push(toAST(tree[i], node));
-                }
-                return node[property];
-            } else {
-                node[property] = toAST(tree, node);
-                return [node[property]];
-            }
-        }
-    }
-    return [];
-}
-
-export function toAST(tree: ParseTree, parent?: Node): Node {
-    if(!tree) {
-        return null;
-    }
-    const factory = tree[NODE_FACTORY_SYMBOL];
-    let node: Node;
-    if (factory) {
-        node = factory(tree) as Node;
-        if (node[CHILD_PROPERTIES_SYMBOL]) {
-            for (const p in node[CHILD_PROPERTIES_SYMBOL]) {
-                fillChildAST(node, p, tree);
-            }
-        }
-        const initFunction = node[INIT_SYMBOL];
-        if(initFunction) {
-            node[initFunction].call(node, tree);
-        }
+        return definition;
     } else {
-        node = new GenericNode();
+        return node[NODE_DEFINITION_SYMBOL];
     }
-    node.parseTreeNode = tree;
-    return node.withParent(parent);
 }
 
 export abstract class Node {
@@ -196,5 +113,21 @@ export class NodeVisitor {
     }
 }
 
-@ASTNodeFor(ParserRuleContext)
-export class GenericNode extends Node {}
+function registerNodeDefinition<T extends Node>(target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
+    if (!NODE_TYPES[pkg]) {
+        NODE_TYPES[pkg] = {};
+    }
+    NODE_TYPES[pkg][target.name] = target;
+    const def = {
+        package: pkg,
+        name: target.name
+    };
+    target[NODE_DEFINITION_SYMBOL] = def;
+    return def;
+}
+
+export function ASTNode<T extends Node>(pkg = "") {
+    return function (target: new (...args: any[]) => T): void {
+        registerNodeDefinition(target, pkg);
+    };
+}
