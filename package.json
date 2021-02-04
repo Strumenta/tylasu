@@ -26,7 +26,8 @@
 		"clean": "rimraf dist",
 		"build": "tsc",
 		"lint": "eslint src tests",
-		"test": "cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha -r ts-node/register tests/**/*.test.ts",
+		"build-test-parser": "antlr4ts -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
+		"test": "yarn run build-test-parser && cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha -r ts-node/register tests/**/*.test.ts",
 		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn pack"
 	},
 	"devDependencies": {

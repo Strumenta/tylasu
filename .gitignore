@@ -1,4 +1,5 @@
 .idea/
 dist/
+gen/
 node_modules/
 strumenta-ast-v*.tgz

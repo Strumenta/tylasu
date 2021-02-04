@@ -86,7 +86,6 @@ describe('JSON generator', function() {
         });
     it("Wrongly configured node",
         function () {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             expect(() => require("./wrong-node")).to.throw;
         });
 });

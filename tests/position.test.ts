@@ -1,35 +1,13 @@
 import {expect} from "chai";
 
-import {Point, START_POINT} from "../src";
+import {Point, START_POINT, Node, Position} from "../src";
+import {SimpleLangLexer} from "./parser/SimpleLangLexer";
+import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
+
+class MySetStatement extends Node {}
 
 describe('Position', function() {
-
-/*@test fun isBefore() {
-        val p0 = START_POINT
-        val p1 = Point(1, 1)
-        val p2 = Point(1, 100)
-        val p3 = Point(2, 90)
-
-        assertEquals(false, p0.isBefore(p0))
-        assertEquals(true, p0.isBefore(p1))
-        assertEquals(true, p0.isBefore(p2))
-        assertEquals(true, p0.isBefore(p3))
-
-        assertEquals(false, p1.isBefore(p0))
-        assertEquals(false, p1.isBefore(p1))
-        assertEquals(true, p1.isBefore(p2))
-        assertEquals(true, p1.isBefore(p3))
-
-        assertEquals(false, p2.isBefore(p0))
-        assertEquals(false, p2.isBefore(p1))
-        assertEquals(false, p2.isBefore(p2))
-        assertEquals(true, p2.isBefore(p3))
-
-        assertEquals(false, p3.isBefore(p0))
-        assertEquals(false, p3.isBefore(p1))
-        assertEquals(false, p3.isBefore(p2))
-        assertEquals(false, p3.isBefore(p3))
-    }*/
     it("Point comparisons",
         function () {
             const p0 = START_POINT;
@@ -65,5 +43,28 @@ describe('Position', function() {
             expect(p2.compareTo(p1)).to.equal(1);
             expect(p1.compareTo(p3)).to.equal(-1);
             expect(p3.compareTo(p1)).to.equal(1);
+        });
+
+    it("ParserRuleContext position",
+        function () {
+            const code = "set foo = 123";
+            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+            const cu = parser.compilationUnit();
+            const setStmt = cu.statement(0) as SetStmtContext;
+            const pos = Position.ofParseTree(setStmt);
+            expect(pos).to.deep.equal(new Position(new Point(1, 0), new Point(1, 13)));
+        });
+
+    it("Position derived from parse tree node",
+        function () {
+            const code = "set foo = 123";
+            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+            const cu = parser.compilationUnit();
+            const setStmt = cu.statement(0) as SetStmtContext;
+            const mySetStatement = new MySetStatement();
+            mySetStatement.parseTreeNode = setStmt;
+            expect(mySetStatement.position).to.deep.equal(new Position(new Point(1, 0), new Point(1, 13)));
         });
 });

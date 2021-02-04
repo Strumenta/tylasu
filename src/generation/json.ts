@@ -1,4 +1,4 @@
-import {getNodeDefinition, Node, NODE_DEFINITION_SYMBOL} from "../ast";
+import {getNodeDefinition, Node} from "../ast";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
@@ -15,7 +15,7 @@ Node.prototype[TO_JSON_SYMBOL] = function () {
     };
     const node = this as Node;
     for(const p in node) {
-        if(p == 'parent') {
+        if(p == 'parent' || p == 'parseTreeNode') {
             continue;
         }
         const element = node[p];
