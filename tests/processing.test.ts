@@ -1,7 +1,6 @@
 import {expect} from "chai";
 
 import {Child, Node} from "../src";
-import itiriri from 'itiriri';
 
 class Box extends Node {
     @Child()
@@ -19,16 +18,6 @@ class Item extends Node {
     }
 }
 
-function printSequence(sequence: Generator<Node>): string {
-    return itiriri(sequence).map(n => {
-        if(n instanceof Box || n instanceof Item) {
-            return n.name;
-        } else {
-            throw new Error("Unsupported node: " + n);
-        }
-    }).reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "");
-}
-
 const testCase = new Box(
     "root",
     [
@@ -39,9 +28,11 @@ const testCase = new Box(
         new Item("6")
     ]);
 
-describe('Tree traversing', function() {
-    it("depth-first",
+describe('Tree processing', function() {
+    it("find a node",
         function () {
-            expect(printSequence(testCase.walk())).to.equal("root, first, 1, 2, big, small, 3, 4, 5, 6");
+            const result = testCase.find(n => n instanceof Item && n.name == "1") as Item;
+            expect(result).not.to.be.undefined;
+            expect(result.name).to.equal("1");
         });
 });

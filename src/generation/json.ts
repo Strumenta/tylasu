@@ -26,7 +26,7 @@ Node.prototype[TO_JSON_SYMBOL] = function () {
                 } else if(Array.isArray(element)) {
                     result[p] = element.map(e => e[TO_JSON_SYMBOL]());
                 }
-            } else {
+            } else if(typeof node[p] != "function") {
                 result[p] = node[p];
             }
         }
