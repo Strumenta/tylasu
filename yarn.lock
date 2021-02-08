@@ -959,6 +959,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+itiriri@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/itiriri/-/itiriri-2.0.1.tgz#893e2fcc59164bde2abe3ad59c7d52619636f816"
+  integrity sha512-XutdsL9Nm9ejgRlFwOBdWW78Txvs9ehhMFeGCp3GjGIWSeQNgOzOfo+PjuQSmaFgE1ol6Pr2g5Jg7W4BYIploQ==
+
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"

@@ -104,7 +104,9 @@ export function toAST(tree: ParseTree, parent?: Node): Node {
     } else {
         node = new GenericNode();
     }
-    node.parseTreeNode = tree;
+    if(!node.parseTreeNode) { //Give a chance to custom factories to set a different node
+        node.parseTreeNode = tree;
+    }
     return node.withParent(parent);
 }
 
