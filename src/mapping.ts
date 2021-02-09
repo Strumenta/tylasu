@@ -13,14 +13,15 @@ export function registerNodeFactory<T extends ParseTree>(type: new (...args: any
     type.prototype[NODE_FACTORY_SYMBOL] = factory;
 }
 
-export function registerNodeChild<T extends Node>(type: new (...args: any[]) => T, methodName: string, path: string = methodName): any {
+export function registerNodeChild<T extends Node>(
+    type: new (...args: any[]) => T, methodName: string, path: string = methodName, map = true): any {
     if (methodName == "parent" || methodName == "children") {
         throw new Error(`Can't register the ${methodName} property as a child`);
     }
     if (!type[CHILD_PROPERTIES_SYMBOL]) {
         type[CHILD_PROPERTIES_SYMBOL] = {};
     }
-    const childInfo = {path: path || methodName};
+    const childInfo = map ? {path: path || methodName} : {};
     type[CHILD_PROPERTIES_SYMBOL][methodName] = childInfo;
     return childInfo;
 }
@@ -40,9 +41,10 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T,
     };
 }
 
-export function Child(path?: string): (target, methodName: string) => void {
+export function Child(options: {path?: string, map?: boolean} = {map: true}): (target, methodName: string) => void {
     return function (target, methodName: string) {
-        registerNodeChild(target, methodName, path);
+        const map = (options.map === undefined) || options.map;
+        registerNodeChild(target, methodName, options.path, map);
     };
 }
 
