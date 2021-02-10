@@ -1,7 +1,7 @@
 import {ParseTree} from "antlr4ts/tree";
 import {Position} from "./position";
 
-export const CHILD_PROPERTIES_SYMBOL = Symbol("childProperties");
+export const PROPERTIES_SYMBOL = Symbol("properties");
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
 export const NODE_TYPES: { [name: string]: { [name: string]: new (...args: any[]) => Node } } = {
@@ -47,8 +47,9 @@ export abstract class Node {
         return children;
     }
 
-    getChildNames() {
-        return Object.getOwnPropertyNames(this[CHILD_PROPERTIES_SYMBOL] || {});
+    getChildNames(): string[] {
+        const props = this[PROPERTIES_SYMBOL] || {};
+        return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
     isChild(name: string): boolean {
@@ -113,21 +114,66 @@ export class NodeVisitor {
     }
 }
 
+//-----------------------//
+// Metadata registration //
+//-----------------------//
+
 function registerNodeDefinition<T extends Node>(target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
     if (!NODE_TYPES[pkg]) {
         NODE_TYPES[pkg] = {};
     }
-    NODE_TYPES[pkg][target.name] = target;
+    const name = target.name;
+    const existingDef = target[NODE_DEFINITION_SYMBOL];
+    if(existingDef && (existingDef.package != pkg || existingDef.name != name)) {
+        throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+    }
+    NODE_TYPES[pkg][name] = target;
     const def = {
         package: pkg,
-        name: target.name
+        name: name
     };
     target[NODE_DEFINITION_SYMBOL] = def;
     return def;
 }
 
+export function registerNodeProperty<T>(type: { new(...args: any[]): T }, methodName: string): any {
+    if (methodName == "parent" || methodName == "children" || methodName == "parseTreeNode") {
+        throw new Error(`Can't register the ${methodName} property as a node property`);
+    }
+    if (!type[PROPERTIES_SYMBOL]) {
+        type[PROPERTIES_SYMBOL] = {};
+    }
+    if (!type[PROPERTIES_SYMBOL][methodName]) {
+        type[PROPERTIES_SYMBOL][methodName] = {};
+    }
+    return type[PROPERTIES_SYMBOL][methodName];
+}
+
+export function registerNodeChild<T extends Node>(
+    type: new (...args: any[]) => T, methodName: string): any {
+    const propInfo = registerNodeProperty(type, methodName);
+    propInfo.child = true;
+    return propInfo;
+}
+
+//------------//
+// Decorators //
+//------------//
+
 export function ASTNode<T extends Node>(pkg = "") {
     return function (target: new (...args: any[]) => T): void {
         registerNodeDefinition(target, pkg);
+    };
+}
+
+export function Child(): (target, methodName: string) => void {
+    return function (target, methodName: string) {
+        registerNodeChild(target, methodName);
+    };
+}
+
+export function Property(): (target, methodName: string) => void {
+    return function (target, methodName: string) {
+        registerNodeProperty(target, methodName);
     };
 }

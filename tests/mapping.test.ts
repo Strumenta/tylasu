@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNodeFor, Child, GenericNode, Node, toAST} from "../src";
+import {ASTNodeFor, Child, GenericNode, Mapped, Node, Property} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -8,10 +8,18 @@ import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
-    @Child({ path: "ID" })
+    //Explicit mapping
+    @Child()
+    @Mapped("ID")
     id: Node;
-    @Child({ map: false, path: "SET" })
+    //Implicit mapping (same name)
+    @Child()
+    EQUAL: Node;
+    //No mapping (name doesn't match)
+    @Child()
     set: Node;
+    @Property()
+    expression: any;
 }
 
 describe('Mapping of Parse Trees to ASTs', function() {
@@ -32,6 +40,8 @@ describe('Mapping of Parse Trees to ASTs', function() {
             expect(mySetStatement instanceof MySetStatement).to.be.true;
             expect(mySetStatement.parseTreeNode).to.equal(setStmt);
             expect(mySetStatement.id).not.to.be.undefined;
+            expect(mySetStatement.EQUAL).not.to.be.undefined;
             expect(mySetStatement.set).to.be.undefined;
+            expect(mySetStatement.expression).not.to.be.undefined;
         });
 });
