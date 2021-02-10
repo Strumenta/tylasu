@@ -89,6 +89,9 @@ export function fillChildAST<FROM, TO extends Node>(
 }
 
 export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node {
+    if (!tree) {
+        return undefined;
+    }
     const factory = tree[NODE_FACTORY_SYMBOL];
     let node: Node;
     if (factory) {
