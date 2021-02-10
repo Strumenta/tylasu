@@ -17,6 +17,8 @@ class B extends Node {
     property: number;
     @Mapped("other")
     other2: string;
+    @Mapped("undefined")
+    notThere: any;
 }
 
 describe('AST transformations', function() {
@@ -32,6 +34,7 @@ describe('AST transformations', function() {
             expect(nodeB.property).to.equal(42);
             expect(nodeB.other2).to.equal("other");
             expect(nodeB.aChild).not.to.be.undefined;
+            expect(nodeB.notThere).to.be.undefined;
             expect(nodeB.aChild instanceof B).to.be.true;
         });
 });

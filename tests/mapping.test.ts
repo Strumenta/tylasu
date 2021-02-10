@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNodeFor, Child, GenericNode, Mapped, Node, Property} from "../src";
+import {ASTNodeFor, Child, GenericNode, Mapped, Node, Property, toAST} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -23,6 +23,11 @@ class MySetStatement extends Node {
 }
 
 describe('Mapping of Parse Trees to ASTs', function() {
+    it("Mapping of null/undefined",
+        function () {
+            expect(toAST(undefined)).to.be.undefined;
+            expect(toAST(null)).to.be.undefined;
+        });
     it("Generic node",
         function () {
             const node = new ParserRuleContext().toAST();

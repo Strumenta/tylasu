@@ -20,7 +20,7 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 
 export function toAST(tree: ParseTree, parent?: Node): Node {
     const node = transform(tree, parent, toAST);
-    if(!node.parseTreeNode) { //Give a chance to custom factories to set a different node
+    if(node && !node.parseTreeNode) { //Give a chance to custom factories to set a different node
         node.parseTreeNode = tree;
     }
     return node;
