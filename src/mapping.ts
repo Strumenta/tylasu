@@ -1,6 +1,8 @@
-import {ParseTree} from "antlr4ts/tree";
+import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
 import {ASTNode, CHILD_PROPERTIES_SYMBOL, Node} from "./ast";
+import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+import {RuleNode} from "antlr4ts/tree/RuleNode";
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -114,3 +116,23 @@ export function toAST(tree: ParseTree, parent?: Node): Node {
 
 @ASTNodeFor(ParserRuleContext)
 export class GenericNode extends Node {}
+
+//Augment the ParseTree class with a toAST method
+declare module 'antlr4ts/tree' {
+    export interface ParseTree {
+        toAST(parent?: Node): Node;
+    }
+    export interface RuleNode {
+        toAST(parent?: Node): Node;
+    }
+    export interface TerminalNode {
+        toAST(parent?: Node): Node;
+    }
+}
+
+RuleNode.prototype.toAST = function(parent?: Node): Node {
+    return toAST(this, parent);
+};
+TerminalNode.prototype.toAST = function(parent?: Node): Node {
+    return toAST(this, parent);
+};

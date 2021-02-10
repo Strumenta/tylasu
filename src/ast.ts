@@ -24,7 +24,7 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
 }
 
 export abstract class Node {
-    parent: Node;
+    parent?: Node;
     parseTreeNode?: ParseTree;
 
     constructor(protected specifiedPosition?: Position) {}
@@ -47,7 +47,7 @@ export abstract class Node {
         return children;
     }
 
-    private getChildNames() {
+    getChildNames() {
         return Object.getOwnPropertyNames(this[CHILD_PROPERTIES_SYMBOL] || {});
     }
 
