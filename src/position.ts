@@ -1,5 +1,6 @@
 import {ParseTree} from "antlr4ts/tree";
 import {ParserRuleContext, Token} from "antlr4ts";
+import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 
 function sign(number: number): number {
     return number > 0 ? +1 : number < 0 ? -1 : 0;
@@ -57,6 +58,8 @@ export class Position {
     static ofParseTree(parseTree: ParseTree): Position | undefined {
         if(parseTree instanceof ParserRuleContext) {
             return new Position(Point.ofTokenStart(parseTree.start), Point.ofTokenEnd(parseTree.stop));
+        } else if(parseTree instanceof TerminalNode) {
+            return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
         }
     }
 
