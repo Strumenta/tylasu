@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Child, Node} from "../src";
+import {Child, Node, walkDescendants} from "../src";
 
 class Box extends Node {
     @Child()
@@ -28,10 +28,26 @@ const testCase = new Box(
         new Item("6")
     ]);
 
+const rootP = n => n instanceof Box && n.name == "root";
+const item1P = n => n instanceof Item && n.name == "1";
+
 describe('Tree processing', function() {
-    it("find a node",
+    it("find a node, depth-first",
         function () {
-            const result = testCase.find(n => n instanceof Item && n.name == "1") as Item;
+            let result = testCase.find(rootP) as Item;
+            expect(result).not.to.be.undefined;
+            expect(result.name).to.equal("root");
+            result = testCase.find(item1P) as Item;
+            expect(result).not.to.be.undefined;
+            expect(result.name).to.equal("1");
+            result = testCase.find(n => n instanceof Item && n.name == "No, you won't find me") as Item;
+            expect(result).to.be.undefined;
+        });
+    it("find a node, depth-first excluding parent",
+        function () {
+            let result = testCase.find(rootP, walkDescendants) as Item;
+            expect(result).to.be.undefined;
+            result = testCase.find(item1P, walkDescendants) as Item;
             expect(result).not.to.be.undefined;
             expect(result.name).to.equal("1");
         });
