@@ -1,5 +1,4 @@
 import {ASTNode, Node, NODE_DEFINITION_SYMBOL, PROPERTIES_SYMBOL, registerNodeProperty} from "./ast";
-import {GenericNode} from "./mapping";
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -8,6 +7,7 @@ import {GenericNode} from "./mapping";
 export const NODE_FACTORY_SYMBOL = Symbol("nodeFactory");
 export const INIT_SYMBOL = Symbol("init");
 
+//TODO for future version: allow multiple factories, keyed by name (string | symbol).
 export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory: (tree: T) => Node): void {
     type.prototype[NODE_FACTORY_SYMBOL] = factory;
 }
@@ -58,9 +58,15 @@ export function fillChildAST<FROM, TO extends Node>(
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
         const path = propertyPath.split(".");
+        let error;
         for (const segment in path) {
             if (tree && (tree[path[segment]] instanceof Function)) {
-                tree = tree[path[segment]]();
+                try {
+                    tree = tree[path[segment]]();
+                } catch (e) {
+                    error = e;
+                    break;
+                }
             } else if (tree && tree[path[segment]]) {
                 tree = tree[path[segment]];
             } else {
@@ -68,7 +74,9 @@ export function fillChildAST<FROM, TO extends Node>(
                 break;
             }
         }
-        if (tree) {
+        if(error) {
+            node[property] = new ErrorNode(error);
+        } else if (tree) {
             if(propDef.child) {
                 if (Array.isArray(tree)) {
                     node[property] = [];
@@ -88,6 +96,14 @@ export function fillChildAST<FROM, TO extends Node>(
     return [];
 }
 
+function makeNode(factory, tree: unknown) {
+    try {
+        return factory(tree) as Node;
+    } catch (e) {
+        return new ErrorNode(e);
+    }
+}
+
 export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node {
     if (!tree) {
         return undefined;
@@ -95,7 +111,7 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     const factory = tree[NODE_FACTORY_SYMBOL];
     let node: Node;
     if (factory) {
-        node = factory(tree) as Node;
+        node = makeNode(factory, tree);
         if (node[PROPERTIES_SYMBOL]) {
             for (const p in node[PROPERTIES_SYMBOL]) {
                 fillChildAST(node, p, tree, transformer);
@@ -103,10 +119,28 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
         }
         const initFunction = node[INIT_SYMBOL];
         if (initFunction) {
-            node[initFunction].call(node, tree);
+            try {
+                node[initFunction].call(node, tree);
+            } catch (e) {
+                node = new PartiallyInitializedNode(node, e);
+            }
         }
     } else {
         node = new GenericNode();
     }
     return node.withParent(parent);
+}
+
+export class GenericNode extends Node {}
+
+export class ErrorNode extends Node {
+    constructor(readonly error: Error) {
+        super();
+    }
+}
+
+export class PartiallyInitializedNode extends ErrorNode {
+    constructor(readonly node: Node, error: Error) {
+        super(error);
+    }
 }

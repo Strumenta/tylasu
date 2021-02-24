@@ -20,6 +20,10 @@ class MySetStatement extends Node {
     set: Node;
     @Property()
     expression: any;
+    //Erroneous mapping
+    @Child()
+    @Mapped("nonExistent")
+    nonExistent: Node;
 }
 
 describe('Mapping of Parse Trees to ASTs', function() {
@@ -48,5 +52,6 @@ describe('Mapping of Parse Trees to ASTs', function() {
             expect(mySetStatement.EQUAL).not.to.be.undefined;
             expect(mySetStatement.set).to.be.undefined;
             expect(mySetStatement.expression).not.to.be.undefined;
+            expect(mySetStatement.nonExistent).to.be.undefined;
         });
 });
