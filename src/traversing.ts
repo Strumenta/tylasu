@@ -1,5 +1,4 @@
 import {Node} from "./ast";
-import itiriri, {IterableQuery} from "itiriri";
 
 declare module './ast' {
     export interface Node {
