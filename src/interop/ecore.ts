@@ -1,4 +1,4 @@
-import {ensureNodeDefinition, getNodeDefinition, NODE_TYPES} from "../ast";
+import {getNodeDefinition, NODE_TYPES} from "../ast";
 import * as Ecore from "ecore/dist/ecore";
 import {EPackage} from "ecore";
 
@@ -19,7 +19,7 @@ export function toECoreModel(packageName: string, args: { nsPrefix?: string, nsU
                 const eAttr = Ecore.EAttribute.create({
                     name: prop
                 });
-                eClass.eAttributes().add(eAttr);
+                eClass.get("eStructuralFeatures").add(eAttr);
             }
         }
         //TODO superclass

@@ -14,8 +14,15 @@ describe('Ecore', function() {
         function () {
             const ePackage = toECoreModel("");
             expect(ePackage).not.to.be.undefined;
-            expect(ePackage.get("eClassifiers").size()).to.equal(1);
-            expect(ePackage.get("eClassifiers").at(0).get('name')).to.equal("SomeNode");
+            const classes = ePackage.get("eClassifiers");
+            expect(classes.size() > 0).to.be.true;
+            let found = false;
+            for(let i = 0; i < classes.size(); i++) {
+                if(classes.at(i).get('name') == "SomeNode") {
+                    found = true;
+                }
+            }
+            expect(found).to.be.true;
         });
     it("named package",
         function () {

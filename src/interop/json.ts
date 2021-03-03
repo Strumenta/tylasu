@@ -1,4 +1,4 @@
-import {ensureNodeDefinition, getNodeDefinition, Node} from "../ast";
+import {ensureNodeDefinition, Node} from "../ast";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
