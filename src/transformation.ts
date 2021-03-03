@@ -1,4 +1,11 @@
-import {ASTNode, Node, NODE_DEFINITION_SYMBOL, PROPERTIES_SYMBOL, registerNodeProperty} from "./ast";
+import {
+    ASTNode,
+    ensureNodeDefinition,
+    getNodeDefinition,
+    Node,
+    NODE_DEFINITION_SYMBOL,
+    registerNodeProperty
+} from "./ast";
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -54,7 +61,7 @@ export function Init(target, methodName: string): void {
 
 export function fillChildAST<FROM, TO extends Node>(
     node: TO, property: string, tree: FROM, transformer: (node: FROM) => TO): TO[] {
-    const propDef = node[PROPERTIES_SYMBOL][property];
+    const propDef = ensureNodeDefinition(node).properties[property];
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
         const path = propertyPath.split(".");
@@ -112,8 +119,9 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     let node: Node;
     if (factory) {
         node = makeNode(factory, tree);
-        if (node[PROPERTIES_SYMBOL]) {
-            for (const p in node[PROPERTIES_SYMBOL]) {
+        const def = getNodeDefinition(node);
+        if (def) {
+            for (const p in def.properties) {
                 fillChildAST(node, p, tree, transformer);
             }
         }

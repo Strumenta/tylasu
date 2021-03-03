@@ -1,7 +1,7 @@
 import {expect} from "chai";
 
 import {Child, GenericNode, Node} from "../src";
-import {JSONGenerator} from "../src/generation/json";
+import {JSONGenerator} from "../src/interop/json";
 
 describe('JSON generator', function() {
     it("Empty AST",
@@ -26,6 +26,16 @@ describe('JSON generator', function() {
             expect(json).to.deep.equal({
                 type: "NodeWithChildren",
                 payload: 42
+            });
+        });
+    it("Unannotated AST node with payload",
+        function () {
+            const node = new NotAnnotated();
+            node.payload = "42";
+            const json = new JSONGenerator().toJSON(node);
+            expect(json).to.deep.equal({
+                type: "NotAnnotated",
+                payload: "42"
             });
         });
     it("AST node with child",
@@ -96,4 +106,8 @@ class NodeWithChildren extends Node {
     singleChild: NodeWithChildren
     @Child()
     childrenCollection: NodeWithChildren[]
+}
+
+class NotAnnotated extends Node {
+    payload: string
 }

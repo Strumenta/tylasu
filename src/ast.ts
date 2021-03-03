@@ -1,26 +1,20 @@
 import {ParseTree} from "antlr4ts/tree";
 import {Position} from "./position";
 
-export const PROPERTIES_SYMBOL = Symbol("properties");
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
 export const NODE_TYPES: { [name: string]: { [name: string]: new (...args: any[]) => Node } } = {
     "": {}
 };
 
-export type NodeDefinition = { package: string, name: string };
+export type NodeDefinition = {
+    package: string,
+    name: string,
+    properties: { [name: string]: any }
+};
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
-    if(node instanceof Node) {
-        const nodeType = Object.getPrototypeOf(node).constructor;
-        let definition = nodeType[NODE_DEFINITION_SYMBOL];
-        if(!definition) {
-            definition = registerNodeDefinition(nodeType);
-        }
-        return definition;
-    } else {
-        return node[NODE_DEFINITION_SYMBOL];
-    }
+    return node[NODE_DEFINITION_SYMBOL];
 }
 
 export abstract class Node {
@@ -48,7 +42,7 @@ export abstract class Node {
     }
 
     getChildNames(): string[] {
-        const props = this[PROPERTIES_SYMBOL] || {};
+        const props = getNodeDefinition(this)?.properties || {};
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
@@ -118,11 +112,11 @@ export class NodeVisitor {
 // Metadata registration //
 //-----------------------//
 
-function registerNodeDefinition<T extends Node>(target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
+function registerNodeDefinition<T extends Node>(
+    target: { new(...args: any[]): T }, name = target.name, pkg = ""): NodeDefinition {
     if (!NODE_TYPES[pkg]) {
         NODE_TYPES[pkg] = {};
     }
-    const name = target.name;
     const existingDef = target[NODE_DEFINITION_SYMBOL];
     if(existingDef && (existingDef.package != pkg || existingDef.name != name)) {
         throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
@@ -130,23 +124,36 @@ function registerNodeDefinition<T extends Node>(target: { new(...args: any[]): T
     NODE_TYPES[pkg][name] = target;
     const def = {
         package: pkg,
-        name: name
+        name: name,
+        properties: {}
     };
     target[NODE_DEFINITION_SYMBOL] = def;
     return def;
 }
 
-export function registerNodeProperty<T>(type: { new(...args: any[]): T }, methodName: string): any {
+export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }): NodeDefinition {
+    let definition = getNodeDefinition(node);
+    if (!definition) {
+        if(typeof node === 'function') {
+            definition = registerNodeDefinition(node);
+        } else if(typeof node.constructor === 'function') {
+            definition = registerNodeDefinition(node as any, (node.constructor as any).name);
+        } else {
+            throw new Error("Not a valid node: " + node);
+        }
+    }
+    return definition;
+}
+
+export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string): any {
     if (methodName == "parent" || methodName == "children" || methodName == "parseTreeNode") {
         throw new Error(`Can't register the ${methodName} property as a node property`);
     }
-    if (!type[PROPERTIES_SYMBOL]) {
-        type[PROPERTIES_SYMBOL] = {};
+    const definition = ensureNodeDefinition(type);
+    if (!definition.properties[methodName]) {
+        definition.properties[methodName] = {};
     }
-    if (!type[PROPERTIES_SYMBOL][methodName]) {
-        type[PROPERTIES_SYMBOL][methodName] = {};
-    }
-    return type[PROPERTIES_SYMBOL][methodName];
+    return definition.properties[methodName];
 }
 
 export function registerNodeChild<T extends Node>(
@@ -162,7 +169,7 @@ export function registerNodeChild<T extends Node>(
 
 export function ASTNode<T extends Node>(pkg = "") {
     return function (target: new (...args: any[]) => T): void {
-        registerNodeDefinition(target, pkg);
+        registerNodeDefinition(target, target.name, pkg);
     };
 }
 

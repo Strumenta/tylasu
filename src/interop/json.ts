@@ -1,4 +1,4 @@
-import {getNodeDefinition, Node} from "../ast";
+import {ensureNodeDefinition, getNodeDefinition, Node} from "../ast";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
@@ -9,7 +9,7 @@ export class JSONGenerator {
 }
 
 Node.prototype[TO_JSON_SYMBOL] = function () {
-    const def = getNodeDefinition(this);
+    const def = ensureNodeDefinition(this);
     const result = {
         type: (def.package ? def.package + "." : "") + def.name
     };
