@@ -6,13 +6,13 @@ import {ASTNode, getNodeDefinition, Node, NODE_TYPES} from "../src";
 class SomeNode extends Node {}
 
 @ASTNode("some.package")
-class SomeNodeInPackage extends Node {}
+export class SomeNodeInPackage extends Node {}
 
 describe('Meta model', function() {
     it("info recorded in the default package",
         function () {
             expect(NODE_TYPES[""]).not.to.be.undefined;
-            expect(NODE_TYPES[""]["SomeNode"]).to.equal(SomeNode);
+            expect(NODE_TYPES[""].nodes["SomeNode"]).to.equal(SomeNode);
             const def = getNodeDefinition(SomeNode);
             expect(def).not.to.be.undefined;
             expect(def.package).to.equal("");
@@ -21,7 +21,7 @@ describe('Meta model', function() {
     it("info recorded in some named package",
         function () {
             expect(NODE_TYPES["some.package"]).not.to.be.undefined;
-            expect(NODE_TYPES["some.package"]["SomeNodeInPackage"]).to.equal(SomeNodeInPackage);
+            expect(NODE_TYPES["some.package"].nodes["SomeNodeInPackage"]).to.equal(SomeNodeInPackage);
             const def = getNodeDefinition(SomeNodeInPackage);
             expect(def).not.to.be.undefined;
             expect(def.package).to.equal("some.package");

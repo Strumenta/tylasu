@@ -3,18 +3,22 @@ import {Position} from "./position";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
-export const NODE_TYPES: { [name: string]: { [name: string]: new (...args: any[]) => Node } } = {
-    "": {}
+export type PackageDescription = {
+    nodes: { [name: string]: new (...args: any[]) => Node }
+};
+export const NODE_TYPES: { [name: string]: PackageDescription } = {
+    "": { nodes: {} }
 };
 
 export type NodeDefinition = {
     package: string,
     name: string,
-    properties: { [name: string]: any }
+    properties: { [name: string]: any },
+    generated?: boolean
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
-    return node[NODE_DEFINITION_SYMBOL];
+    return typeof node === "function" ? node[NODE_DEFINITION_SYMBOL] : node.constructor[NODE_DEFINITION_SYMBOL];
 }
 
 export abstract class Node {
@@ -113,20 +117,31 @@ export class NodeVisitor {
 //-----------------------//
 
 function registerNodeDefinition<T extends Node>(
-    target: { new(...args: any[]): T }, name = target.name, pkg = ""): NodeDefinition {
+    target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
     if (!NODE_TYPES[pkg]) {
-        NODE_TYPES[pkg] = {};
+        NODE_TYPES[pkg] = { nodes: {} };
     }
-    const existingDef = target[NODE_DEFINITION_SYMBOL];
+    const name = target.name;
+    const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
+    let def;
     if(existingDef && (existingDef.package != pkg || existingDef.name != name)) {
-        throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+        if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
+            delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
+            existingDef.package = pkg;
+            existingDef.name = name;
+            existingDef.generated = false;
+            def = existingDef;
+        } else {
+            throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+        }
+    } else {
+        def = {
+            package: pkg,
+            name: name,
+            properties: {}
+        };
     }
-    NODE_TYPES[pkg][name] = target;
-    const def = {
-        package: pkg,
-        name: name,
-        properties: {}
-    };
+    NODE_TYPES[pkg].nodes[name] = target;
     target[NODE_DEFINITION_SYMBOL] = def;
     return def;
 }
@@ -136,8 +151,10 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     if (!definition) {
         if(typeof node === 'function') {
             definition = registerNodeDefinition(node);
+            definition.generated = true;
         } else if(typeof node.constructor === 'function') {
-            definition = registerNodeDefinition(node as any, (node.constructor as any).name);
+            definition = registerNodeDefinition(node.constructor as any);
+            definition.generated = true;
         } else {
             throw new Error("Not a valid node: " + node);
         }
@@ -169,7 +186,7 @@ export function registerNodeChild<T extends Node>(
 
 export function ASTNode<T extends Node>(pkg = "") {
     return function (target: new (...args: any[]) => T): void {
-        registerNodeDefinition(target, target.name, pkg);
+        registerNodeDefinition(target, pkg);
     };
 }
 

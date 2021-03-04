@@ -2,9 +2,13 @@ import {ensureNodeDefinition, Node} from "../ast";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
+export function toJSON(node: Node): any {
+    return node[TO_JSON_SYMBOL]();
+}
+
 export class JSONGenerator {
     toJSON(node: Node): any {
-        return node[TO_JSON_SYMBOL]();
+        return toJSON(node);
     }
 }
 
@@ -22,11 +26,11 @@ Node.prototype[TO_JSON_SYMBOL] = function () {
         if(element !== undefined && element !== null) {
             if(node.isChild(p)) {
                 if(element instanceof Node) {
-                    result[p] = element[TO_JSON_SYMBOL]();
+                    result[p] = toJSON(element);
                 } else if(Array.isArray(element)) {
-                    result[p] = element.map(e => e[TO_JSON_SYMBOL]());
+                    result[p] = element.map(toJSON);
                 }
-            } else if(typeof node[p] != "function") {
+            } else if(typeof node[p] !== "function") {
                 result[p] = node[p];
             }
         }
