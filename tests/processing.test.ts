@@ -1,22 +1,7 @@
 import {expect} from "chai";
 
-import {Child, Node, walkDescendants} from "../src";
-
-class Box extends Node {
-    @Child()
-    contents: Node[];
-
-    constructor(public name: string, contents: Node[]) {
-        super();
-        this.contents = contents;
-    }
-}
-
-class Item extends Node {
-    constructor(public name: string) {
-        super();
-    }
-}
+import {walkDescendants} from "../src";
+import {Box, Item} from "./nodes";
 
 const testCase = new Box(
     "root",

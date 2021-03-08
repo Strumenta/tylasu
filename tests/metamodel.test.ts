@@ -1,12 +1,7 @@
 import {expect} from "chai";
 
-import {ASTNode, getNodeDefinition, Node, NODE_TYPES} from "../src";
-
-@ASTNode()
-class SomeNode extends Node {}
-
-@ASTNode("some.package")
-export class SomeNodeInPackage extends Node {}
+import {getNodeDefinition, NODE_TYPES} from "../src";
+import {SomeNode, SomeNodeInPackage} from "./nodes";
 
 describe('Meta model', function() {
     it("info recorded in the default package",

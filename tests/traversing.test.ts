@@ -1,23 +1,8 @@
 import {expect} from "chai";
 
-import {Child, Node} from "../src";
+import {Node} from "../src";
 import itiriri from 'itiriri';
-
-class Box extends Node {
-    @Child()
-    contents: Node[];
-
-    constructor(public name: string, contents: Node[]) {
-        super();
-        this.contents = contents;
-    }
-}
-
-class Item extends Node {
-    constructor(public name: string) {
-        super();
-    }
-}
+import {Box, Item} from "./nodes";
 
 function printSequence(sequence: Generator<Node>): string {
     return itiriri(sequence).map(n => {

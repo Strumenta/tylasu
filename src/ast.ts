@@ -122,8 +122,12 @@ function registerNodeDefinition<T extends Node>(
         NODE_TYPES[pkg] = { nodes: {} };
     }
     const name = target.name;
-    const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     let def;
+    const existingTarget = NODE_TYPES[pkg].nodes[name];
+    if(existingTarget && existingTarget !== target) {
+        throw new Error(target + " is already defined as " + existingTarget);
+    }
+    const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     if(existingDef && (existingDef.package != pkg || existingDef.name != name)) {
         if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
             delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
