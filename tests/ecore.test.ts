@@ -1,7 +1,7 @@
 import {expect} from "chai";
 
 import {fromEObject, registerECoreModel, toEObject} from "../src/interop/ecore";
-import {SomeNodeInPackage} from "./nodes";
+import {SomeNode, SomeNodeInPackage} from "./nodes";
 
 describe('Ecore metamodel', function() {
     it("default package",
@@ -28,11 +28,16 @@ describe('Ecore metamodel', function() {
 describe('Model generation', function() {
     it("simple EObject creation",
         function () {
-            const eObject = toEObject(new SomeNodeInPackage("aaa"));
+            let node = new SomeNodeInPackage("aaa");
+            node.someNode = new SomeNode("A");
+            const eObject = toEObject(node);
             expect(eObject).not.to.be.undefined;
             expect(eObject.get("a")).to.equal("aaa");
-            const node = fromEObject(eObject) as SomeNodeInPackage;
+            expect(eObject.get("someNode").get("a")).to.equal("A");
+            node = fromEObject(eObject) as SomeNodeInPackage;
             expect(node instanceof SomeNodeInPackage).to.be.true;
             expect(node.a).to.equal("aaa");
+            expect(node.someNode instanceof SomeNode).to.be.true;
+            expect(node.someNode.a).to.equal("A");
         });
 });

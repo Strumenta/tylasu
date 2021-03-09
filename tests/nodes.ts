@@ -18,12 +18,21 @@ export class Item extends Node {
 
 @ASTNode()
 export class SomeNode extends Node {
+    @Property()
+    a: string;
+
+    constructor(a?: string, protected specifiedPosition?: Position) {
+        super(specifiedPosition);
+        this.a = a;
+    }
 }
 
 @ASTNode("some.package")
 export class SomeNodeInPackage extends Node {
     @Property()
     a: string;
+    @Child()
+    someNode: SomeNode
 
     constructor(a?: string, protected specifiedPosition?: Position) {
         super(specifiedPosition);
