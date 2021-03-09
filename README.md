@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/%40strumenta%2Fast.svg)](https://badge.fury.io/js/%40strumenta%2Fast)
+
 # AST
 
 @strumenta/ast supplies the infrastructure to build a custom, possibly mutable, Abstract Syntax Tree (AST) using TypeScript.
