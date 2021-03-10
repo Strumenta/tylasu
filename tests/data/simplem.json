@@ -1,0 +1,18 @@
+{
+  "eClass" : "#//CompilationUnit",
+  "statements" : [ {
+    "eClass" : "#//VarDeclaration",
+    "initialValue" : {
+      "eClass" : "#//StringLiteral",
+      "value" : "foo"
+    },
+    "name" : "a"
+  }, {
+    "eClass" : "#//VarDeclaration",
+    "initialValue" : {
+      "eClass" : "#//StringLiteral",
+      "value" : "bar"
+    },
+    "name" : "b"
+  } ]
+}
