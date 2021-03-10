@@ -128,15 +128,19 @@ function registerNodeDefinition<T extends Node>(
         throw new Error(target + " is already defined as " + existingTarget);
     }
     const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
-    if(existingDef && (existingDef.package != pkg || existingDef.name != name)) {
-        if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
-            delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
-            existingDef.package = pkg;
-            existingDef.name = name;
-            existingDef.generated = false;
-            def = existingDef;
+    if(existingDef) {
+        if(existingDef.package != pkg || existingDef.name != name) {
+            if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
+                delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
+                existingDef.package = pkg;
+                existingDef.name = name;
+                existingDef.generated = false;
+                def = existingDef;
+            } else {
+                throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+            }
         } else {
-            throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+            def = existingDef;
         }
     } else {
         def = {

@@ -5,6 +5,12 @@ import {EObject, EPackage} from "ecore";
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 
+const THE_DEFAULT_EPACKAGE = getEPackage("", { nsPrefix: "node", nsUri: "https://github.com/strumenta/at-strumenta-ast-typescript" });
+const THE_NODE_ECLASS = Ecore.EClass.create({
+    name: "Node"
+});
+THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
+
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsUri?: string }) {
     //TODO nested packages for a.b.c?
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
@@ -39,10 +45,19 @@ export function registerECoreModel(packageName: string, args: { nsPrefix?: strin
         const nodeDef = getNodeDefinition(packageDef.nodes[nodeType]);
         if(nodeDef) {
             for(const prop in nodeDef.properties) {
-                const eAttr = Ecore.EAttribute.create({
-                    name: prop
-                });
-                eClass.get("eStructuralFeatures").add(eAttr);
+                if(nodeDef.properties[prop].child) {
+                    const eRef = Ecore.EReference.create({
+                        name: prop,
+                        eType: THE_NODE_ECLASS,
+                        containment: true
+                    });
+                    eClass.get("eStructuralFeatures").add(eRef);
+                } else {
+                    const eAttr = Ecore.EAttribute.create({
+                        name: prop //TODO type?
+                    });
+                    eClass.get("eStructuralFeatures").add(eAttr);
+                }
             }
         }
         //TODO superclass
@@ -74,17 +89,15 @@ export function fromEObject(obj: EObject): Node {
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
         const node = new constructor();
-        const def = getNodeDefinition(node);
-        if (def) {
-            for (const p in def.properties) {
-                const value = obj.get(p);
-                if(value && Object.prototype.hasOwnProperty.call(value,"eClass")) {
-                    node[p] = fromEObject(value);
-                } else {
-                    node[p] = value;
-                }
+        eClass.get("eStructuralFeatures").each(ft => {
+            const name = ft.get("name");
+            const value = obj.get(name);
+            if(ft.isTypeOf("EReference")) {
+                node[name] = fromEObject(value);
+            } else {
+                node[name] = value;
             }
-        }
+        });
         return node;
     } else {
         throw new Error("Unknown node definition: " + ePackage.get("name") + "." + eClass.get("name"));
@@ -110,6 +123,9 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function (): EObject {
     const result = eClass.create();
     eClass.get("eStructuralFeatures").each(a => {
         if(a.isTypeOf('EAttribute')) {
+            const name = a.get("name");
+            result.set(name, this[name]);
+        } else if(a.isTypeOf('EReference')) {
             const name = a.get("name");
             result.set(name, toEObject(this[name]));
         }
