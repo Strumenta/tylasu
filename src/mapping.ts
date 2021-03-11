@@ -1,9 +1,9 @@
 import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
-import {ASTNode, Node, NODE_DEFINITION_SYMBOL} from "./ast";
+import {ASTNode, Child, Node, NODE_DEFINITION_SYMBOL} from "./ast";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
-import {GenericNode, registerNodeFactory, transform} from "./transformation";
+import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation";
 
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
@@ -26,7 +26,13 @@ export function toAST(tree: ParseTree, parent?: Node): Node {
     return node;
 }
 
-registerNodeFactory(ParserRuleContext, () => new GenericNode());
+export class GenericParseTreeNode extends GenericNode {
+    @Child()
+    @Mapped("children")
+    childNodes: GenericParseTreeNode[] = [];
+}
+
+registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
 
 //Augment the ParseTree class with a toAST method
 declare module 'antlr4ts/tree' {

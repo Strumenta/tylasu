@@ -174,9 +174,6 @@ export function generateASTClasses(model: EPackage): PackageDescription {
             const prop = registerNodeProperty(classDef as any, name);
             prop.child = a.isTypeOf('EReference');
         });
-
-        // Hook up the static properties
-        Object.setPrototypeOf(classDef, superclass);
         pkg.nodes[className] = classDef as any;
     });
     return pkg;

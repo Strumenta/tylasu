@@ -67,7 +67,7 @@ export function fillChildAST<FROM, TO extends Node>(
         const path = propertyPath.split(".");
         let error;
         for (const segment in path) {
-            if (tree && (tree[path[segment]] instanceof Function)) {
+            if (tree && (typeof(tree[path[segment]]) === "function")) {
                 try {
                     tree = tree[path[segment]]();
                 } catch (e) {

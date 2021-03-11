@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNodeFor, Child, GenericNode, Mapped, Node, Property, toAST} from "../src";
+import {ASTNodeFor, Child, GenericNode, GenericParseTreeNode, Mapped, Node, Property, toAST} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -18,7 +18,7 @@ class MySetStatement extends Node {
     //No mapping (name doesn't match)
     @Child()
     set: Node;
-    @Property()
+    @Child()
     expression: any;
     //Erroneous mapping
     @Child()
@@ -40,7 +40,7 @@ describe('Mapping of Parse Trees to ASTs', function() {
         });
     it("Node registered declaratively",
         function () {
-            const code = "set foo = 123";
+            const code = "set foo = 123 + 45";
             const lexer = new SimpleLangLexer(CharStreams.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
@@ -53,5 +53,9 @@ describe('Mapping of Parse Trees to ASTs', function() {
             expect(mySetStatement.set).to.be.undefined;
             expect(mySetStatement.expression).not.to.be.undefined;
             expect(mySetStatement.nonExistent).to.be.undefined;
+
+            const expression = mySetStatement.expression as GenericParseTreeNode;
+            expect(expression instanceof GenericParseTreeNode).to.be.true;
+            expect(expression.childNodes.length).to.equal(3);
         });
 });
