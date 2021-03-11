@@ -116,12 +116,14 @@ export class NodeVisitor {
 // Metadata registration //
 //-----------------------//
 
-function registerNodeDefinition<T extends Node>(
+export const SYMBOL_NODE_NAME = Symbol("name");
+
+export function registerNodeDefinition<T extends Node>(
     target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
     if (!NODE_TYPES[pkg]) {
         NODE_TYPES[pkg] = { nodes: {} };
     }
-    const name = target.name;
+    const name = target[SYMBOL_NODE_NAME] || target.name;
     let def;
     const existingTarget = NODE_TYPES[pkg].nodes[name];
     if(existingTarget && existingTarget !== target) {

@@ -1,10 +1,10 @@
 import {expect} from "chai";
 
-import {fromEObject, registerECoreModel, toEObject} from "../src/interop/ecore";
+import {Node, NODE_TYPES} from "../src";
+import {fromEObject, generateASTClasses, registerECoreModel, toEObject} from "../src/interop/ecore";
 import {SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
-import {EPackage} from "ecore";
 
 describe('Ecore metamodel', function() {
     it("default package",
@@ -40,12 +40,22 @@ describe('Ecore metamodel', function() {
                     ePackage.set("nsURI", "");
                 }
                 Ecore.EPackage.Registry.register(ePackage);
+                const pkg = generateASTClasses(ePackage);
+                expect(Object.keys(pkg.nodes).length).to.equal(5);
+                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
+                expect(new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() instanceof Node).to.be.true;
+                expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
+
                 const buffer = fs.readFileSync("tests/data/simplem.json");
                 Ecore.JSON.parse(r, buffer.toString());
-                const model = r.get("contents").at(1);
-                expect(model).not.to.be.null;
-                expect(model).not.to.be.undefined;
-                expect(model.eClass?.get("name")).to.equal("CompilationUnit");
+                const cu = r.get("contents").at(1);
+                expect(cu).not.to.be.null;
+                expect(cu).not.to.be.undefined;
+                expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
+                const node = fromEObject(cu) as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.statements.length).to.equal(2);
+                expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);
             });
     });
 });
