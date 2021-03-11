@@ -163,12 +163,7 @@ export function generateASTClasses(model: EPackage): PackageDescription {
         }
         //TODO other superclasses
         const superclass = Node;
-        const classDef = function DynamicClass(specifiedPosition) {
-            return superclass.call(this, specifiedPosition) || this;
-        }
-        function __() { this.constructor = classDef; }
-        __.prototype = superclass.prototype;
-        classDef.prototype = new __();
+        const classDef = class GeneratedNodeClass extends superclass {}
         classDef[SYMBOL_NODE_NAME] = className;
         classDef[SYMBOL_CLASS_DEFINITION] =
 `class ${className} extends ${superclass[SYMBOL_NODE_NAME] || superclass.name} {}`;

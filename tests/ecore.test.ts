@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Node, NODE_TYPES} from "../src";
+import {Node, NODE_TYPES, SYMBOL_NODE_NAME} from "../src";
 import {fromEObject, generateASTClasses, registerECoreModel, toEObject} from "../src/interop/ecore";
 import {SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
@@ -43,7 +43,14 @@ describe('Ecore metamodel', function() {
                 const pkg = generateASTClasses(ePackage);
                 expect(Object.keys(pkg.nodes).length).to.equal(5);
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
-                expect(new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() instanceof Node).to.be.true;
+
+                let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
+                node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
+
                 expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
 
                 const buffer = fs.readFileSync("tests/data/simplem.json");
@@ -52,7 +59,7 @@ describe('Ecore metamodel', function() {
                 expect(cu).not.to.be.null;
                 expect(cu).not.to.be.undefined;
                 expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
-                const node = fromEObject(cu) as any;
+                node = fromEObject(cu) as any;
                 expect(node instanceof Node).to.be.true;
                 expect(node.statements.length).to.equal(2);
                 expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);

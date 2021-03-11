@@ -1,13 +1,11 @@
 {
 	"extends": "@tsconfig/recommended/tsconfig.json",
 	"compilerOptions": {
-		"target": "ES5",
         "experimentalDecorators": true,
 		"declaration": true,
 		"sourceMap": true,
 		"strict": false,
-		"outDir": "dist",
-		"downlevelIteration": true
+		"outDir": "dist"
 	},
 	"include": ["src/index.ts"],
 	"exclude": ["node_modules"]
