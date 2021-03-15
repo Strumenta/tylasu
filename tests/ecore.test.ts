@@ -1,7 +1,13 @@
 import {expect} from "chai";
 
 import {Node, NODE_TYPES, SYMBOL_NODE_NAME} from "../src";
-import {fromEObject, generateASTClasses, registerECoreModel, toEObject} from "../src/interop/ecore";
+import {
+    fromEObject,
+    generateASTClasses,
+    registerECoreModel,
+    SYMBOL_CLASS_DEFINITION,
+    toEObject
+} from "../src/interop/ecore";
 import {SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
@@ -27,6 +33,22 @@ describe('Ecore metamodel', function() {
             expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("a");
             expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("someNode");
         });
+    it("inheritance",
+        function () {
+            const ePackage = registerECoreModel("some.package");
+            expect(ePackage).not.to.be.undefined;
+            expect(ePackage.get("eClassifiers").size() >= 1).to.be.true;
+            const eClass = ePackage.get("eClassifiers").find(ec => ec.get('name') == "NodeSubclass");
+            expect(eClass).not.to.be.undefined;
+            expect(eClass.get('eStructuralFeatures').size()).to.equal(2);
+            expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("b");
+            expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("anotherChild");
+            expect(eClass.get('eAllStructuralFeatures').length).to.equal(4);
+            expect(eClass.get('eAllStructuralFeatures')[0].get("name")).to.equal("a");
+            expect(eClass.get('eAllStructuralFeatures')[1].get("name")).to.equal("someNode");
+            expect(eClass.get('eAllStructuralFeatures')[2].get("name")).to.equal("b");
+            expect(eClass.get('eAllStructuralFeatures')[3].get("name")).to.equal("anotherChild");
+        });
     it("importing",
     function () {
             const resourceSet = Ecore.ResourceSet.create();
@@ -44,12 +66,30 @@ describe('Ecore metamodel', function() {
                 expect(Object.keys(pkg.nodes).length).to.equal(5);
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
 
+                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"][SYMBOL_CLASS_DEFINITION]).to.equal(
+`@ASTNode("SimpleMM")
+class CompilationUnit extends Node {
+\t@Child()
+\tstatements;
+}`);
                 let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
                 expect(node instanceof Node).to.be.true;
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
                 node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
                 expect(node instanceof Node).to.be.true;
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
+                //Subclassing
+                expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
+`@ASTNode("SimpleMM")
+class StringLiteral extends Expression {
+\t@Property()
+\tvalue;
+}`);
+                node = new NODE_TYPES["SimpleMM"].nodes["StringLiteral"]() as any;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["Expression"]).to.be.true;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["StringLiteral"]).to.be.true;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).to.be.false;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("StringLiteral");
 
                 expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
 

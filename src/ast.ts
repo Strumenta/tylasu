@@ -4,10 +4,11 @@ import {Position} from "./position";
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
 export type PackageDescription = {
+    name: string,
     nodes: { [name: string]: new (...args: any[]) => Node }
 };
 export const NODE_TYPES: { [name: string]: PackageDescription } = {
-    "": { nodes: {} }
+    "": { name: "", nodes: {} }
 };
 
 export type NodeDefinition = {
@@ -18,7 +19,12 @@ export type NodeDefinition = {
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
-    return typeof node === "function" ? node[NODE_DEFINITION_SYMBOL] : node.constructor[NODE_DEFINITION_SYMBOL];
+    const target = typeof node === "function" ? node : node.constructor;
+    if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
+        return target[NODE_DEFINITION_SYMBOL];
+    } else {
+        return undefined;
+    }
 }
 
 export abstract class Node {
@@ -116,13 +122,18 @@ export class NodeVisitor {
 // Metadata registration //
 //-----------------------//
 
+export function ensurePackage(packageName: string): PackageDescription {
+    if (!NODE_TYPES[packageName]) {
+        NODE_TYPES[packageName] = { name: packageName, nodes: {}};
+    }
+    return NODE_TYPES[packageName];
+}
+
 export const SYMBOL_NODE_NAME = Symbol("name");
 
 export function registerNodeDefinition<T extends Node>(
     target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
-    if (!NODE_TYPES[pkg]) {
-        NODE_TYPES[pkg] = { nodes: {} };
-    }
+    ensurePackage(pkg);
     const name = target[SYMBOL_NODE_NAME] || target.name;
     let def;
     const existingTarget = NODE_TYPES[pkg].nodes[name];
@@ -130,7 +141,7 @@ export function registerNodeDefinition<T extends Node>(
         throw new Error(target + " is already defined as " + existingTarget);
     }
     const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
-    if(existingDef) {
+    if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
         if(existingDef.package != pkg || existingDef.name != name) {
             if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
                 delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
@@ -150,6 +161,11 @@ export function registerNodeDefinition<T extends Node>(
             name: name,
             properties: {}
         };
+        if(existingDef) {
+            for(const prop in existingDef.properties) {
+                def.properties[prop] = {inherited: true, ...existingDef.properties[prop]};
+            }
+        }
     }
     NODE_TYPES[pkg].nodes[name] = target;
     target[NODE_DEFINITION_SYMBOL] = def;

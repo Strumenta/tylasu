@@ -39,3 +39,13 @@ export class SomeNodeInPackage extends Node {
         this.a = a;
     }
 }
+
+@ASTNode("some.package")
+export class NodeSubclass extends SomeNodeInPackage {
+    @Property()
+    a: string;
+    @Property()
+    b: string;
+    @Child()
+    anotherChild: SomeNodeInPackage
+}
