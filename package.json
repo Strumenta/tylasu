@@ -3,7 +3,7 @@
 	"description": "Generic AST implementation for TypeScript, inspired by Kolasu and integrated with ANTLR4.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "0.8.1",
+	"version": "0.8.9",
 	"license": "Apache-2.0",
 	"private": false,
 	"repository": {
@@ -28,7 +28,7 @@
 		"ecore": "^0.12.0"
 	},
 	"scripts": {
-		"clean": "rimraf dist",
+		"clean": "rimraf dist && rimraf strumenta-ast-v*.tgz",
 		"build": "tsc",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ts -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
@@ -41,7 +41,7 @@
 		"@types/mocha": "^5.2.7",
 		"@typescript-eslint/eslint-plugin": "^4.11.0",
 		"@typescript-eslint/parser": "^4.11.0",
-		"antlr4ts-cli": "^0.5.0-alpha.3",
+		"antlr4ts-cli": "^0.5.0-alpha.4",
 		"chai": "^4.2.0",
 		"cross-env": "^7.0.3",
 		"eslint": "^7.16.0",

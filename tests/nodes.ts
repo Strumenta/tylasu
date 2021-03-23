@@ -1,7 +1,7 @@
-import {ASTNode, Child, Node, Position, Property} from "../src";
+import {ASTNode, Child, Children, Node, Position, Property} from "../src";
 
 export class Box extends Node {
-    @Child()
+    @Children()
     contents: Node[];
 
     constructor(public name: string, contents: Node[]) {
@@ -32,7 +32,9 @@ export class SomeNodeInPackage extends Node {
     @Property()
     a: string;
     @Child()
-    someNode: SomeNode
+    someNode: SomeNode;
+    @Children()
+    multi: SomeNode[] = [];
 
     constructor(a?: string, protected specifiedPosition?: Position) {
         super(specifiedPosition);
@@ -47,5 +49,5 @@ export class NodeSubclass extends SomeNodeInPackage {
     @Property()
     b: string;
     @Child()
-    anotherChild: SomeNodeInPackage
+    anotherChild: SomeNodeInPackage;
 }

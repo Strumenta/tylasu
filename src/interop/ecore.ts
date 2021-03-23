@@ -18,26 +18,31 @@ const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "Node"
 });
 THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "position"
+}));
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
     if(ePackage) {
-        if(ePackage.get("nsURI") !== args.nsURI) {
+        if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {
             throw new Error("Package " + packageName + " already exists with different nsUri: " + ePackage.get("nsURI"));
-        } else if(ePackage.get("nsPrefix") !== args.nsPrefix) {
+        } else if(args.nsPrefix && ePackage.get("nsPrefix") !== args.nsPrefix) {
             throw new Error("Package " + packageName + " already exists with different nsPrefix: " + ePackage.get("nsPrefix"));
         } else {
             return ePackage;
         }
     } else {
-        return Ecore.EPackage.create({
+        const newPackage = Ecore.EPackage.create({
             name: packageName,
             ...args
         });
+        Ecore.EPackage.Registry.register(newPackage);
+        return newPackage;
     }
 }
 
-function registerPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
+function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const packageDef = NODE_TYPES[packageName];
     if (!packageDef) {
         throw new Error("Unknown package: " + packageName);
@@ -59,22 +64,28 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     const proto = Object.getPrototypeOf(constructor);
     const parentNodeDef = getNodeDefinition(proto);
     if(parentNodeDef) {
-        const {packageDef, ePackage} = registerPackage(parentNodeDef.package, {});
+        const {packageDef, ePackage} = registerEPackage(parentNodeDef.package, {});
         const superclass = registerEClass(parentNodeDef.name, packageDef, ePackage);
         eClass.get("eSuperTypes").add(superclass);
+    } else {
+        eClass.get("eSuperTypes").add(THE_NODE_ECLASS);
     }
     const nodeDef = getNodeDefinition(constructor);
     if (nodeDef) {
         for (const prop in nodeDef.properties) {
-            if(nodeDef.properties[prop].inherited) {
+            const property = nodeDef.properties[prop];
+            if(property.inherited) {
                 continue;
             }
-            if (nodeDef.properties[prop].child) {
+            if (property.child) {
                 const eRef = Ecore.EReference.create({
                     name: prop,
                     eType: THE_NODE_ECLASS,
                     containment: true
                 });
+                if(property.multiple) {
+                    eRef.set("upperBound", -1);
+                }
                 eClass.get("eStructuralFeatures").add(eRef);
             } else {
                 const eAttr = Ecore.EAttribute.create({
@@ -89,7 +100,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
 }
 
 export function registerECoreModel(packageName: string, args: { nsPrefix?: string, nsURI?: string } = {}): EPackage {
-    const {packageDef, ePackage} = registerPackage(packageName, args);
+    const {packageDef, ePackage} = registerEPackage(packageName, {nsURI: "", ...args});
     for(const nodeType in packageDef.nodes) {
         registerEClass(nodeType, packageDef, ePackage);
     }
@@ -105,16 +116,24 @@ export function ensureECoreModel(packageName: string): EPackage {
     }
 }
 
-export function toEObject(obj: Node | any): EObject | any {
-    return (obj instanceof Node) ? obj[TO_EOBJECT_SYMBOL]() : obj;
+export function toEObject(obj: Node | Node[] | any, owner?: EObject, feature?: EObject): EObject | any {
+    if(Array.isArray(obj)) {
+        const eList = new Ecore.EList(owner || Ecore.EObject.create(), feature);
+        obj.forEach(o => {
+            eList.add(toEObject(o));
+        });
+        return eList;
+    } else {
+        return (obj instanceof Node) ? obj[TO_EOBJECT_SYMBOL]() : obj;
+    }
 }
 
-export function fromEObject(obj: EObject | any): Node | any[] {
+export function fromEObject(obj: EObject | any, parent?: Node): Node | any[] {
     if(!obj) {
         return undefined;
     }
     if(Object.getPrototypeOf(obj) == Ecore.EList.prototype) {
-        return (obj as EList).map(fromEObject);
+        return (obj as EList).map(o => fromEObject(o, parent));
     }
     const eClass = obj.eClass;
     if(!eClass) {
@@ -124,11 +143,12 @@ export function fromEObject(obj: EObject | any): Node | any[] {
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
         const node = new constructor();
-        eClass.get("eStructuralFeatures").each(ft => {
+        node.parent = parent;
+        eClass.get("eAllStructuralFeatures").forEach(ft => {
             const name = ft.get("name");
             const value = obj.get(name);
             if(ft.isTypeOf("EReference")) {
-                node[name] = fromEObject(value);
+                node[name] = fromEObject(value, node);
             } else {
                 node[name] = value;
             }
@@ -156,13 +176,13 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function (): EObject {
         throw new Error("Unknown class " + def.name + " in package " + def.package);
     }
     const result = eClass.create();
-    eClass.get("eStructuralFeatures").each(a => {
+    eClass.get("eAllStructuralFeatures").forEach(a => {
         if(a.isTypeOf('EAttribute')) {
             const name = a.get("name");
             result.set(name, this[name]);
         } else if(a.isTypeOf('EReference')) {
             const name = a.get("name");
-            result.set(name, toEObject(this[name]));
+            result.set(name, toEObject(this[name], result, a));
         }
     });
     return result;
@@ -194,7 +214,8 @@ class ${className} extends ${superclass[SYMBOL_NODE_NAME] || superclass.name} {`
         const name = a.get("name");
         const prop = registerNodeProperty(classDef as any, name);
         prop.child = a.isTypeOf('EReference');
-        classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${prop.child ? "@Child()" : "@Property()"}\n\t${name};`;
+        const annot = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
+        classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annot}\n\t${name};`;
     });
     classDef[SYMBOL_CLASS_DEFINITION] += "\n}";
     pkg.nodes[className] = classDef as any;

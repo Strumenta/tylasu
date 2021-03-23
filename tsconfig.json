@@ -7,6 +7,6 @@
 		"strict": false,
 		"outDir": "dist"
 	},
-	"include": ["src/index.ts"],
+	"include": ["src/index.ts", "src/interop"],
 	"exclude": ["node_modules"]
 }

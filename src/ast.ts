@@ -100,6 +100,10 @@ export abstract class Node {
     get position(): Position | undefined {
         return this.specifiedPosition || Position.ofParseTree(this.parseTreeNode);
     }
+
+    set position(newPos: Position) {
+        this.specifiedPosition = newPos;
+    }
 }
 
 export class NodeVisitor {
@@ -221,6 +225,14 @@ export function Child(): (target, methodName: string) => void {
         registerNodeChild(target, methodName);
     };
 }
+
+export function Children(): (target, methodName: string) => void {
+    return function (target, methodName: string) {
+        const props = registerNodeChild(target, methodName);
+        props.multiple = true;
+    };
+}
+
 
 export function Property(): (target, methodName: string) => void {
     return function (target, methodName: string) {
