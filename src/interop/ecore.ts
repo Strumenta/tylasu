@@ -8,6 +8,7 @@ import {
 } from "../ast";
 import * as Ecore from "ecore/dist/ecore";
 import {EList, EObject, EPackage} from "ecore";
+import {Point, Position} from "../position";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -17,10 +18,38 @@ const THE_DEFAULT_EPACKAGE = getEPackage("", { nsPrefix: "node", nsURI: "https:/
 const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "Node"
 });
-THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
-THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "position"
+const THE_POINT_ECLASS = Ecore.EClass.create({
+    name: "Point"
+});
+THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "line",
+    eType: Ecore.EInt
 }));
+THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "column",
+    eType: Ecore.EInt
+}));
+const THE_POSITION_ECLASS = Ecore.EClass.create({
+    name: "Position"
+});
+THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "start",
+    eType: THE_POINT_ECLASS,
+    containment: true
+}));
+THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "end",
+    eType: THE_POINT_ECLASS,
+    containment: true
+}));
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "position",
+    eType: THE_POSITION_ECLASS,
+    containment: true
+}));
+THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
+THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
+THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
@@ -124,11 +153,11 @@ export function toEObject(obj: Node | Node[] | any, owner?: EObject, feature?: E
         });
         return eList;
     } else {
-        return (obj instanceof Node) ? obj[TO_EOBJECT_SYMBOL]() : obj;
+        return (obj && (typeof obj[TO_EOBJECT_SYMBOL] === "function")) ? obj[TO_EOBJECT_SYMBOL]() : obj;
     }
 }
 
-export function fromEObject(obj: EObject | any, parent?: Node): Node | any[] {
+export function fromEObject(obj: EObject | any, parent?: Node): Node | Position | (Node | Position)[] {
     if(!obj) {
         return undefined;
     }
@@ -138,6 +167,11 @@ export function fromEObject(obj: EObject | any, parent?: Node): Node | any[] {
     const eClass = obj.eClass;
     if(!eClass) {
         return obj;
+    }
+    if(eClass == THE_POSITION_ECLASS) {
+        return new Position(
+            new Point(obj.get("start").get("line"), obj.get("start").get("column")),
+            new Point(obj.get("end").get("line"), obj.get("end").get("column")));
     }
     const ePackage = eClass.eContainer as EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
@@ -163,7 +197,7 @@ export class EObjectGenerator {
     toEObject(node: Node): EObject {
         return toEObject(node);
     }
-    fromEObject(eObject: EObject): Node | any[] {
+    fromEObject(eObject: EObject): Node | Position | (Node | Position)[] {
         return fromEObject(eObject);
     }
 }
@@ -186,6 +220,17 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function (): EObject {
         }
     });
     return result;
+}
+
+Position.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
+    const pos = THE_POSITION_ECLASS.create();
+    pos.set("start", THE_POINT_ECLASS.create({
+        line: this.start.line, column: this.start.column
+    }));
+    pos.set("end", THE_POINT_ECLASS.create({
+        line: this.end.line, column: this.end.column
+    }));
+    return pos;
 }
 
 export const SYMBOL_CLASS_DEFINITION = Symbol("class definition");

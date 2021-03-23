@@ -158,5 +158,9 @@ describe('Model generation and import', function() {
             node = fromEObject(eObject) as SomeNodeInPackage;
             expect(node instanceof SomeNodeInPackage).to.be.true;
             expect(node.position).not.to.be.undefined;
+            expect(node.position.start.line).to.equal(1);
+            expect(node.position.start.column).to.equal(2);
+            expect(node.position.end.line).to.equal(3);
+            expect(node.position.end.column).to.equal(4);
         });
 });
