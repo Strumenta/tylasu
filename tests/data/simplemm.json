@@ -1,6 +1,8 @@
 {
   "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
   "name" : "SimpleMM",
+  "nsURI" : "https://strumenta.com/simplemm",
+  "nsPrefix" : "simplemm",
   "eClassifiers" : [ {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
     "name" : "Statement",
@@ -29,6 +31,15 @@
       }
     } ]
   }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EEnum",
+    "name" : "Visibility",
+    "eLiterals" : [ {
+      "name" : "PUBLIC"
+    }, {
+      "name" : "PRIVATE",
+      "value" : 1
+    } ]
+  }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
     "name" : "VarDeclaration",
     "eSuperTypes" : [ {
@@ -49,6 +60,13 @@
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
         "$ref" : "//String"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "visibility",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EEnum",
+        "$ref" : "//Visibility"
       }
     } ]
   }, {

@@ -1,18 +1,19 @@
 {
-  "eClass" : "#//CompilationUnit",
+  "eClass" : "https://strumenta.com/simplemm#//CompilationUnit",
   "statements" : [ {
-    "eClass" : "#//VarDeclaration",
+    "eClass" : "https://strumenta.com/simplemm#//VarDeclaration",
     "initialValue" : {
-      "eClass" : "#//StringLiteral",
+      "eClass" : "https://strumenta.com/simplemm#//StringLiteral",
       "value" : "foo"
     },
     "name" : "a"
   }, {
-    "eClass" : "#//VarDeclaration",
+    "eClass" : "https://strumenta.com/simplemm#//VarDeclaration",
     "initialValue" : {
-      "eClass" : "#//StringLiteral",
+      "eClass" : "https://strumenta.com/simplemm#//StringLiteral",
       "value" : "bar"
     },
-    "name" : "b"
+    "name" : "b",
+    "visibility" : "PRIVATE"
   } ]
 }
