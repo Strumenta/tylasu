@@ -16,10 +16,19 @@ export class Item extends Node {
     }
 }
 
+export enum Fibo {
+    A = 1,
+    B = 1,
+    C = A + B,
+    D = B + C
+}
+
 @ASTNode()
 export class SomeNode extends Node {
     @Property()
     a: string;
+    @Property()
+    fib: Fibo
 
     constructor(a?: string, protected specifiedPosition?: Position) {
         super(specifiedPosition);

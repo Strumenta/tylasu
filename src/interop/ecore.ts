@@ -183,6 +183,13 @@ export function fromEObject(obj: EObject | any, parent?: Node): Node | Position 
             const value = obj.get(name);
             if(ft.isTypeOf("EReference")) {
                 node[name] = fromEObject(value, node);
+            } else if(value !== undefined && value !== null && ft.get("eType") && ft.get("eType").isTypeOf("EEnum")) {
+                const literal = ft.get("eType").get("eLiterals").find(l => l.get("name") === value);
+                if(literal) {
+                    node[name] = literal.get("value") || 0;
+                } else {
+                    throw new Error(`Unknown enum literal: ${value} of ${ft.get("eType").get("name")}`)
+                }
             } else {
                 node[name] = value;
             }
@@ -213,7 +220,17 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function (): EObject {
     eClass.get("eAllStructuralFeatures").forEach(a => {
         if(a.isTypeOf('EAttribute')) {
             const name = a.get("name");
-            result.set(name, this[name]);
+            const value = this[name];
+            if(value !== undefined && value !== null && a.get("eType") && a.get("eType").isTypeOf("EEnum")) {
+                const literal = a.get("eType").get("eLiterals").find(l => l.get("value") === value);
+                if(literal) {
+                    result.set(name, literal.get("name"));
+                } else {
+                    throw new Error(`No literal has value ${value} in enum ${a.get("eType").get("name")}`)
+                }
+            } else {
+                result.set(name, value);
+            }
         } else if(a.isTypeOf('EReference')) {
             const name = a.get("name");
             result.set(name, toEObject(this[name], result, a));

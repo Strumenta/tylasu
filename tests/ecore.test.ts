@@ -8,11 +8,11 @@ import {
     SYMBOL_CLASS_DEFINITION,
     toEObject
 } from "../src/interop/ecore";
-import {SomeNode, SomeNodeInPackage} from "./nodes";
+import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
 
-describe('Ecore metamodel', function() {
+describe('Metamodel', function() {
     it("default package",
         function () {
             const ePackage = registerECoreModel("");
@@ -56,65 +56,9 @@ describe('Ecore metamodel', function() {
             expect(eClass.get('eAllStructuralFeatures')[4].get("name")).to.equal("b");
             expect(eClass.get('eAllStructuralFeatures')[5].get("name")).to.equal("anotherChild");
         });
-    it("importing",
-    function () {
-            const resourceSet = Ecore.ResourceSet.create();
-            const resource = resourceSet.create({ uri: 'file:data/simplemm.json' });
-            const buffer = fs.readFileSync("tests/data/simplemm.json");
-            resource.load(buffer.toString(), (r, e) => {
-                expect(r).not.to.be.null;
-                expect(r).not.to.be.undefined;
-                const ePackage = r.get("contents").at(0);
-                if(!ePackage.get("nsURI")) {
-                    ePackage.set("nsURI", "");
-                }
-                Ecore.EPackage.Registry.register(ePackage);
-                const pkg = generateASTClasses(ePackage);
-                expect(Object.keys(pkg.nodes).length).to.equal(5);
-                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
-
-                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"][SYMBOL_CLASS_DEFINITION]).to.equal(
-`@ASTNode("SimpleMM")
-class CompilationUnit extends Node {
-\t@Child()
-\tstatements;
-}`);
-                let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
-                expect(node instanceof Node).to.be.true;
-                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
-                node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
-                expect(node instanceof Node).to.be.true;
-                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
-                //Subclassing
-                expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
-`@ASTNode("SimpleMM")
-class StringLiteral extends Expression {
-\t@Property()
-\tvalue;
-}`);
-                node = new NODE_TYPES["SimpleMM"].nodes["StringLiteral"]() as any;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["Expression"]).to.be.true;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["StringLiteral"]).to.be.true;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).to.be.false;
-                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("StringLiteral");
-
-                expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
-
-                const buffer = fs.readFileSync("tests/data/simplem.json");
-                Ecore.JSON.parse(r, buffer.toString());
-                const cu = r.get("contents").at(1);
-                expect(cu).not.to.be.null;
-                expect(cu).not.to.be.undefined;
-                expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
-                node = fromEObject(cu) as any;
-                expect(node instanceof Node).to.be.true;
-                expect(node.statements.length).to.equal(2);
-                expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);
-            });
-    });
 });
 
-describe('Model generation and import', function() {
+describe('Model', function() {
     it("simple EObject creation",
         function () {
             let node = new SomeNodeInPackage("aaa");
@@ -162,5 +106,78 @@ describe('Model generation and import', function() {
             expect(node.position.start.column).to.equal(2);
             expect(node.position.end.line).to.equal(3);
             expect(node.position.end.column).to.equal(4);
+        });
+    it("enums",
+        function () {
+            let node = new SomeNode("A");
+            node.fib = Fibo.D;
+            const eObject = toEObject(node);
+            expect(eObject).not.to.be.undefined;
+            expect(eObject.get("a")).to.equal("A");
+            expect(eObject.get("fib")).to.equal(3);
+            node = fromEObject(eObject) as SomeNode;
+            expect(node instanceof SomeNode).to.be.true;
+            expect(node.a).to.equal("A");
+            expect(node.fib).to.equal(Fibo.D);
+        });
+});
+
+describe("Import/export", function () {
+    it("importing",
+        function () {
+            const resourceSet = Ecore.ResourceSet.create();
+            const resource = resourceSet.create({ uri: 'file:data/simplemm.json' });
+            const buffer = fs.readFileSync("tests/data/simplemm.json");
+            resource.load(buffer.toString(), (r, e) => {
+                expect(r).not.to.be.null;
+                expect(r).not.to.be.undefined;
+                const ePackage = r.get("contents").at(0);
+                if(!ePackage.get("nsURI")) {
+                    ePackage.set("nsURI", "");
+                }
+                Ecore.EPackage.Registry.register(ePackage);
+                const pkg = generateASTClasses(ePackage);
+                expect(Object.keys(pkg.nodes).length).to.equal(5);
+                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
+
+                expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"][SYMBOL_CLASS_DEFINITION]).to.equal(
+                    `@ASTNode("SimpleMM")
+class CompilationUnit extends Node {
+\t@Child()
+\tstatements;
+}`);
+                let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
+                node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
+                //Subclassing
+                expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
+                    `@ASTNode("SimpleMM")
+class StringLiteral extends Expression {
+\t@Property()
+\tvalue;
+}`);
+                node = new NODE_TYPES["SimpleMM"].nodes["StringLiteral"]() as any;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["Expression"]).to.be.true;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["StringLiteral"]).to.be.true;
+                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).to.be.false;
+                expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("StringLiteral");
+
+                expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
+
+                const buffer = fs.readFileSync("tests/data/simplem.json");
+                Ecore.JSON.parse(r, buffer.toString());
+                const cu = r.get("contents").at(1);
+                expect(cu).not.to.be.null;
+                expect(cu).not.to.be.undefined;
+                expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
+                node = fromEObject(cu) as any;
+                expect(node instanceof Node).to.be.true;
+                expect(node.statements.length).to.equal(2);
+                expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);
+                expect(node.statements[1].visibility).to.equal(1);
+            });
         });
 });
