@@ -142,7 +142,7 @@ describe("Import/export", function () {
 
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"][SYMBOL_CLASS_DEFINITION]).to.equal(
                     `@ASTNode("SimpleMM")
-class CompilationUnit extends Node {
+export class CompilationUnit extends Node {
 \t@Child()
 \tstatements;
 }`);
@@ -155,7 +155,7 @@ class CompilationUnit extends Node {
                 //Subclassing
                 expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
                     `@ASTNode("SimpleMM")
-class StringLiteral extends Expression {
+export class StringLiteral extends Expression {
 \t@Property()
 \tvalue;
 }`);

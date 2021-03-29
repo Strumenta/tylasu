@@ -269,7 +269,7 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     classDef[SYMBOL_NODE_NAME] = className;
     classDef[SYMBOL_CLASS_DEFINITION] =
 `@ASTNode("${pkg.name}")
-class ${className} extends ${superclass[SYMBOL_NODE_NAME] || superclass.name} {`;
+export class ${className} extends ${superclass[SYMBOL_NODE_NAME] || superclass.name} {`;
     registerNodeDefinition(classDef as any, pkg.name);
 
     eClass.get("eStructuralFeatures").each(a => {
