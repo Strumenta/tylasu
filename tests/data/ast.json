@@ -89,6 +89,109 @@
           "containment": true
         }
       ]
+    },
+    {
+      "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "name": "PossiblyNamed",
+      "abstract": false,
+      "interface": true,
+      "eStructuralFeatures": [
+        {
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+          "name": "name",
+          "eType": {
+            "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+          },
+          "ordered": true,
+          "unique": true,
+          "lowerBound": 0,
+          "upperBound": 1
+        }
+      ]
+    },
+    {
+      "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "name": "Named",
+      "abstract": false,
+      "interface": true,
+      "eSuperTypes": [
+        {
+          "$ref": "//PossiblyNamed",
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+        }
+      ],
+      "eStructuralFeatures": [
+        {
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+          "name": "name",
+          "eType": {
+            "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+          },
+          "ordered": true,
+          "unique": true,
+          "lowerBound": 1,
+          "upperBound": 1
+        }
+      ]
+    },
+    {
+      "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "name": "ReferenceByName",
+      "eTypeParameters": [
+        {
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter",
+          "name": "N",
+          "eBounds": [
+            {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EGenericType",
+              "eClassifier": {
+                "$ref": "//PossiblyNamed",
+                "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+              }
+            }
+          ]
+        }
+      ],
+      "abstract": false,
+      "interface": false,
+      "eSuperTypes": [
+        {
+          "$ref": "//Named",
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+        }
+      ],
+      "eStructuralFeatures": [
+        {
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+          "name": "name",
+          "eType": {
+            "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+          },
+          "ordered": true,
+          "unique": true,
+          "lowerBound": 1,
+          "upperBound": 1
+        },
+        {
+          "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+          "name": "referenced",
+          "ordered": true,
+          "unique": true,
+          "lowerBound": 0,
+          "upperBound": 1,
+          "eGenericType": {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EGenericType",
+            "eTypeParameter": {
+              "$ref": "//ReferenceByName/N",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"
+            }
+          },
+          "containment": true
+        }
+      ]
     }
   ]
 }

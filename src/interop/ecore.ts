@@ -52,9 +52,54 @@ THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
+export const THE_POSSIBLY_NAMED_INTERFACE = Ecore.EClass.create({
+    name: "PossiblyNamed",
+    interface: true
+});
+THE_POSSIBLY_NAMED_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "name",
+    eType: Ecore.EString,
+    lowerBound: 0
+}));
+export const THE_NAMED_INTERFACE = Ecore.EClass.create({
+    name: "Named",
+    interface: true
+});
+THE_NAMED_INTERFACE.get("eSuperTypes").add(THE_POSSIBLY_NAMED_INTERFACE);
+THE_NAMED_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "name",
+    eType: Ecore.EString,
+    lowerBound: 1
+}));
+export const THE_REFERENCE_BY_NAME_CLASS = Ecore.EClass.create({
+    name: "ReferenceByName"
+});
+THE_REFERENCE_BY_NAME_CLASS.get("eSuperTypes").add(THE_NAMED_INTERFACE);
+THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").add(Ecore.ETypeParameter.create({
+    name: "N"
+}));
+THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").at(0).get("eBounds").add(Ecore.EGenericType.create({
+    eClassifier: THE_POSSIBLY_NAMED_INTERFACE
+}));
+THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "name",
+    eType: Ecore.EString,
+    lowerBound: 1
+}));
+THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "referenced",
+    containment: true
+}));
+THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").at(1).set("eGenericType", Ecore.EGenericType.create({
+    eTypeParameter: THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").at(0)
+}));
+
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_CLASS);
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
