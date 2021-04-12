@@ -5,7 +5,7 @@ import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
-    SYMBOL_CLASS_DEFINITION,
+    SYMBOL_CLASS_DEFINITION, THE_AST_EPACKAGE,
     toEObject
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
@@ -123,6 +123,16 @@ describe('Model', function() {
 });
 
 describe("Import/export", function () {
+    it("exporting base metamodel", function () {
+        const resourceSet = Ecore.ResourceSet.create();
+        const resource = resourceSet.create({ uri: 'file:data/kolasu.json' });
+        resource.get("contents").add(THE_AST_EPACKAGE);
+        resource.save((data, e) => {
+            expect(e).to.be.null;
+            const string = JSON.stringify(data, null, 2);
+            console.log(string);
+        });
+    });
     it("importing",
         function () {
             const resourceSet = Ecore.ResourceSet.create();

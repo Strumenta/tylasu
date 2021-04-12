@@ -14,42 +14,47 @@ export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 
-const THE_DEFAULT_EPACKAGE = getEPackage("", { nsPrefix: "node", nsURI: "https://github.com/strumenta/at-strumenta-ast-typescript" });
-const THE_NODE_ECLASS = Ecore.EClass.create({
-    name: "Node"
+export const THE_AST_EPACKAGE = getEPackage("StrumentaParser", { nsURI: "https://strumenta.com/kolasu/v1" });
+export const THE_NODE_ECLASS = Ecore.EClass.create({
+    name: "ASTNode",
+    abstract: true
 });
-const THE_POINT_ECLASS = Ecore.EClass.create({
+export const THE_POINT_ECLASS = Ecore.EClass.create({
     name: "Point"
 });
 THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "line",
-    eType: Ecore.EInt
+    eType: Ecore.EInt,
+    lowerBound: 1
 }));
 THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "column",
-    eType: Ecore.EInt
+    eType: Ecore.EInt,
+    lowerBound: 1
 }));
-const THE_POSITION_ECLASS = Ecore.EClass.create({
+export const THE_POSITION_ECLASS = Ecore.EClass.create({
     name: "Position"
 });
 THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "start",
     eType: THE_POINT_ECLASS,
-    containment: true
+    containment: true,
+    lowerBound: 1
 }));
 THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "end",
     eType: THE_POINT_ECLASS,
-    containment: true
+    containment: true,
+    lowerBound: 1
 }));
 THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "position",
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
-THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
-THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
-THE_DEFAULT_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
