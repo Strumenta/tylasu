@@ -14,7 +14,8 @@ export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 
-export const THE_AST_EPACKAGE = getEPackage("StrumentaParser", { nsURI: "https://strumenta.com/kolasu/v1" });
+const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
+export const THE_AST_EPACKAGE = getEPackage("kolasu.v1", { nsURI: KOLASU_URI_V1 });
 export const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "ASTNode",
     abstract: true
@@ -313,7 +314,11 @@ function generateASTClass(eClass, pkg: PackageDescription) {
         throw new Error("A class can have at most one superclass");
     } else if(superclasses.length == 1) {
         const eSuperClass = superclasses[0];
-        superclass = generateASTClass(eSuperClass, ensurePackage(eSuperClass.eContainer.get("name")));
+        if(eSuperClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eSuperClass.get("name") == "ASTNode") {
+            superclass = Node;
+        } else {
+            superclass = generateASTClass(eSuperClass, ensurePackage(eSuperClass.eContainer.get("name")));
+        }
     }
     const classDef = class GeneratedNodeClass extends superclass {};
     classDef[SYMBOL_NODE_NAME] = className;
