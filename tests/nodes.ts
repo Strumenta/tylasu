@@ -2,6 +2,7 @@ import {ASTNode, Child, Children, Node, Position, Property} from "../src";
 
 export class Box extends Node {
     @Children()
+    @Reflect.metadata("design:arrayElementType", Node)
     contents: Node[];
 
     constructor(public name: string, contents: Node[]) {

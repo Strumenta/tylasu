@@ -132,6 +132,29 @@ function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?
     return {packageDef, ePackage};
 }
 
+function translateType(type) {
+    if (type === Number) {
+        return Ecore.EDouble;
+    } else if (type === String) {
+        return Ecore.EString;
+    } else if(type.name) {
+        //TODO
+        return undefined
+    }
+}
+
+function getEType(property: any) {
+    const type = property.type;
+    if(!type) {
+        return undefined;
+    }
+    if(type === Array && property.arrayElementType) {
+        //TODO
+        return undefined;
+    }
+    return translateType(type);
+}
+
 function registerEClass(nodeType: string, packageDef: PackageDescription, ePackage) {
     if (nodeType[ECLASS_SYMBOL]) {
         return nodeType[ECLASS_SYMBOL];
@@ -169,8 +192,14 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
                 eClass.get("eStructuralFeatures").add(eRef);
             } else {
                 const eAttr = Ecore.EAttribute.create({
-                    name: prop //TODO type?
+                    name: prop
                 });
+                if(property.type) {
+                    const eType = getEType(property);
+                    if(eType) {
+                        eAttr.set("eType", eType);
+                    }
+                }
                 eClass.get("eStructuralFeatures").add(eAttr);
             }
         }

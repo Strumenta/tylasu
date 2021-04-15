@@ -1,5 +1,6 @@
 import {ParseTree} from "antlr4ts/tree";
 import {Position} from "./position";
+import "reflect-metadata";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
@@ -15,13 +16,35 @@ export type NodeDefinition = {
     package: string,
     name: string,
     properties: { [name: string]: any },
-    generated?: boolean
+    generated?: boolean,
+    resolved?: boolean;
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
     const target = typeof node === "function" ? node : node.constructor;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        return target[NODE_DEFINITION_SYMBOL];
+        const definition = target[NODE_DEFINITION_SYMBOL];
+        if(definition && definition.properties && !definition.resolved) {
+            try {
+                const metadataHolder = typeof node === "function" ? new node() : node;
+                let noTypesToFind = true;
+                let atLeastOneFound = false;
+                for(const p in definition.properties) {
+                    noTypesToFind = false;
+                    const type = Reflect.getMetadata("design:type", metadataHolder, p);
+                    atLeastOneFound = atLeastOneFound || !!type;
+                    definition.properties[p].type = type;
+                    if(type === Array) {
+                        definition.properties[p].arrayType =
+                            Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
+                    }
+                }
+                definition.resolved = noTypesToFind || atLeastOneFound;
+            } catch (e) {
+                //Ignore
+            }
+        }
+        return definition;
     } else {
         return undefined;
     }
