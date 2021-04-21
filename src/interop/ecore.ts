@@ -370,6 +370,7 @@ function generateASTClass(eClass, pkg: PackageDescription) {
         const superclass: typeof Node = nodeSuperclass;
         const classDef = class GeneratedNodeClass extends superclass {};
         classDef[SYMBOL_NODE_NAME] = className;
+        //TODO include decorator that records where the class has been loaded from?
         classDef[SYMBOL_CLASS_DEFINITION] =
             `@ASTNode("${pkg.name}")
 export class ${className} extends ${nodeSuperclass[SYMBOL_NODE_NAME] || nodeSuperclass.name} {`;
