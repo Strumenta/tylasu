@@ -165,7 +165,7 @@ export function registerNodeDefinition<T extends Node>(
     let def;
     const existingTarget = NODE_TYPES[pkg].nodes[name];
     if(existingTarget && existingTarget !== target) {
-        throw new Error(target + " is already defined as " + existingTarget);
+        throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
     }
     const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
@@ -177,7 +177,7 @@ export function registerNodeDefinition<T extends Node>(
                 existingDef.generated = false;
                 def = existingDef;
             } else {
-                throw new Error("Type " + name + " is already defined as " + JSON.stringify(existingDef));
+                throw new Error(`Type ${name} is already defined as ${JSON.stringify(existingDef)}`);
             }
         } else {
             def = existingDef;

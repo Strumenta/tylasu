@@ -15,7 +15,7 @@ export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 
 const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
-export const THE_AST_EPACKAGE = getEPackage("kolasu.v1", { nsURI: KOLASU_URI_V1 });
+export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
 export const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "ASTNode",
     abstract: true
@@ -332,40 +332,68 @@ Position.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
 
 export const SYMBOL_CLASS_DEFINITION = Symbol("class definition");
 
+function defineProperty(classDef, name) {
+    const internalPropertySymbol = Symbol(name);
+    Object.defineProperty(classDef, name, {
+        enumerable: true,
+        get(): any {
+            return this[internalPropertySymbol];
+        },
+        set(v: any) {
+            this[internalPropertySymbol] = v;
+        }
+    });
+}
+
+function isTheNodeClass(eClass) {
+    return eClass.eContainer && eClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eClass.get("name") == "ASTNode";
+}
+
 function generateASTClass(eClass, pkg: PackageDescription) {
+    if(isTheNodeClass(eClass)) {
+        return Node;
+    }
     const className = eClass.get("name");
     if (pkg.nodes[className]) {
         return pkg.nodes[className];
     }
     const superclasses = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
-    let superclass = Node;
+    let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
     } else if(superclasses.length == 1) {
         const eSuperClass = superclasses[0];
-        if(eSuperClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eSuperClass.get("name") == "ASTNode") {
-            superclass = Node;
-        } else {
-            superclass = generateASTClass(eSuperClass, ensurePackage(eSuperClass.eContainer.get("name")));
-        }
+        nodeSuperclass = generateASTClass(eSuperClass, ensurePackage(eSuperClass.eContainer.get("name")));
     }
-    const classDef = class GeneratedNodeClass extends superclass {};
-    classDef[SYMBOL_NODE_NAME] = className;
-    classDef[SYMBOL_CLASS_DEFINITION] =
-`@ASTNode("${pkg.name}")
-export class ${className} extends ${superclass[SYMBOL_NODE_NAME] || superclass.name} {`;
-    registerNodeDefinition(classDef as any, pkg.name);
+    if(nodeSuperclass) {
+        //TODO check it actually derives from node!
+        const superclass: typeof Node = nodeSuperclass;
+        const classDef = class GeneratedNodeClass extends superclass {};
+        classDef[SYMBOL_NODE_NAME] = className;
+        classDef[SYMBOL_CLASS_DEFINITION] =
+            `@ASTNode("${pkg.name}")
+export class ${className} extends ${nodeSuperclass[SYMBOL_NODE_NAME] || nodeSuperclass.name} {`;
+        registerNodeDefinition(classDef as any, pkg.name);
 
-    eClass.get("eStructuralFeatures").each(a => {
-        const name = a.get("name");
-        const prop = registerNodeProperty(classDef as any, name);
-        prop.child = a.isTypeOf('EReference');
-        const annot = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
-        classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annot}\n\t${name};`;
-    });
-    classDef[SYMBOL_CLASS_DEFINITION] += "\n}";
-    pkg.nodes[className] = classDef as any;
-    return classDef;
+        eClass.get("eStructuralFeatures").each(a => {
+            const name = a.get("name");
+            defineProperty(classDef, name);
+            const prop = registerNodeProperty(classDef as any, name);
+            prop.child = a.isTypeOf('EReference');
+            const annot = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
+            classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annot}\n\t${name};`;
+        });
+        classDef[SYMBOL_CLASS_DEFINITION] += "\n}";
+        pkg.nodes[className] = classDef as any;
+        return classDef;
+    } else {
+        const classDef = class GeneratedClass {};
+        eClass.get("eStructuralFeatures").each(a => {
+            const name = a.get("name");
+            defineProperty(classDef, name);
+        });
+        return classDef;
+    }
 }
 
 export function generateASTClasses(model: EPackage): PackageDescription {
