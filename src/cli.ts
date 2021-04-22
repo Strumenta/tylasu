@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {command, run, positional, restPositionals} from 'cmd-ts';
+import {command, run, restPositionals} from 'cmd-ts';
 import { File } from 'cmd-ts/dist/cjs/batteries/fs';
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
@@ -9,7 +9,7 @@ import {generateASTClasses, SYMBOL_CLASS_DEFINITION} from "./interop/ecore";
 const cmd = command({
     name: 'generate-classes',
     description: 'Generates TypeScript AST classes from an Ecore metamodel',
-    version: '0.1.0',
+    version: '0.2.0',
     args: {
         metamodel: restPositionals({
             type: File,
@@ -18,7 +18,7 @@ const cmd = command({
     },
     handler: args => {
         const resourceSet = Ecore.ResourceSet.create();
-        let output = "import {ASTNode, Child, Children, Node, Property} from '@strumenta/ast';\n\n";
+        let output = "import {ASTNode, Child, Children, Node, Property} from '@strumenta/ast';\n";
         let error = undefined;
         args.metamodel.forEach(mm => {
             const resource = resourceSet.create({ uri: 'file:' + mm });

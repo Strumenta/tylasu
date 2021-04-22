@@ -400,7 +400,7 @@ export class ${className} extends ${nodeSuperclass[SYMBOL_NODE_NAME] || nodeSupe
 export function generateASTClasses(model: EPackage): PackageDescription {
     const packageName = model.get("name");
     const pkg = ensurePackage(packageName);
-    model.get("eClassifiers").filter(c => c.isTypeOf("EClass")).forEach(
+    model.get("eClassifiers").filter(c => c.isTypeOf("EClass") && !c.get("interface")).forEach(
         eClass => generateASTClass(eClass, pkg));
     return pkg;
 }
