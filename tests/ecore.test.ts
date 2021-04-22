@@ -5,14 +5,18 @@ import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
-    SYMBOL_CLASS_DEFINITION, THE_AST_EPACKAGE,
+    SYMBOL_CLASS_DEFINITION, THE_AST_EPACKAGE, THE_AST_RESOURCE,
     toEObject
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
+import {THE_POSITION_ECLASS} from "../dist/interop/ecore";
 
 describe('Metamodel', function() {
+    it("Base metamodel", function () {
+        expect(THE_POSITION_ECLASS.eURI()).to.equal("builtin:kolasu#//Position");
+    });
     it("default package",
         function () {
             const ePackage = registerECoreModel("");
@@ -124,10 +128,7 @@ describe('Model', function() {
 
 describe("Import/export", function () {
     it("exporting base metamodel", function () {
-        const resourceSet = Ecore.ResourceSet.create();
-        const resource = resourceSet.create({ uri: 'file:data/kolasu.json' });
-        resource.get("contents").add(THE_AST_EPACKAGE);
-        resource.save((data, e) => {
+        THE_AST_RESOURCE.save((data, e) => {
             expect(e).to.be.null;
             const string = JSON.stringify(data, null, 2);
             console.log(string);
