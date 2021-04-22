@@ -14,8 +14,8 @@ export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 
-const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: 'builtin:kolasu' });
+export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
+export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
 export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
 export const THE_NODE_ECLASS = Ecore.EClass.create({
@@ -252,8 +252,8 @@ export function fromEObject(obj: EObject | any, parent?: Node): Node | Position 
     }
     if(eClass == THE_POSITION_ECLASS) {
         return new Position(
-            new Point(obj.get("start").get("line"), obj.get("start").get("column")),
-            new Point(obj.get("end").get("line"), obj.get("end").get("column")));
+            new Point(obj.get("start").get("line") || 0, obj.get("start").get("column") || 0),
+            new Point(obj.get("end").get("line") || 0, obj.get("end").get("column") || 0));
     }
     const ePackage = eClass.eContainer as EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];

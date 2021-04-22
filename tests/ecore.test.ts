@@ -5,17 +5,16 @@ import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
-    SYMBOL_CLASS_DEFINITION, THE_AST_EPACKAGE, THE_AST_RESOURCE,
-    toEObject
+    SYMBOL_CLASS_DEFINITION, THE_POSITION_ECLASS, THE_AST_RESOURCE,
+    toEObject, KOLASU_URI_V1
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
-import {THE_POSITION_ECLASS} from "../dist/interop/ecore";
 
 describe('Metamodel', function() {
     it("Base metamodel", function () {
-        expect(THE_POSITION_ECLASS.eURI()).to.equal("builtin:kolasu#//Position");
+        expect(THE_POSITION_ECLASS.eURI()).to.equal(`${KOLASU_URI_V1}#//Position`);
     });
     it("default package",
         function () {
@@ -184,11 +183,19 @@ export class StringLiteral extends Expression {
                 expect(cu).not.to.be.null;
                 expect(cu).not.to.be.undefined;
                 expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
-                node = fromEObject(cu) as any;
+                expect(cu.get("position")).not.to.be.undefined;
+                node = fromEObject(cu) as Node & any;
                 expect(node instanceof Node).to.be.true;
                 expect(node.statements.length).to.equal(2);
                 expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);
                 expect(node.statements[1].visibility).to.equal(1);
+                expect(node.position).not.to.be.undefined;
+                expect(node.position.start).not.to.be.undefined;
+                expect(node.position.start.line).to.equal(1);
+                expect(node.position.start.column).to.equal(0);
+                expect(node.position.end).not.to.be.undefined;
+                expect(node.position.end.line).to.equal(1);
+                expect(node.position.end.column).to.equal(1);
             });
         });
 });
