@@ -28,6 +28,8 @@ const cmd = command({
                     error = e;
                     console.error(e);
                 } else {
+                    //TODO multiple ePackages in multiple files?
+                    //TODO multiple strategies (one-class-per-file, one-package-per-file)?
                     const ePackage = r.get("contents").at(0);
                     if(!ePackage.get("nsURI")) {
                         ePackage.set("nsURI", "");

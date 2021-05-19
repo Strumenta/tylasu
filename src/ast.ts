@@ -15,7 +15,7 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 export type NodeDefinition = {
     package: string,
     name: string,
-    properties: { [name: string]: any },
+    properties: any,
     generated?: boolean,
     resolved?: boolean;
 };
@@ -158,6 +158,22 @@ export function ensurePackage(packageName: string): PackageDescription {
 
 export const SYMBOL_NODE_NAME = Symbol("name");
 
+export function errorOnRedefinition<T>(
+    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
+}
+
+export function warnOnRedefinition<T>(
+    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    console.warn(`Redefining ${name} from`, existingTarget, 'to', target);
+}
+
+let nodeRedefinitionStrategy = errorOnRedefinition;
+
+export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition): void {
+    nodeRedefinitionStrategy = strategy;
+}
+
 export function registerNodeDefinition<T extends Node>(
     target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
     ensurePackage(pkg);
@@ -165,7 +181,7 @@ export function registerNodeDefinition<T extends Node>(
     let def;
     const existingTarget = NODE_TYPES[pkg].nodes[name];
     if(existingTarget && existingTarget !== target) {
-        throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
+        nodeRedefinitionStrategy(name, target, existingTarget);
     }
     const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
@@ -215,9 +231,9 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     return definition;
 }
 
-export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string): any {
+export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string | symbol): any {
     if (methodName == "parent" || methodName == "children" || methodName == "parseTreeNode") {
-        throw new Error(`Can't register the ${methodName} property as a node property`);
+        methodName = Symbol(methodName);
     }
     const definition = ensureNodeDefinition(type);
     if (!definition.properties[methodName]) {
