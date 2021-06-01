@@ -1,6 +1,14 @@
 import {expect} from "chai";
 
-import {errorOnRedefinition, Node, NODE_TYPES, registerNodeDefinition, setNodeRedefinitionStrategy, SYMBOL_NODE_NAME} from "../src";
+import {
+    errorOnRedefinition,
+    Node,
+    NODE_TYPES,
+    registerNodeDefinition,
+    setNodeRedefinitionStrategy,
+    SYMBOL_NODE_NAME,
+    warnOnRedefinition
+} from "../src";
 import {fail} from "assert";
 
 class Foo extends Node {}
@@ -26,6 +34,7 @@ describe('AST management facilities', function() {
             registerNodeDefinition(Foo);
             try {
                 setNodeRedefinitionStrategy((name, target, existingTarget) => {
+                    warnOnRedefinition(name, target, existingTarget);
                     expect(name).to.equal("Foo");
                     expect(target).to.equal(Bar);
                     expect(existingTarget).to.equal(Foo);
