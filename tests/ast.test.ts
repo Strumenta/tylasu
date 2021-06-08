@@ -6,22 +6,19 @@ import {
     NODE_TYPES,
     registerNodeDefinition,
     setNodeRedefinitionStrategy,
-    SYMBOL_NODE_NAME,
     warnOnRedefinition
 } from "../src";
 import {fail} from "assert";
 
 class Foo extends Node {}
-class Bar extends Node {
-    static [SYMBOL_NODE_NAME] = "Foo";
-}
+class Bar extends Node {}
 
 describe('AST management facilities', function() {
     it("By default, redefining a node errors",
         function () {
-            registerNodeDefinition(Foo);
+            registerNodeDefinition(Foo, "", "Foo");
             try {
-                registerNodeDefinition(Bar);
+                registerNodeDefinition(Bar, "", "Foo");
                 fail("I was expecting an exception")
             } catch (e) {
                 expect(e.message.startsWith("Foo")).to.be.true;
@@ -31,7 +28,7 @@ describe('AST management facilities', function() {
         });
     it("We can change the redefinition strategy",
         function () {
-            registerNodeDefinition(Foo);
+            registerNodeDefinition(Foo, "", "Foo");
             try {
                 setNodeRedefinitionStrategy((name, target, existingTarget) => {
                     warnOnRedefinition(name, target, existingTarget);
@@ -39,7 +36,7 @@ describe('AST management facilities', function() {
                     expect(target).to.equal(Bar);
                     expect(existingTarget).to.equal(Foo);
                 });
-                registerNodeDefinition(Bar);
+                registerNodeDefinition(Bar, "", "Foo");
                 expect(NODE_TYPES[""].nodes["Foo"]).to.equal(Bar);
             } finally {
                 setNodeRedefinitionStrategy(errorOnRedefinition);

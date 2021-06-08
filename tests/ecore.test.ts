@@ -1,11 +1,12 @@
 import {expect} from "chai";
 
-import {Node, NODE_TYPES, Point, Position, SYMBOL_NODE_NAME} from "../src";
+import {Node, NODE_TYPES, Point, Position} from "../src";
 import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
     SYMBOL_CLASS_DEFINITION, THE_POSITION_ECLASS, THE_AST_RESOURCE,
+    SYMBOL_NODE_NAME,
     toEObject, KOLASU_URI_V1
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
@@ -151,7 +152,7 @@ describe("Import/export", function () {
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
 
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"][SYMBOL_CLASS_DEFINITION]).to.equal(
-                    `@ASTNode("SimpleMM")
+                    `@ASTNode("SimpleMM", "CompilationUnit")
 export class CompilationUnit extends Node {
 \t@Child()
 \tstatements;
@@ -164,7 +165,7 @@ export class CompilationUnit extends Node {
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
                 //Subclassing
                 expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
-                    `@ASTNode("SimpleMM")
+                    `@ASTNode("SimpleMM", "StringLiteral")
 export class StringLiteral extends Expression {
 \t@Property()
 \tvalue;

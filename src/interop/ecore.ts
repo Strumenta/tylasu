@@ -4,7 +4,7 @@ import {
     Node,
     NODE_TYPES,
     PackageDescription,
-    registerNodeDefinition, registerNodeProperty, SYMBOL_NODE_NAME
+    registerNodeDefinition, registerNodeProperty
 } from "../ast";
 import * as Ecore from "ecore/dist/ecore";
 import {EList, EObject, EPackage} from "ecore";
@@ -13,6 +13,7 @@ import {Point, Position} from "../position";
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
+export const SYMBOL_NODE_NAME = Symbol("name");
 
 export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
 export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
@@ -373,10 +374,11 @@ function generateASTClass(eClass, pkg: PackageDescription) {
         const classDef = class GeneratedNodeClass extends superclass {};
         classDef[SYMBOL_NODE_NAME] = className;
         //TODO include decorator that records where the class has been loaded from?
+        const superClassName = nodeSuperclass == Node ? "Node" : nodeSuperclass[SYMBOL_NODE_NAME];
         classDef[SYMBOL_CLASS_DEFINITION] =
-            `@ASTNode("${pkg.name}")
-export class ${className} extends ${nodeSuperclass[SYMBOL_NODE_NAME] || nodeSuperclass.name} {`;
-        registerNodeDefinition(classDef as any, pkg.name);
+            `@ASTNode("${pkg.name}", "${className}")
+export class ${className} extends ${superClassName} {`;
+        registerNodeDefinition(classDef as any, pkg.name, className);
 
         eClass.get("eStructuralFeatures").each(a => {
             const name = a.get("name");

@@ -1,6 +1,6 @@
 import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
-import {ASTNode, Child, Node, NODE_DEFINITION_SYMBOL} from "./ast";
+import {Child, Node, NODE_DEFINITION_SYMBOL, registerNodeDefinition} from "./ast";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
 import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation";
@@ -8,7 +8,7 @@ import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformat
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
-            ASTNode("")(target);
+            registerNodeDefinition(target);
         }
         registerNodeFactory(type, () => new target());
     };

@@ -3,7 +3,7 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL,
+    NODE_DEFINITION_SYMBOL, registerNodeDefinition,
     registerNodeProperty
 } from "./ast";
 
@@ -37,7 +37,7 @@ export function registerInitializer<T extends Node>(type: new (...args: any[]) =
 export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
-            ASTNode("")(target);
+            registerNodeDefinition(target);
         }
         registerNodeFactory(type, () => new target());
     };
@@ -139,8 +139,10 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     return node.withParent(parent);
 }
 
+@ASTNode("", "GenericNode")
 export class GenericNode extends Node {}
 
+@ASTNode("", "ErrorNode")
 export class ErrorNode extends Node {
     constructor(readonly error: Error) {
         super();

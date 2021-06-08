@@ -13,17 +13,16 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 };
 
 export type NodeDefinition = {
-    package: string,
-    name: string,
+    package?: string,
+    name?: string,
     properties: any,
-    generated?: boolean,
     resolved?: boolean;
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
     const target = typeof node === "function" ? node : node.constructor;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        const definition = target[NODE_DEFINITION_SYMBOL];
+        const definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
         if(definition && definition.properties && !definition.resolved) {
             try {
                 const metadataHolder = typeof node === "function" ? new node() : node;
@@ -156,8 +155,6 @@ export function ensurePackage(packageName: string): PackageDescription {
     return NODE_TYPES[packageName];
 }
 
-export const SYMBOL_NODE_NAME = Symbol("name");
-
 export function errorOnRedefinition<T>(
     name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
     throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
@@ -175,28 +172,27 @@ export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition
 }
 
 export function registerNodeDefinition<T extends Node>(
-    target: { new(...args: any[]): T }, pkg = ""): NodeDefinition {
-    ensurePackage(pkg);
-    const name = target[SYMBOL_NODE_NAME] || target.name;
+    target: { new(...args: any[]): T }, pkg?: string, name?: string): NodeDefinition {
     let def;
-    const existingTarget = NODE_TYPES[pkg].nodes[name];
-    if(existingTarget && existingTarget !== target) {
-        nodeRedefinitionStrategy(name, target, existingTarget);
+    if(pkg !== undefined) {
+        if(!name) {
+            throw new Error("Package name without node name");
+        }
+        ensurePackage(pkg);
+        const existingTarget = NODE_TYPES[pkg].nodes[name];
+        if(existingTarget && existingTarget !== target) {
+            nodeRedefinitionStrategy(name, target, existingTarget);
+        }
     }
     const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        if(existingDef.package != pkg || existingDef.name != name) {
-            if(existingDef.generated && NODE_TYPES[existingDef.package].nodes[existingDef.name] === target) {
-                delete NODE_TYPES[existingDef.package].nodes[existingDef.name];
-                existingDef.package = pkg;
-                existingDef.name = name;
-                existingDef.generated = false;
-                def = existingDef;
-            } else {
-                throw new Error(`Type ${name} is already defined as ${JSON.stringify(existingDef)}`);
-            }
+        if((existingDef.package !== undefined && existingDef.package != pkg) ||
+            (existingDef.name !== undefined && existingDef.name != name)) {
+            throw new Error(`Type ${target} is already defined as ${JSON.stringify(existingDef)}`);
         } else {
             def = existingDef;
+            def.package = pkg;
+            def.name = name;
         }
     } else {
         def = {
@@ -210,7 +206,9 @@ export function registerNodeDefinition<T extends Node>(
             }
         }
     }
-    NODE_TYPES[pkg].nodes[name] = target;
+    if(pkg !== undefined) {
+        NODE_TYPES[pkg].nodes[name] = target;
+    }
     target[NODE_DEFINITION_SYMBOL] = def;
     return def;
 }
@@ -220,10 +218,8 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     if (!definition) {
         if(typeof node === 'function') {
             definition = registerNodeDefinition(node);
-            definition.generated = true;
         } else if(typeof node.constructor === 'function') {
             definition = registerNodeDefinition(node.constructor as any);
-            definition.generated = true;
         } else {
             throw new Error("Not a valid node: " + node);
         }
@@ -253,9 +249,9 @@ export function registerNodeChild<T extends Node>(
 // Decorators //
 //------------//
 
-export function ASTNode<T extends Node>(pkg = "") {
+export function ASTNode<T extends Node>(pkg: string, name: string) {
     return function (target: new (...args: any[]) => T): void {
-        registerNodeDefinition(target, pkg);
+        registerNodeDefinition(target, pkg, name);
     };
 }
 
