@@ -1,9 +1,9 @@
 {
 	"name": "@strumenta/ast",
-	"description": "Generic AST implementation for TypeScript, inspired by Kolasu and integrated with ANTLR4.",
+	"description": "Generic AST implementation for JavaScript, inspired by Kolasu and integrated with ANTLR4.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "0.11.0",
+	"version": "0.12.0-SNAPSHOT",
 	"license": "Apache-2.0",
 	"private": false,
 	"repository": {

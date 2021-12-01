@@ -7,8 +7,10 @@ import {
     registerNodeDefinition, registerNodeProperty
 } from "../ast";
 import * as Ecore from "ecore/dist/ecore";
-import {EList, EObject, EPackage} from "ecore";
+import {EList, EObject, EPackage, Resource} from "ecore";
 import {Point, Position} from "../position";
+import {Parser} from "../parsing";
+import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -407,4 +409,26 @@ export function generateASTClasses(model: EPackage): PackageDescription {
     model.get("eClassifiers").filter(c => c.isTypeOf("EClass") && !c.get("interface")).forEach(
         eClass => generateASTClass(eClass, pkg));
     return pkg;
+}
+
+/**
+ * A parser that supports exporting AST's to EMF/Ecore.
+ * In particular, this parser can generate the metamodel. We can then use toEObject(node) to translate a tree
+ * into its EMF representation.
+ */
+export abstract class EMFEnabledParser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext>
+    extends Parser<R, P, C> {
+
+    /**
+     * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
+     */
+    generateMetamodel(resource: Resource): void {
+        resource.get("contents").add(THE_AST_EPACKAGE);
+        this.doGenerateMetamodel(resource);
+    }
+
+    /**
+     * Implement this method to tell the parser how to generate the metamodel. See [MetamodelBuilder].
+     */
+    protected abstract doGenerateMetamodel(resource: Resource): void;
 }

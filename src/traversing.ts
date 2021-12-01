@@ -29,7 +29,7 @@ export function* walk(node: Node): Generator<Node> {
 }
 
 Node.prototype.walk = function() {
-    return walk(this)
+    return walk(this);
 };
 
 /**

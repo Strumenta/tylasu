@@ -63,6 +63,18 @@ export class Position {
         }
     }
 
+    static ofTokenStart(token: Token): Position {
+        return new Position(Point.ofTokenStart(token), Point.ofTokenStart(token));
+    }
+
+    static ofTokenEnd(token: Token): Position {
+        return new Position(Point.ofTokenEnd(token), Point.ofTokenEnd(token));
+    }
+
+    static ofPoint(point: Point) {
+        return new Position(point, point);
+    }
+
     compareTo(other: Position): number {
         if(!other) {
             return 1;
