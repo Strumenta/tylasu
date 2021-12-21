@@ -1,5 +1,7 @@
 import {
-    CharStream, CharStreams, CommonTokenStream,
+    CharStream,
+    CharStreams,
+    CommonTokenStream,
     Lexer,
     Parser as ANTLRParser,
     ParserRuleContext,
@@ -11,6 +13,9 @@ import {Issue, IssueSeverity} from "./validation";
 import {Point, Position} from "./position";
 import {Node} from "./ast";
 import {Interval} from "antlr4ts/misc";
+import {ErrorNode} from "antlr4ts/tree";
+import {walk} from "./traversing";
+import {assignParents} from "./processing";
 
 function now() {
     return performance?.now() || 0;
@@ -77,18 +82,18 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
                     Position.ofTokenEnd(lastToken)));
         }
 
-        /* TODO root.processDescendantsAndErrors(
-            {
+        processDescendantsAndErrors(
+            root,
+            it => {
                 if (it.exception != null) {
-            val message = "Recognition exception: ${it.exception.message}"
-            issues.add(Issue.syntactic(message, position = it.toPosition()))
-        }
-    },
-        {
-            val message = "Error node found (token: ${it.symbol?.text})"
-            issues.add(Issue.syntactic(message, position = it.toPosition()))
-        }
-    )*/
+                    const message = `Recognition exception: ${it.exception.message}`;
+                    issues.push(Issue.syntactic(message, IssueSeverity.ERROR, it.toPosition()));
+                }
+            },
+            it => {
+                const message = `Error node found (token: ${it.symbol?.text})`;
+                issues.push(Issue.syntactic(message, IssueSeverity.ERROR, it.toPosition()));
+            });
     }
 
     parseFirstStage(inputStream: CharStream, measureLexingTime = false): FirstStageParsingResult<C> {
@@ -128,8 +133,9 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         this.assignParents(ast);
         ast = ast ? this.postProcessAst(ast, issues) : ast;
         if (ast != null && !considerPosition) {
-            // Remove parseTreeNodes because they cause the position to be computed
-            //TODO ast.walk().forEach { it.parseTreeNode = null }
+            for(const node of walk(ast)) {
+                delete node.parseTreeNode;
+            }
         }
         const text = code.getText(Interval.of(0, code.size - 1));
         return new ParsingResult(text, ast, issues, null, firstStage, now() - start);
@@ -142,7 +148,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      * relationships, you can override this method to do nothing to improve performance.
      */
     protected assignParents(ast: R): void {
-        //TODO
+        assignParents(ast);
     }
 
     lex(inputStream: CharStream, onlyFromDefaultChannel = true): LexingResult {
@@ -261,5 +267,23 @@ export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> e
 
     get root(): RootNode {
         return this.data;
+    }
+}
+
+function processDescendantsAndErrors(
+    self: ParserRuleContext,
+    operationOnParserRuleContext: (ParserRuleContext) => void,
+    operationOnError: (ErrorNode) => void,
+    includingMe = true
+) {
+    if (includingMe) {
+        operationOnParserRuleContext(self);
+    }
+    if (self.children != null) {
+        self.children.filter(c => c instanceof ParserRuleContext).forEach(c => {
+            processDescendantsAndErrors(
+                c as ParserRuleContext, operationOnParserRuleContext, operationOnError, true);
+        });
+        self.children.filter(c => c instanceof ErrorNode).forEach(operationOnError);
     }
 }

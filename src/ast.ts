@@ -78,6 +78,13 @@ export abstract class Node {
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
+    get properties(): PropertyDescription[] {
+        const props = getNodeDefinition(this)?.properties || {};
+        return Object.getOwnPropertyNames(props).map(p => {
+            return { name: p, value: this[p] };
+        });
+    }
+
     isChild(name: string): boolean {
         return this.getChildNames().indexOf(name) >= 0;
     }
@@ -131,6 +138,11 @@ export abstract class Node {
     set position(newPos: Position) {
         this.specifiedPosition = newPos;
     }
+}
+
+export interface PropertyDescription {
+    name: string;
+    value: any;
 }
 
 export class NodeVisitor {

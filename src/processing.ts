@@ -1,6 +1,6 @@
 import {Node} from "./ast";
 import {walk} from "./traversing";
-import itiriri from "itiriri";
+import {filter, first, pipe} from "iter-ops";
 
 declare module './ast' {
     export interface Node {
@@ -26,9 +26,22 @@ declare module './ast' {
 export function find(
     startingNode: Node, predicate: (n: Node, index: number) => boolean,
     walker: typeof walk = walk): Node | undefined {
-    return itiriri(walker(startingNode)).find(predicate);
+    return pipe(walker(startingNode), filter(predicate)).first;
 }
 
 Node.prototype.find = function(predicate: (n: Node, index: number) => boolean, walker: typeof walk = walk) {
     return find(this, predicate, walker);
 };
+
+
+/**
+ * Sets or corrects the parent of all AST nodes.
+ * Kolasu does not see set/add/delete operations on the AST nodes,
+ * so this function should be called manually after modifying the AST.
+ */
+export function assignParents(node: Node): void {
+    for(const c of node.walkChildren()) {
+        c.parent = this;
+        assignParents(c);
+    }
+}

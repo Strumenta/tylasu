@@ -1,17 +1,17 @@
 import {expect} from "chai";
 
 import {Node} from "../src";
-import itiriri from 'itiriri';
 import {Box, Item} from "./nodes";
+import {map, pipe, reduce} from "iter-ops";
 
 function printSequence(sequence: Generator<Node>): string {
-    return itiriri(sequence).map(n => {
+    return pipe(sequence, map(n => {
         if(n instanceof Box || n instanceof Item) {
             return n.name;
         } else {
             throw new Error("Unsupported node: " + n);
         }
-    }).reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "");
+    }), reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "")).first;
 }
 
 const testCase = new Box(
