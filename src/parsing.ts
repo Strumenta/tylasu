@@ -17,8 +17,19 @@ import {ErrorNode} from "antlr4ts/tree";
 import {walk} from "./traversing";
 import {assignParents} from "./processing";
 
-function now() {
-    return performance?.now() || 0;
+let now: () => number;
+
+try {
+    performance.now();
+    now = () => performance.now();
+} catch (e) {
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { performance } = require('perf_hooks');
+        now = () => performance.now();
+    } catch (e) {
+        now = () => new Date().getTime();
+    }
 }
 
 export abstract class Parser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext> {
