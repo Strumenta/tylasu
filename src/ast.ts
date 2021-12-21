@@ -119,6 +119,11 @@ export abstract class Node {
         return this;
     }
 
+    withParseTreeNode(node: ParseTree): this {
+        this.parseTreeNode = node;
+        return this;
+    }
+
     get position(): Position | undefined {
         return this.specifiedPosition || Position.ofParseTree(this.parseTreeNode);
     }

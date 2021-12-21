@@ -3,6 +3,8 @@
 	"compilerOptions": {
         "experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"module": "ES6",
+		"moduleResolution": "Node",
 		"declaration": true,
 		"sourceMap": true,
 		"strict": false,

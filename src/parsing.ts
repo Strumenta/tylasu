@@ -1,16 +1,16 @@
 import {
-    CharStream, CommonTokenStream,
+    CharStream, CharStreams, CommonTokenStream,
     Lexer,
     Parser as ANTLRParser,
     ParserRuleContext,
     Recognizer,
+    Token,
     TokenStream
 } from "antlr4ts";
 import {Issue, IssueSeverity} from "./validation";
-import {Token} from "antlr4ts/Token";
 import {Point, Position} from "./position";
-import {Interval} from "antlr4ts/misc";
 import {Node} from "./ast";
+import {Interval} from "antlr4ts/misc";
 
 function now() {
     return performance?.now() || 0;
@@ -117,7 +117,10 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         return ast;
     }
 
-    parse(code: CharStream, considerPosition: boolean, measureLexingTime: boolean): ParsingResult<R, C> {
+    parse(code: string | CharStream, considerPosition = true, measureLexingTime = true): ParsingResult<R, C> {
+        if(typeof code === "string") {
+            code = CharStreams.fromString(code);
+        }
         const start = now()
         const firstStage = this.parseFirstStage(code, measureLexingTime);
         const issues = firstStage.issues;
@@ -138,7 +141,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      * If you assign the parents correctly when you build the AST, or you're not interested in tracking child-parent
      * relationships, you can override this method to do nothing to improve performance.
      */
-    protected assignParents(ast: R) {
+    protected assignParents(ast: R): void {
         //TODO
     }
 
@@ -236,7 +239,7 @@ export class FirstStageParsingResult<C extends ParserRuleContext> extends CodePr
         this.incompleteNode = incompleteNode;
     }
 
-    get root() {
+    get root(): C {
         return this.data;
     }
 }

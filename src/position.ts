@@ -71,7 +71,7 @@ export class Position {
         return new Position(Point.ofTokenEnd(token), Point.ofTokenEnd(token));
     }
 
-    static ofPoint(point: Point) {
+    static ofPoint(point: Point): Position {
         return new Position(point, point);
     }
 
