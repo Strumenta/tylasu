@@ -364,6 +364,19 @@ export function ensureECoreModel(packageName: string): EPackage {
     }
 }
 
+function samePropertiesAs(propertyNames: string[], eClass: EClass) {
+    const attributes = eClass.get("eAllStructuralFeatures");
+    if(propertyNames.length !== attributes.length) {
+        return false;
+    }
+    for(let i = 0; i < propertyNames.length; i++) {
+        if(!propertyNames.includes(attributes[i].get("name"))) {
+            return false;
+        }
+    }
+    return true;
+}
+
 export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObject): EObject | any {
     if(Array.isArray(obj)) {
         const eList = new Ecore.EList(owner || Ecore.EObject.create(), feature);
@@ -376,25 +389,23 @@ export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObj
             return obj[TO_EOBJECT_SYMBOL]();
         } else if(obj) {
             const propertyNames = Object.getOwnPropertyNames(obj);
-            if(propertyNames.length == 2 &&
-                propertyNames.includes("root") &&
-                propertyNames.includes("issues") &&
+            if(samePropertiesAs(propertyNames, THE_RESULT_ECLASS) &&
                 obj.root instanceof Node &&
                 Array.isArray(obj.issues)) {
                 return THE_RESULT_ECLASS.create({
                     root: toEObject(obj.root),
                     issues: obj.issues.map(toEObject)
                 });
-            } else if(propertyNames.length == 3 &&
-                propertyNames.includes("year") &&
-                propertyNames.includes("month") &&
-                propertyNames.includes("dayOfMonth")) {
+            } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_ECLASS)) {
                 return THE_LOCAL_DATE_ECLASS.create(obj);
-            } else if(propertyNames.length == 4 &&
-                propertyNames.includes("type") &&
-                propertyNames.includes("message") &&
-                propertyNames.includes("severity") &&
-                propertyNames.includes("position")) {
+            } else if(samePropertiesAs(propertyNames, THE_LOCAL_TIME_ECLASS)) {
+                return THE_LOCAL_TIME_ECLASS.create(obj);
+            } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_TIME_ECLASS)) {
+                return THE_LOCAL_DATE_TIME_ECLASS.create({
+                    date: toEObject(obj.date),
+                    time: toEObject(obj.time)
+                });
+            } else if(samePropertiesAs(propertyNames, THE_ISSUE_ECLASS)) {
                 return THE_ISSUE_ECLASS.create({
                     type: IssueType[obj.type],
                     message: obj.message,

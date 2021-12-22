@@ -135,7 +135,7 @@ describe("Import/export", function () {
         });
     });
     it("importing using API", function () {
-        this.enableTimeouts(false);
+        this.timeout(0);
         const resourceSet = Ecore.ResourceSet.create();
         const resource = resourceSet.create({ uri: 'file:data/sas.metamodel.json' });
         const mmBuffer = fs.readFileSync("tests/data/sas.metamodel.json");
