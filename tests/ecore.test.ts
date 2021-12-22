@@ -1,13 +1,13 @@
 import {expect} from "chai";
 
-import {Node, NODE_TYPES, Point, Position} from "../src";
+import {Issue, Node, NODE_TYPES, Point, Position} from "../src";
 import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
     SYMBOL_CLASS_DEFINITION, THE_POSITION_ECLASS, THE_AST_RESOURCE,
     SYMBOL_NODE_NAME,
-    toEObject, KOLASU_URI_V1, loadEPackages, loadEObject, generateASTModel
+    toEObject, KOLASU_URI_V1, loadEPackages, loadEObject, generateASTModel, Result
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
@@ -215,4 +215,14 @@ export class StringLiteral extends Expression {
                 expect(node.position.end.column).to.equal(1);
             });
         });
+    it("Result export/import roundtrip", function () {
+        const result = {
+            root: new SomeNodeInPackage("root"),
+            issues: [Issue.semantic("Something's wrong")]
+        };
+        const eObject = toEObject(result);
+        expect(eObject.get("issues").size()).to.equal(1);
+        const object = fromEObject(eObject) as Result;
+        expect(object.issues.length).to.equal(1);
+    });
 });

@@ -9,8 +9,9 @@ import {
 import * as Ecore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
 import {Point, Position} from "../position";
-import {Parser} from "../parsing";
+import {Parser, ParsingResult} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
+import {Issue, IssueSeverity, IssueType} from "../validation";
 
 // Kolasu model definition
 
@@ -79,66 +80,166 @@ THE_NAMED_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     eType: Ecore.EString,
     lowerBound: 1
 }));
-export const THE_REFERENCE_BY_NAME_CLASS = Ecore.EClass.create({
+export const THE_REFERENCE_BY_NAME_ECLASS = Ecore.EClass.create({
     name: "ReferenceByName"
 });
-THE_REFERENCE_BY_NAME_CLASS.get("eSuperTypes").add(THE_NAMED_INTERFACE);
-THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").add(Ecore.ETypeParameter.create({
+THE_REFERENCE_BY_NAME_ECLASS.get("eSuperTypes").add(THE_NAMED_INTERFACE);
+THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").add(Ecore.ETypeParameter.create({
     name: "N"
 }));
-THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").at(0).get("eBounds").add(Ecore.EGenericType.create({
+THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0).get("eBounds").add(Ecore.EGenericType.create({
     eClassifier: THE_POSSIBLY_NAMED_INTERFACE
 }));
-THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "name",
     eType: Ecore.EString,
     lowerBound: 1
 }));
-THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "referenced",
     containment: true
 }));
-THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").at(1).set("eGenericType", Ecore.EGenericType.create({
-    eTypeParameter: THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").at(0)
+THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").at(1).set("eGenericType", Ecore.EGenericType.create({
+    eTypeParameter: THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0)
 }));
 
-export const THE_LOCAL_DATE_CLASS  = Ecore.EClass.create({
+export const THE_LOCAL_DATE_ECLASS  = Ecore.EClass.create({
     name: "LocalDate"
 });
-THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "year",
     eType: Ecore.EInt,
     lowerBound: 1
 }));
-THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "month",
     eType: Ecore.EInt,
     lowerBound: 1
 }));
-THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "dayOfMonth",
     eType: Ecore.EInt,
     lowerBound: 1
 }));
-/*
-val localTime = ePackage.createEClass("LocalTime").apply {
-    addAttribute("hour", intDT, 1, 1)
-    addAttribute("minute", intDT, 1, 1)
-    addAttribute("second", intDT, 1, 1)
-    addAttribute("nanosecond", intDT, 1, 1)
+
+export const THE_LOCAL_TIME_ECLASS  = Ecore.EClass.create({
+    name: "LocalTime"
+});
+THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "hour",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "minute",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "second",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "nanosecond",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+
+export const THE_LOCAL_DATE_TIME_ECLASS  = Ecore.EClass.create({
+    name: "LocalDateTime"
+});
+THE_LOCAL_DATE_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "date",
+    eType: THE_LOCAL_DATE_ECLASS,
+    lowerBound: 1,
+    containment: true
+}));
+THE_LOCAL_DATE_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "time",
+    eType: THE_LOCAL_TIME_ECLASS,
+    lowerBound: 1,
+    containment: true
+}));
+
+
+function addLiteral(eenum: Ecore.EEnum, name: string, value: number) {
+    const literal = Ecore.EEnumLiteral.create({
+        name, value
+    });
+    eenum.get("eLiterals").add(literal);
+    return literal;
 }
-val localDateTime = ePackage.createEClass("LocalDateTime").apply {
-    addContainment("date", localDate, 1, 1)
-    addContainment("time", localTime, 1, 1)
-}*/
+
+export const THE_ISSUE_TYPE_EENUM = Ecore.EEnum.create({
+    name: "IssueType"
+});
+addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.LEXICAL], IssueType.LEXICAL);
+addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.SYNTACTIC], IssueType.SYNTACTIC);
+addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.SEMANTIC], IssueType.SEMANTIC);
+
+export const THE_ISSUE_SEVERITY_EENUM = Ecore.EEnum.create({
+    name: "IssueSeverity"
+});
+addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.INFO], IssueSeverity.INFO);
+addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.WARNING], IssueSeverity.WARNING);
+addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.ERROR], IssueSeverity.ERROR);
+
+export const THE_ISSUE_ECLASS = Ecore.EClass.create({
+    name: "Issue"
+});
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "type",
+    eType: THE_ISSUE_TYPE_EENUM,
+    lowerBound: 1
+}));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "message",
+    eType: Ecore.EString,
+    lowerBound: 1
+}));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "severity",
+    eType: THE_ISSUE_SEVERITY_EENUM
+}));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "position",
+    eType: THE_POSITION_ECLASS,
+    containment: true
+}));
+
+export const THE_RESULT_ECLASS = Ecore.EClass.create({
+    name: "Result"
+});
+const resultTypeParameter = Ecore.ETypeParameter.create({ name: "CU" });
+(resultTypeParameter.get("eBounds") as EList).add(Ecore.EGenericType.create({
+    eClassifier: THE_NODE_ECLASS
+}));
+THE_RESULT_ECLASS.get("eTypeParameters").add(resultTypeParameter);
+THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "root",
+    eGenericType: Ecore.EGenericType.create({ eTypeParameter: resultTypeParameter }),
+    containment: true
+}));
+THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "issues",
+    eGenericType: THE_ISSUE_ECLASS,
+    containment: true,
+    upperBound: -1
+}));
 
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_CLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_CLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
@@ -263,7 +364,7 @@ export function ensureECoreModel(packageName: string): EPackage {
     }
 }
 
-export function toEObject(obj: Node | Node[] | any, owner?: EObject, feature?: EObject): EObject | any {
+export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObject): EObject | any {
     if(Array.isArray(obj)) {
         const eList = new Ecore.EList(owner || Ecore.EObject.create(), feature);
         obj.forEach(o => {
@@ -271,7 +372,41 @@ export function toEObject(obj: Node | Node[] | any, owner?: EObject, feature?: E
         });
         return eList;
     } else {
-        return (obj && (typeof obj[TO_EOBJECT_SYMBOL] === "function")) ? obj[TO_EOBJECT_SYMBOL]() : obj;
+        if (obj && (typeof obj[TO_EOBJECT_SYMBOL] === "function")) {
+            return obj[TO_EOBJECT_SYMBOL]();
+        } else if(obj) {
+            const propertyNames = Object.getOwnPropertyNames(obj);
+            if(propertyNames.length == 2 &&
+                propertyNames.includes("root") &&
+                propertyNames.includes("issues") &&
+                obj.root instanceof Node &&
+                Array.isArray(obj.issues)) {
+                return THE_RESULT_ECLASS.create({
+                    root: toEObject(obj.root),
+                    issues: obj.issues.map(toEObject)
+                });
+            } else if(propertyNames.length == 3 &&
+                propertyNames.includes("year") &&
+                propertyNames.includes("month") &&
+                propertyNames.includes("dayOfMonth")) {
+                return THE_LOCAL_DATE_ECLASS.create(obj);
+            } else if(propertyNames.length == 4 &&
+                propertyNames.includes("type") &&
+                propertyNames.includes("message") &&
+                propertyNames.includes("severity") &&
+                propertyNames.includes("position")) {
+                return THE_ISSUE_ECLASS.create({
+                    type: IssueType[obj.type],
+                    message: obj.message,
+                    severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
+                    position: obj.position ? toEObject(obj.position) : undefined
+                });
+            } else {
+                return obj;
+            }
+        } else {
+            return obj;
+        }
     }
 }
 
@@ -281,9 +416,29 @@ export interface LocalDate {
     dayOfMonth: number;
 }
 
-export type ASTElement = Node | Position | LocalDate | ASTElement[];
+export interface LocalTime {
+    hour: number;
+    minute: number;
+    second: number;
+    nanosecond: number;
+}
+
+export interface LocalDateTime {
+    date: LocalDate;
+    time: LocalTime;
+}
+
+export interface Result {
+    root: Node;
+    issues: Issue[];
+}
+
+export type ASTElement = Node | Position | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
 
 function decodeEnumLiteral(eType, literalName: string) {
+    if(!literalName) {
+        return undefined;
+    }
     const literal = eType.get("eLiterals").find(l => l.get("name") === literalName);
     if (literal) {
         return literal.get("value") || 0;
@@ -305,11 +460,33 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
     }
     if(eClass == THE_POSITION_ECLASS) {
         return new Position(
-            new Point(obj.get("start").get("line") || 0, obj.get("start").get("column") || 0),
-            new Point(obj.get("end").get("line") || 0, obj.get("end").get("column") || 0));
+            new Point(obj.get("start")?.get("line") || 1, obj.get("start")?.get("column") || 0),
+            new Point(obj.get("end")?.get("line") || 1, obj.get("end")?.get("column") || 0));
     }
-    if(eClass == THE_LOCAL_DATE_CLASS) {
-        return { year: obj.get("year"), month: obj.get("month"), dayOfMonth: obj.get("dayOfMonth") }
+    if(eClass == THE_LOCAL_DATE_ECLASS) {
+        return { year: obj.get("year"), month: obj.get("month"), dayOfMonth: obj.get("dayOfMonth") };
+    }
+    if(eClass == THE_LOCAL_TIME_ECLASS) {
+        return {
+            hour: obj.get("hour"),
+            minute: obj.get("minute"),
+            second: obj.get("second"),
+            nanosecond: obj.get("nanosecond")
+        };
+    }
+    if(eClass == THE_LOCAL_DATE_TIME_ECLASS) {
+        return { date: fromEObject(obj.get("date")) as LocalDate, time: fromEObject(obj.get("time")) as LocalTime };
+    }
+    if(eClass == THE_RESULT_ECLASS) {
+        return {
+            root: fromEObject(obj.get("root")) as Node,
+            issues: (obj.get("issues") as EList)?.map(
+                i => new Issue(
+                    decodeEnumLiteral(THE_ISSUE_TYPE_EENUM, i.get("type")),
+                    i.get("message"),
+                    decodeEnumLiteral(THE_ISSUE_SEVERITY_EENUM, i.get("severity")),
+                    fromEObject(i.get("position")) as Position)) as Issue[] || []
+        };
     }
     const ePackage = eClass.eContainer as EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
@@ -517,6 +694,9 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
 export function importJsonObject(json: any, resource: Resource, eClass?: EClass, strict = true): EObject {
     if (json.eClass) {
         eClass = findEClass(json.eClass, resource);
+        if(!eClass) {
+            throw new Error(`Unknown EClass: ${json.eClass}`);
+        }
     }
     if(!eClass) {
         throw new Error("EClass is not specified and not present in the object");
