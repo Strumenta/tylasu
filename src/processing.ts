@@ -1,6 +1,6 @@
 import {Node} from "./ast";
 import {walk} from "./traversing";
-import {filter, first, pipe} from "iter-ops";
+import {filter, pipe} from "iter-ops";
 
 declare module './ast' {
     export interface Node {

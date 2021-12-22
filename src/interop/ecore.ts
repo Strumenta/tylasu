@@ -423,7 +423,7 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
-    const interfaces = supertypes.filter(t => t.get("interface"));
+    //const interfaces = supertypes.filter(t => t.get("interface"));
     let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
