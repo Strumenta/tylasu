@@ -44,7 +44,6 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      */
     protected abstract createANTLRParser(tokenStream: TokenStream): P;
 
-
     /**
      * Invokes the parser's root rule, i.e., the method which is responsible of parsing the entire input.
      * Usually this is the topmost rule, the one with index 0 (as also assumed by other libraries such as antlr4-c3),
@@ -56,7 +55,6 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         const entryPoint = parser[parser.ruleNames[0]]
         return entryPoint!.call(parser) as C
     }
-
 
     /**
      * Transforms a parse tree into an AST (second parsing stage).

@@ -7,10 +7,12 @@ import {
     registerNodeDefinition, registerNodeProperty
 } from "../ast";
 import * as Ecore from "ecore/dist/ecore";
-import {EList, EObject, EPackage, Resource} from "ecore";
+import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
 import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
+
+// Kolasu model definition
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -100,12 +102,43 @@ THE_REFERENCE_BY_NAME_CLASS.get("eStructuralFeatures").at(1).set("eGenericType",
     eTypeParameter: THE_REFERENCE_BY_NAME_CLASS.get("eTypeParameters").at(0)
 }));
 
+export const THE_LOCAL_DATE_CLASS  = Ecore.EClass.create({
+    name: "LocalDate"
+});
+THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "year",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "month",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+THE_LOCAL_DATE_CLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "dayOfMonth",
+    eType: Ecore.EInt,
+    lowerBound: 1
+}));
+/*
+val localTime = ePackage.createEClass("LocalTime").apply {
+    addAttribute("hour", intDT, 1, 1)
+    addAttribute("minute", intDT, 1, 1)
+    addAttribute("second", intDT, 1, 1)
+    addAttribute("nanosecond", intDT, 1, 1)
+}
+val localDateTime = ePackage.createEClass("LocalDateTime").apply {
+    addContainment("date", localDate, 1, 1)
+    addContainment("time", localTime, 1, 1)
+}*/
+
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_CLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_CLASS);
 
 function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
@@ -242,7 +275,24 @@ export function toEObject(obj: Node | Node[] | any, owner?: EObject, feature?: E
     }
 }
 
-export function fromEObject(obj: EObject | any, parent?: Node): Node | Position | (Node | Position)[] {
+export interface LocalDate {
+    year: number;
+    month: number;
+    dayOfMonth: number;
+}
+
+export type ASTElement = Node | Position | LocalDate | ASTElement[];
+
+function decodeEnumLiteral(eType, literalName: string) {
+    const literal = eType.get("eLiterals").find(l => l.get("name") === literalName);
+    if (literal) {
+        return literal.get("value") || 0;
+    } else {
+        throw new Error(`Unknown enum literal: ${literalName} of ${eType.get("name")}`)
+    }
+}
+
+export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
     if(!obj) {
         return undefined;
     }
@@ -258,6 +308,9 @@ export function fromEObject(obj: EObject | any, parent?: Node): Node | Position 
             new Point(obj.get("start").get("line") || 0, obj.get("start").get("column") || 0),
             new Point(obj.get("end").get("line") || 0, obj.get("end").get("column") || 0));
     }
+    if(eClass == THE_LOCAL_DATE_CLASS) {
+        return { year: obj.get("year"), month: obj.get("month"), dayOfMonth: obj.get("dayOfMonth") }
+    }
     const ePackage = eClass.eContainer as EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
@@ -266,15 +319,21 @@ export function fromEObject(obj: EObject | any, parent?: Node): Node | Position 
         eClass.get("eAllStructuralFeatures").forEach(ft => {
             const name = ft.get("name");
             const value = obj.get(name);
-            if(ft.isTypeOf("EReference")) {
+            const eType = ft.get("eType");
+            if(Array.isArray(value)) {
+                node[name] = value.map(e => {
+                    if(e.eClass === "http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral") {
+                        if(e.$ref) {
+                            const literalName = e.$ref.substring(e.$ref.lastIndexOf("/") + 1);
+                            return decodeEnumLiteral(eType, literalName);
+                        }
+                    }
+                    return fromEObject(e, node);
+                });
+            } else if(ft.isTypeOf("EReference")) {
                 node[name] = fromEObject(value, node);
-            } else if(value !== undefined && value !== null && ft.get("eType") && ft.get("eType").isTypeOf("EEnum")) {
-                const literal = ft.get("eType").get("eLiterals").find(l => l.get("name") === value);
-                if(literal) {
-                    node[name] = literal.get("value") || 0;
-                } else {
-                    throw new Error(`Unknown enum literal: ${value} of ${ft.get("eType").get("name")}`)
-                }
+            } else if(value !== undefined && value !== null && eType && eType.isTypeOf("EEnum")) {
+                node[name] = decodeEnumLiteral(eType, value);
             } else {
                 node[name] = value;
             }
@@ -289,7 +348,7 @@ export class EObjectGenerator {
     toEObject(node: Node): EObject {
         return toEObject(node);
     }
-    fromEObject(eObject: EObject): Node | Position | (Node | Position)[] {
+    fromEObject(eObject: EObject): ASTElement {
         return fromEObject(eObject);
     }
 }
@@ -362,7 +421,9 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     if (pkg.nodes[className]) {
         return pkg.nodes[className];
     }
-    const superclasses = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
+    const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
+    const superclasses = supertypes.filter(t => !t.get("interface"));
+    const interfaces = supertypes.filter(t => t.get("interface"));
     let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
@@ -377,6 +438,8 @@ function generateASTClass(eClass, pkg: PackageDescription) {
         classDef[SYMBOL_NODE_NAME] = className;
         //TODO include decorator that records where the class has been loaded from?
         const superClassName = nodeSuperclass == Node ? "Node" : nodeSuperclass[SYMBOL_NODE_NAME];
+        // TODO we don't generate interfaces yet
+        // const implementsClause = interfaces.length > 0 ? ` implements ${interfaces.map(i => i.get("name")).join(", ")}` : "";
         classDef[SYMBOL_CLASS_DEFINITION] =
             `@ASTNode("${pkg.name}", "${className}")
 export class ${className} extends ${superClassName} {`;
@@ -387,8 +450,8 @@ export class ${className} extends ${superClassName} {`;
             defineProperty(classDef, name);
             const prop = registerNodeProperty(classDef as any, name);
             prop.child = a.isTypeOf('EReference');
-            const annot = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
-            classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annot}\n\t${name};`;
+            const annotation = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
+            classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annotation}\n\t${name};`;
         });
         classDef[SYMBOL_CLASS_DEFINITION] += "\n}";
         pkg.nodes[className] = classDef as any;
@@ -403,12 +466,109 @@ export class ${className} extends ${superClassName} {`;
     }
 }
 
+export function generateASTModel(model: EPackage[]): PackageDescription[] {
+    return model.map(generateASTClasses);
+}
+
 export function generateASTClasses(model: EPackage): PackageDescription {
     const packageName = model.get("name");
     const pkg = ensurePackage(packageName);
     model.get("eClassifiers").filter(c => c.isTypeOf("EClass") && !c.get("interface")).forEach(
         eClass => generateASTClass(eClass, pkg));
     return pkg;
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function loadEPackages(data: any, resource: Resource): EPackage[] {
+    resource.parse(data);
+    return registerPackages(resource);
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function loadEObject(data: any, resource: Resource): EObject | undefined {
+    return importJsonObject(data, resource);
+}
+
+export function findEClass(name: string, resource: Resource): EClass | undefined {
+    const index = name.lastIndexOf("#");
+    if (index > 0) {
+        const packageName = name.substring(0, index);
+        const ePackage = EPackage.Registry.getEPackage(packageName);
+        if(!ePackage) {
+            throw new Error("Package not found: " + packageName);
+        }
+        return ePackage.get("eClassifiers").find((c: EClassifier) =>
+            c.get("name") == name.substring(name.lastIndexOf("/") + 1));
+    } else {
+        const parts = name.substring(1).split("/").filter(s => s.length > 0);
+        const packages = resource.eContents().filter(value => value.isTypeOf("EPackage"));
+        if(parts.length == 2) {
+            const ePackage = packages[parseInt(parts[0])];
+            return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[1]);
+        } else if(packages.length == 1) {
+            return packages[0].get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[0]);
+        } else {
+            throw new Error("Unsupported class name: " + name);
+        }
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function importJsonObject(json: any, resource: Resource, eClass?: EClass, strict = true): EObject {
+    if (json.eClass) {
+        eClass = findEClass(json.eClass, resource);
+    }
+    if(!eClass) {
+        throw new Error("EClass is not specified and not present in the object");
+    }
+    const eObject = eClass.create({});
+    for (const key in json) {
+        if (Object.prototype.hasOwnProperty.call(json, key) && key != "eClass") {
+            const feature = eClass.getEStructuralFeature(key);
+            if (feature) {
+                if (feature.isTypeOf('EAttribute')) {
+                    eObject.set(key, json[key]);
+                } else if (feature.isTypeOf('EReference')) {
+                    const eType = feature.get("eType");
+                    if (feature.get("many")) {
+                        if (json[key]) {
+                            json[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
+                        }
+                    } else {
+                        let obj;
+                        if (Array.isArray(json[key])) {
+                            if (json[key].length == 1) {
+                                obj = json[key][0];
+                            } else if (json[key].length > 1) {
+                                throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                            }
+                        } else {
+                            obj = json[key];
+                        }
+                        if (obj) {
+                            eObject.set(key, importJsonObject(obj, resource, eType, strict));
+                        }
+                    }
+                } else if (strict) {
+                    throw new Error("Not a feature: " + key + " of " + eClass.fragment());
+                }
+            } else if (strict) {
+                throw new Error("Not a feature: " + key + " of " + eClass.fragment());
+            }
+        }
+    }
+    return eObject;
+}
+
+export function registerPackages(resource: Resource): EPackage[] {
+    return resource.get("contents")
+        .filter((p: EObject) =>
+            p.isKindOf("EPackage") &&
+            p.get("name") != "javax.xml.datatype")
+        .map((p: EPackage) => {
+            EPackage.Registry.register(p);
+            return p;
+        });
 }
 
 /**

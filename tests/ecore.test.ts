@@ -7,7 +7,7 @@ import {
     registerECoreModel,
     SYMBOL_CLASS_DEFINITION, THE_POSITION_ECLASS, THE_AST_RESOURCE,
     SYMBOL_NODE_NAME,
-    toEObject, KOLASU_URI_V1
+    toEObject, KOLASU_URI_V1, loadEPackages, loadEObject, generateASTModel
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
@@ -134,7 +134,23 @@ describe("Import/export", function () {
             console.log(string);
         });
     });
-    it("importing",
+    it("importing using API", function () {
+        const resourceSet = Ecore.ResourceSet.create();
+        const resource = resourceSet.create({ uri: 'file:data/sas.metamodel.json' });
+        const mmBuffer = fs.readFileSync("tests/data/sas.metamodel.json");
+        const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
+        expect(ePackages.length).to.equal(5);
+        const buffer = fs.readFileSync("tests/data/sas.example1.json");
+        const example1 = loadEObject(JSON.parse(buffer.toString()), resource);
+        expect(example1.eClass.get("name")).to.equal("SourceFile");
+        expect(example1.get("statementsAndDeclarations").size()).to.equal(13);
+        expect(() => fromEObject(example1)).to.throw;
+        generateASTModel(ePackages);
+        const node = fromEObject(example1) as Node & any;
+        expect(node instanceof Node).to.be.true;
+        expect(node.statementsAndDeclarations.length).to.equal(13);
+    });
+    it("importing using raw Ecore.js",
         function () {
             const resourceSet = Ecore.ResourceSet.create();
             const resource = resourceSet.create({ uri: 'file:data/simplemm.json' });
