@@ -9,7 +9,7 @@ import {
 import * as Ecore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
 import {Point, Position} from "../position";
-import {Parser, ParsingResult} from "../parsing";
+import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 
@@ -377,9 +377,15 @@ function samePropertiesAs(propertyNames: string[], eClass: EClass) {
     return true;
 }
 
+/**
+ * Transforms an AST into its Ecore representation.
+ * @param obj the root AST node
+ * @param owner the EObject which will own the collection (when obj is an array)
+ * @param feature the feature that will own the collection (when obj is an array)
+ */
 export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObject): EObject | any {
     if(Array.isArray(obj)) {
-        const eList = new Ecore.EList(owner || Ecore.EObject.create(), feature);
+        const eList = new Ecore.EList(owner!, feature!);
         obj.forEach(o => {
             eList.add(toEObject(o));
         });
@@ -541,7 +547,7 @@ export class EObjectGenerator {
     }
 }
 
-Node.prototype[TO_EOBJECT_SYMBOL] = function (): EObject {
+Node.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
     const def = ensureNodeDefinition(this);
     const ePackage = ensureECoreModel(def.package);
     const eClass = ePackage.get("eClassifiers").find(c => c.get("name") == def.name);
@@ -672,8 +678,16 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     return registerPackages(resource);
 }
 
+/**
+ * Interprets a string or JSON object as an EObject.
+ * @param data the input string or object.
+ * @param resource where to look for to resolve references to types.
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEObject(data: any, resource: Resource): EObject | undefined {
+    if(typeof data === "string") {
+        data = JSON.parse(data);
+    }
     return importJsonObject(data, resource);
 }
 
@@ -701,43 +715,75 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
     }
 }
 
+/**
+ * Interprets a JSON object as an EObject.
+ * @param obj the input object.
+ * @param resource where to look for to resolve references to types.
+ * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
+ * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function importJsonObject(json: any, resource: Resource, eClass?: EClass, strict = true): EObject {
-    if (json.eClass) {
-        eClass = findEClass(json.eClass, resource);
+export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, strict = true): EObject {
+    if (obj.eClass) {
+        eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
-            throw new Error(`Unknown EClass: ${json.eClass}`);
+            throw new Error(`Unknown EClass: ${obj.eClass}`);
         }
     }
     if(!eClass) {
-        throw new Error("EClass is not specified and not present in the object");
+        const propertyNames = Object.getOwnPropertyNames(obj);
+        if(samePropertiesAs(propertyNames, THE_RESULT_ECLASS) &&
+            Array.isArray(obj.issues)) {
+            return THE_RESULT_ECLASS.create({
+                root: importJsonObject(obj.root, resource),
+                issues: obj.issues.map(i => importJsonObject(i, resource))
+            });
+        } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_ECLASS)) {
+            return THE_LOCAL_DATE_ECLASS.create(obj);
+        } else if(samePropertiesAs(propertyNames, THE_LOCAL_TIME_ECLASS)) {
+            return THE_LOCAL_TIME_ECLASS.create(obj);
+        } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_TIME_ECLASS)) {
+            return THE_LOCAL_DATE_TIME_ECLASS.create({
+                date: toEObject(obj.date),
+                time: toEObject(obj.time)
+            });
+        } else if(samePropertiesAs(propertyNames, THE_ISSUE_ECLASS)) {
+            return THE_ISSUE_ECLASS.create({
+                type: IssueType[obj.type],
+                message: obj.message,
+                severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
+                position: obj.position ? importJsonObject(obj.position, resource) : undefined
+            });
+        } else {
+            throw new Error("EClass is not specified and not present in the object");
+        }
     }
     const eObject = eClass.create({});
-    for (const key in json) {
-        if (Object.prototype.hasOwnProperty.call(json, key) && key != "eClass") {
+    for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && key != "eClass") {
             const feature = eClass.getEStructuralFeature(key);
             if (feature) {
                 if (feature.isTypeOf('EAttribute')) {
-                    eObject.set(key, json[key]);
+                    eObject.set(key, obj[key]);
                 } else if (feature.isTypeOf('EReference')) {
                     const eType = feature.get("eType");
                     if (feature.get("many")) {
-                        if (json[key]) {
-                            json[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
+                        if (obj[key]) {
+                            obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
                         }
                     } else {
-                        let obj;
-                        if (Array.isArray(json[key])) {
-                            if (json[key].length == 1) {
-                                obj = json[key][0];
-                            } else if (json[key].length > 1) {
+                        let value;
+                        if (Array.isArray(obj[key])) {
+                            if (obj[key].length == 1) {
+                                value = obj[key][0];
+                            } else if (obj[key].length > 1) {
                                 throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
                             }
                         } else {
-                            obj = json[key];
+                            value = obj[key];
                         }
-                        if (obj) {
-                            eObject.set(key, importJsonObject(obj, resource, eType, strict));
+                        if (value) {
+                            eObject.set(key, importJsonObject(value, resource, eType, strict));
                         }
                     }
                 } else if (strict) {

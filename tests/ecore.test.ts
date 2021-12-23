@@ -142,7 +142,7 @@ describe("Import/export", function () {
         const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
         expect(ePackages.length).to.equal(5);
         const buffer = fs.readFileSync("tests/data/sas.example1.json");
-        const example1 = loadEObject(JSON.parse(buffer.toString()), resource);
+        const example1 = loadEObject(buffer.toString(), resource);
         expect(example1.eClass.get("name")).to.equal("SourceFile");
         expect(example1.get("statementsAndDeclarations").size()).to.equal(13);
         expect(() => fromEObject(example1)).to.throw;

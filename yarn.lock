@@ -944,10 +944,10 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
-iter-ops@^1.4.5:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/iter-ops/-/iter-ops-1.4.5.tgz#359db259020dce040c54cafedb64ca22a4a8726d"
-  integrity sha512-YOCMoQJDoVdBmPX0tU++sJ6ozGXm+NAnawd489itIOBDIicexPlnRYn+96TGzpRKd05YfisfKIsRoIuf6wqkPw==
+iter-ops@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/iter-ops/-/iter-ops-1.5.0.tgz#11b2762ee63a0d7b4ffab6e9249759d5a2410461"
+  integrity sha512-WoGpyrQnoCPXZ/ETFJv1PN3B77qjbYlCXqWwtRf/dKY2Ldcf6iltnIxtmhe8OIsRbDTBimjr+RXXsS7n7KqcIA==
 
 js-tokens@^4.0.0:
   version "4.0.0"

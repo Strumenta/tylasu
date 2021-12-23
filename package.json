@@ -3,7 +3,7 @@
 	"description": "Generic AST implementation for JavaScript, inspired by Kolasu and integrated with ANTLR4.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "0.14.0",
+	"version": "0.15.0",
 	"license": "Apache-2.0",
 	"private": false,
 	"repository": {
@@ -24,7 +24,7 @@
 	"dependencies": {
 		"@types/node": "^13.9.8",
 		"antlr4ts": "^0.5.0-alpha.4",
-		"iter-ops": "^1.4.5",
+		"iter-ops": "^1.5.0",
 		"reflect-metadata": "^0.1.13"
 	},
 	"optionalDependencies": {
