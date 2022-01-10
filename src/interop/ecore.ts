@@ -456,11 +456,22 @@ function decodeEnumLiteral(eType, literalName: string) {
     if(!literalName) {
         return undefined;
     }
-    const literal = eType.get("eLiterals").find(l => l.get("name") === literalName);
-    if (literal) {
-        return literal.get("value") || 0;
+    if(typeof literalName === "string") {
+        const literal = eType.get("eLiterals").find(l => l.get("name") === literalName);
+        if (literal) {
+            return literal.get("value") || 0;
+        } else {
+            throw new Error(`Unknown enum literal: ${literalName} of ${eType.get("name")}`);
+        }
+    } else if(typeof literalName === "number") {
+        const literal = eType.get("eLiterals").at(literalName);
+        if (literal) {
+            return literal.get("value") || literalName;
+        } else {
+            throw new Error(`Unknown enum literal: ${literalName} of ${eType.get("name")}`)
+        }
     } else {
-        throw new Error(`Unknown enum literal: ${literalName} of ${eType.get("name")}`)
+        throw new Error(`Invalid enum literal: ${literalName} of ${eType.get("name")}`)
     }
 }
 
@@ -734,19 +745,13 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
         const propertyNames = Object.getOwnPropertyNames(obj);
         if(samePropertiesAs(propertyNames, THE_RESULT_ECLASS) &&
             Array.isArray(obj.issues)) {
-            return THE_RESULT_ECLASS.create({
-                root: importJsonObject(obj.root, resource),
-                issues: obj.issues.map(i => importJsonObject(i, resource))
-            });
+            eClass = THE_RESULT_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_ECLASS)) {
-            return THE_LOCAL_DATE_ECLASS.create(obj);
+            eClass = THE_LOCAL_DATE_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_LOCAL_TIME_ECLASS)) {
-            return THE_LOCAL_TIME_ECLASS.create(obj);
+            eClass = THE_LOCAL_TIME_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_TIME_ECLASS)) {
-            return THE_LOCAL_DATE_TIME_ECLASS.create({
-                date: toEObject(obj.date),
-                time: toEObject(obj.time)
-            });
+            eClass = THE_LOCAL_TIME_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_ISSUE_ECLASS)) {
             return THE_ISSUE_ECLASS.create({
                 type: IssueType[obj.type],
@@ -754,6 +759,10 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                 severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
                 position: obj.position ? importJsonObject(obj.position, resource) : undefined
             });
+        } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
+            eClass = THE_POINT_ECLASS;
+        } else if(samePropertiesAs(propertyNames, THE_POSITION_ECLASS)) {
+            eClass = THE_POSITION_ECLASS;
         } else {
             throw new Error("EClass is not specified and not present in the object");
         }

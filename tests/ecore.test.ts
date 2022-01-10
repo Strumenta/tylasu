@@ -143,13 +143,17 @@ describe("Import/export", function () {
         expect(ePackages.length).to.equal(5);
         const buffer = fs.readFileSync("tests/data/sas.example1.json");
         const example1 = loadEObject(buffer.toString(), resource);
-        expect(example1.eClass.get("name")).to.equal("SourceFile");
-        expect(example1.get("statementsAndDeclarations").size()).to.equal(13);
+        expect(example1.eClass.get("name")).to.equal("Result");
+        const root = example1.get("root");
+        expect(root.eClass.get("name")).to.equal("SourceFile");
+        expect(root.get("statementsAndDeclarations").size()).to.equal(26);
         expect(() => fromEObject(example1)).to.throw;
         generateASTModel(ePackages);
-        const node = fromEObject(example1) as Node & any;
+        const result = fromEObject(example1) as Result;
+        expect(result.issues.length).to.equal(258);
+        const node = result.root as any;
         expect(node instanceof Node).to.be.true;
-        expect(node.statementsAndDeclarations.length).to.equal(13);
+        expect(node.statementsAndDeclarations.length).to.equal(26);
     });
     it("importing using raw Ecore.js",
         function () {
