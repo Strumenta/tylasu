@@ -1,0 +1,19 @@
+{
+  "ast": {
+    "eClass": "https://strumenta.com/kolasu/v1#//Result",
+    "root": {
+      "eClass": "#/0/SomeNodeInPackage",
+      "a": "root"
+    },
+    "issues": [
+      {
+        "eClass": "https://strumenta.com/kolasu/v1#//Result/issues/Issue",
+        "type": "SEMANTIC",
+        "message": "Something's wrong",
+        "severity": "ERROR"
+      }
+    ]
+  },
+  "code": "some code",
+  "name": "test-1"
+}

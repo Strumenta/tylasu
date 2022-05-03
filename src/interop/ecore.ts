@@ -828,8 +828,10 @@ export abstract class EMFEnabledParser<R extends Node, P extends ANTLRParser, C 
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
      */
-    generateMetamodel(resource: Resource): void {
-        resource.get("contents").add(THE_AST_EPACKAGE);
+    generateMetamodel(resource: Resource, includingKolasuMetamodel = true): void {
+        if (includingKolasuMetamodel) {
+            resource.get("contents").add(THE_AST_EPACKAGE);
+        }
         this.doGenerateMetamodel(resource);
     }
 

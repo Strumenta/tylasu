@@ -61,3 +61,6 @@ export class NodeSubclass extends SomeNodeInPackage {
     @Child()
     anotherChild: SomeNodeInPackage;
 }
+
+@ASTNode("another.package", "SomeNodeInPackage")
+export class SomeNodeInAnotherPackage extends Node {}

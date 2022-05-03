@@ -33,7 +33,6 @@ Node.prototype.find = function(predicate: (n: Node, index: number) => boolean, w
     return find(this, predicate, walker);
 };
 
-
 /**
  * Sets or corrects the parent of all AST nodes.
  * Kolasu does not see set/add/delete operations on the AST nodes,

@@ -20,14 +20,17 @@ import {assignParents} from "./processing";
 let now: () => number;
 
 try {
+    // Web
     performance.now();
     now = () => performance.now();
 } catch (e) {
     try {
+        // Node.js
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { performance } = require('perf_hooks');
         now = () => performance.now();
     } catch (e) {
+        // Fallback
         now = () => new Date().getTime();
     }
 }
