@@ -130,6 +130,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         return new FirstStageParsingResult(code, root, issues, time - now(), lexingTime);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected postProcessAst(ast: R, issues: Issue[]): R {
         return ast;
     }

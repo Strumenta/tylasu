@@ -5,7 +5,7 @@ import * as Ecore from "ecore/dist/ecore";
 
 export function saveForParserBench<R extends Node>(
     result: ParsingResult<R, any>, name: string,
-    parser: EMFEnabledParser<R, any, any>, callback: (data: any, error: any) => void) {
+    parser: EMFEnabledParser<R, any, any>, callback: (data: any, error: any) => void): void {
     const resourceSet = Ecore.ResourceSet.create();
     const mmResource = resourceSet.create({ uri: "ast" });
     parser.generateMetamodel(mmResource, false);
