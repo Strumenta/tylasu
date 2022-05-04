@@ -295,13 +295,15 @@ function getEType(property: any) {
 }
 
 function registerEClass(nodeType: string, packageDef: PackageDescription, ePackage) {
-    if (nodeType[ECLASS_SYMBOL]) {
-        return nodeType[ECLASS_SYMBOL];
+    const constructor = packageDef.nodes[nodeType];
+    if (Object.prototype.hasOwnProperty.call(constructor, ECLASS_SYMBOL)) {
+        const eClass = constructor[ECLASS_SYMBOL];
+        ePackage.get('eClassifiers').add(eClass);
+        return eClass;
     }
     const eClass = Ecore.EClass.create({
         name: nodeType
     });
-    const constructor = packageDef.nodes[nodeType];
     constructor[ECLASS_SYMBOL] = eClass;
     const proto = Object.getPrototypeOf(constructor);
     const parentNodeDef = getNodeDefinition(proto);

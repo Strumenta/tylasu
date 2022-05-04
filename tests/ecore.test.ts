@@ -49,6 +49,8 @@ describe('Metamodel', function() {
             expect(ePackage.get("eClassifiers").size() >= 1).to.be.true;
             const eClass = ePackage.get("eClassifiers").find(ec => ec.get('name') == "NodeSubclass");
             expect(eClass).not.to.be.undefined;
+            expect(eClass.get('eSuperTypes').size()).to.equal(1);
+            expect(eClass.get('eSuperTypes').at(0).get("name")).to.equal("SomeNodeInPackage");
             expect(eClass.get('eStructuralFeatures').size()).to.equal(2);
             expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("b");
             expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("anotherChild");

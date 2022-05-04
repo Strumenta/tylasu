@@ -1,7 +1,7 @@
 import {expect} from "chai";
 
-import {Issue, ParsingResult} from "../src";
-import {SomeNodeInAnotherPackage, SomeNodeInPackage} from "./nodes";
+import {Issue, ParsingResult, registerECoreModel} from "../src";
+import {NodeSubclass, SomeNodeInAnotherPackage, SomeNodeInPackage} from "./nodes";
 import {saveForParserBench} from "../src/interop/parser-bench";
 import {EMFEnabledParser, toEObject} from "../src/interop/ecore";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
@@ -10,8 +10,8 @@ import * as Ecore from "ecore/dist/ecore";
 
 describe('Parser Bench', function() {
     it("Export", function () {
-        const result = new ParsingResult<SomeNodeInPackage, any>(
-            "some code", new SomeNodeInPackage("root"), [Issue.semantic("Something's wrong")]);
+        const result = new ParsingResult<NodeSubclass, any>(
+            "some code", new NodeSubclass("root"), [Issue.semantic("Something's wrong")]);
         const testParser = new TestParser();
         const resourceSet = Ecore.ResourceSet.create();
         const mmResource = resourceSet.create({ uri: "some.package" });
@@ -31,7 +31,7 @@ describe('Parser Bench', function() {
     });
 });
 
-class TestParser extends EMFEnabledParser<SomeNodeInPackage, any, any> {
+class TestParser extends EMFEnabledParser<NodeSubclass, any, any> {
     protected createANTLRLexer(inputStream: CharStream): Lexer {
         return undefined;
     }
@@ -41,11 +41,11 @@ class TestParser extends EMFEnabledParser<SomeNodeInPackage, any, any> {
     }
 
     protected doGenerateMetamodel(resource): void {
-        resource.get("contents").add(toEObject(new SomeNodeInPackage()).eClass.eContainer);
-        resource.get("contents").add(toEObject(new SomeNodeInAnotherPackage()).eClass.eContainer);
+        resource.get("contents").add(registerECoreModel("some.package"));
+        resource.get("contents").add(registerECoreModel("another.package"));
     }
 
-    protected parseTreeToAst(parseTreeRoot: any, considerPosition: boolean, issues: Issue[]): SomeNodeInPackage | undefined {
+    protected parseTreeToAst(parseTreeRoot: any, considerPosition: boolean, issues: Issue[]): NodeSubclass | undefined {
         return undefined;
     }
 

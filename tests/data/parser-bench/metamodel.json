@@ -115,7 +115,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": null,
+            "$ref": "/0/SomeNodeInPackage",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ],
@@ -191,6 +191,41 @@
             "unique": true,
             "lowerBound": 0,
             "upperBound": -1,
+            "containment": true
+          }
+        ]
+      },
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "NodeSubclass",
+        "abstract": false,
+        "interface": false,
+        "eSuperTypes": [
+          {
+            "$ref": "/0/SomeNodeInPackage",
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "b",
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "name": "anotherChild",
+            "eType": {
+              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+            },
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1,
             "containment": true
           }
         ]

@@ -2,7 +2,7 @@
   "ast": {
     "eClass": "https://strumenta.com/kolasu/v1#//Result",
     "root": {
-      "eClass": "#/0/SomeNodeInPackage",
+      "eClass": "#/0/NodeSubclass",
       "a": "root"
     },
     "issues": [
