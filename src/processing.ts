@@ -1,6 +1,6 @@
 import {Node} from "./ast";
 import {walk} from "./traversing";
-import {filter, pipe} from "iter-ops";
+import {first, pipe} from "iter-ops";
 
 declare module './ast' {
     export interface Node {
@@ -26,7 +26,7 @@ declare module './ast' {
 export function find(
     startingNode: Node, predicate: (n: Node, index: number) => boolean,
     walker: typeof walk = walk): Node | undefined {
-    return pipe(walker(startingNode), filter(predicate)).first;
+    return pipe(walker(startingNode), first(predicate)).first;
 }
 
 Node.prototype.find = function(predicate: (n: Node, index: number) => boolean, walker: typeof walk = walk) {

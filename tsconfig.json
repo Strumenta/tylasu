@@ -3,12 +3,11 @@
 	"compilerOptions": {
         "experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"module": "ES6",
 		"moduleResolution": "Node",
 		"declaration": true,
 		"sourceMap": true,
 		"strict": false,
-		"outDir": "dist"
+		"declarationDir": "dist/types"
 	},
 	"include": ["src/index.ts", "src/interop", "src/cli.ts"],
 	"exclude": ["node_modules"]
