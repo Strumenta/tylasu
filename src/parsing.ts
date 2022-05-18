@@ -99,12 +99,12 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
             it => {
                 if (it.exception != null) {
                     const message = `Recognition exception: ${it.exception.message}`;
-                    issues.push(Issue.syntactic(message, IssueSeverity.ERROR, it.toPosition()));
+                    issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it)));
                 }
             },
             it => {
                 const message = `Error node found (token: ${it.symbol?.text})`;
-                issues.push(Issue.syntactic(message, IssueSeverity.ERROR, it.toPosition()));
+                issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it)));
             });
     }
 
@@ -127,7 +127,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
             this.verifyParseTree(parser, issues, root);
         }
         const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
-        return new FirstStageParsingResult(code, root, issues, time - now(), lexingTime);
+        return new FirstStageParsingResult(code, root, issues, now() - time, lexingTime);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

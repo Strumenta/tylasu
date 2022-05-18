@@ -25,7 +25,12 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
         const definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
         if(definition && definition.properties && !definition.resolved) {
             try {
-                const metadataHolder = typeof node === "function" ? new node() : node;
+                let metadataHolder;
+                try {
+                    metadataHolder = new (node as any)();
+                } catch (_) {
+                    metadataHolder = node;
+                }
                 let noTypesToFind = true;
                 let atLeastOneFound = false;
                 for(const p in definition.properties) {
