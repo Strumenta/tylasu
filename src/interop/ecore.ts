@@ -796,24 +796,30 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                     eObject.set(key, obj[key]);
                 } else if (feature.isTypeOf('EReference')) {
                     const eType = feature.get("eType");
-                    if (feature.get("many")) {
-                        if (obj[key]) {
-                            obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
-                        }
-                    } else {
-                        let value;
-                        if (Array.isArray(obj[key])) {
-                            if (obj[key].length == 1) {
-                                value = obj[key][0];
-                            } else if (obj[key].length > 1) {
-                                throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                    if (feature.get("containment") === true) {
+                        if (feature.get("many")) {
+                            if (obj[key]) {
+                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
                             }
                         } else {
-                            value = obj[key];
+                            let value;
+                            if (Array.isArray(obj[key])) {
+                                if (obj[key].length == 1) {
+                                    value = obj[key][0];
+                                } else if (obj[key].length > 1) {
+                                    throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                                }
+                            } else {
+                                value = obj[key];
+                            }
+                            if (value) {
+                                eObject.set(key, importJsonObject(value, resource, eType, strict));
+                            }
                         }
-                        if (value) {
-                            eObject.set(key, importJsonObject(value, resource, eType, strict));
-                        }
+                    } else if (feature.get("containment") === false) {
+                        throw new Error("References are not supported yet");
+                    } else {
+                        throw new Error("The feature is neither a containment or a reference");
                     }
                 } else if (strict) {
                     throw new Error("Not a feature: " + key + " of " + eClass.fragment());
