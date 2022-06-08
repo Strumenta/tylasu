@@ -21,13 +21,19 @@ export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
 
 export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
+export const KOLASU_URI_V2 = "https://strumenta.com/kolasu/v2";
+export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V2 });
+export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: KOLASU_URI_V2 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
-export const THE_NODE_ECLASS = Ecore.EClass.create({
-    name: "ASTNode",
+export const THE_ORIGIN_ECLASS = Ecore.EClass.create({
+    name: "Origin",
     abstract: true
 });
+export const THE_NODE_ECLASS = Ecore.EClass.create({
+    name: "ASTNode",
+    abstract: true,
+});
+THE_NODE_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
 export const THE_POINT_ECLASS = Ecore.EClass.create({
     name: "Point"
 });
@@ -61,6 +67,17 @@ THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "destination",
+    eType: THE_POSITION_ECLASS,
+    containment: true
+}));
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "origin",
+    eType: THE_ORIGIN_ECLASS,
+    containment: false
+}));
+
 export const THE_POSSIBLY_NAMED_INTERFACE = Ecore.EClass.create({
     name: "PossiblyNamed",
     interface: true
@@ -228,6 +245,7 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     upperBound: -1
 }));
 
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
@@ -241,7 +259,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 
-function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
+export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
     if(ePackage) {
         if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {

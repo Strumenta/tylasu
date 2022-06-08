@@ -451,6 +451,11 @@ cross-spawn@^7.0.1, cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crossecore@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/crossecore/-/crossecore-0.3.0.tgz#9caf1986b411e8f546c62af8fa46ec46d0acf705"
+  integrity sha512-dyzFxEdNMbXYuyuJkJxiqxVPnQwHiYZ1mIigEgNg8rhaTT9Lgf7/02GViKNGyEmABBT/yMV/pSsVUKXjn2Q+yw==
+
 debug@4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"

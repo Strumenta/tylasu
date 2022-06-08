@@ -1,6 +1,8 @@
 import {Node} from "./ast";
 import {ParseTree} from "antlr4ts/tree";
 import {Point, Position} from "./position";
+import {EObject} from "ecore"
+import * as Ecore from "ecore/dist/ecore";
 
 export class NodeData {
     //type: string;
@@ -21,6 +23,23 @@ export interface TranspilationTrace {
 }
 
 export function loadTranspilationTraceFromJSON(json: string) : TranspilationTrace {
+    // const p : EPackage = new EPackageImpl()
+    // const f : EFactory = new EFactoryImpl()
+    // const jr = new JsonResource(p, f)
+    // const loaded = jr.fromJson(json)
+    // console.log("loaded", loaded);
+    // // @ts-ignore
+    // console.log("package", p.eContents().size());
+    //
+    // Dynamic
+    const resourceSet = Ecore.ResourceSet.create();
+    const mmResource = resourceSet.create({ uri: "some.package" });
+    mmResource.load((resource)=>{
+        console.log("resource loaded", resource)
+    }, (e)=>{
+        console.error("Error", e)
+    })
+
     const raw = JSON.parse(json);
     const idsToNodes = new Map<string, NodeData>();
     const deferredDestinations = new Map<string, NodeData>();
