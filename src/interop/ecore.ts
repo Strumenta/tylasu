@@ -710,6 +710,18 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
 }
 
 /**
+ * Used to track references to resolve once the whole model is loaded.
+ */
+class ReferencesTracker {
+    trackReference() : void {
+        const a = 1;
+    }
+    resolveAllReferences(root: EObject | undefined) : void {
+        const a = 1;
+    }
+}
+
+/**
  * Interprets a string or JSON object as an EObject.
  * @param data the input string or object.
  * @param resource where to look for to resolve references to types.
@@ -719,7 +731,10 @@ export function loadEObject(data: any, resource: Resource): EObject | undefined 
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
-    return importJsonObject(data, resource);
+    const referencesTracker = new ReferencesTracker();
+    const result = importJsonObject(data, resource, null, true, referencesTracker);
+    referencesTracker.resolveAllReferences(result);
+    return result;
 }
 
 export function findEClass(name: string, resource: Resource): EClass | undefined {
@@ -752,9 +767,11 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  * @param resource where to look for to resolve references to types.
  * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
  * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
+ * @param pathsToEObjectsMap paths to ID map to be used to solve references
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, strict = true): EObject {
+function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
+                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker()): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
@@ -777,7 +794,7 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                 type: IssueType[obj.type],
                 message: obj.message,
                 severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
-                position: obj.position ? importJsonObject(obj.position, resource) : undefined
+                position: obj.position ? importJsonObject(obj.position, resource, null, strict, referencesTracker) : undefined
             });
         } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
             eClass = THE_POINT_ECLASS;
@@ -799,7 +816,7 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                     if (feature.get("containment") === true) {
                         if (feature.get("many")) {
                             if (obj[key]) {
-                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
+                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
                             }
                         } else {
                             let value;
@@ -813,11 +830,12 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                                 value = obj[key];
                             }
                             if (value) {
-                                eObject.set(key, importJsonObject(value, resource, eType, strict));
+                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
                             }
                         }
                     } else if (feature.get("containment") === false) {
-                        throw new Error("References are not supported yet");
+                        const refValue = obj[key];
+                        throw new Error(`References are not supported yet. Value: ${JSON.stringify(refValue)}`);
                     } else {
                         throw new Error("The feature is neither a containment or a reference");
                     }
