@@ -709,15 +709,21 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     return registerPackages(resource);
 }
 
+interface PostponedReference {
+    eObject: EObject, feature: any, refValue: any
+}
+
 /**
  * Used to track references to resolve once the whole model is loaded.
  */
 class ReferencesTracker {
-    trackReference() : void {
-        const a = 1;
+    private postponedReferences : PostponedReference[] = [];
+
+    trackReference(eObject: EObject, feature: any, refValue: any) : void {
+        this.postponedReferences.push({eObject, feature, refValue});
     }
     resolveAllReferences(root: EObject | undefined) : void {
-        const a = 1;
+        throw new Error();
     }
 }
 
@@ -835,7 +841,8 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
                         }
                     } else if (feature.get("containment") === false) {
                         const refValue = obj[key];
-                        throw new Error(`References are not supported yet. Value: ${JSON.stringify(refValue)}`);
+                        referencesTracker.trackReference(eObject, feature, refValue);
+                        //throw new Error(`References are not supported yet. Value: ${JSON.stringify(refValue)}`);
                     } else {
                         throw new Error("The feature is neither a containment or a reference");
                     }

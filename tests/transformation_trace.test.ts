@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import * as fs from "fs";
 import {loadTranspilationTraceFromJSON, TranspilationTrace} from "../src/transformation_trace";
-import {loadEObject, loadEPackages} from "../src";
+import {loadEObject, loadEPackages, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../src";
 import * as Ecore from "ecore/dist/ecore";
 import {KOLASU_TRANSPILATION_URI_V1, TRANSPILATION_EPACKAGE} from "../src/interop/transpilation_package";
 
@@ -10,6 +10,7 @@ describe('Transformation traces', function() {
         function () {
             this.timeout(0);
             const resourceSet = Ecore.ResourceSet.create();
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/total-bench/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/rpg-metamodels.json").toString()),
