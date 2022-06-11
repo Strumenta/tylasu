@@ -12,6 +12,7 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
+import {resourceParse} from "./ecorejsfork";
 
 // Kolasu model definition
 
@@ -705,7 +706,9 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: Resource): EPackage[] {
-    resource.parse(data);
+    console.log("custom", resource.parse)
+    resourceParse(resource, data);
+    //resource.parse(data);
     return registerPackages(resource);
 }
 

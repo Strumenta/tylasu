@@ -36,7 +36,7 @@ describe('Transformation traces', function() {
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/total-bench/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/rpg-metamodels.json").toString()),
-                rpgMetamodelsResource);
+                 rpgMetamodelsResource);
             const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/java-metamodels.json").toString()),
                 rpgMetamodelsResource);
 
@@ -46,7 +46,20 @@ describe('Transformation traces', function() {
             // const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
             // expect(ePackages.length).to.equal(5);
             const text = fs.readFileSync('tests/data/total-bench/rpgtojava-transpilation-example.json', 'utf8')
-            const example1 = loadEObject(text.toString(), resource);
+
+            const javaast = rpgMetamodelsResource.eContents()[2];
+            expect(javaast.eClass.get("name")).to.eql("EPackage");
+            expect(javaast.eContents().length).to.eql(31);
+            const jCompilationUnit = javaast.eContents()[30];
+            expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
+            expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
+            expect(jCompilationUnit.eContents().length).to.eql(1);
+            const declarations = jCompilationUnit.eContents()[0];
+            expect(declarations.eClass.get("name")).to.eql("EReference");
+            expect(declarations.get("name")).to.eql("declarations");
+            expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+
+            //const example1 = loadEObject(text.toString(), resource);
             //const trace : TranspilationTrace = loadTranspilationTraceFromJSON(text);
             // expect(trace.sourceAST.type).to.equal("com.strumenta.rpgparser.model.CompilationUnit");
             // expect(trace.sourceAST.id).to.equal("src-1");
