@@ -21,13 +21,19 @@ export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
 
 export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
+export const KOLASU_URI_V2 = "https://strumenta.com/kolasu/v2";
+export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V2 });
+export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: KOLASU_URI_V2 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
-export const THE_NODE_ECLASS = Ecore.EClass.create({
-    name: "ASTNode",
+export const THE_ORIGIN_ECLASS = Ecore.EClass.create({
+    name: "Origin",
     abstract: true
 });
+export const THE_NODE_ECLASS = Ecore.EClass.create({
+    name: "ASTNode",
+    abstract: true,
+});
+THE_NODE_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
 export const THE_POINT_ECLASS = Ecore.EClass.create({
     name: "Point"
 });
@@ -61,6 +67,17 @@ THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "destination",
+    eType: THE_POSITION_ECLASS,
+    containment: true
+}));
+THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "origin",
+    eType: THE_ORIGIN_ECLASS,
+    containment: false
+}));
+
 export const THE_POSSIBLY_NAMED_INTERFACE = Ecore.EClass.create({
     name: "PossiblyNamed",
     interface: true
@@ -228,6 +245,7 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     upperBound: -1
 }));
 
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
@@ -241,7 +259,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 
-function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
+export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
     if(ePackage) {
         if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {
@@ -691,6 +709,24 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     return registerPackages(resource);
 }
 
+interface PostponedReference {
+    eObject: EObject, feature: any, refValue: any
+}
+
+/**
+ * Used to track references to resolve once the whole model is loaded.
+ */
+class ReferencesTracker {
+    private postponedReferences : PostponedReference[] = [];
+
+    trackReference(eObject: EObject, feature: any, refValue: any) : void {
+        this.postponedReferences.push({eObject, feature, refValue});
+    }
+    resolveAllReferences(root: EObject | undefined) : void {
+        throw new Error();
+    }
+}
+
 /**
  * Interprets a string or JSON object as an EObject.
  * @param data the input string or object.
@@ -701,7 +737,10 @@ export function loadEObject(data: any, resource: Resource): EObject | undefined 
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
-    return importJsonObject(data, resource);
+    const referencesTracker = new ReferencesTracker();
+    const result = importJsonObject(data, resource, null, true, referencesTracker);
+    referencesTracker.resolveAllReferences(result);
+    return result;
 }
 
 export function findEClass(name: string, resource: Resource): EClass | undefined {
@@ -734,9 +773,11 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  * @param resource where to look for to resolve references to types.
  * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
  * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
+ * @param pathsToEObjectsMap paths to ID map to be used to solve references
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, strict = true): EObject {
+function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
+                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker()): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
@@ -759,7 +800,7 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                 type: IssueType[obj.type],
                 message: obj.message,
                 severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
-                position: obj.position ? importJsonObject(obj.position, resource) : undefined
+                position: obj.position ? importJsonObject(obj.position, resource, null, strict, referencesTracker) : undefined
             });
         } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
             eClass = THE_POINT_ECLASS;
@@ -778,24 +819,32 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                     eObject.set(key, obj[key]);
                 } else if (feature.isTypeOf('EReference')) {
                     const eType = feature.get("eType");
-                    if (feature.get("many")) {
-                        if (obj[key]) {
-                            obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
-                        }
-                    } else {
-                        let value;
-                        if (Array.isArray(obj[key])) {
-                            if (obj[key].length == 1) {
-                                value = obj[key][0];
-                            } else if (obj[key].length > 1) {
-                                throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                    if (feature.get("containment") === true) {
+                        if (feature.get("many")) {
+                            if (obj[key]) {
+                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
                             }
                         } else {
-                            value = obj[key];
+                            let value;
+                            if (Array.isArray(obj[key])) {
+                                if (obj[key].length == 1) {
+                                    value = obj[key][0];
+                                } else if (obj[key].length > 1) {
+                                    throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                                }
+                            } else {
+                                value = obj[key];
+                            }
+                            if (value) {
+                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
+                            }
                         }
-                        if (value) {
-                            eObject.set(key, importJsonObject(value, resource, eType, strict));
-                        }
+                    } else if (feature.get("containment") === false) {
+                        const refValue = obj[key];
+                        referencesTracker.trackReference(eObject, feature, refValue);
+                        //throw new Error(`References are not supported yet. Value: ${JSON.stringify(refValue)}`);
+                    } else {
+                        throw new Error("The feature is neither a containment or a reference");
                     }
                 } else if (strict) {
                     throw new Error("Not a feature: " + key + " of " + eClass.fragment());

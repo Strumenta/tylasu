@@ -1,0 +1,2721 @@
+{
+  "eClass" : "https://strumenta.com/kolasu/transpilation/v1#//TranspilationTrace",
+  "originalCode" : "﻿\n\n      * Calculates number of Fibonacci in an iterative way\n     D NBR             S              8  0\n     D RESULT          S              8  0 INZ(0)\n     D COUNT           S              8  0\n     D A               S              8  0 INZ(0)\n     D B               S              8  0 INZ((A + 1))\n     C     *entry        plist\n     C                   parm                    ppdat\n      *\n     C                   EVAL      NBR = 55\n     C                   EXSR      FIB\n     C     RESULT        DSPLY\n      *--------------------------------------------------------------*\n     C     FIB           BEGSR\n     C                   EVAL      COUNT = 0\n     C                   SELECT\n     C                   WHEN      NBR = 0\n     C                   EVAL      RESULT = 0\n     C                   WHEN      NBR = 1\n     C                   EVAL      RESULT = 1\n     C                   OTHER\n     C                   FOR       COUNT = 2 TO NBR\n     C                   EVAL      RESULT = A + B\n     C                   EVAL      A = B\n     C                   EVAL      B = RESULT\n     C     RESULT        DSPLY\n     C                   ENDFOR\n     C                   ENDSL\n     C                   ENDSR\n     C                   SETON",
+  "sourceAST" : {
+    "eClass" : "https://strumenta.com/rpg/model#//CompilationUnit",
+    "position" : {
+      "start" : {
+        "line" : 1
+      },
+      "end" : {
+        "line" : 32,
+        "column" : 30
+      }
+    },
+    "dataDefinitions" : [ {
+      "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+      "position" : {
+        "start" : {
+          "line" : 4
+        },
+        "end" : {
+          "line" : 4,
+          "column" : 42
+        }
+      },
+      "explicitLength" : 8,
+      "name" : "NBR",
+      "type" : {
+        "eClass" : "https://strumenta.com/rpg/model#//PackedDecimalType",
+        "position" : {
+          "start" : {
+            "line" : 4,
+            "column" : 33
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 42
+          }
+        },
+        "entireDigits" : 8,
+        "totalDigits" : 8
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+      "position" : {
+        "start" : {
+          "line" : 5
+        },
+        "end" : {
+          "line" : 5,
+          "column" : 49
+        }
+      },
+      "keywords" : [ {
+        "eClass" : "https://strumenta.com/rpg/model#//InitializationKeyword",
+        "position" : {
+          "start" : {
+            "line" : 5,
+            "column" : 43
+          },
+          "end" : {
+            "line" : 5,
+            "column" : 49
+          }
+        },
+        "value" : {
+          "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+          "position" : {
+            "start" : {
+              "line" : 5,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 5,
+              "column" : 48
+            }
+          },
+          "value" : "0"
+        }
+      } ],
+      "explicitLength" : 8,
+      "name" : "RESULT",
+      "type" : {
+        "eClass" : "https://strumenta.com/rpg/model#//PackedDecimalType",
+        "position" : {
+          "start" : {
+            "line" : 5,
+            "column" : 33
+          },
+          "end" : {
+            "line" : 5,
+            "column" : 42
+          }
+        },
+        "entireDigits" : 8,
+        "totalDigits" : 8
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+      "position" : {
+        "start" : {
+          "line" : 6
+        },
+        "end" : {
+          "line" : 6,
+          "column" : 42
+        }
+      },
+      "explicitLength" : 8,
+      "name" : "COUNT",
+      "type" : {
+        "eClass" : "https://strumenta.com/rpg/model#//PackedDecimalType",
+        "position" : {
+          "start" : {
+            "line" : 6,
+            "column" : 33
+          },
+          "end" : {
+            "line" : 6,
+            "column" : 42
+          }
+        },
+        "entireDigits" : 8,
+        "totalDigits" : 8
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+      "position" : {
+        "start" : {
+          "line" : 7
+        },
+        "end" : {
+          "line" : 7,
+          "column" : 49
+        }
+      },
+      "keywords" : [ {
+        "eClass" : "https://strumenta.com/rpg/model#//InitializationKeyword",
+        "position" : {
+          "start" : {
+            "line" : 7,
+            "column" : 43
+          },
+          "end" : {
+            "line" : 7,
+            "column" : 49
+          }
+        },
+        "value" : {
+          "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+          "position" : {
+            "start" : {
+              "line" : 7,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 7,
+              "column" : 48
+            }
+          },
+          "value" : "0"
+        }
+      } ],
+      "explicitLength" : 8,
+      "name" : "A",
+      "type" : {
+        "eClass" : "https://strumenta.com/rpg/model#//PackedDecimalType",
+        "position" : {
+          "start" : {
+            "line" : 7,
+            "column" : 33
+          },
+          "end" : {
+            "line" : 7,
+            "column" : 42
+          }
+        },
+        "entireDigits" : 8,
+        "totalDigits" : 8
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+      "position" : {
+        "start" : {
+          "line" : 8
+        },
+        "end" : {
+          "line" : 8,
+          "column" : 55
+        }
+      },
+      "keywords" : [ {
+        "eClass" : "https://strumenta.com/rpg/model#//InitializationKeyword",
+        "position" : {
+          "start" : {
+            "line" : 8,
+            "column" : 43
+          },
+          "end" : {
+            "line" : 8,
+            "column" : 55
+          }
+        },
+        "value" : {
+          "eClass" : "https://strumenta.com/rpg/model#//ParensExpr",
+          "position" : {
+            "start" : {
+              "line" : 8,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 8,
+              "column" : 54
+            }
+          },
+          "base" : {
+            "eClass" : "https://strumenta.com/rpg/model#//SumExpr",
+            "position" : {
+              "start" : {
+                "line" : 8,
+                "column" : 48
+              },
+              "end" : {
+                "line" : 8,
+                "column" : 53
+              }
+            },
+            "left" : {
+              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+              "position" : {
+                "start" : {
+                  "line" : 8,
+                  "column" : 48
+                },
+                "end" : {
+                  "line" : 8,
+                  "column" : 49
+                }
+              },
+              "name" : "A"
+            },
+            "right" : {
+              "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+              "position" : {
+                "start" : {
+                  "line" : 8,
+                  "column" : 52
+                },
+                "end" : {
+                  "line" : 8,
+                  "column" : 53
+                }
+              },
+              "value" : "1"
+            }
+          }
+        }
+      } ],
+      "explicitLength" : 8,
+      "name" : "B",
+      "type" : {
+        "eClass" : "https://strumenta.com/rpg/model#//PackedDecimalType",
+        "position" : {
+          "start" : {
+            "line" : 8,
+            "column" : 33
+          },
+          "end" : {
+            "line" : 8,
+            "column" : 42
+          }
+        },
+        "entireDigits" : 8,
+        "totalDigits" : 8
+      }
+    } ],
+    "mainStatements" : [ {
+      "eClass" : "https://strumenta.com/rpg/model#//PListStatement",
+      "position" : {
+        "start" : {
+          "line" : 9
+        },
+        "end" : {
+          "line" : 9,
+          "column" : 30
+        }
+      },
+      "params" : [ {
+        "name" : "ppdat"
+      } ],
+      "name" : "*entry"
+    }, {
+      "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+      "position" : {
+        "start" : {
+          "line" : 12
+        },
+        "end" : {
+          "line" : 12,
+          "column" : 43
+        }
+      },
+      "expression" : {
+        "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+        "position" : {
+          "start" : {
+            "line" : 12,
+            "column" : 35
+          },
+          "end" : {
+            "line" : 12,
+            "column" : 43
+          }
+        },
+        "target" : {
+          "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+          "position" : {
+            "start" : {
+              "line" : 12,
+              "column" : 35
+            },
+            "end" : {
+              "line" : 12,
+              "column" : 38
+            }
+          },
+          "name" : "NBR"
+        },
+        "value" : {
+          "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+          "position" : {
+            "start" : {
+              "line" : 12,
+              "column" : 41
+            },
+            "end" : {
+              "line" : 12,
+              "column" : 43
+            }
+          },
+          "value" : "55"
+        }
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/model#//InvokeSubroutineStatement",
+      "position" : {
+        "start" : {
+          "line" : 13
+        },
+        "end" : {
+          "line" : 13,
+          "column" : 38
+        }
+      },
+      "subroutineName" : "FIB"
+    }, {
+      "eClass" : "https://strumenta.com/rpg/model#//DisplayStatement",
+      "position" : {
+        "start" : {
+          "line" : 14
+        },
+        "end" : {
+          "line" : 14,
+          "column" : 30
+        }
+      },
+      "message" : {
+        "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+        "position" : {
+          "start" : {
+            "line" : 14,
+            "column" : 11
+          },
+          "end" : {
+            "line" : 14,
+            "column" : 17
+          }
+        },
+        "name" : "RESULT"
+      }
+    }, {
+      "eClass" : "https://strumenta.com/rpg/model#//SetOnStatement",
+      "position" : {
+        "start" : {
+          "line" : 32
+        },
+        "end" : {
+          "line" : 32,
+          "column" : 30
+        }
+      }
+    } ],
+    "subroutines" : [ {
+      "position" : {
+        "start" : {
+          "line" : 16
+        },
+        "end" : {
+          "line" : 31,
+          "column" : 30
+        }
+      },
+      "name" : "FIB",
+      "statements" : [ {
+        "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+        "position" : {
+          "start" : {
+            "line" : 17
+          },
+          "end" : {
+            "line" : 17,
+            "column" : 44
+          }
+        },
+        "expression" : {
+          "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+          "position" : {
+            "start" : {
+              "line" : 17,
+              "column" : 35
+            },
+            "end" : {
+              "line" : 17,
+              "column" : 44
+            }
+          },
+          "target" : {
+            "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+            "position" : {
+              "start" : {
+                "line" : 17,
+                "column" : 35
+              },
+              "end" : {
+                "line" : 17,
+                "column" : 40
+              }
+            },
+            "name" : "COUNT"
+          },
+          "value" : {
+            "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+            "position" : {
+              "start" : {
+                "line" : 17,
+                "column" : 43
+              },
+              "end" : {
+                "line" : 17,
+                "column" : 44
+              }
+            },
+            "value" : "0"
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/rpg/model#//SelectStatement",
+        "position" : {
+          "start" : {
+            "line" : 18
+          },
+          "end" : {
+            "line" : 30,
+            "column" : 30
+          }
+        },
+        "otherClause" : {
+          "body" : [ {
+            "eClass" : "https://strumenta.com/rpg/model#//ForStatement",
+            "position" : {
+              "start" : {
+                "line" : 24,
+                "column" : 35
+              },
+              "end" : {
+                "line" : 29,
+                "column" : 31
+              }
+            },
+            "body" : [ {
+              "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+              "position" : {
+                "start" : {
+                  "line" : 25
+                },
+                "end" : {
+                  "line" : 25,
+                  "column" : 49
+                }
+              },
+              "expression" : {
+                "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                "position" : {
+                  "start" : {
+                    "line" : 25,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 25,
+                    "column" : 49
+                  }
+                },
+                "target" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 25,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 25,
+                      "column" : 41
+                    }
+                  },
+                  "name" : "RESULT"
+                },
+                "value" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//SumExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 25,
+                      "column" : 44
+                    },
+                    "end" : {
+                      "line" : 25,
+                      "column" : 49
+                    }
+                  },
+                  "left" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                    "position" : {
+                      "start" : {
+                        "line" : 25,
+                        "column" : 44
+                      },
+                      "end" : {
+                        "line" : 25,
+                        "column" : 45
+                      }
+                    },
+                    "name" : "A"
+                  },
+                  "right" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                    "position" : {
+                      "start" : {
+                        "line" : 25,
+                        "column" : 48
+                      },
+                      "end" : {
+                        "line" : 25,
+                        "column" : 49
+                      }
+                    },
+                    "name" : "B"
+                  }
+                }
+              }
+            }, {
+              "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+              "position" : {
+                "start" : {
+                  "line" : 26
+                },
+                "end" : {
+                  "line" : 26,
+                  "column" : 40
+                }
+              },
+              "expression" : {
+                "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                "position" : {
+                  "start" : {
+                    "line" : 26,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 26,
+                    "column" : 40
+                  }
+                },
+                "target" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 26,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 26,
+                      "column" : 36
+                    }
+                  },
+                  "name" : "A"
+                },
+                "value" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 26,
+                      "column" : 39
+                    },
+                    "end" : {
+                      "line" : 26,
+                      "column" : 40
+                    }
+                  },
+                  "name" : "B"
+                }
+              }
+            }, {
+              "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+              "position" : {
+                "start" : {
+                  "line" : 27
+                },
+                "end" : {
+                  "line" : 27,
+                  "column" : 45
+                }
+              },
+              "expression" : {
+                "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                "position" : {
+                  "start" : {
+                    "line" : 27,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 27,
+                    "column" : 45
+                  }
+                },
+                "target" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 27,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 27,
+                      "column" : 36
+                    }
+                  },
+                  "name" : "B"
+                },
+                "value" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 27,
+                      "column" : 39
+                    },
+                    "end" : {
+                      "line" : 27,
+                      "column" : 45
+                    }
+                  },
+                  "name" : "RESULT"
+                }
+              }
+            }, {
+              "eClass" : "https://strumenta.com/rpg/model#//DisplayStatement",
+              "position" : {
+                "start" : {
+                  "line" : 28
+                },
+                "end" : {
+                  "line" : 28,
+                  "column" : 30
+                }
+              },
+              "message" : {
+                "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 28,
+                    "column" : 11
+                  },
+                  "end" : {
+                    "line" : 28,
+                    "column" : 17
+                  }
+                },
+                "name" : "RESULT"
+              }
+            } ],
+            "indexVariable" : "COUNT",
+            "limitValue" : {
+              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+              "position" : {
+                "start" : {
+                  "line" : 24,
+                  "column" : 48
+                },
+                "end" : {
+                  "line" : 24,
+                  "column" : 51
+                }
+              },
+              "name" : "NBR"
+            },
+            "startValue" : {
+              "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+              "position" : {
+                "start" : {
+                  "line" : 24,
+                  "column" : 43
+                },
+                "end" : {
+                  "line" : 24,
+                  "column" : 44
+                }
+              },
+              "value" : "2"
+            }
+          } ]
+        },
+        "whenClauses" : [ {
+          "eClass" : "https://strumenta.com/rpg/model#//ConditionWhenClause",
+          "position" : {
+            "start" : {
+              "line" : 19
+            },
+            "end" : {
+              "line" : 21
+            }
+          },
+          "body" : [ {
+            "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+            "position" : {
+              "start" : {
+                "line" : 20
+              },
+              "end" : {
+                "line" : 20,
+                "column" : 45
+              }
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+              "position" : {
+                "start" : {
+                  "line" : 20,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 20,
+                  "column" : 45
+                }
+              },
+              "target" : {
+                "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 20,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 20,
+                    "column" : 41
+                  }
+                },
+                "name" : "RESULT"
+              },
+              "value" : {
+                "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                "position" : {
+                  "start" : {
+                    "line" : 20,
+                    "column" : 44
+                  },
+                  "end" : {
+                    "line" : 20,
+                    "column" : 45
+                  }
+                },
+                "value" : "0"
+              }
+            }
+          } ],
+          "condition" : {
+            "eClass" : "https://strumenta.com/rpg/model#//ComparisonExpr",
+            "position" : {
+              "start" : {
+                "line" : 19,
+                "column" : 35
+              },
+              "end" : {
+                "line" : 19,
+                "column" : 42
+              }
+            },
+            "left" : {
+              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+              "position" : {
+                "start" : {
+                  "line" : 19,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 19,
+                  "column" : 38
+                }
+              },
+              "name" : "NBR"
+            },
+            "right" : {
+              "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+              "position" : {
+                "start" : {
+                  "line" : 19,
+                  "column" : 41
+                },
+                "end" : {
+                  "line" : 19,
+                  "column" : 42
+                }
+              },
+              "value" : "0"
+            }
+          }
+        }, {
+          "eClass" : "https://strumenta.com/rpg/model#//ConditionWhenClause",
+          "position" : {
+            "start" : {
+              "line" : 21
+            },
+            "end" : {
+              "line" : 23
+            }
+          },
+          "body" : [ {
+            "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+            "position" : {
+              "start" : {
+                "line" : 22
+              },
+              "end" : {
+                "line" : 22,
+                "column" : 45
+              }
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+              "position" : {
+                "start" : {
+                  "line" : 22,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 22,
+                  "column" : 45
+                }
+              },
+              "target" : {
+                "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 22,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 22,
+                    "column" : 41
+                  }
+                },
+                "name" : "RESULT"
+              },
+              "value" : {
+                "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                "position" : {
+                  "start" : {
+                    "line" : 22,
+                    "column" : 44
+                  },
+                  "end" : {
+                    "line" : 22,
+                    "column" : 45
+                  }
+                },
+                "value" : "1"
+              }
+            }
+          } ],
+          "condition" : {
+            "eClass" : "https://strumenta.com/rpg/model#//ComparisonExpr",
+            "position" : {
+              "start" : {
+                "line" : 21,
+                "column" : 35
+              },
+              "end" : {
+                "line" : 21,
+                "column" : 42
+              }
+            },
+            "left" : {
+              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+              "position" : {
+                "start" : {
+                  "line" : 21,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 21,
+                  "column" : 38
+                }
+              },
+              "name" : "NBR"
+            },
+            "right" : {
+              "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+              "position" : {
+                "start" : {
+                  "line" : 21,
+                  "column" : 41
+                },
+                "end" : {
+                  "line" : 21,
+                  "column" : 42
+                }
+              },
+              "value" : "1"
+            }
+          }
+        } ]
+      }, {
+        "eClass" : "https://strumenta.com/rpg/model#//EndSubroutineStatement",
+        "position" : {
+          "start" : {
+            "line" : 31
+          },
+          "end" : {
+            "line" : 31,
+            "column" : 30
+          }
+        }
+      } ]
+    } ]
+  },
+  "targetAST" : {
+    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JCompilationUnit",
+    "position" : {
+      "start" : {
+        "line" : 1
+      },
+      "end" : {
+        "line" : 32,
+        "column" : 30
+      }
+    },
+    "destination" : {
+      "start" : {
+        "line" : 1
+      },
+      "end" : {
+        "line" : 29
+      }
+    },
+    "origin" : {
+      "eClass" : "https://strumenta.com/rpg/model#//CompilationUnit",
+      "$ref" : "//@sourceAST"
+    },
+    "declarations" : [ {
+      "destination" : {
+        "start" : {
+          "line" : 1
+        },
+        "end" : {
+          "line" : 29
+        }
+      },
+      "members" : [ {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
+        "position" : {
+          "start" : {
+            "line" : 4
+          },
+          "end" : {
+            "line" : 4,
+            "column" : 42
+          }
+        },
+        "destination" : {
+          "start" : {
+            "line" : 2
+          },
+          "end" : {
+            "line" : 3
+          }
+        },
+        "origin" : {
+          "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+          "$ref" : "//@sourceAST/@dataDefinitions.0"
+        },
+        "name" : "NBR",
+        "type" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+          "destination" : {
+            "start" : {
+              "line" : 2
+            },
+            "end" : {
+              "line" : 2,
+              "column" : 7
+            }
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
+        "position" : {
+          "start" : {
+            "line" : 5
+          },
+          "end" : {
+            "line" : 5,
+            "column" : 49
+          }
+        },
+        "destination" : {
+          "start" : {
+            "line" : 3
+          },
+          "end" : {
+            "line" : 4
+          }
+        },
+        "origin" : {
+          "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+          "$ref" : "//@sourceAST/@dataDefinitions.1"
+        },
+        "initialValue" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+          "position" : {
+            "start" : {
+              "line" : 5,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 5,
+              "column" : 48
+            }
+          },
+          "destination" : {
+            "start" : {
+              "line" : 3,
+              "column" : 17
+            },
+            "end" : {
+              "line" : 3,
+              "column" : 18
+            }
+          },
+          "origin" : {
+            "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+            "$ref" : "//@sourceAST/@dataDefinitions.1/@keywords.0/@value"
+          },
+          "value" : "0"
+        },
+        "name" : "RESULT",
+        "type" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+          "destination" : {
+            "start" : {
+              "line" : 3
+            },
+            "end" : {
+              "line" : 3,
+              "column" : 7
+            }
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
+        "position" : {
+          "start" : {
+            "line" : 6
+          },
+          "end" : {
+            "line" : 6,
+            "column" : 42
+          }
+        },
+        "destination" : {
+          "start" : {
+            "line" : 4
+          },
+          "end" : {
+            "line" : 5
+          }
+        },
+        "origin" : {
+          "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+          "$ref" : "//@sourceAST/@dataDefinitions.2"
+        },
+        "name" : "COUNT",
+        "type" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+          "destination" : {
+            "start" : {
+              "line" : 4
+            },
+            "end" : {
+              "line" : 4,
+              "column" : 7
+            }
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
+        "position" : {
+          "start" : {
+            "line" : 7
+          },
+          "end" : {
+            "line" : 7,
+            "column" : 49
+          }
+        },
+        "destination" : {
+          "start" : {
+            "line" : 5
+          },
+          "end" : {
+            "line" : 6
+          }
+        },
+        "origin" : {
+          "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+          "$ref" : "//@sourceAST/@dataDefinitions.3"
+        },
+        "initialValue" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+          "position" : {
+            "start" : {
+              "line" : 7,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 7,
+              "column" : 48
+            }
+          },
+          "destination" : {
+            "start" : {
+              "line" : 5,
+              "column" : 12
+            },
+            "end" : {
+              "line" : 5,
+              "column" : 13
+            }
+          },
+          "origin" : {
+            "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+            "$ref" : "//@sourceAST/@dataDefinitions.3/@keywords.0/@value"
+          },
+          "value" : "0"
+        },
+        "name" : "A",
+        "type" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+          "destination" : {
+            "start" : {
+              "line" : 5
+            },
+            "end" : {
+              "line" : 5,
+              "column" : 7
+            }
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
+        "position" : {
+          "start" : {
+            "line" : 8
+          },
+          "end" : {
+            "line" : 8,
+            "column" : 55
+          }
+        },
+        "destination" : {
+          "start" : {
+            "line" : 6
+          },
+          "end" : {
+            "line" : 7
+          }
+        },
+        "origin" : {
+          "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
+          "$ref" : "//@sourceAST/@dataDefinitions.4"
+        },
+        "initialValue" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JParensExpr",
+          "position" : {
+            "start" : {
+              "line" : 8,
+              "column" : 47
+            },
+            "end" : {
+              "line" : 8,
+              "column" : 54
+            }
+          },
+          "destination" : {
+            "start" : {
+              "line" : 6,
+              "column" : 12
+            },
+            "end" : {
+              "line" : 6,
+              "column" : 19
+            }
+          },
+          "origin" : {
+            "eClass" : "https://strumenta.com/rpg/model#//ParensExpr",
+            "$ref" : "//@sourceAST/@dataDefinitions.4/@keywords.0/@value"
+          },
+          "base" : {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JSumExpr",
+            "position" : {
+              "start" : {
+                "line" : 8,
+                "column" : 48
+              },
+              "end" : {
+                "line" : 8,
+                "column" : 53
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 6,
+                "column" : 13
+              },
+              "end" : {
+                "line" : 6,
+                "column" : 18
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//SumExpr",
+              "$ref" : "//@sourceAST/@dataDefinitions.4/@keywords.0/@value/@base"
+            },
+            "left" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+              "position" : {
+                "start" : {
+                  "line" : 8,
+                  "column" : 48
+                },
+                "end" : {
+                  "line" : 8,
+                  "column" : 49
+                }
+              },
+              "destination" : {
+                "start" : {
+                  "line" : 6,
+                  "column" : 13
+                },
+                "end" : {
+                  "line" : 6,
+                  "column" : 14
+                }
+              },
+              "origin" : {
+                "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                "$ref" : "//@sourceAST/@dataDefinitions.4/@keywords.0/@value/@base/@left"
+              },
+              "name" : "A"
+            },
+            "right" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+              "position" : {
+                "start" : {
+                  "line" : 8,
+                  "column" : 52
+                },
+                "end" : {
+                  "line" : 8,
+                  "column" : 53
+                }
+              },
+              "destination" : {
+                "start" : {
+                  "line" : 6,
+                  "column" : 17
+                },
+                "end" : {
+                  "line" : 6,
+                  "column" : 18
+                }
+              },
+              "origin" : {
+                "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                "$ref" : "//@sourceAST/@dataDefinitions.4/@keywords.0/@value/@base/@right"
+              },
+              "value" : "1"
+            }
+          }
+        },
+        "name" : "B",
+        "type" : {
+          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+          "destination" : {
+            "start" : {
+              "line" : 6
+            },
+            "end" : {
+              "line" : 6,
+              "column" : 7
+            }
+          }
+        }
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JMethod",
+        "destination" : {
+          "start" : {
+            "line" : 7
+          },
+          "end" : {
+            "line" : 12
+          }
+        },
+        "body" : {
+          "statements" : [ {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+            "position" : {
+              "start" : {
+                "line" : 12
+              },
+              "end" : {
+                "line" : 12,
+                "column" : 43
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 8
+              },
+              "end" : {
+                "line" : 9
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+              "$ref" : "//@sourceAST/@mainStatements.1"
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+              "position" : {
+                "start" : {
+                  "line" : 12,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 12,
+                  "column" : 43
+                }
+              },
+              "destination" : {
+                "start" : {
+                  "line" : 8
+                },
+                "end" : {
+                  "line" : 8,
+                  "column" : 16
+                }
+              },
+              "origin" : {
+                "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                "$ref" : "//@sourceAST/@mainStatements.1/@expression"
+              },
+              "target" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                "destination" : {
+                  "start" : {
+                    "line" : 8
+                  },
+                  "end" : {
+                    "line" : 8,
+                    "column" : 11
+                  }
+                },
+                "name" : "NBR"
+              },
+              "value" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                "position" : {
+                  "start" : {
+                    "line" : 12,
+                    "column" : 41
+                  },
+                  "end" : {
+                    "line" : 12,
+                    "column" : 43
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 8,
+                    "column" : 14
+                  },
+                  "end" : {
+                    "line" : 8,
+                    "column" : 16
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                  "$ref" : "//@sourceAST/@mainStatements.1/@expression/@value"
+                },
+                "value" : "55"
+              }
+            }
+          }, {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+            "position" : {
+              "start" : {
+                "line" : 13
+              },
+              "end" : {
+                "line" : 13,
+                "column" : 38
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 9,
+                "column" : 8
+              },
+              "end" : {
+                "line" : 10
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//InvokeSubroutineStatement",
+              "$ref" : "//@sourceAST/@mainStatements.2"
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JMethodCall",
+              "destination" : {
+                "start" : {
+                  "line" : 9,
+                  "column" : 8
+                },
+                "end" : {
+                  "line" : 9,
+                  "column" : 13
+                }
+              },
+              "methodName" : "FIB"
+            }
+          }, {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+            "position" : {
+              "start" : {
+                "line" : 14
+              },
+              "end" : {
+                "line" : 14,
+                "column" : 30
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 10,
+                "column" : 8
+              },
+              "end" : {
+                "line" : 11
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//DisplayStatement",
+              "$ref" : "//@sourceAST/@mainStatements.3"
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JMethodCall",
+              "destination" : {
+                "start" : {
+                  "line" : 10,
+                  "column" : 8
+                },
+                "end" : {
+                  "line" : 10,
+                  "column" : 34
+                }
+              },
+              "arguments" : [ {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 14,
+                    "column" : 11
+                  },
+                  "end" : {
+                    "line" : 14,
+                    "column" : 17
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 10,
+                    "column" : 27
+                  },
+                  "end" : {
+                    "line" : 10,
+                    "column" : 33
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "$ref" : "//@sourceAST/@mainStatements.3/@message"
+                },
+                "name" : "RESULT"
+              } ],
+              "container" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldAccess",
+                "destination" : {
+                  "start" : {
+                    "line" : 10,
+                    "column" : 8
+                  },
+                  "end" : {
+                    "line" : 10,
+                    "column" : 18
+                  }
+                },
+                "container" : {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                  "destination" : {
+                    "start" : {
+                      "line" : 10,
+                      "column" : 8
+                    },
+                    "end" : {
+                      "line" : 10,
+                      "column" : 14
+                    }
+                  },
+                  "name" : "System"
+                },
+                "fieldName" : "out"
+              },
+              "methodName" : "println"
+            }
+          } ]
+        },
+        "name" : "execute",
+        "parameters" : [ {
+          "destination" : {
+            "start" : {
+              "line" : 7,
+              "column" : 17
+            },
+            "end" : {
+              "line" : 7,
+              "column" : 29
+            }
+          },
+          "origin" : {
+            "eClass" : "https://strumenta.com/rpg/model#//PlistParameter",
+            "$ref" : "//@sourceAST/@mainStatements.0/@params.0"
+          },
+          "name" : "ppdat",
+          "type" : {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JEntityType",
+            "destination" : {
+              "start" : {
+                "line" : 7,
+                "column" : 17
+              },
+              "end" : {
+                "line" : 7,
+                "column" : 23
+              }
+            },
+            "name" : "Object"
+          }
+        } ]
+      }, {
+        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JMethod",
+        "destination" : {
+          "start" : {
+            "line" : 12
+          },
+          "end" : {
+            "line" : 28
+          }
+        },
+        "body" : {
+          "statements" : [ {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+            "position" : {
+              "start" : {
+                "line" : 17
+              },
+              "end" : {
+                "line" : 17,
+                "column" : 44
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 13
+              },
+              "end" : {
+                "line" : 14
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+              "$ref" : "//@sourceAST/@subroutines.0/@statements.0"
+            },
+            "expression" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+              "position" : {
+                "start" : {
+                  "line" : 17,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 17,
+                  "column" : 44
+                }
+              },
+              "destination" : {
+                "start" : {
+                  "line" : 13
+                },
+                "end" : {
+                  "line" : 13,
+                  "column" : 17
+                }
+              },
+              "origin" : {
+                "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                "$ref" : "//@sourceAST/@subroutines.0/@statements.0/@expression"
+              },
+              "target" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                "destination" : {
+                  "start" : {
+                    "line" : 13
+                  },
+                  "end" : {
+                    "line" : 13,
+                    "column" : 13
+                  }
+                },
+                "name" : "COUNT"
+              },
+              "value" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                "position" : {
+                  "start" : {
+                    "line" : 17,
+                    "column" : 43
+                  },
+                  "end" : {
+                    "line" : 17,
+                    "column" : 44
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 13,
+                    "column" : 16
+                  },
+                  "end" : {
+                    "line" : 13,
+                    "column" : 17
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                  "$ref" : "//@sourceAST/@subroutines.0/@statements.0/@expression/@value"
+                },
+                "value" : "0"
+              }
+            }
+          }, {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIfStmt",
+            "position" : {
+              "start" : {
+                "line" : 18
+              },
+              "end" : {
+                "line" : 30,
+                "column" : 30
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 14,
+                "column" : 8
+              },
+              "end" : {
+                "line" : 26
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//SelectStatement",
+              "$ref" : "//@sourceAST/@subroutines.0/@statements.1"
+            },
+            "condition" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JComparisonExpr",
+              "position" : {
+                "start" : {
+                  "line" : 19,
+                  "column" : 35
+                },
+                "end" : {
+                  "line" : 19,
+                  "column" : 42
+                }
+              },
+              "destination" : {
+                "start" : {
+                  "line" : 14,
+                  "column" : 12
+                },
+                "end" : {
+                  "line" : 14,
+                  "column" : 20
+                }
+              },
+              "origin" : {
+                "eClass" : "https://strumenta.com/rpg/model#//ComparisonExpr",
+                "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@condition"
+              },
+              "left" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 19,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 19,
+                    "column" : 38
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 14,
+                    "column" : 12
+                  },
+                  "end" : {
+                    "line" : 14,
+                    "column" : 15
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                  "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@condition/@left"
+                },
+                "name" : "NBR"
+              },
+              "right" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                "position" : {
+                  "start" : {
+                    "line" : 19,
+                    "column" : 41
+                  },
+                  "end" : {
+                    "line" : 19,
+                    "column" : 42
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 14,
+                    "column" : 19
+                  },
+                  "end" : {
+                    "line" : 14,
+                    "column" : 20
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                  "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@condition/@right"
+                },
+                "value" : "0"
+              }
+            },
+            "elseBody" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIfStmt",
+              "destination" : {
+                "start" : {
+                  "line" : 16,
+                  "column" : 16
+                },
+                "end" : {
+                  "line" : 26
+                }
+              },
+              "condition" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JComparisonExpr",
+                "position" : {
+                  "start" : {
+                    "line" : 21,
+                    "column" : 35
+                  },
+                  "end" : {
+                    "line" : 21,
+                    "column" : 42
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 16,
+                    "column" : 20
+                  },
+                  "end" : {
+                    "line" : 16,
+                    "column" : 28
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//ComparisonExpr",
+                  "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@condition"
+                },
+                "left" : {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                  "position" : {
+                    "start" : {
+                      "line" : 21,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 21,
+                      "column" : 38
+                    }
+                  },
+                  "destination" : {
+                    "start" : {
+                      "line" : 16,
+                      "column" : 20
+                    },
+                    "end" : {
+                      "line" : 16,
+                      "column" : 23
+                    }
+                  },
+                  "origin" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                    "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@condition/@left"
+                  },
+                  "name" : "NBR"
+                },
+                "right" : {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                  "position" : {
+                    "start" : {
+                      "line" : 21,
+                      "column" : 41
+                    },
+                    "end" : {
+                      "line" : 21,
+                      "column" : 42
+                    }
+                  },
+                  "destination" : {
+                    "start" : {
+                      "line" : 16,
+                      "column" : 27
+                    },
+                    "end" : {
+                      "line" : 16,
+                      "column" : 28
+                    }
+                  },
+                  "origin" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                    "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@condition/@right"
+                  },
+                  "value" : "1"
+                }
+              },
+              "elseBody" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JBlockStmt",
+                "destination" : {
+                  "start" : {
+                    "line" : 18,
+                    "column" : 16
+                  },
+                  "end" : {
+                    "line" : 26
+                  }
+                },
+                "statements" : [ {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JForStmt",
+                  "position" : {
+                    "start" : {
+                      "line" : 24,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 29,
+                      "column" : 31
+                    }
+                  },
+                  "destination" : {
+                    "start" : {
+                      "line" : 19
+                    },
+                    "end" : {
+                      "line" : 25
+                    }
+                  },
+                  "origin" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//ForStatement",
+                    "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0"
+                  },
+                  "body" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JBlockStmt",
+                    "destination" : {
+                      "start" : {
+                        "line" : 19,
+                        "column" : 54
+                      },
+                      "end" : {
+                        "line" : 25
+                      }
+                    },
+                    "statements" : [ {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                      "position" : {
+                        "start" : {
+                          "line" : 25
+                        },
+                        "end" : {
+                          "line" : 25,
+                          "column" : 49
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 20
+                        },
+                        "end" : {
+                          "line" : 21
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.0"
+                      },
+                      "expression" : {
+                        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+                        "position" : {
+                          "start" : {
+                            "line" : 25,
+                            "column" : 35
+                          },
+                          "end" : {
+                            "line" : 25,
+                            "column" : 49
+                          }
+                        },
+                        "destination" : {
+                          "start" : {
+                            "line" : 20
+                          },
+                          "end" : {
+                            "line" : 20,
+                            "column" : 30
+                          }
+                        },
+                        "origin" : {
+                          "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                          "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.0/@expression"
+                        },
+                        "target" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                          "destination" : {
+                            "start" : {
+                              "line" : 20
+                            },
+                            "end" : {
+                              "line" : 20,
+                              "column" : 22
+                            }
+                          },
+                          "name" : "RESULT"
+                        },
+                        "value" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JSumExpr",
+                          "position" : {
+                            "start" : {
+                              "line" : 25,
+                              "column" : 44
+                            },
+                            "end" : {
+                              "line" : 25,
+                              "column" : 49
+                            }
+                          },
+                          "destination" : {
+                            "start" : {
+                              "line" : 20,
+                              "column" : 25
+                            },
+                            "end" : {
+                              "line" : 20,
+                              "column" : 30
+                            }
+                          },
+                          "origin" : {
+                            "eClass" : "https://strumenta.com/rpg/model#//SumExpr",
+                            "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.0/@expression/@value"
+                          },
+                          "left" : {
+                            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                            "position" : {
+                              "start" : {
+                                "line" : 25,
+                                "column" : 44
+                              },
+                              "end" : {
+                                "line" : 25,
+                                "column" : 45
+                              }
+                            },
+                            "destination" : {
+                              "start" : {
+                                "line" : 20,
+                                "column" : 25
+                              },
+                              "end" : {
+                                "line" : 20,
+                                "column" : 26
+                              }
+                            },
+                            "origin" : {
+                              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                              "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.0/@expression/@value/@left"
+                            },
+                            "name" : "A"
+                          },
+                          "right" : {
+                            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                            "position" : {
+                              "start" : {
+                                "line" : 25,
+                                "column" : 48
+                              },
+                              "end" : {
+                                "line" : 25,
+                                "column" : 49
+                              }
+                            },
+                            "destination" : {
+                              "start" : {
+                                "line" : 20,
+                                "column" : 29
+                              },
+                              "end" : {
+                                "line" : 20,
+                                "column" : 30
+                              }
+                            },
+                            "origin" : {
+                              "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                              "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.0/@expression/@value/@right"
+                            },
+                            "name" : "B"
+                          }
+                        }
+                      }
+                    }, {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                      "position" : {
+                        "start" : {
+                          "line" : 26
+                        },
+                        "end" : {
+                          "line" : 26,
+                          "column" : 40
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 21
+                        },
+                        "end" : {
+                          "line" : 22
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.1"
+                      },
+                      "expression" : {
+                        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+                        "position" : {
+                          "start" : {
+                            "line" : 26,
+                            "column" : 35
+                          },
+                          "end" : {
+                            "line" : 26,
+                            "column" : 40
+                          }
+                        },
+                        "destination" : {
+                          "start" : {
+                            "line" : 21
+                          },
+                          "end" : {
+                            "line" : 21,
+                            "column" : 21
+                          }
+                        },
+                        "origin" : {
+                          "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                          "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.1/@expression"
+                        },
+                        "target" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                          "destination" : {
+                            "start" : {
+                              "line" : 21
+                            },
+                            "end" : {
+                              "line" : 21,
+                              "column" : 17
+                            }
+                          },
+                          "name" : "A"
+                        },
+                        "value" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                          "position" : {
+                            "start" : {
+                              "line" : 26,
+                              "column" : 39
+                            },
+                            "end" : {
+                              "line" : 26,
+                              "column" : 40
+                            }
+                          },
+                          "destination" : {
+                            "start" : {
+                              "line" : 21,
+                              "column" : 20
+                            },
+                            "end" : {
+                              "line" : 21,
+                              "column" : 21
+                            }
+                          },
+                          "origin" : {
+                            "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                            "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.1/@expression/@value"
+                          },
+                          "name" : "B"
+                        }
+                      }
+                    }, {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                      "position" : {
+                        "start" : {
+                          "line" : 27
+                        },
+                        "end" : {
+                          "line" : 27,
+                          "column" : 45
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 22
+                        },
+                        "end" : {
+                          "line" : 23
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.2"
+                      },
+                      "expression" : {
+                        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+                        "position" : {
+                          "start" : {
+                            "line" : 27,
+                            "column" : 35
+                          },
+                          "end" : {
+                            "line" : 27,
+                            "column" : 45
+                          }
+                        },
+                        "destination" : {
+                          "start" : {
+                            "line" : 22
+                          },
+                          "end" : {
+                            "line" : 22,
+                            "column" : 26
+                          }
+                        },
+                        "origin" : {
+                          "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                          "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.2/@expression"
+                        },
+                        "target" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                          "destination" : {
+                            "start" : {
+                              "line" : 22
+                            },
+                            "end" : {
+                              "line" : 22,
+                              "column" : 17
+                            }
+                          },
+                          "name" : "B"
+                        },
+                        "value" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                          "position" : {
+                            "start" : {
+                              "line" : 27,
+                              "column" : 39
+                            },
+                            "end" : {
+                              "line" : 27,
+                              "column" : 45
+                            }
+                          },
+                          "destination" : {
+                            "start" : {
+                              "line" : 22,
+                              "column" : 20
+                            },
+                            "end" : {
+                              "line" : 22,
+                              "column" : 26
+                            }
+                          },
+                          "origin" : {
+                            "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                            "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.2/@expression/@value"
+                          },
+                          "name" : "RESULT"
+                        }
+                      }
+                    }, {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                      "position" : {
+                        "start" : {
+                          "line" : 28
+                        },
+                        "end" : {
+                          "line" : 28,
+                          "column" : 30
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 23
+                        },
+                        "end" : {
+                          "line" : 24
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//DisplayStatement",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.3"
+                      },
+                      "expression" : {
+                        "eClass" : "https://strumenta.com/languagemodules/java/v1#//JMethodCall",
+                        "destination" : {
+                          "start" : {
+                            "line" : 23
+                          },
+                          "end" : {
+                            "line" : 23,
+                            "column" : 42
+                          }
+                        },
+                        "arguments" : [ {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                          "position" : {
+                            "start" : {
+                              "line" : 28,
+                              "column" : 11
+                            },
+                            "end" : {
+                              "line" : 28,
+                              "column" : 17
+                            }
+                          },
+                          "destination" : {
+                            "start" : {
+                              "line" : 23,
+                              "column" : 35
+                            },
+                            "end" : {
+                              "line" : 23,
+                              "column" : 41
+                            }
+                          },
+                          "origin" : {
+                            "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                            "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@body.3/@message"
+                          },
+                          "name" : "RESULT"
+                        } ],
+                        "container" : {
+                          "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldAccess",
+                          "destination" : {
+                            "start" : {
+                              "line" : 23
+                            },
+                            "end" : {
+                              "line" : 23,
+                              "column" : 26
+                            }
+                          },
+                          "container" : {
+                            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                            "destination" : {
+                              "start" : {
+                                "line" : 23
+                              },
+                              "end" : {
+                                "line" : 23,
+                                "column" : 22
+                              }
+                            },
+                            "name" : "System"
+                          },
+                          "fieldName" : "out"
+                        },
+                        "methodName" : "println"
+                      }
+                    } ]
+                  },
+                  "check" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JComparisonExpr",
+                    "destination" : {
+                      "start" : {
+                        "line" : 19,
+                        "column" : 32
+                      },
+                      "end" : {
+                        "line" : 19,
+                        "column" : 44
+                      }
+                    },
+                    "comparisonType" : "LessEq",
+                    "left" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                      "destination" : {
+                        "start" : {
+                          "line" : 19,
+                          "column" : 32
+                        },
+                        "end" : {
+                          "line" : 19,
+                          "column" : 37
+                        }
+                      },
+                      "name" : "COUNT"
+                    },
+                    "right" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceExpr",
+                      "position" : {
+                        "start" : {
+                          "line" : 24,
+                          "column" : 48
+                        },
+                        "end" : {
+                          "line" : 24,
+                          "column" : 51
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 19,
+                          "column" : 41
+                        },
+                        "end" : {
+                          "line" : 19,
+                          "column" : 44
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//ReferenceExpr",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@limitValue"
+                      },
+                      "name" : "NBR"
+                    }
+                  },
+                  "initializer" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JVariableDecl",
+                    "destination" : {
+                      "start" : {
+                        "line" : 19,
+                        "column" : 17
+                      },
+                      "end" : {
+                        "line" : 19,
+                        "column" : 32
+                      }
+                    },
+                    "initialValue" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                      "position" : {
+                        "start" : {
+                          "line" : 24,
+                          "column" : 43
+                        },
+                        "end" : {
+                          "line" : 24,
+                          "column" : 44
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 19,
+                          "column" : 29
+                        },
+                        "end" : {
+                          "line" : 19,
+                          "column" : 30
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@otherClause/@body.0/@startValue"
+                      },
+                      "value" : "2"
+                    },
+                    "name" : "COUNT",
+                    "type" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntType",
+                      "destination" : {
+                        "start" : {
+                          "line" : 19,
+                          "column" : 17
+                        },
+                        "end" : {
+                          "line" : 19,
+                          "column" : 20
+                        }
+                      }
+                    }
+                  },
+                  "postOp" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JPostIncrement",
+                    "destination" : {
+                      "start" : {
+                        "line" : 19,
+                        "column" : 45
+                      },
+                      "end" : {
+                        "line" : 19,
+                        "column" : 52
+                      }
+                    },
+                    "name" : "COUNT"
+                  }
+                } ]
+              },
+              "thenBody" : {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JBlockStmt",
+                "destination" : {
+                  "start" : {
+                    "line" : 16,
+                    "column" : 30
+                  },
+                  "end" : {
+                    "line" : 18,
+                    "column" : 10
+                  }
+                },
+                "statements" : [ {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                  "position" : {
+                    "start" : {
+                      "line" : 22
+                    },
+                    "end" : {
+                      "line" : 22,
+                      "column" : 45
+                    }
+                  },
+                  "destination" : {
+                    "start" : {
+                      "line" : 17
+                    },
+                    "end" : {
+                      "line" : 18
+                    }
+                  },
+                  "origin" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+                    "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@body.0"
+                  },
+                  "expression" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+                    "position" : {
+                      "start" : {
+                        "line" : 22,
+                        "column" : 35
+                      },
+                      "end" : {
+                        "line" : 22,
+                        "column" : 45
+                      }
+                    },
+                    "destination" : {
+                      "start" : {
+                        "line" : 17
+                      },
+                      "end" : {
+                        "line" : 17,
+                        "column" : 22
+                      }
+                    },
+                    "origin" : {
+                      "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                      "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@body.0/@expression"
+                    },
+                    "target" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                      "destination" : {
+                        "start" : {
+                          "line" : 17
+                        },
+                        "end" : {
+                          "line" : 17,
+                          "column" : 18
+                        }
+                      },
+                      "name" : "RESULT"
+                    },
+                    "value" : {
+                      "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                      "position" : {
+                        "start" : {
+                          "line" : 22,
+                          "column" : 44
+                        },
+                        "end" : {
+                          "line" : 22,
+                          "column" : 45
+                        }
+                      },
+                      "destination" : {
+                        "start" : {
+                          "line" : 17,
+                          "column" : 21
+                        },
+                        "end" : {
+                          "line" : 17,
+                          "column" : 22
+                        }
+                      },
+                      "origin" : {
+                        "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                        "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.1/@body.0/@expression/@value"
+                      },
+                      "value" : "1"
+                    }
+                  }
+                } ]
+              }
+            },
+            "thenBody" : {
+              "eClass" : "https://strumenta.com/languagemodules/java/v1#//JBlockStmt",
+              "destination" : {
+                "start" : {
+                  "line" : 14,
+                  "column" : 22
+                },
+                "end" : {
+                  "line" : 16,
+                  "column" : 10
+                }
+              },
+              "statements" : [ {
+                "eClass" : "https://strumenta.com/languagemodules/java/v1#//JExpressionStatement",
+                "position" : {
+                  "start" : {
+                    "line" : 20
+                  },
+                  "end" : {
+                    "line" : 20,
+                    "column" : 45
+                  }
+                },
+                "destination" : {
+                  "start" : {
+                    "line" : 15
+                  },
+                  "end" : {
+                    "line" : 16
+                  }
+                },
+                "origin" : {
+                  "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
+                  "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@body.0"
+                },
+                "expression" : {
+                  "eClass" : "https://strumenta.com/languagemodules/java/v1#//JAssignmentExpression",
+                  "position" : {
+                    "start" : {
+                      "line" : 20,
+                      "column" : 35
+                    },
+                    "end" : {
+                      "line" : 20,
+                      "column" : 45
+                    }
+                  },
+                  "destination" : {
+                    "start" : {
+                      "line" : 15
+                    },
+                    "end" : {
+                      "line" : 15,
+                      "column" : 22
+                    }
+                  },
+                  "origin" : {
+                    "eClass" : "https://strumenta.com/rpg/model#//Assignment",
+                    "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@body.0/@expression"
+                  },
+                  "target" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReferenceTarget",
+                    "destination" : {
+                      "start" : {
+                        "line" : 15
+                      },
+                      "end" : {
+                        "line" : 15,
+                        "column" : 18
+                      }
+                    },
+                    "name" : "RESULT"
+                  },
+                  "value" : {
+                    "eClass" : "https://strumenta.com/languagemodules/java/v1#//JIntLiteral",
+                    "position" : {
+                      "start" : {
+                        "line" : 20,
+                        "column" : 44
+                      },
+                      "end" : {
+                        "line" : 20,
+                        "column" : 45
+                      }
+                    },
+                    "destination" : {
+                      "start" : {
+                        "line" : 15,
+                        "column" : 21
+                      },
+                      "end" : {
+                        "line" : 15,
+                        "column" : 22
+                      }
+                    },
+                    "origin" : {
+                      "eClass" : "https://strumenta.com/rpg/model#//IntLiteral",
+                      "$ref" : "//@sourceAST/@subroutines.0/@statements.1/@whenClauses.0/@body.0/@expression/@value"
+                    },
+                    "value" : "0"
+                  }
+                }
+              } ]
+            }
+          }, {
+            "eClass" : "https://strumenta.com/languagemodules/java/v1#//JReturnStatement",
+            "position" : {
+              "start" : {
+                "line" : 31
+              },
+              "end" : {
+                "line" : 31,
+                "column" : 30
+              }
+            },
+            "destination" : {
+              "start" : {
+                "line" : 26,
+                "column" : 8
+              },
+              "end" : {
+                "line" : 27
+              }
+            },
+            "origin" : {
+              "eClass" : "https://strumenta.com/rpg/model#//EndSubroutineStatement",
+              "$ref" : "//@sourceAST/@subroutines.0/@statements.2"
+            }
+          } ]
+        },
+        "name" : "FIB"
+      } ],
+      "name" : "CALCFIB"
+    } ]
+  },
+  "generatedCode" : "class CALCFIB {\n    int NBR;\n    int RESULT = 0;\n    int COUNT;\n    int A = 0;\n    int B = (A + 1);\n    void execute(Object ppdat) {\n        NBR = 55;\n        FIB();\n        System.out.println(RESULT);\n    }\n    void FIB() {\n        COUNT = 0;\n        if (NBR == 0) {\n            RESULT = 0;\n        }  else if (NBR == 1) {\n            RESULT = 1;\n        }  else {\n            for (int COUNT = 2; COUNT <= NBR;COUNT++) {\n                RESULT = A + B;\n                A = B;\n                B = RESULT;\n                System.out.println(RESULT);\n            }\n        }\n        return;\n    }\n}\n"
+}
