@@ -48,6 +48,7 @@ describe('Transformation traces', function() {
             const text = fs.readFileSync('tests/data/total-bench/rpgtojava-transpilation-example.json', 'utf8')
 
             const javaast = rpgMetamodelsResource.eContents()[2];
+            console.log(javaast.get("name"))
             expect(javaast.eClass.get("name")).to.eql("EPackage");
             expect(javaast.eContents().length).to.eql(31);
             const jCompilationUnit = javaast.eContents()[30];
