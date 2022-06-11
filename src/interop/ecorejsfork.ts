@@ -1,35 +1,35 @@
 import * as Ecore from "ecore/dist/ecore";
-import {Resource} from "ecore";
+import {Resource, ResourceSet} from "ecore";
 import {expect} from "chai";
 
 function isString(element) : boolean {
     return typeof element === "string";
 }
 
-export function tester(resource: Resource) {
-    const javaast = resource.eContents().find((r)=>r.get("name") === "com.strumenta.javaast");
-    if (javaast == null) {
-        console.log("javaast not found");
-        return;
-    }
-    expect(javaast.eClass.get("name")).to.eql("EPackage");
-    expect(javaast.eContents().length).to.eql(31);
-    const jCompilationUnit = javaast.eContents()[30];
-    expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
-    expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
-    expect(jCompilationUnit.eContents().length).to.eql(1);
-    const declarations = jCompilationUnit.eContents()[0];
-    expect(declarations.eClass.get("name")).to.eql("EReference");
-    expect(declarations.get("name")).to.eql("declarations");
-    expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
-    console.log("tested ok")
-}
+// export function tester(resource: Resource) {
+//     const javaast = resource.eContents().find((r)=>r.get("name") === "com.strumenta.javaast");
+//     if (javaast == null) {
+//         console.log("javaast not found");
+//         return;
+//     }
+//     expect(javaast.eClass.get("name")).to.eql("EPackage");
+//     expect(javaast.eContents().length).to.eql(31);
+//     const jCompilationUnit = javaast.eContents()[30];
+//     expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
+//     expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
+//     expect(jCompilationUnit.eContents().length).to.eql(1);
+//     const declarations = jCompilationUnit.eContents()[0];
+//     expect(declarations.eClass.get("name")).to.eql("EReference");
+//     expect(declarations.get("name")).to.eql("declarations");
+//     expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+//     console.log("tested ok")
+// }
 
 export function resourceParse(model, data) {
     if (isString(data)) {
         data = JSON.parse(data);
     }
-    tester(model);
+    //tester(model);
 
     const toResolve : any[] = [];
     const resourceSet = model.get('resourceSet') || Ecore.ResourceSet.create();
@@ -87,7 +87,7 @@ export function resourceParse(model, data) {
             let resolved = index[ref];
 
             if (!resolved) {
-                resolved = resourceSet.getEObject(ref);
+                resolved = resourceSetGetEObject(ref, parent.eResource()?.eContainer);
                 if (!resolved) {
                     throw new Error(`UNRESOLVED ${parent.get("name") || parent} feature ${feature.get("name")} value ${JSON.stringify(value)}`);
                 }
@@ -208,4 +208,68 @@ function buildIndex(model) {
     }
 
     return index;
+}
+
+function resourceSetGetEObject(uri: string, resourceSet: ResourceSet) : any {
+    const split = uri.split('#'),
+        base = split[0],
+        fragment = split[1];
+    let resource;
+
+    if (!fragment) {
+        return null;
+    }
+
+    const ePackage = Ecore.EPackage.Registry.getEPackage(base);
+
+    if (ePackage) {
+
+        resource = ePackage.eResource();
+
+        if (!resource) {
+            resource = this.create({ uri: base });
+            resource.add(ePackage);
+            this.get('resources').add(resource);
+            resource.set('resourceSet', this);
+        }
+    } else {
+        throw new Error(`EPackage not found: ${base}`)
+    }
+
+    if (resource) {
+        const result2 = resourceGetEObject(fragment, resource);
+        return result2;
+    }
+
+    // resource = this.get('resources').find(function(e) {
+    //     return e.get('uri') === base;
+    // });
+
+    const result = resource ? resource.getEObject(fragment) : null;
+    return result;
+}
+function resourceGetEObject(fragment: string, resource: Resource) : any {
+    if (!fragment) return null;
+
+    const result = resourceIndex(resource)[fragment];
+    return result;
+    // if(resourceIndex(resource)[fragment]) {
+    //     return resourceIndex(resource)[fragment];
+    // }
+}
+function resourceIndex(resource: Resource) {
+    // if (_.isUndefined(this.__updateIndex)) {
+    //     var res = this;
+    //     res.__updateIndex = true;
+    //     res.on('add remove', function() {
+    //         res.__updateIndex = true;
+    //     })
+    // }
+    //
+    // if (this.__updateIndex) {
+    //     this.__index = buildIndex(this);
+    //     this.__updateIndex = false;
+    // }
+
+    return buildIndex(resource);
 }

@@ -3,6 +3,7 @@ import * as fs from "fs";
 import {loadEObject, loadEPackages, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../src";
 import * as Ecore from "ecore/dist/ecore";
 import {KOLASU_TRANSPILATION_URI_V1, TRANSPILATION_EPACKAGE} from "../src/interop/transpilation_package";
+import {ensureEcoreContainsEchar} from "../src/interop/ecorefix";
 
 describe('Transformation traces', function() {
         it("Can load eType for all references in Java metamodel",
@@ -32,6 +33,7 @@ describe('Transformation traces', function() {
         function () {
             this.timeout(0);
             const resourceSet = Ecore.ResourceSet.create();
+            ensureEcoreContainsEchar();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/total-bench/rpg-metamodels.json'})
