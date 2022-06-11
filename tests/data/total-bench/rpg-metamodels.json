@@ -37,7 +37,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -68,7 +68,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -84,7 +84,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -143,7 +143,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -253,7 +253,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -272,7 +272,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -291,7 +291,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -321,7 +321,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -337,7 +337,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -353,7 +353,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -369,7 +369,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -385,7 +385,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -401,7 +401,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -417,7 +417,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -433,7 +433,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -453,7 +453,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -817,7 +817,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -1208,14 +1208,14 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "name",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -1255,7 +1255,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -1404,7 +1404,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -1511,7 +1511,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -1926,7 +1926,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -1941,14 +1941,14 @@
       "name" : "auto",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "ctdata",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -1963,7 +1963,7 @@
       "name" : "varying",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -1993,7 +1993,7 @@
       "name" : "separator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     } ]
   }, {
@@ -2110,7 +2110,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -2252,7 +2252,7 @@
       "name" : "separator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     } ]
   }, {
@@ -2307,7 +2307,7 @@
       "name" : "separator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     } ]
   }, {
@@ -2504,7 +2504,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2512,7 +2512,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2520,7 +2520,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -2543,7 +2543,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2551,7 +2551,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2559,7 +2559,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -2700,7 +2700,7 @@
       "name" : "device",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2728,7 +2728,7 @@
       "name" : "fileName",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2758,7 +2758,7 @@
       "name" : "lengthOfKeyOrRecordAddress",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2766,7 +2766,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2774,7 +2774,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2788,7 +2788,7 @@
       "name" : "recordLength",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -2819,7 +2819,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -2852,7 +2852,7 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -2884,7 +2884,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -2908,21 +2908,21 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "minusIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "plusIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -2937,7 +2937,7 @@
       "name" : "zeroIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -2961,7 +2961,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -2993,7 +2993,7 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3041,14 +3041,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3064,7 +3064,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3112,7 +3112,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3143,14 +3143,14 @@
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3158,7 +3158,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3189,7 +3189,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3197,7 +3197,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3229,14 +3229,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3252,7 +3252,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -3267,14 +3267,14 @@
       "name" : "blIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "bnIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3289,7 +3289,7 @@
       "name" : "nuIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3320,21 +3320,21 @@
       "name" : "eqIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "ofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "onIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3349,7 +3349,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3357,7 +3357,7 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3389,7 +3389,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -3445,7 +3445,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3460,14 +3460,14 @@
       "name" : "minusIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "plusIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3482,7 +3482,7 @@
       "name" : "zeroIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3521,7 +3521,7 @@
       "name" : "onIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3570,14 +3570,14 @@
       "name" : "eqIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3585,7 +3585,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3600,7 +3600,7 @@
       "name" : "numberIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3623,14 +3623,14 @@
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3638,7 +3638,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3802,7 +3802,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3810,14 +3810,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "fdIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3841,14 +3841,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -3880,14 +3880,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3895,7 +3895,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3911,7 +3911,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -3934,14 +3934,14 @@
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -3949,7 +3949,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3965,7 +3965,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -3988,7 +3988,7 @@
       "name" : "bofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4004,14 +4004,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4019,7 +4019,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4050,14 +4050,14 @@
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4065,7 +4065,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4073,7 +4073,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4113,21 +4113,21 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4158,14 +4158,14 @@
       "name" : "eofIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4173,7 +4173,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4189,7 +4189,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -4205,21 +4205,21 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "sourceField",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "targetField",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4253,7 +4253,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4277,14 +4277,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4292,7 +4292,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -4340,14 +4340,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4378,7 +4378,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4386,7 +4386,7 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4442,7 +4442,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4465,21 +4465,21 @@
       "name" : "negativeIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "positiveIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "zeroIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -4503,7 +4503,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4511,7 +4511,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4519,7 +4519,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4535,7 +4535,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4543,7 +4543,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4551,7 +4551,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4575,7 +4575,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4583,7 +4583,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4591,7 +4591,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4672,21 +4672,21 @@
       "name" : "exactIndex",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "highIndex",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "lowIndex",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -4701,7 +4701,7 @@
       "name" : "supportTableName",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4746,7 +4746,7 @@
       "name" : "indicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4754,7 +4754,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -4785,14 +4785,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -4800,7 +4800,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -4950,7 +4950,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -5003,7 +5003,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5043,14 +5043,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5074,7 +5074,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -5098,14 +5098,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5153,7 +5153,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5161,7 +5161,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -5185,7 +5185,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5193,7 +5193,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5201,7 +5201,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -5216,14 +5216,14 @@
       "name" : "label",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "returnPoint",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -5239,7 +5239,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5461,7 +5461,7 @@
       "name" : "indexValue",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5517,28 +5517,28 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "negativeIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "positiveIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "zeroIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -5553,7 +5553,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5561,7 +5561,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5576,7 +5576,7 @@
       "name" : "numberIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5607,7 +5607,7 @@
       "name" : "externalDataArea",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5615,7 +5615,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -5639,7 +5639,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -5654,7 +5654,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5662,7 +5662,7 @@
       "upperBound" : -1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//char"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EChar"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5685,14 +5685,14 @@
       "name" : "eqIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "hiIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5707,7 +5707,7 @@
       "name" : "lowIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5739,14 +5739,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -5762,14 +5762,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5789,7 +5789,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5797,7 +5797,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5805,7 +5805,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -5821,7 +5821,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5829,7 +5829,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5869,21 +5869,21 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "fdIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5962,7 +5962,7 @@
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -5970,7 +5970,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -5986,14 +5986,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "nrIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6041,7 +6041,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     } ]
   }, {
@@ -6066,7 +6066,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -6082,7 +6082,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -6090,7 +6090,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6125,7 +6125,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6164,7 +6164,7 @@
       "name" : "label",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6276,14 +6276,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6339,14 +6339,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "erIndicator",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -6362,7 +6362,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//boolean"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6428,14 +6428,14 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "returnPoint",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6641,7 +6641,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -6707,7 +6707,7 @@
       "name" : "decimalPositions",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -6721,7 +6721,7 @@
       "name" : "length",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -6753,7 +6753,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -6769,7 +6769,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -6777,7 +6777,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -6810,7 +6810,7 @@
       "name" : "name",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     } ]
   }, {
@@ -6825,7 +6825,7 @@
       "name" : "explicitLength",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -6840,7 +6840,7 @@
       "lowerBound" : 1,
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//string"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -6892,14 +6892,14 @@
       "name" : "returnDecimals",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "returnLength",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
@@ -6933,14 +6933,14 @@
       "name" : "returnDecimals",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     }, {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
       "name" : "returnLength",
       "eType" : {
         "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
-        "$ref" : "https://strumenta.com/kolasu/v2#//int"
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EInt"
       }
     } ]
   }, {
