@@ -12,7 +12,7 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
-import {resourceParse} from "./ecorejsfork";
+import {resourceGetEObject, resourceParse} from "./ecorejsfork";
 
 // Kolasu model definition
 
@@ -722,11 +722,36 @@ interface PostponedReference {
 class ReferencesTracker {
     private postponedReferences : PostponedReference[] = [];
 
+    constructor(public resource: Resource) {
+    }
+
     trackReference(eObject: EObject, feature: any, refValue: any) : void {
         this.postponedReferences.push({eObject, feature, refValue});
     }
     resolveAllReferences(root: EObject | undefined) : void {
-        throw new Error();
+        this.postponedReferences.forEach((pr)=>{
+            // pr.eObject.set(pr.feature, )
+            const uri = pr.refValue["$ref"];
+            if (uri.indexOf("#") != -1) {
+                const parts = uri.split("#");
+                if (parts.length != 2) {
+                    throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
+                }
+                const packageURI = parts[0];
+                const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
+                if (ePackage == null) {
+                    throw new Error(`Could not find EPackage with URI ${packageURI}`)
+                }
+                throw new Error(JSON.stringify(pr.refValue))
+            } else {
+                const referred = resourceGetEObject(uri, this.resource);
+                if (referred == null) {
+                    throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+                }
+                pr.eObject.set(pr.feature, referred);
+            }
+        });
+        this.postponedReferences = [];
     }
 }
 
@@ -740,8 +765,9 @@ export function loadEObject(data: any, resource: Resource): EObject | undefined 
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
-    const referencesTracker = new ReferencesTracker();
+    const referencesTracker = new ReferencesTracker(resource);
     const result = importJsonObject(data, resource, null, true, referencesTracker);
+    resource.add(result);
     referencesTracker.resolveAllReferences(result);
     return result;
 }
@@ -780,7 +806,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
-                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker()): EObject {
+                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {

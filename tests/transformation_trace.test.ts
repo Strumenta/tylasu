@@ -39,8 +39,9 @@ describe('Transformation traces', function() {
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/total-bench/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/rpg-metamodels.json").toString()),
                  rpgMetamodelsResource);
+            const javaMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/total-bench/java-metamodels.json'})
             const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/java-metamodels.json").toString()),
-                rpgMetamodelsResource);
+                javaMetamodelsResource);
 
             //resourceSet.eContents().add(TRANSPILATION_EPACKAGE)
             const resource = resourceSet.create({ uri: 'rpgtojava-transpilation-example.json' });
@@ -49,7 +50,7 @@ describe('Transformation traces', function() {
             // expect(ePackages.length).to.equal(5);
             const text = fs.readFileSync('tests/data/total-bench/rpgtojava-transpilation-example.json', 'utf8')
 
-            const javaast = rpgMetamodelsResource.eContents()[2];
+            const javaast = javaMetamodelsResource.eContents()[0];
             console.log(javaast.get("name"))
             expect(javaast.eClass.get("name")).to.eql("EPackage");
             expect(javaast.eContents().length).to.eql(31);
@@ -62,9 +63,8 @@ describe('Transformation traces', function() {
             expect(declarations.get("name")).to.eql("declarations");
             expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
 
-            //const example1 = loadEObject(text.toString(), resource);
-            //const trace : TranspilationTrace = loadTranspilationTraceFromJSON(text);
-            // expect(trace.sourceAST.type).to.equal("com.strumenta.rpgparser.model.CompilationUnit");
+            const example1 = loadEObject(text.toString(), resource);
+            expect(example1.get("sourceAST").eClass.get("name")).to.equal("CompilationUnit");
             // expect(trace.sourceAST.id).to.equal("src-1");
             // expect(trace.sourceAST.destination.id).to.equal("target-1");
             // expect(trace.sourceAST.destination.type).to.equal("com.strumenta.javaast.JCompilationUnit");

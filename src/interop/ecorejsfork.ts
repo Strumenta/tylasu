@@ -81,7 +81,7 @@ export function resourceParse(model, data) {
 
     function resolveReferences() {
         const index = buildIndex(model);
-
+// model.eContainer.get("resources").indexOf(model)
         function setReference(parent, feature, value, isMany) {
             const ref = value.$ref;
             let resolved = index[ref];
@@ -248,7 +248,7 @@ function resourceSetGetEObject(uri: string, resourceSet: ResourceSet) : any {
     const result = resource ? resource.getEObject(fragment) : null;
     return result;
 }
-function resourceGetEObject(fragment: string, resource: Resource) : any {
+export function resourceGetEObject(fragment: string, resource: Resource) : any {
     if (!fragment) return null;
 
     const result = resourceIndex(resource)[fragment];
