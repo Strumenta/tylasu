@@ -636,7 +636,10 @@ function defineProperty(classDef, name) {
 }
 
 function isTheNodeClass(eClass) {
-    return eClass.eContainer && eClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eClass.get("name") == "ASTNode";
+    return eClass.eContainer
+        && (eClass.eContainer.get("nsURI") == KOLASU_URI_V1
+            || eClass.eContainer.get("nsURI") == KOLASU_URI_V2)
+        && eClass.get("name") == "ASTNode";
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {
@@ -649,7 +652,6 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
-    //const interfaces = supertypes.filter(t => t.get("interface"));
     let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
@@ -706,9 +708,7 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: Resource): EPackage[] {
-    console.log("custom", resource.parse)
     resourceParse(resource, data);
-    //resource.parse(data);
     return registerPackages(resource);
 }
 
