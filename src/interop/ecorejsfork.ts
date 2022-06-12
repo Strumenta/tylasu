@@ -60,7 +60,7 @@ export function resourceParse(model, data: string | any) : void {
 
     function resolveReferences() {
         const index = buildIndex(model);
-// model.eContainer.get("resources").indexOf(model)
+
         function setReference(parent, feature, value, isMany) {
             const ref = value.$ref;
             let resolved = index[ref];
@@ -220,35 +220,13 @@ function resourceSetGetEObject(uri: string, resourceSet: ResourceSet) : any {
         return result2;
     }
 
-    // resource = this.get('resources').find(function(e) {
-    //     return e.get('uri') === base;
-    // });
-
-    const result = resource ? resource.getEObject(fragment) : null;
-    return result;
+    return resource ? resource.getEObject(fragment) : null;
 }
 export function resourceGetEObject(fragment: string, resource: Resource) : any {
     if (!fragment) return null;
-
-    const result = resourceIndex(resource)[fragment];
-    return result;
-    // if(resourceIndex(resource)[fragment]) {
-    //     return resourceIndex(resource)[fragment];
-    // }
+    return resourceIndex(resource)[fragment];
 }
-function resourceIndex(resource: Resource) {
-    // if (_.isUndefined(this.__updateIndex)) {
-    //     var res = this;
-    //     res.__updateIndex = true;
-    //     res.on('add remove', function() {
-    //         res.__updateIndex = true;
-    //     })
-    // }
-    //
-    // if (this.__updateIndex) {
-    //     this.__index = buildIndex(this);
-    //     this.__updateIndex = false;
-    // }
 
+function resourceIndex(resource: Resource) {
     return buildIndex(resource);
 }
