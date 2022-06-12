@@ -260,7 +260,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 
-export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
+export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }): EPackage {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
     if(ePackage) {
         if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {
@@ -728,9 +728,9 @@ class ReferencesTracker {
     trackReference(eObject: EObject, feature: any, refValue: any) : void {
         this.postponedReferences.push({eObject, feature, refValue});
     }
-    resolveAllReferences(root: EObject | undefined) : void {
+
+    resolveAllReferences() : void {
         this.postponedReferences.forEach((pr)=>{
-            // pr.eObject.set(pr.feature, )
             const uri = pr.refValue["$ref"];
             if (uri.indexOf("#") != -1) {
                 const parts = uri.split("#");
@@ -768,7 +768,7 @@ export function loadEObject(data: any, resource: Resource): EObject | undefined 
     const referencesTracker = new ReferencesTracker(resource);
     const result = importJsonObject(data, resource, null, true, referencesTracker);
     resource.add(result);
-    referencesTracker.resolveAllReferences(result);
+    referencesTracker.resolveAllReferences();
     return result;
 }
 

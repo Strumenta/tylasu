@@ -1,35 +1,14 @@
 import * as Ecore from "ecore/dist/ecore";
 import {Resource, ResourceSet} from "ecore";
-import {expect} from "chai";
 
 function isString(element) : boolean {
     return typeof element === "string";
 }
 
-// export function tester(resource: Resource) {
-//     const javaast = resource.eContents().find((r)=>r.get("name") === "com.strumenta.javaast");
-//     if (javaast == null) {
-//         console.log("javaast not found");
-//         return;
-//     }
-//     expect(javaast.eClass.get("name")).to.eql("EPackage");
-//     expect(javaast.eContents().length).to.eql(31);
-//     const jCompilationUnit = javaast.eContents()[30];
-//     expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
-//     expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
-//     expect(jCompilationUnit.eContents().length).to.eql(1);
-//     const declarations = jCompilationUnit.eContents()[0];
-//     expect(declarations.eClass.get("name")).to.eql("EReference");
-//     expect(declarations.get("name")).to.eql("declarations");
-//     expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
-//     console.log("tested ok")
-// }
-
-export function resourceParse(model, data) {
+export function resourceParse(model, data: string | any) : void {
     if (isString(data)) {
         data = JSON.parse(data);
     }
-    //tester(model);
 
     const toResolve : any[] = [];
     const resourceSet = model.get('resourceSet') || Ecore.ResourceSet.create();

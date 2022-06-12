@@ -1,11 +1,7 @@
 import * as Ecore from "ecore/dist/ecore";
 import {
     getEPackage,
-    THE_AST_EPACKAGE,
-    THE_ISSUE_ECLASS,
     THE_NODE_ECLASS,
-    THE_REFERENCE_BY_NAME_ECLASS,
-    THE_RESULT_ECLASS
 } from "./ecore";
 
 export const KOLASU_TRANSPILATION_URI_V1 = "https://strumenta.com/kolasu/transpilation/v1";
