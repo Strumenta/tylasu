@@ -2,5 +2,5 @@
 dist/
 gen/
 node_modules/
-strumenta-ast-v*.tgz**/.DS_Store
-.DS_Store
+strumenta-ast-v*.tgz
+**/.DS_Store
