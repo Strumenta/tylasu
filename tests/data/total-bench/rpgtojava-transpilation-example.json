@@ -963,7 +963,8 @@
       "eClass" : "https://strumenta.com/rpg/model#//CompilationUnit",
       "$ref" : "//@sourceAST"
     },
-    "declarations" : [ {
+    "declarations" : [
+      {
       "destination" : {
         "start" : {
           "line" : 1
@@ -972,7 +973,8 @@
           "line" : 29
         }
       },
-      "members" : [ {
+      "members" : [
+        {
         "eClass" : "https://strumenta.com/languagemodules/java/v1#//JFieldDecl",
         "position" : {
           "start" : {

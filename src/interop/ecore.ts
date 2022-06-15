@@ -12,6 +12,7 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
+import {resourceGetEObject, resourceParse} from "./ecorejsfork";
 
 // Kolasu model definition
 
@@ -259,7 +260,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 
-export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
+export function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }): EPackage {
     const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
     if(ePackage) {
         if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {
@@ -635,7 +636,10 @@ function defineProperty(classDef, name) {
 }
 
 function isTheNodeClass(eClass) {
-    return eClass.eContainer && eClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eClass.get("name") == "ASTNode";
+    return eClass.eContainer
+        && (eClass.eContainer.get("nsURI") == KOLASU_URI_V1
+            || eClass.eContainer.get("nsURI") == KOLASU_URI_V2)
+        && eClass.get("name") == "ASTNode";
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {
@@ -648,7 +652,6 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
-    //const interfaces = supertypes.filter(t => t.get("interface"));
     let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
@@ -705,7 +708,7 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: Resource): EPackage[] {
-    resource.parse(data);
+    resourceParse(resource, data);
     return registerPackages(resource);
 }
 
@@ -719,11 +722,36 @@ interface PostponedReference {
 class ReferencesTracker {
     private postponedReferences : PostponedReference[] = [];
 
+    constructor(public resource: Resource) {
+    }
+
     trackReference(eObject: EObject, feature: any, refValue: any) : void {
         this.postponedReferences.push({eObject, feature, refValue});
     }
-    resolveAllReferences(root: EObject | undefined) : void {
-        throw new Error();
+
+    resolveAllReferences() : void {
+        this.postponedReferences.forEach((pr)=>{
+            const uri = pr.refValue["$ref"];
+            if (uri.indexOf("#") != -1) {
+                const parts = uri.split("#");
+                if (parts.length != 2) {
+                    throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
+                }
+                const packageURI = parts[0];
+                const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
+                if (ePackage == null) {
+                    throw new Error(`Could not find EPackage with URI ${packageURI}`)
+                }
+                throw new Error(JSON.stringify(pr.refValue))
+            } else {
+                const referred = resourceGetEObject(uri, this.resource);
+                if (referred == null) {
+                    throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+                }
+                pr.eObject.set(pr.feature, referred);
+            }
+        });
+        this.postponedReferences = [];
     }
 }
 
@@ -737,9 +765,10 @@ export function loadEObject(data: any, resource: Resource): EObject | undefined 
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
-    const referencesTracker = new ReferencesTracker();
+    const referencesTracker = new ReferencesTracker(resource);
     const result = importJsonObject(data, resource, null, true, referencesTracker);
-    referencesTracker.resolveAllReferences(result);
+    resource.add(result);
+    referencesTracker.resolveAllReferences();
     return result;
 }
 
@@ -777,7 +806,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
-                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker()): EObject {
+                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
