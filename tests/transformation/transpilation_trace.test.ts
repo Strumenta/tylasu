@@ -1,11 +1,16 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {loadEObject, loadEPackages, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../src";
+import {loadEObject, loadEPackages, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../../src";
 import * as Ecore from "ecore/dist/ecore";
-import {KOLASU_TRANSPILATION_URI_V1, TRANSPILATION_EPACKAGE} from "../src/interop/transpilation_package";
-import {ensureEcoreContainsEchar} from "../src/interop/ecore_patching";
+import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation_package";
+import {ensureEcoreContainsEchar} from "../../src/interop/ecore_patching";
+import {
+    TranspilationTraceLoader
+} from "../../src/transformation/transpilation_trace";
 
-describe('Transformation traces', function() {
+describe('Transpilation traces', function() {
+    // This test verifies that the EReference class has been loaded correctly.
+    // Under certain circumstances this was not the case
     it("Can instantiate EReference correctly", function () {
             const A_ECLASS = Ecore.EClass.create({
                     name: "MyClass",
@@ -52,7 +57,7 @@ describe('Transformation traces', function() {
                     expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
             }
         );
-    it("Can load transformation trace produced by Kolasu",
+    it("Can load transpilation trace produced by Kolasu as EObject",
         function () {
             this.timeout(0);
 
@@ -67,15 +72,10 @@ describe('Transformation traces', function() {
             const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/total-bench/java-metamodels.json").toString()),
                 javaMetamodelsResource);
 
-            //resourceSet.eContents().add(TRANSPILATION_EPACKAGE)
             const resource = resourceSet.create({ uri: 'rpgtojava-transpilation-example.json' });
-            // const mmBuffer = fs.readFileSync("tests/data/sas.metamodel.json");
-            // const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
-            // expect(ePackages.length).to.equal(5);
             const text = fs.readFileSync('tests/data/total-bench/rpgtojava-transpilation-example.json', 'utf8')
 
             const javaast = javaMetamodelsResource.eContents()[0];
-            console.log(javaast.get("name"))
             expect(javaast.eClass.get("name")).to.eql("EPackage");
             expect(javaast.eContents().length).to.eql(31);
             const jCompilationUnit = javaast.eContents()[30];
@@ -89,10 +89,15 @@ describe('Transformation traces', function() {
 
             const example1 = loadEObject(text.toString(), resource);
             expect(example1.get("sourceAST").eClass.get("name")).to.equal("CompilationUnit");
-            // expect(trace.sourceAST.id).to.equal("src-1");
-            // expect(trace.sourceAST.destination.id).to.equal("target-1");
-            // expect(trace.sourceAST.destination.type).to.equal("com.strumenta.javaast.JCompilationUnit");
-            // expect(trace.sourceAST.position).to.equal({start:{line:1,column:0}, end:{line:32, column:30}});
-            // expect(trace.sourceAST.dataDefinitions.length).to.equal(5);
+        });
+    it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
+        function () {
+            this.timeout(0);
+            const loader = new TranspilationTraceLoader("tests/data/total-bench/rpg-metamodels.json", "tests/data/total-bench/java-metamodels.json");
+            const trace = loader.loadTranspilationTraceFromFile('tests/data/total-bench/rpgtojava-transpilation-example.json');
+            // TODO test type of target root
+            // TODO test type of source root
+            // TODO test source root to target root
+            // TODO test target root to source root
         });
 });
