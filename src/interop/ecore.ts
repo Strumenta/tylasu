@@ -12,7 +12,6 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
-import {resourceGetEObject, resourceParse} from "./ecorejsfork";
 
 // Kolasu model definition
 
@@ -710,7 +709,7 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: Resource): EPackage[] {
-    resourceParse(resource, data);
+    resource.parse(data);
     return registerPackages(resource);
 }
 
@@ -746,7 +745,7 @@ class ReferencesTracker {
                 }
                 throw new Error(JSON.stringify(pr.refValue))
             } else {
-                const referred = resourceGetEObject(uri, this.resource);
+                const referred = this.resource.getEObject(uri);
                 if (referred == null) {
                     throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
                 }
