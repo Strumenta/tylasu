@@ -142,7 +142,6 @@ export function resourceParse(model, data: string | any) : void {
 //
 // The index keys are the EObject's fragment identifier, the
 // values are the EObjects.
-//
 
 function buildIndex(model) {
     const index = {},

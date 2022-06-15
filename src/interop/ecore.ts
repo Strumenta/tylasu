@@ -71,12 +71,14 @@ THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
 THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "destination",
     eType: THE_POSITION_ECLASS,
-    containment: true
+    containment: true,
+    lowerBound: 0
 }));
 THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "origin",
     eType: THE_ORIGIN_ECLASS,
-    containment: false
+    containment: false,
+    lowerBound: 0
 }));
 
 export const THE_POSSIBLY_NAMED_INTERFACE = Ecore.EClass.create({
@@ -851,11 +853,7 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
                     if (feature.get("containment") === true) {
                         if (feature.get("many")) {
                             if (obj[key]) {
-                                try {
-                                    obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
-                                } catch (e) {
-                                    throw new Error(`Issue while processing key ${key}: ${e}`)
-                                }
+                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
                             }
                         } else {
                             let value;
@@ -869,17 +867,12 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
                                 value = obj[key];
                             }
                             if (value) {
-                                try {
-                                    eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
-                                } catch (e) {
-                                    throw new Error(`Error while processing key ${key} with eType=${eType}. This eClass=${eClass.get("name")}. Error: ${e}`)
-                                }
+                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
                             }
                         }
                     } else if (feature.get("containment") === false) {
                         const refValue = obj[key];
                         referencesTracker.trackReference(eObject, feature, refValue);
-                        //throw new Error(`References are not supported yet. Value: ${JSON.stringify(refValue)}`);
                     } else {
                         throw new Error("The feature is neither a containment or a reference");
                     }
