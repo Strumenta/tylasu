@@ -26,7 +26,7 @@ describe('Transpilation traces', function() {
         it("Can load Java metamodel correctly", function () {
                 const resourceSet = Ecore.ResourceSet.create();
                 const resource = resourceSet.create({uri: 'file:/tests/data/total-bench/java-metamodels.json'})
-                const data = JSON.parse(fs.readFileSync("../at-strumenta-ast-typescript/tests/data/total-bench/java-metamodels.json").toString());
+                const data = JSON.parse(fs.readFileSync("tests/data/total-bench/java-metamodels.json").toString());
                 resource.parse(data);
                 const jcompilationunit = resource.eContents()[0].eContents()[30];
                 expect(jcompilationunit.get("name")).to.eql( "JCompilationUnit");
