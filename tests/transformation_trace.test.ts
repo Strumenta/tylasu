@@ -6,9 +6,33 @@ import * as Ecore from "ecore/dist/ecore";
 import {KOLASU_TRANSPILATION_URI_V1, TRANSPILATION_EPACKAGE} from "../src/interop/transpilation_package";
 
 describe('Transformation traces', function() {
+    it("Can instantiate EReference correctly", function () {
+            const A_ECLASS = Ecore.EClass.create({
+                    name: "MyClass",
+                    abstract: true,
+            });
+            const ef = Ecore.EReference.create({
+                    name: "sourceAST",
+                    containment: true,
+                    eType: A_ECLASS
+            });
+            expect(ef.get("eType").get("name")).to.eql("MyClass")
+    })
+        it("Can load Java metamodel correctly", function () {
+                const resourceSet = Ecore.ResourceSet.create();
+                const resource = resourceSet.create({uri: 'file:/tests/data/total-bench/java-metamodels.json'})
+                const data = JSON.parse(fs.readFileSync("../at-strumenta-ast-typescript/tests/data/total-bench/java-metamodels.json").toString());
+                resource.parse(data);
+                const jcompilationunit = resource.eContents()[0].eContents()[30];
+                expect(jcompilationunit.get("name")).to.eql( "JCompilationUnit");
+                const declarations = jcompilationunit.eContents()[0];
+                expect(declarations.get("name")).to.eql( "declarations");
+                expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+        })
     it("Can load transformation trace produced by Kolasu",
         function () {
             this.timeout(0);
+
             const resourceSet = Ecore.ResourceSet.create();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)

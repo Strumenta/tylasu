@@ -31,9 +31,11 @@ TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.creat
 }));
 TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "sourceAST",
-    containment: true
+    containment: true,
+    eType: THE_NODE_ECLASS
 }));
 TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "targetAST",
-    containment: true
+    containment: true,
+    eType: THE_NODE_ECLASS
 }));

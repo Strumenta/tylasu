@@ -807,7 +807,7 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
         } else if(samePropertiesAs(propertyNames, THE_POSITION_ECLASS)) {
             eClass = THE_POSITION_ECLASS;
         } else {
-            throw new Error("EClass is not specified and not present in the object");
+            throw new Error(`EClass is not specified and not present in the object. Property names: ${propertyNames}`);
         }
     }
     const eObject = eClass.create({});
@@ -822,7 +822,11 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
                     if (feature.get("containment") === true) {
                         if (feature.get("many")) {
                             if (obj[key]) {
-                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
+                                try {
+                                    obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
+                                } catch (e) {
+                                    throw new Error(`Issue while processing key ${key}: ${e}`)
+                                }
                             }
                         } else {
                             let value;
@@ -836,7 +840,11 @@ function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
                                 value = obj[key];
                             }
                             if (value) {
-                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
+                                try {
+                                    eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
+                                } catch (e) {
+                                    throw new Error(`Error while processing key ${key} with eType=${eType}. This eClass=${eClass.get("name")}. Error: ${e}`)
+                                }
                             }
                         }
                     } else if (feature.get("containment") === false) {
