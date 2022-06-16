@@ -42,9 +42,6 @@ export class TranspilationTrace {
 abstract class Node {
     constructor(public eo: EObject, protected trace: TranspilationTrace) {
     }
-    // getContainmentRoles() : string[] {
-    //     return eo.eClass.fe
-    // }
 
     getType() : string {
         return this.eo.eClass.eContainer.get("name") + "." + this.getSimpleType();

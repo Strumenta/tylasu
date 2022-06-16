@@ -761,7 +761,6 @@ class ReferencesTracker {
  * @param data the input string or object.
  * @param resource where to look for to resolve references to types.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEObject(data: any, resource: Resource): EObject | undefined {
     if(typeof data === "string") {
         data = JSON.parse(data);
@@ -803,7 +802,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  * @param resource where to look for to resolve references to types.
  * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
  * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
- * @param pathsToEObjectsMap paths to ID map to be used to solve references
+ * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
