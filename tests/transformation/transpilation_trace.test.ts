@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {loadEObject, loadEPackages, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../../src";
+import {loadEObject, loadEPackages, Point, Position, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../../src";
 import * as Ecore from "ecore/dist/ecore";
 import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation_package";
 import {ensureEcoreContainsEchar} from "../../src/interop/ecore_patching";
@@ -95,9 +95,17 @@ describe('Transpilation traces', function() {
             this.timeout(0);
             const loader = new TranspilationTraceLoader("tests/data/total-bench/rpg-metamodels.json", "tests/data/total-bench/java-metamodels.json");
             const trace = loader.loadTranspilationTraceFromFile('tests/data/total-bench/rpgtojava-transpilation-example.json');
-            // TODO test type of target root
-            // TODO test type of source root
-            // TODO test source root to target root
-            // TODO test target root to source root
+
+            expect(trace.getRootSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(trace.getRootSourceNode().getSimpleType()).to.eql("CompilationUnit");
+            expect(trace.getRootSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(trace.getRootSourceNode().getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.getRootSourceNode().getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+
+            expect(trace.getRootTargetNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.getRootTargetNode().getSimpleType()).to.eql("JCompilationUnit");
+            expect(trace.getRootTargetNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(trace.getRootTargetNode().getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(trace.getRootTargetNode().getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
         });
 });

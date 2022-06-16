@@ -12,7 +12,8 @@
         "column" : 30
       }
     },
-    "dataDefinitions" : [ {
+    "dataDefinitions" : [
+      {
       "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
       "position" : {
         "start" : {
@@ -274,7 +275,8 @@
         "totalDigits" : 8
       }
     } ],
-    "mainStatements" : [ {
+    "mainStatements" : [
+      {
       "eClass" : "https://strumenta.com/rpg/model#//PListStatement",
       "position" : {
         "start" : {
@@ -390,7 +392,8 @@
         }
       }
     } ],
-    "subroutines" : [ {
+    "subroutines" : [
+      {
       "position" : {
         "start" : {
           "line" : 16
