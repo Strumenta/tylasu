@@ -53,6 +53,10 @@ abstract class Node {
     getSimpleType() : string {
         return this.eo.eClass.get("name");
     }
+
+    getRole() : string {
+        return this.eo.eContainingFeature.get("name");
+    }
 }
 
 class SourceNode extends Node {
@@ -72,6 +76,7 @@ class SourceNode extends Node {
             .filter((c)=>role==null || role == c.eContainingFeature.get("name"))
             .map((c)=>new SourceNode(c, this.trace));
     }
+
 }
 
 class TargetNode extends Node {
