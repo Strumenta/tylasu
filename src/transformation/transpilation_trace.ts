@@ -113,9 +113,9 @@ export class TranspilationTraceLoader {
         languages.forEach((l)=> this.registerLanguageFromFile(l));
     }
 
-    registerLanguageFromFile(metamodelPath: string) {
+    registerLanguageFromFile(metamodelPath: string) : void {
         const languageResource = this.resourceSet.create({uri: 'language_' + metamodelPath})
-        const languagePackages = loadEPackages(JSON.parse(fs.readFileSync(metamodelPath).toString()),
+        loadEPackages(JSON.parse(fs.readFileSync(metamodelPath).toString()),
             languageResource);
     }
 
