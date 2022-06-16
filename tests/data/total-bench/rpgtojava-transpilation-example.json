@@ -41,7 +41,8 @@
         "entireDigits" : 8,
         "totalDigits" : 8
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
       "position" : {
         "start" : {
@@ -96,7 +97,8 @@
         "entireDigits" : 8,
         "totalDigits" : 8
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
       "position" : {
         "start" : {
@@ -124,7 +126,8 @@
         "entireDigits" : 8,
         "totalDigits" : 8
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
       "position" : {
         "start" : {
@@ -179,7 +182,8 @@
         "entireDigits" : 8,
         "totalDigits" : 8
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/parsing#//StandaloneField",
       "position" : {
         "start" : {
@@ -291,7 +295,8 @@
         "name" : "ppdat"
       } ],
       "name" : "*entry"
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/model#//EvalStatement",
       "position" : {
         "start" : {
@@ -343,7 +348,8 @@
           "value" : "55"
         }
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/model#//InvokeSubroutineStatement",
       "position" : {
         "start" : {
@@ -355,7 +361,8 @@
         }
       },
       "subroutineName" : "FIB"
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/model#//DisplayStatement",
       "position" : {
         "start" : {
@@ -380,7 +387,8 @@
         },
         "name" : "RESULT"
       }
-    }, {
+    },
+      {
       "eClass" : "https://strumenta.com/rpg/model#//SetOnStatement",
       "position" : {
         "start" : {

@@ -66,6 +66,12 @@ class SourceNode extends Node {
     getDestinationNode() : TargetNode | null {
         return this.trace.getDestinationNode(this);
     }
+    getChildren(role?: string) : SourceNode[] {
+        return this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .filter((c)=>role==null || role == c.eContainingFeature.get("name"))
+            .map((c)=>new SourceNode(c, this.trace));
+    }
 }
 
 class TargetNode extends Node {
@@ -82,6 +88,13 @@ class TargetNode extends Node {
             return null;
         }
         return new SourceNode(rawOrigin, this.trace);
+    }
+    getChildren(role?: string) : TargetNode[] {
+        return this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .filter((c) => c.eContainingFeature.get("name") != "destination")
+            .filter((c)=>role==null || role == c.eContainingFeature.get("name"))
+            .map((c)=>new TargetNode(c, this.trace));
     }
 }
 

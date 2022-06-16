@@ -101,11 +101,16 @@ describe('Transpilation traces', function() {
             expect(trace.getRootSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
             expect(trace.getRootSourceNode().getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
             expect(trace.getRootSourceNode().getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(trace.getRootSourceNode().getChildren().length).to.eql(11);
+            expect(trace.getRootSourceNode().getChildren("mainStatements").length).to.eql(5);
 
             expect(trace.getRootTargetNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
             expect(trace.getRootTargetNode().getSimpleType()).to.eql("JCompilationUnit");
             expect(trace.getRootTargetNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
             expect(trace.getRootTargetNode().getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(trace.getRootTargetNode().getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(trace.getRootTargetNode().getChildren().length).to.eql(1);
+            expect(trace.getRootTargetNode().getChildren("declarations").length).to.eql(1);
+            expect(trace.getRootTargetNode().getChildren("unexisting").length).to.eql(0);
         });
 });
