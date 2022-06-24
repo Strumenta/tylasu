@@ -39,8 +39,9 @@ export class TranspilationTrace {
     }
 }
 
-abstract class Node {
-    constructor(public eo: EObject, protected trace: TranspilationTrace) {
+
+export abstract class Node {
+    constructor(public eo: EObject) {
     }
 
     getType() : string {
@@ -56,7 +57,11 @@ abstract class Node {
     }
 }
 
-class SourceNode extends Node {
+export class SourceNode extends Node {
+    constructor(eo: EObject, protected trace: TranspilationTrace) {
+        super(eo);
+    }
+
     getPosition() : Position | null {
         const raw = this.eo.get("position");
         if (raw == null) {
@@ -76,7 +81,12 @@ class SourceNode extends Node {
 
 }
 
-class TargetNode extends Node {
+export class TargetNode extends Node {
+
+    constructor(eo: EObject, protected trace: TranspilationTrace) {
+        super(eo);
+    }
+
     getDestination() : Position | null {
         const raw = this.eo.get("destination");
         if (raw == null) {
