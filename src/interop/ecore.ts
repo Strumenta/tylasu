@@ -537,6 +537,9 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
         const packages = resource.eContents().filter(value => value.isTypeOf("EPackage"));
         if(parts.length == 2) {
             const ePackage = packages[parseInt(parts[0])];
+            if (ePackage == null) {
+                throw new Error("Package not found while looking for EClass " + name)
+            }
             return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[1]);
         } else if(packages.length == 1) {
             return packages[0].get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[0]);

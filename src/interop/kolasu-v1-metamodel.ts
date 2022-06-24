@@ -10,7 +10,7 @@ export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
 
 
 export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: KOLASU_URI_V1 });
+export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
 export const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "ASTNode",
