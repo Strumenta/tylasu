@@ -1,12 +1,10 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {loadEObject, loadEPackages, Point, Position, THE_AST_EPACKAGE, THE_NODE_ECLASS} from "../../src";
+import {loadEObject, loadEPackages, Point, Position, TranspilationTraceLoader} from "../../src";
+import {THE_AST_EPACKAGE} from "../../src/interop/kolasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
-import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation_package";
-import {ensureEcoreContainsEchar} from "../../src/interop/ecore_patching";
-import {
-    TranspilationTraceLoader
-} from "../../src/transformation/transpilation_trace";
+import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
+import {ensureEcoreContainsEchar} from "../../src/interop/ecore-patching";
 
 describe('Transpilation traces', function() {
     // This test verifies that the EReference class has been loaded correctly.
@@ -63,8 +61,8 @@ describe('Transpilation traces', function() {
 
             const resourceSet = Ecore.ResourceSet.create();
             ensureEcoreContainsEchar();
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
                  rpgMetamodelsResource);
@@ -93,8 +91,20 @@ describe('Transpilation traces', function() {
     it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
         function () {
             this.timeout(0);
-            const loader = new TranspilationTraceLoader("tests/data/playground/rpg-metamodels.json", "tests/data/playground/java-metamodels.json");
-            const trace = loader.loadTranspilationTraceFromFile('tests/data/playground/rpgtojava-transpilation-example.json');
+            ensureEcoreContainsEchar();
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const loader = new TranspilationTraceLoader({
+                name: "rpg",
+                uri: "file://tests/data/playground/rpg-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString())
+            }, {
+                name: "java",
+                uri: "file://tests/data/playground/java-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString())
+            });
+            const example = fs.readFileSync("tests/data/playground/rpgtojava-transpilation-example.json").toString();
+            const trace = loader.loadTranspilationTrace(example);
 
             expect(trace.getRootSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(trace.getRootSourceNode().getSimpleType()).to.eql("CompilationUnit");

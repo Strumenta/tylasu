@@ -12,7 +12,7 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
-import {getEPackage} from "./ecore_basic";
+import {getEPackage} from "./ecore-basic";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -258,15 +258,15 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
     if(!eClass) {
         return obj;
     }
-    if(eClass == THE_POSITION_ECLASS) {
+    if(isBuiltInClass(eClass, THE_POSITION_ECLASS)) {
         return new Position(
             new Point(obj.get("start")?.get("line") || 1, obj.get("start")?.get("column") || 0),
             new Point(obj.get("end")?.get("line") || 1, obj.get("end")?.get("column") || 0));
     }
-    if(eClass == THE_LOCAL_DATE_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_DATE_ECLASS)) {
         return { year: obj.get("year"), month: obj.get("month"), dayOfMonth: obj.get("dayOfMonth") };
     }
-    if(eClass == THE_LOCAL_TIME_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_TIME_ECLASS)) {
         return {
             hour: obj.get("hour"),
             minute: obj.get("minute"),
@@ -274,10 +274,10 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
             nanosecond: obj.get("nanosecond")
         };
     }
-    if(eClass == THE_LOCAL_DATE_TIME_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_DATE_TIME_ECLASS)) {
         return { date: fromEObject(obj.get("date")) as LocalDate, time: fromEObject(obj.get("time")) as LocalTime };
     }
-    if(eClass == THE_RESULT_ECLASS) {
+    if(isBuiltInClass(eClass, THE_RESULT_ECLASS)) {
         return {
             root: fromEObject(obj.get("root")) as Node,
             issues: (obj.get("issues") as EList)?.map(
@@ -386,15 +386,13 @@ function defineProperty(classDef, name) {
     });
 }
 
-function isTheNodeClass(eClass) {
-    return eClass.eContainer
-        && (eClass.eContainer.get("nsURI") == KOLASU_URI_V1
-            || eClass.eContainer.get("nsURI") == KOLASU_URI_V2)
-        && eClass.get("name") == "ASTNode";
+function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
+    const nsURI = eClass?.eContainer?.get("nsURI");
+    return (nsURI == KOLASU_URI_V1 || nsURI == KOLASU_URI_V2) && eClass.get("name") == refClass.get("name");
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {
-    if(isTheNodeClass(eClass)) {
+    if(isBuiltInClass(eClass, THE_NODE_ECLASS)) {
         return Node;
     }
     const className = eClass.get("name");
@@ -511,7 +509,7 @@ class ReferencesTracker {
  * @param data the input string or object.
  * @param resource where to look for to resolve references to types.
  */
-export function loadEObject(data: any, resource: Resource, eClass?: EClass,): EObject | undefined {
+export function loadEObject(data: any, resource: Resource, eClass?: EClass): EObject | undefined {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }

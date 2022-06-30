@@ -1,7 +1,7 @@
 import * as Ecore from "ecore/dist/ecore";
 import {IssueSeverity, IssueType} from "../validation";
 import {EList} from "ecore";
-import {addLiteral, getEPackage} from "./ecore_basic";
+import {addLiteral, getEPackage} from "./ecore-basic";
 
 // Kolasu model definition
 
