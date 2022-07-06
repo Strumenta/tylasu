@@ -2,9 +2,10 @@
 
 # AST
 
-@strumenta/ast supplies the infrastructure to build a custom, possibly mutable, Abstract Syntax Tree (AST) using TypeScript.
+Tylasu supplies the infrastructure to build a custom, possibly mutable, Abstract Syntax Tree (AST) using TypeScript.
 
-Tylasu is part of the [StarLasu](https://github.com/Strumenta/StarLasu) set of libraries. The other libraries provide similar support in other languages.
+Tylasu is part of the [StarLasu](https://github.com/Strumenta/StarLasu) family of libraries. The other libraries provide
+similar support in other languages.
 
 Tylasu is integrated with ANTLR, specifically [antlr4ts](https://github.com/tunnelvisionlabs/antlr4ts).
 

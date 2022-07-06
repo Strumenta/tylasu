@@ -18,7 +18,7 @@ const cmd = command({
     },
     handler: args => {
         const resourceSet = Ecore.ResourceSet.create();
-        let output = "import {ASTNode, Child, Children, Node, Property} from '@strumenta/ast';\n";
+        let output = "import {ASTNode, Child, Children, Node, Property} from '@strumenta/tylasu';\n";
         let error = undefined;
         args.metamodel.forEach(mm => {
             const resource = resourceSet.create({ uri: 'file:' + mm });
