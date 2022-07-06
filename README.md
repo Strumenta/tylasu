@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/%40strumenta%2Ftylasu.svg)](https://badge.fury.io/js/%40strumenta%2Ftylasu)
 
-# AST
+# Tylasu – AST Library for TypeScript
 
 Tylasu supplies the infrastructure to build a custom, possibly mutable, Abstract Syntax Tree (AST) using TypeScript.
 
