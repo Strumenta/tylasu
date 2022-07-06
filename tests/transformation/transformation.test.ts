@@ -10,7 +10,7 @@ import {
     PartiallyInitializedNode,
     Property,
     transform
-} from "../src";
+} from "../../src";
 
 class A extends Node {
     child: Node;

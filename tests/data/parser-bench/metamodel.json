@@ -11,7 +11,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+            "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ],
@@ -32,7 +32,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "someNode",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -45,7 +45,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "multi",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -63,7 +63,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+            "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ],
@@ -84,7 +84,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "someNode",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -97,7 +97,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "multi",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -132,7 +132,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "anotherChild",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -150,7 +150,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+            "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ],
@@ -171,7 +171,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "someNode",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -184,7 +184,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "multi",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -219,7 +219,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "anotherChild",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -237,7 +237,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+            "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ],
@@ -258,7 +258,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "someNode",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -271,7 +271,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "multi",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -306,7 +306,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
             "name": "anotherChild",
             "eType": {
-              "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+              "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
             },
             "ordered": true,
@@ -331,7 +331,7 @@
         "interface": false,
         "eSuperTypes": [
           {
-            "$ref": "https://strumenta.com/kolasu/v1#//ASTNode",
+            "$ref": "https://strumenta.com/kolasu/v2#//ASTNode",
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
           }
         ]

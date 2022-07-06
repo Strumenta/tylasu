@@ -12,254 +12,24 @@ import {Point, Position} from "../position";
 import {Parser} from "../parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
-
-// Kolasu model definition
+import {getEPackage} from "./ecore-basic";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
 
-export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
-THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
-export const THE_NODE_ECLASS = Ecore.EClass.create({
-    name: "ASTNode",
-    abstract: true
-});
-export const THE_POINT_ECLASS = Ecore.EClass.create({
-    name: "Point"
-});
-THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "line",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_POINT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "column",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-export const THE_POSITION_ECLASS = Ecore.EClass.create({
-    name: "Position"
-});
-THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "start",
-    eType: THE_POINT_ECLASS,
-    containment: true,
-    lowerBound: 1
-}));
-THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "end",
-    eType: THE_POINT_ECLASS,
-    containment: true,
-    lowerBound: 1
-}));
-THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "position",
-    eType: THE_POSITION_ECLASS,
-    containment: true
-}));
-export const THE_POSSIBLY_NAMED_INTERFACE = Ecore.EClass.create({
-    name: "PossiblyNamed",
-    interface: true
-});
-THE_POSSIBLY_NAMED_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "name",
-    eType: Ecore.EString,
-    lowerBound: 0
-}));
-export const THE_NAMED_INTERFACE = Ecore.EClass.create({
-    name: "Named",
-    interface: true
-});
-THE_NAMED_INTERFACE.get("eSuperTypes").add(THE_POSSIBLY_NAMED_INTERFACE);
-THE_NAMED_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "name",
-    eType: Ecore.EString,
-    lowerBound: 1
-}));
-export const THE_REFERENCE_BY_NAME_ECLASS = Ecore.EClass.create({
-    name: "ReferenceByName"
-});
-THE_REFERENCE_BY_NAME_ECLASS.get("eSuperTypes").add(THE_NAMED_INTERFACE);
-THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").add(Ecore.ETypeParameter.create({
-    name: "N"
-}));
-THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0).get("eBounds").add(Ecore.EGenericType.create({
-    eClassifier: THE_POSSIBLY_NAMED_INTERFACE
-}));
-THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "name",
-    eType: Ecore.EString,
-    lowerBound: 1
-}));
-THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "referenced",
-    containment: true
-}));
-THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").at(1).set("eGenericType", Ecore.EGenericType.create({
-    eTypeParameter: THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0)
-}));
-
-export const THE_LOCAL_DATE_ECLASS  = Ecore.EClass.create({
-    name: "LocalDate"
-});
-THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "year",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "month",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_LOCAL_DATE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "dayOfMonth",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-
-export const THE_LOCAL_TIME_ECLASS  = Ecore.EClass.create({
-    name: "LocalTime"
-});
-THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "hour",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "minute",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "second",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-THE_LOCAL_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "nanosecond",
-    eType: Ecore.EInt,
-    lowerBound: 1
-}));
-
-export const THE_LOCAL_DATE_TIME_ECLASS  = Ecore.EClass.create({
-    name: "LocalDateTime"
-});
-THE_LOCAL_DATE_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "date",
-    eType: THE_LOCAL_DATE_ECLASS,
-    lowerBound: 1,
-    containment: true
-}));
-THE_LOCAL_DATE_TIME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "time",
-    eType: THE_LOCAL_TIME_ECLASS,
-    lowerBound: 1,
-    containment: true
-}));
-
-
-function addLiteral(eenum: Ecore.EEnum, name: string, value: number) {
-    const literal = Ecore.EEnumLiteral.create({
-        name, value
-    });
-    eenum.get("eLiterals").add(literal);
-    return literal;
-}
-
-export const THE_ISSUE_TYPE_EENUM = Ecore.EEnum.create({
-    name: "IssueType"
-});
-addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.LEXICAL], IssueType.LEXICAL);
-addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.SYNTACTIC], IssueType.SYNTACTIC);
-addLiteral(THE_ISSUE_TYPE_EENUM, IssueType[IssueType.SEMANTIC], IssueType.SEMANTIC);
-
-export const THE_ISSUE_SEVERITY_EENUM = Ecore.EEnum.create({
-    name: "IssueSeverity"
-});
-addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.INFO], IssueSeverity.INFO);
-addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.WARNING], IssueSeverity.WARNING);
-addLiteral(THE_ISSUE_SEVERITY_EENUM, IssueSeverity[IssueSeverity.ERROR], IssueSeverity.ERROR);
-
-export const THE_ISSUE_ECLASS = Ecore.EClass.create({
-    name: "Issue"
-});
-THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "type",
-    eType: THE_ISSUE_TYPE_EENUM,
-    lowerBound: 1
-}));
-THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "message",
-    eType: Ecore.EString,
-    lowerBound: 1
-}));
-THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
-    name: "severity",
-    eType: THE_ISSUE_SEVERITY_EENUM
-}));
-THE_ISSUE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "position",
-    eType: THE_POSITION_ECLASS,
-    containment: true
-}));
-
-export const THE_RESULT_ECLASS = Ecore.EClass.create({
-    name: "Result"
-});
-const resultTypeParameter = Ecore.ETypeParameter.create({ name: "CU" });
-(resultTypeParameter.get("eBounds") as EList).add(Ecore.EGenericType.create({
-    eClassifier: THE_NODE_ECLASS
-}));
-THE_RESULT_ECLASS.get("eTypeParameters").add(resultTypeParameter);
-THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "root",
-    eGenericType: Ecore.EGenericType.create({ eTypeParameter: resultTypeParameter }),
-    containment: true
-}));
-THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
-    name: "issues",
-    eGenericType: THE_ISSUE_ECLASS,
-    containment: true,
-    upperBound: -1
-}));
-
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
-THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
-
-function getEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
-    const ePackage = Ecore.EPackage.Registry.ePackages().find(p => p.get("name") == packageName);
-    if(ePackage) {
-        if(args.nsURI && ePackage.get("nsURI") !== args.nsURI) {
-            throw new Error("Package " + packageName + " already exists with different nsUri: " + ePackage.get("nsURI"));
-        } else if(args.nsPrefix && ePackage.get("nsPrefix") !== args.nsPrefix) {
-            throw new Error("Package " + packageName + " already exists with different nsPrefix: " + ePackage.get("nsPrefix"));
-        } else {
-            return ePackage;
-        }
-    } else {
-        const newPackage = Ecore.EPackage.create({
-            name: packageName,
-            ...args
-        });
-        Ecore.EPackage.Registry.register(newPackage);
-        return newPackage;
-    }
-}
+import {
+    KOLASU_URI_V2, THE_AST_EPACKAGE,
+    THE_ISSUE_ECLASS, THE_ISSUE_SEVERITY_EENUM, THE_ISSUE_TYPE_EENUM,
+    THE_LOCAL_DATE_ECLASS,
+    THE_LOCAL_DATE_TIME_ECLASS,
+    THE_LOCAL_TIME_ECLASS,
+    THE_NODE_ECLASS, THE_POINT_ECLASS,
+    THE_POSITION_ECLASS,
+    THE_RESULT_ECLASS
+} from "./kolasu-v2-metamodel";
+import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 
 function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const packageDef = NODE_TYPES[packageName];
@@ -488,15 +258,15 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
     if(!eClass) {
         return obj;
     }
-    if(eClass == THE_POSITION_ECLASS) {
+    if(isBuiltInClass(eClass, THE_POSITION_ECLASS)) {
         return new Position(
             new Point(obj.get("start")?.get("line") || 1, obj.get("start")?.get("column") || 0),
             new Point(obj.get("end")?.get("line") || 1, obj.get("end")?.get("column") || 0));
     }
-    if(eClass == THE_LOCAL_DATE_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_DATE_ECLASS)) {
         return { year: obj.get("year"), month: obj.get("month"), dayOfMonth: obj.get("dayOfMonth") };
     }
-    if(eClass == THE_LOCAL_TIME_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_TIME_ECLASS)) {
         return {
             hour: obj.get("hour"),
             minute: obj.get("minute"),
@@ -504,10 +274,10 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
             nanosecond: obj.get("nanosecond")
         };
     }
-    if(eClass == THE_LOCAL_DATE_TIME_ECLASS) {
+    if(isBuiltInClass(eClass, THE_LOCAL_DATE_TIME_ECLASS)) {
         return { date: fromEObject(obj.get("date")) as LocalDate, time: fromEObject(obj.get("time")) as LocalTime };
     }
-    if(eClass == THE_RESULT_ECLASS) {
+    if(isBuiltInClass(eClass, THE_RESULT_ECLASS)) {
         return {
             root: fromEObject(obj.get("root")) as Node,
             issues: (obj.get("issues") as EList)?.map(
@@ -616,12 +386,13 @@ function defineProperty(classDef, name) {
     });
 }
 
-function isTheNodeClass(eClass) {
-    return eClass.eContainer && eClass.eContainer.get("nsURI") == KOLASU_URI_V1 && eClass.get("name") == "ASTNode";
+function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
+    const nsURI = eClass?.eContainer?.get("nsURI");
+    return (nsURI == KOLASU_URI_V1 || nsURI == KOLASU_URI_V2) && eClass.get("name") == refClass.get("name");
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {
-    if(isTheNodeClass(eClass)) {
+    if(isBuiltInClass(eClass, THE_NODE_ECLASS)) {
         return Node;
     }
     const className = eClass.get("name");
@@ -630,7 +401,6 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
-    //const interfaces = supertypes.filter(t => t.get("interface"));
     let nodeSuperclass = undefined;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
@@ -691,17 +461,64 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     return registerPackages(resource);
 }
 
+interface PostponedReference {
+    eObject: EObject, feature: any, refValue: any
+}
+
+/**
+ * Used to track references to resolve once the whole model is loaded.
+ */
+class ReferencesTracker {
+    private postponedReferences : PostponedReference[] = [];
+
+    constructor(public resource: Resource) {
+    }
+
+    trackReference(eObject: EObject, feature: any, refValue: any) : void {
+        this.postponedReferences.push({eObject, feature, refValue});
+    }
+
+    resolveAllReferences() : void {
+        this.postponedReferences.forEach((pr)=>{
+            const uri = pr.refValue["$ref"];
+            if (uri.indexOf("#") != -1) {
+                const parts = uri.split("#");
+                if (parts.length != 2) {
+                    throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
+                }
+                const packageURI = parts[0];
+                const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
+                if (ePackage == null) {
+                    throw new Error(`Could not find EPackage with URI ${packageURI}`)
+                }
+                throw new Error(JSON.stringify(pr.refValue))
+            } else {
+                const referred = this.resource.getEObject(uri);
+                if (referred == null) {
+                    throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+                }
+                pr.eObject.set(pr.feature, referred);
+            }
+        });
+        this.postponedReferences = [];
+    }
+}
+
 /**
  * Interprets a string or JSON object as an EObject.
  * @param data the input string or object.
  * @param resource where to look for to resolve references to types.
+ * @param eClass the class of the object, if not specified in the `data`.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function loadEObject(data: any, resource: Resource): EObject | undefined {
+export function loadEObject(data: unknown, resource: Resource, eClass?: EClass): EObject | undefined {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
-    return importJsonObject(data, resource);
+    const referencesTracker = new ReferencesTracker(resource);
+    const result = importJsonObject(data, resource, eClass, true, referencesTracker);
+    resource.add(result);
+    referencesTracker.resolveAllReferences();
+    return result;
 }
 
 export function findEClass(name: string, resource: Resource): EClass | undefined {
@@ -710,7 +527,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
         const packageName = name.substring(0, index);
         const ePackage = EPackage.Registry.getEPackage(packageName);
         if(!ePackage) {
-            throw new Error("Package not found: " + packageName);
+            throw new Error("Package not found: " + packageName+ " while loading for class " + name);
         }
         return ePackage.get("eClassifiers").find((c: EClassifier) =>
             c.get("name") == name.substring(name.lastIndexOf("/") + 1));
@@ -719,6 +536,9 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
         const packages = resource.eContents().filter(value => value.isTypeOf("EPackage"));
         if(parts.length == 2) {
             const ePackage = packages[parseInt(parts[0])];
+            if (ePackage == null) {
+                throw new Error("Package not found while looking for EClass " + name)
+            }
             return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[1]);
         } else if(packages.length == 1) {
             return packages[0].get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[0]);
@@ -734,9 +554,12 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  * @param resource where to look for to resolve references to types.
  * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
  * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
+ * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, strict = true): EObject {
+function importJsonObject(
+    obj: any, resource: Resource, eClass?: EClass,
+    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
@@ -759,14 +582,14 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                 type: IssueType[obj.type],
                 message: obj.message,
                 severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
-                position: obj.position ? importJsonObject(obj.position, resource) : undefined
+                position: obj.position ? importJsonObject(obj.position, resource, null, strict, referencesTracker) : undefined
             });
         } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
             eClass = THE_POINT_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_POSITION_ECLASS)) {
             eClass = THE_POSITION_ECLASS;
         } else {
-            throw new Error("EClass is not specified and not present in the object");
+            throw new Error(`EClass is not specified and not present in the object. Property names: ${propertyNames}`);
         }
     }
     const eObject = eClass.create({});
@@ -778,24 +601,31 @@ export function importJsonObject(obj: any, resource: Resource, eClass?: EClass, 
                     eObject.set(key, obj[key]);
                 } else if (feature.isTypeOf('EReference')) {
                     const eType = feature.get("eType");
-                    if (feature.get("many")) {
-                        if (obj[key]) {
-                            obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict)));
-                        }
-                    } else {
-                        let value;
-                        if (Array.isArray(obj[key])) {
-                            if (obj[key].length == 1) {
-                                value = obj[key][0];
-                            } else if (obj[key].length > 1) {
-                                throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                    if (feature.get("containment") === true) {
+                        if (feature.get("many")) {
+                            if (obj[key]) {
+                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
                             }
                         } else {
-                            value = obj[key];
+                            let value;
+                            if (Array.isArray(obj[key])) {
+                                if (obj[key].length == 1) {
+                                    value = obj[key][0];
+                                } else if (obj[key].length > 1) {
+                                    throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+                                }
+                            } else {
+                                value = obj[key];
+                            }
+                            if (value) {
+                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
+                            }
                         }
-                        if (value) {
-                            eObject.set(key, importJsonObject(value, resource, eType, strict));
-                        }
+                    } else if (feature.get("containment") === false) {
+                        const refValue = obj[key];
+                        referencesTracker.trackReference(eObject, feature, refValue);
+                    } else {
+                        throw new Error("The feature is neither a containment or a reference");
                     }
                 } else if (strict) {
                     throw new Error("Not a feature: " + key + " of " + eClass.fragment());

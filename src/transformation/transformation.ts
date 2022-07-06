@@ -5,7 +5,7 @@ import {
     Node,
     NODE_DEFINITION_SYMBOL, registerNodeDefinition,
     registerNodeProperty
-} from "./ast";
+} from "../ast";
 
 //-----------------------------------//
 // Factory and metadata registration //

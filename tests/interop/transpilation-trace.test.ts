@@ -1,0 +1,130 @@
+import {expect} from "chai";
+import * as fs from "fs";
+import {loadEObject, loadEPackages, Point, Position, TranspilationTraceLoader} from "../../src";
+import {THE_AST_EPACKAGE} from "../../src/interop/kolasu-v2-metamodel";
+import * as Ecore from "ecore/dist/ecore";
+import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
+import {ensureEcoreContainsEchar} from "../../src/interop/ecore-patching";
+
+describe('Transpilation traces', function() {
+    // This test verifies that the EReference class has been loaded correctly.
+    // Under certain circumstances this was not the case
+    it("Can instantiate EReference correctly", function () {
+            const A_ECLASS = Ecore.EClass.create({
+                    name: "MyClass",
+                    abstract: true,
+            });
+            const ef = Ecore.EReference.create({
+                    name: "sourceAST",
+                    containment: true,
+                    eType: A_ECLASS
+            });
+            expect(ef.get("eType").get("name")).to.eql("MyClass")
+    })
+        it("Can load Java metamodel correctly", function () {
+                const resourceSet = Ecore.ResourceSet.create();
+                const resource = resourceSet.create({uri: 'file:/tests/data/playground/java-metamodels.json'})
+                const data = JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString());
+                resource.parse(data);
+                const jcompilationunit = resource.eContents()[0].eContents()[30];
+                expect(jcompilationunit.get("name")).to.eql( "JCompilationUnit");
+                const declarations = jcompilationunit.eContents()[0];
+                expect(declarations.get("name")).to.eql( "declarations");
+                expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+        })
+        it("Can load eType for all references in Java metamodel",
+            function () {
+                    this.timeout(0);
+                    const resourceSet = Ecore.ResourceSet.create();
+                    Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
+                    Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
+                    const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
+                    const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString()),
+                        rpgMetamodelsResource);
+                    expect(rpgMetamodelsResource.eContents().length).to.eql(1);
+                    const javaast = rpgMetamodelsResource.eContents()[0];
+                    expect(javaast.eClass.get("name")).to.eql("EPackage");
+                    expect(javaast.eContents().length).to.eql(31);
+                    const jCompilationUnit = javaast.eContents()[30];
+                    expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
+                    expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
+                    expect(jCompilationUnit.eContents().length).to.eql(1);
+                    const declarations = jCompilationUnit.eContents()[0];
+                    expect(declarations.eClass.get("name")).to.eql("EReference");
+                    expect(declarations.get("name")).to.eql("declarations");
+                    expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+            }
+        );
+    it("Can load transpilation trace produced by Kolasu as EObject",
+        function () {
+            this.timeout(0);
+
+            const resourceSet = Ecore.ResourceSet.create();
+            ensureEcoreContainsEchar();
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
+            const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
+                 rpgMetamodelsResource);
+            const javaMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/java-metamodels.json'})
+            const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString()),
+                javaMetamodelsResource);
+
+            const resource = resourceSet.create({ uri: 'rpgtojava-transpilation-example.json' });
+            const text = fs.readFileSync('tests/data/playground/rpgtojava-transpilation-example.json', 'utf8')
+
+            const javaast = javaMetamodelsResource.eContents()[0];
+            expect(javaast.eClass.get("name")).to.eql("EPackage");
+            expect(javaast.eContents().length).to.eql(31);
+            const jCompilationUnit = javaast.eContents()[30];
+            expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
+            expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
+            expect(jCompilationUnit.eContents().length).to.eql(1);
+            const declarations = jCompilationUnit.eContents()[0];
+            expect(declarations.eClass.get("name")).to.eql("EReference");
+            expect(declarations.get("name")).to.eql("declarations");
+            expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
+
+            const example1 = loadEObject(text.toString(), resource);
+            expect(example1.get("sourceAST").eClass.get("name")).to.equal("CompilationUnit");
+        });
+    it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
+        function () {
+            this.timeout(0);
+            ensureEcoreContainsEchar();
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const loader = new TranspilationTraceLoader({
+                name: "rpg",
+                uri: "file://tests/data/playground/rpg-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString())
+            }, {
+                name: "java",
+                uri: "file://tests/data/playground/java-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString())
+            });
+            const example = fs.readFileSync("tests/data/playground/rpgtojava-transpilation-example.json").toString();
+            const trace = loader.loadTranspilationTrace(example);
+
+            expect(trace.getRootSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(trace.getRootSourceNode().getSimpleType()).to.eql("CompilationUnit");
+            expect(trace.getRootSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(trace.getRootSourceNode().getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.getRootSourceNode().getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(trace.getRootSourceNode().getChildren().length).to.eql(11);
+            expect(trace.getRootSourceNode().getChildren("mainStatements").length).to.eql(5);
+            expect(trace.getRootSourceNode().getRole()).to.eql("sourceAST");
+            expect(trace.getRootSourceNode().getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
+
+            expect(trace.getRootTargetNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.getRootTargetNode().getSimpleType()).to.eql("JCompilationUnit");
+            expect(trace.getRootTargetNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(trace.getRootTargetNode().getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(trace.getRootTargetNode().getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(trace.getRootTargetNode().getChildren().length).to.eql(1);
+            expect(trace.getRootTargetNode().getChildren("declarations").length).to.eql(1);
+            expect(trace.getRootTargetNode().getChildren("unexisting").length).to.eql(0);
+            expect(trace.getRootTargetNode().getRole()).to.eql("targetAST");
+            expect(trace.getRootTargetNode().getChildren("declarations")[0].getRole()).to.eql("declarations");
+        });
+});
