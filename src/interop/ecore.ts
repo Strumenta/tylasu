@@ -508,8 +508,9 @@ class ReferencesTracker {
  * Interprets a string or JSON object as an EObject.
  * @param data the input string or object.
  * @param resource where to look for to resolve references to types.
+ * @param eClass the class of the object, if not specified in the `data`.
  */
-export function loadEObject(data: any, resource: Resource, eClass?: EClass): EObject | undefined {
+export function loadEObject(data: unknown, resource: Resource, eClass?: EClass): EObject | undefined {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
@@ -556,8 +557,9 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
  * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function importJsonObject(obj: any, resource: Resource, eClass?: EClass,
-                          strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
+function importJsonObject(
+    obj: any, resource: Resource, eClass?: EClass,
+    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {

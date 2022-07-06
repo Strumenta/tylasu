@@ -82,10 +82,11 @@ export abstract class TraceNode {
 
     getPosition(): Position | null {
         const raw = this.eo.get("position");
-        if (!raw) {
-            return raw;
+        if (raw) {
+            return fromEObject(raw) as Position;
+        } else {
+            return null;
         }
-        return fromEObject(raw) as Position;
     }
 }
 
