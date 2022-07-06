@@ -3,7 +3,7 @@ import * as Ecore from "ecore/dist/ecore";
 // Given the Ecore implementation we have from the ecore.js is not 100% complete and it is unmaintained
 // we apply corrections here
 
-export const EChar = new Ecore.create(Ecore.EObject);
+export const EChar = Ecore.create(Ecore.EObject);
 EChar.eClass = Ecore.EDataType;
 EChar.set({ name: 'EChar' });
 
