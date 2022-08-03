@@ -10,7 +10,7 @@ import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
-export function saveForParserBench<R extends Node>(
+export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R, any>, name: string,
     parser: EMFEnabledParser<R, any, any>, callback: (data: any, error: any) => void): void {
     const resourceSet = Ecore.ResourceSet.create();

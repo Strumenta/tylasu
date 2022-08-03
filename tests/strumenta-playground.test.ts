@@ -1,14 +1,12 @@
 import {expect} from "chai";
 
-import {Issue, ParsingResult, registerECoreModel} from "../src";
-import {NodeSubclass, SomeNodeInAnotherPackage, SomeNodeInPackage} from "./nodes";
-import {saveForParserBench} from "../src/interop/parser-bench";
-import {EMFEnabledParser, toEObject} from "../src/interop/ecore";
+import {EMFEnabledParser, Issue, ParsingResult, registerECoreModel, saveForStrumentaPlayground} from "../src";
+import {NodeSubclass} from "./nodes";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
 
-describe('Parser Bench', function() {
+describe('Strumenta Playground', function() {
     it("Export", function () {
         const result = new ParsingResult<NodeSubclass, any>(
             "some code", new NodeSubclass("root"), [Issue.semantic("Something's wrong")]);
@@ -18,15 +16,15 @@ describe('Parser Bench', function() {
         testParser.generateMetamodel(mmResource, false);
         mmResource.save((data, e) => {
             expect(e).to.be.null;
-            fs.writeFileSync("tests/data/parser-bench/metamodel.json", JSON.stringify(data, null, 2));
+            fs.writeFileSync("tests/data/playground/metamodel.json", JSON.stringify(data, null, 2));
         });
-        saveForParserBench(result, "test-1", testParser, (data, error) => {
+        saveForStrumentaPlayground(result, "test-1", testParser, (data, error) => {
            expect(error).to.be.null;
            expect(data).not.to.be.null;
            expect(data.name).to.equal("test-1");
            expect(data.code).to.equal("some code");
            expect(data.ast).not.to.be.undefined;
-           fs.writeFileSync("tests/data/parser-bench/example1.json", JSON.stringify(data, null, 2));
+           fs.writeFileSync("tests/data/playground/example1.json", JSON.stringify(data, null, 2));
         });
     });
 });

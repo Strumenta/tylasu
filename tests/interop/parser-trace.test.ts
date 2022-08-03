@@ -9,13 +9,13 @@ describe('Parser traces', function() {
             this.timeout(0);
 
             const metamodel =
-                JSON.parse(fs.readFileSync("tests/data/parser-bench/rpgexamples/metamodel.json").toString());
+                JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/metamodel.json").toString());
             const loader = new ParserTraceLoader({
                 name: "rpg",
-                uri: "file://tests/data/parser-bench/rpgexamples/metamodel.json",
+                uri: "file://tests/data/playground/rpgexamples/metamodel.json",
                 metamodel: metamodel
             });
-            const code = fs.readFileSync("tests/data/parser-bench/rpgexamples/BBSAACCLVR.json").toString();
+            const code = fs.readFileSync("tests/data/playground/rpgexamples/BBSAACCLVR.json").toString();
             const trace = loader.loadParserTrace(code, "rpg");
 
             expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");

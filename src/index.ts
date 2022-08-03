@@ -9,4 +9,4 @@ export * from "./validation";
 export * from "./parsing";
 export * from "./interop/json";
 export * from "./interop/ecore";
-export * from "./interop/parser-bench";
+export * from "./interop/strumenta-playground";
