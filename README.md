@@ -9,8 +9,10 @@ similar support in other languages.
 
 Tylasu is integrated with ANTLR, specifically [antlr4ts](https://github.com/tunnelvisionlabs/antlr4ts).
 
-## Building
+## Building and Releasing
 
 `yarn build` compiles the sources.
 
 `yarn dist` compiles, tests and builds the npm package.
+
+`yarn publish-lib` creates the dist and uploads it to the NPM registry and GitHub packages.
