@@ -7,7 +7,7 @@
     },
     "issues": [
       {
-        "eClass": "https://strumenta.com/kolasu/v2#//Result/issues/Issue",
+        "eClass": "https://strumenta.com/kolasu/v2#//Issue",
         "type": "SEMANTIC",
         "message": "Something's wrong",
         "severity": "ERROR"

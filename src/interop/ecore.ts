@@ -222,7 +222,7 @@ export interface Result {
     issues: Issue[];
 }
 
-export type ASTElement = Node | Position | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
+export type ASTElement = Node | Position | Issue | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
 
 function decodeEnumLiteral(eType, literalName: string) {
     if(!literalName) {
@@ -277,15 +277,17 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
     if(isBuiltInClass(eClass, THE_LOCAL_DATE_TIME_ECLASS)) {
         return { date: fromEObject(obj.get("date")) as LocalDate, time: fromEObject(obj.get("time")) as LocalTime };
     }
+    if(isBuiltInClass(eClass, THE_ISSUE_ECLASS)) {
+        return new Issue(
+            decodeEnumLiteral(THE_ISSUE_TYPE_EENUM, obj.get("type")),
+            obj.get("message"),
+            decodeEnumLiteral(THE_ISSUE_SEVERITY_EENUM, obj.get("severity")),
+            fromEObject(obj.get("position")) as Position);
+    }
     if(isBuiltInClass(eClass, THE_RESULT_ECLASS)) {
         return {
             root: fromEObject(obj.get("root")) as Node,
-            issues: (obj.get("issues") as EList)?.map(
-                i => new Issue(
-                    decodeEnumLiteral(THE_ISSUE_TYPE_EENUM, i.get("type")),
-                    i.get("message"),
-                    decodeEnumLiteral(THE_ISSUE_SEVERITY_EENUM, i.get("severity")),
-                    fromEObject(i.get("position")) as Position)) as Issue[] || []
+            issues: (obj.get("issues") as EList)?.map(fromEObject) as Issue[] || []
         };
     }
     const ePackage = eClass.eContainer as EPackage;

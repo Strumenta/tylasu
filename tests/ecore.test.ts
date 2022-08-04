@@ -5,13 +5,15 @@ import {
     fromEObject,
     generateASTClasses,
     registerECoreModel,
-    SYMBOL_CLASS_DEFINITION, THE_POSITION_ECLASS, THE_AST_RESOURCE,
+    SYMBOL_CLASS_DEFINITION,
     SYMBOL_NODE_NAME,
-    toEObject, KOLASU_URI_V1, loadEPackages, loadEObject, generateASTModel, Result
-} from "../src/interop/ecore";
+    toEObject, loadEPackages, loadEObject, generateASTModel, Result
+} from "../src";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
+import {KOLASU_URI_V1} from "../src/interop/kolasu-v1-metamodel";
+import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../src/interop/kolasu-v1-metamodel";
 
 describe('Metamodel', function() {
     it("Base metamodel", function () {
@@ -54,13 +56,15 @@ describe('Metamodel', function() {
             expect(eClass.get('eStructuralFeatures').size()).to.equal(2);
             expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("b");
             expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("anotherChild");
-            expect(eClass.get('eAllStructuralFeatures').length).to.equal(6);
+            expect(eClass.get('eAllStructuralFeatures').length).to.equal(8);
             expect(eClass.get('eAllStructuralFeatures')[0].get("name")).to.equal("position");
-            expect(eClass.get('eAllStructuralFeatures')[1].get("name")).to.equal("a");
-            expect(eClass.get('eAllStructuralFeatures')[2].get("name")).to.equal("someNode");
-            expect(eClass.get('eAllStructuralFeatures')[3].get("name")).to.equal("multi");
-            expect(eClass.get('eAllStructuralFeatures')[4].get("name")).to.equal("b");
-            expect(eClass.get('eAllStructuralFeatures')[5].get("name")).to.equal("anotherChild");
+            expect(eClass.get('eAllStructuralFeatures')[1].get("name")).to.equal("destination");
+            expect(eClass.get('eAllStructuralFeatures')[2].get("name")).to.equal("origin");
+            expect(eClass.get('eAllStructuralFeatures')[3].get("name")).to.equal("a");
+            expect(eClass.get('eAllStructuralFeatures')[4].get("name")).to.equal("someNode");
+            expect(eClass.get('eAllStructuralFeatures')[5].get("name")).to.equal("multi");
+            expect(eClass.get('eAllStructuralFeatures')[6].get("name")).to.equal("b");
+            expect(eClass.get('eAllStructuralFeatures')[7].get("name")).to.equal("anotherChild");
         });
 });
 

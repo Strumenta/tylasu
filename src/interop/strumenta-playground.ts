@@ -55,8 +55,12 @@ export class ParserTrace {
     }
 
     get issues(): Issue[] {
-        // TODO
-        return [];
+        const ast = this.eo.get("ast");
+        if (ast.eClass == THE_RESULT_ECLASS_V2 || ast.eClass == THE_RESULT_ECLASS_V1) {
+            return fromEObject(ast.get("issues")) as Issue[] || [];
+        } else {
+            return [];
+        }
     }
 
     private getEObjectID(eObject: EObject): string {

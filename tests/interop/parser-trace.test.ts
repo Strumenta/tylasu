@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {ParserTraceLoader, Point, Position} from "../../src";
+import {IssueSeverity, IssueType, ParserTraceLoader, Point, Position} from "../../src";
 
 describe('Parser traces', function() {
 
@@ -24,5 +24,10 @@ describe('Parser traces', function() {
             expect(trace.rootNode.getChildren().length).to.eql(28);
             expect(trace.rootNode.getChildren("mainStatements").length).to.eql(5);
             expect(trace.rootNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
+            expect(trace.issues.length).to.eql(3);
+            expect(trace.issues[0].type).to.eql(IssueType.SEMANTIC);
+            expect(trace.issues[0].message).to.eql("Physical line of type FileDescription are currently ignored");
+            expect(trace.issues[0].severity).to.eql(IssueSeverity.WARNING);
+            expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
         });
 });

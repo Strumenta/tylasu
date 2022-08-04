@@ -7,8 +7,6 @@ import {addLiteral, getEPackage} from "./ecore-basic";
 
 export const KOLASU_URI_V1 = "https://strumenta.com/kolasu/v1";
 
-
-
 export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V1 });
 export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v1", { nsURI: KOLASU_URI_V1 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
@@ -206,7 +204,7 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
 }));
 THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "issues",
-    eGenericType: THE_ISSUE_ECLASS,
+    eGenericType: Ecore.EGenericType.create({ eClassifier: THE_ISSUE_ECLASS }),
     containment: true,
     upperBound: -1
 }));
@@ -222,4 +220,5 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);

@@ -219,7 +219,7 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
 }));
 THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "issues",
-    eGenericType: THE_ISSUE_ECLASS,
+    eGenericType: Ecore.EGenericType.create({ eClassifier: THE_ISSUE_ECLASS }),
     containment: true,
     upperBound: -1
 }));
@@ -236,4 +236,5 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
