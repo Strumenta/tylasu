@@ -1,4 +1,3 @@
-import {ParseTree} from "antlr4ts/tree";
 import {Position} from "./position";
 import "reflect-metadata";
 
@@ -54,11 +53,20 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
     }
 }
 
-export abstract class Node {
-    parent?: Node;
-    parseTreeNode?: ParseTree;
+export abstract class Origin {
+    abstract get position(): Position | undefined;
+    get sourceText(): string | undefined {
+        return undefined;
+    }
+}
 
-    constructor(protected specifiedPosition?: Position) {}
+export abstract class Node extends Origin {
+    parent?: Node;
+    origin?: Origin;
+
+    constructor(protected positionOverride?: Position) {
+        super();
+    }
 
     get children(): Node[] {
         const names = this.getChildNames();
@@ -131,17 +139,17 @@ export abstract class Node {
         return this;
     }
 
-    withParseTreeNode(node: ParseTree): this {
-        this.parseTreeNode = node;
+    withOrigin(origin?: Origin): this {
+        this.origin = origin;
         return this;
     }
 
     get position(): Position | undefined {
-        return this.specifiedPosition || Position.ofParseTree(this.parseTreeNode);
+        return this.positionOverride || this.origin?.position;
     }
 
     set position(newPos: Position) {
-        this.specifiedPosition = newPos;
+        this.positionOverride = newPos;
     }
 }
 

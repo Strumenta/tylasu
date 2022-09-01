@@ -1,8 +1,8 @@
-import {Node} from "./ast";
+import {Node} from "./model/model";
 import {walk} from "./traversing";
 import {first, pipe} from "iter-ops";
 
-declare module './ast' {
+declare module './model/model' {
     export interface Node {
         /**
          * Finds the first node that satisfies a condition among this node's descendants.

@@ -1,9 +1,10 @@
 import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
-import {Child, Node, NODE_DEFINITION_SYMBOL, registerNodeDefinition} from "./ast";
+import {Child, Node, NODE_DEFINITION_SYMBOL, registerNodeDefinition} from "./model/model";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
 import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
+import {ParseTreeOrigin} from "./parsing/parse-tree";
 
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
@@ -20,8 +21,8 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 
 export function toAST(tree: ParseTree, parent?: Node): Node {
     const node = transform(tree, parent, toAST);
-    if(node && !node.parseTreeNode) { //Give a chance to custom factories to set a different node
-        node.parseTreeNode = tree;
+    if(node && !node.origin) { //Give a chance to custom factories to set a different node
+        node.origin = new ParseTreeOrigin(tree);
     }
     return node;
 }

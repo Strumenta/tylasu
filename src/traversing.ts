@@ -1,6 +1,6 @@
-import {Node} from "./ast";
+import {Node} from "./model/model";
 
-declare module './ast' {
+declare module './model/model' {
     export interface Node {
         /**
          * A generator that walks over the whole AST starting from this node, depth-first.

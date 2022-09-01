@@ -5,11 +5,11 @@ import {
     NODE_TYPES,
     PackageDescription,
     registerNodeDefinition, registerNodeProperty
-} from "../ast";
+} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
-import {Point, Position} from "../position";
-import {Parser} from "../parsing";
+import {Point, Position} from "../model/position";
+import {Parser} from "../parsing/parsing";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {getEPackage} from "./ecore-basic";

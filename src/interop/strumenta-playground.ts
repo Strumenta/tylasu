@@ -1,9 +1,9 @@
-import {ParsingResult} from "../parsing";
+import {ParsingResult} from "../parsing/parsing";
 import {EMFEnabledParser, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
-import {Node} from "../ast";
+import {Node} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
-import {Position} from "../position";
+import {Position} from "../model/position";
 import {PARSER_TRACE_ECLASS} from "./parser-package";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2} from "./kolasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";

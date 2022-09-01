@@ -1,10 +1,12 @@
 import {expect} from "chai";
 
-import {ASTNodeFor, Child, GenericNode, GenericParseTreeNode, Mapped, Node, Property, toAST} from "../src";
+import {Child, GenericNode, Mapped, Node} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
+import {ParseTreeOrigin} from "../src/parsing/parse-tree";
+import {ASTNodeFor, GenericParseTreeNode, toAST} from "../src/mapping";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
@@ -47,7 +49,9 @@ describe('Mapping of Parse Trees to ASTs', function() {
             const setStmt = cu.statement(0) as SetStmtContext;
             const mySetStatement = setStmt.toAST() as MySetStatement;
             expect(mySetStatement instanceof MySetStatement).to.be.true;
-            expect(mySetStatement.parseTreeNode).to.equal(setStmt);
+            expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;
+            const origin = mySetStatement.origin as ParseTreeOrigin;
+            expect(origin.parseTree).to.equal(setStmt);
             expect(mySetStatement.id).not.to.be.undefined;
             expect(mySetStatement.EQUAL).not.to.be.undefined;
             expect(mySetStatement.set).to.be.undefined;

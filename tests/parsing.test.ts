@@ -1,9 +1,11 @@
 import {expect} from "chai";
 
-import {Issue, Node, Parser} from "../src";
+import {Issue, Node} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import {CompilationUnitContext, SimpleLangParser} from "./parser/SimpleLangParser";
+import {Parser} from "../src/parsing/parsing";
+import {ParseTreeOrigin} from "../src/parsing/parse-tree";
 
 class CompilationUnit extends Node {}
 
@@ -28,7 +30,9 @@ describe('Parsing', function() {
             const parser = new SLParser();
             const result = parser.parse(code);
             expect(result.root instanceof CompilationUnit).to.be.true;
-            expect(result.root.parseTreeNode).to.equal(result.firstStage.root);
+            expect(result.root.origin instanceof ParseTreeOrigin).to.be.true;
+            const origin = result.root.origin as ParseTreeOrigin;
+            expect(origin.parseTree).to.equal(result.firstStage.root);
             expect(result.code).to.equal(code);
         });
 });

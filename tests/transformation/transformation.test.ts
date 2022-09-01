@@ -72,7 +72,7 @@ describe('AST transformations', function() {
             nodeA.other = "other";
             const nodeB = transform(nodeA) as B;
             expect(nodeB instanceof B).to.be.true;
-            expect(nodeB.parseTreeNode).to.be.undefined;
+            expect(nodeB.origin).to.be.undefined;
             expect(nodeB.property).to.equal(42);
             expect(nodeB.other2).to.equal("other");
             expect(nodeB.aChild).not.to.be.undefined;

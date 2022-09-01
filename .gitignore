@@ -5,3 +5,4 @@ node_modules/
 strumenta-ast-v*.tgz
 strumenta-tylasu-v*.tgz
 **/.DS_Store
+/yarn-error.log

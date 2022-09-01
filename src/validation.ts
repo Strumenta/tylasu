@@ -1,4 +1,4 @@
-import {Position} from "./position";
+import {Position} from "./model/position";
 
 export enum IssueType { LEXICAL, SYNTACTIC, SEMANTIC}
 

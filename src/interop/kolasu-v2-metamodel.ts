@@ -47,7 +47,7 @@ THE_POSITION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     containment: true,
     lowerBound: 1
 }));
-THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+THE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "position",
     eType: THE_POSITION_ECLASS,
     containment: true

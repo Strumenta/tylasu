@@ -1,10 +1,11 @@
 import {expect} from "chai";
 
-import {EMFEnabledParser, Issue, ParsingResult, registerECoreModel, saveForStrumentaPlayground} from "../src";
+import {EMFEnabledParser, Issue, registerECoreModel, saveForStrumentaPlayground} from "../src";
 import {NodeSubclass} from "./nodes";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
+import {ParsingResult} from "../src/parsing/parsing";
 
 describe('Strumenta Playground', function() {
     it("Export", function () {

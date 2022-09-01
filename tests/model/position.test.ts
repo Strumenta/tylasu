@@ -1,9 +1,9 @@
 import {expect} from "chai";
 
-import {Point, START_POINT, Node, Position} from "../src";
-import {SimpleLangLexer} from "./parser/SimpleLangLexer";
+import {Point, START_POINT, Node, Position} from "../../src";
+import {SimpleLangLexer} from "../parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
+import {SetStmtContext, SimpleLangParser} from "../parser/SimpleLangParser";
 
 class MySetStatement extends Node {}
 
@@ -63,8 +63,7 @@ describe('Position', function() {
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;
-            const mySetStatement = new MySetStatement();
-            mySetStatement.parseTreeNode = setStmt;
+            const mySetStatement = new MySetStatement().withParseTreeNode(setStmt);
             expect(mySetStatement.position).to.deep.equal(new Position(new Point(1, 0), new Point(1, 13)));
         });
 });

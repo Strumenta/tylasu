@@ -1,11 +1,16 @@
 {
 	"name": "@strumenta/tylasu",
-	"description": "Generic AST implementation for JavaScript, inspired by Kolasu and integrated with ANTLR4.",
+	"description": "AST building blocks for JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.0.1",
+	"version": "1.1",
 	"license": "Apache-2.0",
-	"keywords": ["ast", "starlasu", "traversal", "transformation"],
+	"keywords": [
+		"ast",
+		"starlasu",
+		"traversal",
+		"transformation"
+	],
 	"private": false,
 	"repository": {
 		"type": "git",
@@ -24,15 +29,24 @@
 		"generate-classes": "dist/cli.js"
 	},
 	"dependencies": {
-		"@types/node": "^13.9.8",
-		"antlr4ts": "^0.5.0-alpha.4",
 		"iter-ops": "^1.5.0",
 		"reflect-metadata": "^0.1.13"
 	},
-	"optionalDependencies": {
-		"@types/ecore": "^0.12.3",
-		"cmd-ts": "^0.6.9",
+	"peerDependencies": {
+		"antlr4ts": "^0.5.0-alpha.4",
+		"cmd-ts": "^0.11.0",
 		"ecore": "^0.12.0"
+	},
+	"peerDependenciesMeta": {
+		"antlr4ts": {
+			"optional": true
+		},
+		"cmd-ts": {
+			"optional": true
+		},
+		"ecore": {
+			"optional": true
+		}
 	},
 	"scripts": {
 		"clean": "rimraf dist && rimraf strumenta-ast-v*.tgz",
@@ -48,12 +62,17 @@
 	"devDependencies": {
 		"@tsconfig/recommended": "^1.0.1",
 		"@types/chai": "^4.2.11",
+		"@types/ecore": "^0.12.3",
 		"@types/mocha": "^5.2.7",
+		"@types/node": "^13.9.8",
 		"@typescript-eslint/eslint-plugin": "^4.11.0",
 		"@typescript-eslint/parser": "^4.11.0",
+		"antlr4ts": "^0.5.0-alpha.4",
 		"antlr4ts-cli": "^0.5.0-alpha.4",
 		"chai": "^4.3.4",
+		"cmd-ts": "^0.11.0",
 		"cross-env": "^7.0.3",
+		"ecore": "^0.12.0",
 		"eslint": "^7.16.0",
 		"merge-options": "^2.0.0",
 		"mocha": "^9.1.3",

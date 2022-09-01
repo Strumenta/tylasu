@@ -11,7 +11,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 	],
 	rules: {
-		'@typescript-eslint/no-explicit-any': 0,
-		'@typescript-eslint/no-non-null-assertion': 0,
+		'@typescript-eslint/no-explicit-any': "off",
+		'@typescript-eslint/no-non-null-assertion': "off"
 	}
 };

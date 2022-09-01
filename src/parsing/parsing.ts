@@ -9,13 +9,14 @@ import {
     Token,
     TokenStream
 } from "antlr4ts";
-import {Issue, IssueSeverity} from "./validation";
-import {Point, Position} from "./position";
-import {Node} from "./ast";
+import {Issue, IssueSeverity} from "../validation";
+import {Point, Position} from "../model/position";
+import {Node} from "../model/model";
 import {Interval} from "antlr4ts/misc";
 import {ErrorNode} from "antlr4ts/tree";
-import {walk} from "./traversing";
-import {assignParents} from "./processing";
+import {walk} from "../traversing";
+import {assignParents} from "../processing";
+import {} from "../interop/antlr4";
 
 let now: () => number;
 
@@ -147,7 +148,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         ast = ast ? this.postProcessAst(ast, issues) : ast;
         if (ast != null && !considerPosition) {
             for(const node of walk(ast)) {
-                delete node.parseTreeNode;
+                delete node.origin;
             }
         }
         const text = code.getText(Interval.of(0, code.size - 1));
