@@ -1,11 +1,12 @@
 import {expect} from "chai";
 
-import {EMFEnabledParser, Issue, registerECoreModel, saveForStrumentaPlayground} from "../src";
+import {Issue, registerECoreModel, saveForStrumentaPlayground} from "../src";
 import {NodeSubclass} from "./nodes";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
 import {ParsingResult} from "../src/parsing/parsing";
+import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
 
 describe('Strumenta Playground', function() {
     it("Export", function () {
@@ -30,7 +31,7 @@ describe('Strumenta Playground', function() {
     });
 });
 
-class TestParser extends EMFEnabledParser<NodeSubclass, any, any> {
+class TestParser extends EcoreEnabledParser<NodeSubclass, any, any> {
     protected createANTLRLexer(inputStream: CharStream): Lexer {
         return undefined;
     }

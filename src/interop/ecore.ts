@@ -1,35 +1,37 @@
 import {
-    ensureNodeDefinition, ensurePackage,
+    ensureNodeDefinition,
+    ensurePackage,
     getNodeDefinition,
     Node,
     NODE_TYPES,
     PackageDescription,
-    registerNodeDefinition, registerNodeProperty
+    registerNodeDefinition,
+    registerNodeProperty
 } from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
 import {Point, Position} from "../model/position";
-import {Parser} from "../parsing/parsing";
-import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {getEPackage} from "./ecore-basic";
+import {
+    KOLASU_URI_V2,
+    THE_ISSUE_ECLASS,
+    THE_ISSUE_SEVERITY_EENUM,
+    THE_ISSUE_TYPE_EENUM,
+    THE_LOCAL_DATE_ECLASS,
+    THE_LOCAL_DATE_TIME_ECLASS,
+    THE_LOCAL_TIME_ECLASS,
+    THE_NODE_ECLASS,
+    THE_POINT_ECLASS,
+    THE_POSITION_ECLASS,
+    THE_RESULT_ECLASS
+} from "./kolasu-v2-metamodel";
+import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
-
-import {
-    KOLASU_URI_V2, THE_AST_EPACKAGE,
-    THE_ISSUE_ECLASS, THE_ISSUE_SEVERITY_EENUM, THE_ISSUE_TYPE_EENUM,
-    THE_LOCAL_DATE_ECLASS,
-    THE_LOCAL_DATE_TIME_ECLASS,
-    THE_LOCAL_TIME_ECLASS,
-    THE_NODE_ECLASS, THE_POINT_ECLASS,
-    THE_POSITION_ECLASS,
-    THE_RESULT_ECLASS
-} from "./kolasu-v2-metamodel";
-import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 
 function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const packageDef = NODE_TYPES[packageName];
@@ -651,26 +653,10 @@ export function registerPackages(resource: Resource): EPackage[] {
         });
 }
 
-/**
- * A parser that supports exporting AST's to EMF/Ecore.
- * In particular, this parser can generate the metamodel. We can then use toEObject(node) to translate a tree
- * into its EMF representation.
- */
-export abstract class EMFEnabledParser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext>
-    extends Parser<R, P, C> {
-
+export interface EcoreMetamodelSupport {
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
      */
-    generateMetamodel(resource: Resource, includingKolasuMetamodel = true): void {
-        if (includingKolasuMetamodel) {
-            resource.get("contents").add(THE_AST_EPACKAGE);
-        }
-        this.doGenerateMetamodel(resource);
-    }
-
-    /**
-     * Implement this method to tell the parser how to generate the metamodel. See [MetamodelBuilder].
-     */
-    protected abstract doGenerateMetamodel(resource: Resource): void;
+    generateMetamodel(resource: Resource, includingKolasuMetamodel: boolean): void;
 }
+

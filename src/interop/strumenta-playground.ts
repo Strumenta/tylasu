@@ -1,5 +1,12 @@
 import {ParsingResult} from "../parsing/parsing";
-import {EMFEnabledParser, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
+import {
+    EcoreMetamodelSupport,
+    fromEObject,
+    loadEObject,
+    loadEPackages,
+    Result,
+    toEObject
+} from "./ecore";
 import {Node} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
@@ -12,10 +19,10 @@ import {TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R, any>, name: string,
-    parser: EMFEnabledParser<R, any, any>, callback: (data: any, error: any) => void): void {
+    metamodelSupport: EcoreMetamodelSupport, callback: (data: any, error: any) => void): void {
     const resourceSet = Ecore.ResourceSet.create();
     const mmResource = resourceSet.create({ uri: "ast" });
-    parser.generateMetamodel(mmResource, false);
+    metamodelSupport.generateMetamodel(mmResource, false);
     mmResource.set("uri", "");
     const resource = resourceSet.create({ uri: 'file:' + name + ".json" });
     const simplifiedResult: Result = { root: result.root, issues: result.issues };
