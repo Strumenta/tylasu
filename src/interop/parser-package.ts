@@ -36,4 +36,8 @@ PARSER_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     eType: Ecore.ELong,
     upperBound: 1
 }));
-
+PARSER_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "parsingTime",
+    eType: Ecore.ELong,
+    upperBound: 1
+}));
