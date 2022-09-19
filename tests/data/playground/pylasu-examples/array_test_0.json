@@ -1,0 +1,86 @@
+{
+  "eClass": "https://strumenta.com/kolasu/transpilation/v1#//TranspilationTrace",
+  "generatedCode": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import lit\n\nspark = SparkSession.builder.getOrCreate()\nA = b\n__array_arrayname = [\"one\", \"two\", \"three\", \"four\"]\nfor i in range(1, 5 + 1):\n    A = A.withColumn(\"y\", lit(2))\n",
+  "sourceResult": {
+    "root": {
+      "eClass": "https://corios.com/sas#/0/Program",
+      "contents": [
+        {
+          "eClass": "https://corios.com/sas/data_step#/1/DataStep",
+          "datasets": [
+            {
+              "options": [],
+              "name": "A"
+            }
+          ],
+          "statements": [
+            {
+              "eClass": "https://corios.com/sas/data_step#/1/SetStatement",
+              "by": [],
+              "specs": [
+                {
+                  "dataset": {
+                    "options": [],
+                    "name": "b"
+                  }
+                }
+              ]
+            },
+            {
+              "eClass": "https://corios.com/sas/data_step#/1/ArrayDeclaration",
+              "dimensions": [
+                4
+              ],
+              "name": "arrayname",
+              "initial_values": [],
+              "variables": [
+                "one",
+                "two",
+                "three",
+                "four"
+              ]
+            },
+            {
+              "eClass": "https://corios.com/sas/data_step#/1/DoLoop",
+              "stop": {
+                "eClass": "https://corios.com/sas#/0/Literal",
+                "value": 5
+              },
+              "body": [
+                {
+                  "eClass": "https://corios.com/sas#/0/Assignment",
+                  "location": {
+                    "eClass": "https://corios.com/sas#/0/VariableAccess",
+                    "variable": "y"
+                  },
+                  "value": {
+                    "eClass": "https://corios.com/sas#/0/Literal",
+                    "value": 2
+                  }
+                }
+              ],
+              "variable": "i",
+              "start": {
+                "eClass": "https://corios.com/sas#/0/Literal",
+                "value": 1
+              }
+            },
+            {
+              "eClass": "https://corios.com/sas/data_step#/1/OutputStatement",
+              "datasets": []
+            }
+          ]
+        },
+        {
+          "eClass": "https://corios.com/sas#/0/RunStatement"
+        }
+      ]
+    }
+  },
+  "targetResult": {
+    "root": {
+      "eClass": "https://corios.com/sas/python#/4/Module"
+    }
+  },
+  "originalCode": "data A;\r\nset b;\r\narray arrayname{4} one two three four;\r\ndo i = 1 to 5;\r\n   y = 2;\r\nend;\r\nrun;"
+}

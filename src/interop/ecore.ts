@@ -608,7 +608,8 @@ function importJsonObject(
                     if (feature.get("containment") === true) {
                         if (feature.get("many")) {
                             if (obj[key]) {
-                                obj[key].forEach((v: any) => eObject.get(key).add(importJsonObject(v, resource, eType, strict, referencesTracker)));
+                                obj[key].forEach((v: any) => eObject.get(key).add(
+                                    importJsonObject(v, resource, eType, strict, referencesTracker)));
                             }
                         } else {
                             let value;

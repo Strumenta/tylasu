@@ -76,7 +76,7 @@ export class ParserTrace {
 }
 
 export abstract class TraceNode {
-    constructor(public eo: EObject) {
+    protected constructor(public eo: EObject) {
     }
 
     getType(): string {
@@ -98,6 +98,15 @@ export abstract class TraceNode {
         } else {
             return null;
         }
+    }
+
+    getAttributes(): { [name: string]: any } {
+        const result: any = {};
+        for (const attr of this.eo.eClass.get("eAllAttributes")) {
+            const name = attr.get("name");
+            result[name] = this.eo.get(name);
+        }
+        return result;
     }
 }
 
@@ -172,7 +181,7 @@ export class TranspilationTrace {
     private sourceToTarget = new Map<string, EObject>()
 
     constructor(private eo: EObject) {
-        this.examineTargetNode(this.eo.get("targetAST"));
+        this.examineTargetNode(this.rootTargetNode.eo);
     }
 
     private examineTargetNode(tn: EObject) {
@@ -191,12 +200,12 @@ export class TranspilationTrace {
         return new TargetNode(targetEO, this);
     }
 
-    getRootSourceNode(): SourceNode {
-        return new SourceNode(this.eo.get("sourceAST"), this)
+    get rootSourceNode(): SourceNode {
+        return new SourceNode(this.eo.get("sourceResult").get("root"), this)
     }
 
-    getRootTargetNode(): TargetNode {
-        return new TargetNode(this.eo.get("targetAST"), this)
+    get rootTargetNode(): TargetNode {
+        return new TargetNode(this.eo.get("targetResult").get("root"), this)
     }
 
     private getEObjectID(eObject: EObject): string {

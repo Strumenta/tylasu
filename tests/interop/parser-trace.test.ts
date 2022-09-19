@@ -51,8 +51,9 @@ describe('Parser traces', function() {
             expect(trace.rootNode.getPosition()).to.eql(new Position(new Point(16, 0), new Point(349, 0)));
             expect(trace.rootNode.getChildren().length).to.equal(44);
             expect(trace.rootNode.getChildren("statementsAndDeclarations").length).to.equal(44);
-            expect(trace.rootNode.getChildren("statementsAndDeclarations")[0].getRole())
-                .to.equal("statementsAndDeclarations");
+            const child = trace.rootNode.getChildren("statementsAndDeclarations")[0];
+            expect(child.getRole()).to.equal("statementsAndDeclarations");
+            expect(child.getAttributes()).to.eql({ name: "fileloc" });
             expect(trace.issues.length).to.equal(5);
             expect(trace.issues[0].type).to.equal(IssueType.SEMANTIC);
             expect(trace.issues[0].message).to.equal("Unparsed macro code");
