@@ -4,7 +4,9 @@ import {loadEObject, loadEPackages, Point, Position, TranspilationTraceLoader} f
 import {THE_AST_EPACKAGE} from "../../src/interop/kolasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
 import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
-import {ensureEcoreContainsEchar} from "../../src/interop/ecore-patching";
+import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
+
+ensureEcoreContainsAllDataTypes();
 
 describe('Transpilation traces', function() {
     // This test verifies that the EReference class has been loaded correctly.
@@ -60,7 +62,6 @@ describe('Transpilation traces', function() {
             this.timeout(0);
 
             const resourceSet = Ecore.ResourceSet.create();
-            ensureEcoreContainsEchar();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
@@ -91,7 +92,6 @@ describe('Transpilation traces', function() {
     it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
         function () {
             this.timeout(0);
-            ensureEcoreContainsEchar();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
@@ -131,15 +131,20 @@ describe('Transpilation traces', function() {
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",
         function () {
             this.timeout(0);
-            ensureEcoreContainsEchar();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
-            const metamodel =
-                JSON.parse(fs.readFileSync("tests/data/playground/pylasu-examples/metamodel.json").toString());
+            const sasMetamodel =
+                JSON.parse(fs.readFileSync("tests/data/playground/pylasu-examples/sas-metamodel.json").toString());
+            const pyMetamodel =
+                JSON.parse(fs.readFileSync("tests/data/playground/pylasu-examples/pyspark-metamodel.json").toString());
             const loader = new TranspilationTraceLoader({
-                name: "sas-py",
-                uri: "file://tests/data/playground/pylasu-examples/metamodel.json",
-                metamodel: metamodel
+                name: "sas",
+                uri: "file://tests/data/playground/pylasu-examples/sas-metamodel.json",
+                metamodel: sasMetamodel
+            }, {
+                name: "python",
+                uri: "file://tests/data/playground/pylasu-examples/pyspark-metamodel.json",
+                metamodel: pyMetamodel
             });
             const example = fs.readFileSync("tests/data/playground/pylasu-examples/array_test_0.json").toString();
             const trace = loader.loadTranspilationTrace(example);

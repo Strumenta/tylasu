@@ -1,6 +1,9 @@
 import {expect} from "chai";
 import * as fs from "fs";
 import {IssueSeverity, IssueType, ParserTraceLoader, Point, Position} from "../../src";
+import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
+
+ensureEcoreContainsAllDataTypes();
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
