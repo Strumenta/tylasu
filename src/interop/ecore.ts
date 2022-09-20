@@ -27,6 +27,7 @@ import {
     THE_RESULT_ECLASS
 } from "./kolasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
+import {EBigDecimal, EBigInteger} from "./ecore-patching";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -461,7 +462,16 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: Resource): EPackage[] {
-    resource.parse(data);
+    if(typeof data === "string") {
+        data = JSON.parse(data);
+    }
+    if (Array.isArray(data)) {
+        for (const pkg of data) {
+            loadEObject(pkg, resource);
+        }
+    } else {
+        loadEObject(data, resource);
+    }
     return registerPackages(resource);
 }
 
@@ -484,27 +494,49 @@ class ReferencesTracker {
 
     resolveAllReferences() : void {
         this.postponedReferences.forEach((pr)=>{
-            const uri = pr.refValue["$ref"];
-            if (uri.indexOf("#") != -1) {
-                const parts = uri.split("#");
-                if (parts.length != 2) {
-                    throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
-                }
-                const packageURI = parts[0];
-                const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
-                if (ePackage == null) {
-                    throw new Error(`Could not find EPackage with URI ${packageURI}`)
-                }
-                throw new Error(JSON.stringify(pr.refValue))
-            } else {
-                const referred = this.resource.getEObject(uri);
-                if (referred == null) {
-                    throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
-                }
-                pr.eObject.set(pr.feature, referred);
-            }
+            this.resolveReference(pr);
         });
         this.postponedReferences = [];
+    }
+
+    resolveReference(pr: PostponedReference) {
+        if (pr.feature.get('upperBound') !== 1) {
+            const list = pr.eObject.get(pr.feature);
+            pr.refValue.forEach(ref => {
+                list.add(this.getReferredObject(ref.$ref));
+            });
+        } else {
+            pr.eObject.set(pr.feature, this.getReferredObject(pr.refValue["$ref"]));
+        }
+    }
+
+    getReferredObject(uri: string) {
+        let eClass = undefined;
+        try {
+            eClass = findEClass(uri, this.resource);
+        } catch (e) {
+            //Not an eclass
+        }
+        if (eClass) {
+            return eClass;
+        } else if (uri.indexOf("#") != -1) {
+            const parts = uri.split("#");
+            if (parts.length != 2) {
+                throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
+            }
+            const packageURI = parts[0];
+            const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
+            if (ePackage == null) {
+                throw new Error(`Could not find EPackage with URI ${packageURI}`)
+            }
+            throw new Error("Not supported: " + uri);
+        } else {
+            const referred = this.resource.getEObject(uri);
+            if (referred == null) {
+                throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+            }
+            return referred;
+        }
     }
 }
 
@@ -533,8 +565,22 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
         if(!ePackage) {
             throw new Error("Package not found: " + packageName+ " while loading for class " + name);
         }
-        return ePackage.get("eClassifiers").find((c: EClassifier) =>
-            c.get("name") == name.substring(name.lastIndexOf("/") + 1));
+        const className = name.substring(name.lastIndexOf("/") + 1);
+        if (ePackage.get("nsURI") == KOLASU_URI_V1) {
+            // Possibly handle Kolasu v1 data types
+            if (className == "BigDecimal") {
+                return EBigDecimal;
+            } else if (className == "BigInteger") {
+                return EBigInteger;
+            } else if (className == "boolean") {
+                return Ecore.EBoolean;
+            } else if (className == "int") {
+                return Ecore.EInt;
+            } else if (className == "string") {
+                return Ecore.EString;
+            }
+        }
+        return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == className);
     } else {
         const parts = name.substring(1).split("/").filter(s => s.length > 0);
         const packages = resource.eContents().filter(value => value.isTypeOf("EPackage"));

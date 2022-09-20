@@ -1,6 +1,6 @@
 import * as Ecore from "ecore/dist/ecore";
 import {getEPackage} from "./ecore-basic";
-import {THE_NODE_ECLASS, THE_RESULT_ECLASS} from "./kolasu-v2-metamodel";
+import {THE_RESULT_ECLASS} from "./kolasu-v2-metamodel";
 
 export const KOLASU_TRANSPILATION_URI_V1 = "https://strumenta.com/kolasu/transpilation/v1";
 export const TRANSPILATION_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_TRANSPILATION_URI_V1 });
@@ -13,6 +13,11 @@ export const TRANSPILATION_TRACE_ECLASS = Ecore.EClass.create({
 });
 TRANSPILATION_EPACKAGE.get('eClassifiers').add(TRANSPILATION_TRACE_ECLASS);
 
+TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "name",
+    eType: Ecore.EString,
+    upperBound: 1
+}));
 TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
     name: "originalCode",
     eType: Ecore.EString,

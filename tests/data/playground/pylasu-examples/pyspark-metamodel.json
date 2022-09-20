@@ -1,0 +1,239 @@
+[
+  {
+    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
+    "eClassifiers": [
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "BaseParenthesizableWhitespace",
+        "eSuperTypes": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#//ASTNode"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "position",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//Position"
+            }
+          }
+        ]
+      },
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "SimpleWhitespace",
+        "eSuperTypes": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#/0/BaseParenthesizableWhitespace"
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#//ASTNode"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "position",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//Position"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "value",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EString"
+            }
+          }
+        ]
+      },
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "Newline",
+        "eSuperTypes": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#//ASTNode"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "position",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//Position"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "value",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//EObject"
+            }
+          }
+        ]
+      },
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "EmptyLine",
+        "eSuperTypes": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#//ASTNode"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "position",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//Position"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "indent",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EBoolean"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "whitespace",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#/0/SimpleWhitespace"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "comment",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//EObject"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "newline",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#/0/Newline"
+            }
+          }
+        ]
+      }
+    ],
+    "nsURI": "https://corios.com/sas/python",
+    "name": "libcst._nodes.whitespace"
+  },
+  {
+    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
+    "eClassifiers": [
+      {
+        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "name": "Module",
+        "eSuperTypes": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref": "#//ASTNode"
+          }
+        ],
+        "eStructuralFeatures": [
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "position",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//Position"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "body",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#//EObject"
+            },
+            "upperBound": -1
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "header",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#/0/EmptyLine"
+            },
+            "upperBound": -1
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
+            "name": "footer",
+            "eType": {
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+              "$ref": "#/0/EmptyLine"
+            },
+            "upperBound": -1
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "encoding",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EString"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "default_indent",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EString"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "default_newline",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EString"
+            }
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+            "name": "has_trailing_newline",
+            "eType": {
+              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "$ref": "#//EBoolean"
+            }
+          }
+        ]
+      }
+    ],
+    "nsURI": "https://corios.com/sas/python",
+    "name": "libcst._nodes.module"
+  }
+]

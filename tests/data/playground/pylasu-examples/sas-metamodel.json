@@ -1,7 +1,6 @@
 [
   {
     "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
-    "nsURI": "https://corios.com/sas",
     "eClassifiers": [
       {
         "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -15,8 +14,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -40,8 +39,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -49,8 +48,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "array",
             "containment": true,
+            "name": "array",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -58,8 +57,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "index",
             "containment": true,
+            "name": "index",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -79,8 +78,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -104,8 +103,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -113,8 +112,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "location",
             "containment": true,
+            "name": "location",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//ASTNode"
@@ -122,8 +121,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "value",
             "containment": true,
+            "name": "value",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -147,8 +146,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -156,8 +155,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "expression",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -165,8 +164,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "lower",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -174,8 +173,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "upper",
             "containment": true,
+            "name": "upper",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -195,8 +194,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -216,8 +215,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -233,13 +232,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "options",
             "containment": true,
+            "name": "options",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/DatasetOption"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -259,8 +258,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -284,8 +283,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -293,13 +292,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Variables"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -319,8 +318,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -336,13 +335,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "arguments",
             "containment": true,
+            "name": "arguments",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -366,8 +365,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -391,8 +390,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -424,8 +423,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -457,8 +456,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -482,8 +481,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -491,13 +490,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Variables"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -521,8 +520,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -546,8 +545,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -591,8 +590,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -620,8 +619,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -649,8 +648,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -658,13 +657,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "contents",
             "containment": true,
+            "name": "contents",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//ASTNode"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -684,8 +683,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -693,21 +692,21 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "variables",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "aliases",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -727,8 +726,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -748,8 +747,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -789,8 +788,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -818,8 +817,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -827,13 +826,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/SortVariable"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -858,8 +857,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -867,8 +866,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "in_dataset",
             "containment": true,
+            "name": "in_dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -876,8 +875,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "out_dataset",
             "containment": true,
+            "name": "out_dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -893,8 +892,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "duplicates_out_dataset",
             "containment": true,
+            "name": "duplicates_out_dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -902,13 +901,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "statements",
             "containment": true,
+            "name": "statements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/SortStatement"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -924,8 +923,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -957,8 +956,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -986,8 +985,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -995,13 +994,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/SummaryClassVariable"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1017,8 +1016,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1034,22 +1033,22 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Variables"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "names",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1073,8 +1072,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1082,8 +1081,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "dataset",
             "containment": true,
+            "name": "dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -1091,22 +1090,22 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "stats",
             "containment": true,
+            "name": "stats",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/OutputStatistic"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "modifiers",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1122,8 +1121,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1131,8 +1130,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "in_dataset",
             "containment": true,
+            "name": "in_dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -1140,8 +1139,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "out_dataset",
             "containment": true,
+            "name": "out_dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -1157,23 +1156,23 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "outputs",
             "containment": true,
+            "name": "outputs",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/OutputStatistic"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "statements",
             "containment": true,
+            "name": "statements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/SummaryStatement"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1197,8 +1196,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1230,8 +1229,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1239,13 +1238,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "elements",
             "containment": true,
+            "name": "elements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1265,8 +1264,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1302,8 +1301,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1311,12 +1310,12 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "names",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1336,8 +1335,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1345,8 +1344,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "condition",
             "containment": true,
+            "name": "condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1355,11 +1354,11 @@
         ]
       }
     ],
+    "nsURI": "https://corios.com/sas",
     "name": "sas2pyspark.ast.base"
   },
   {
     "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
-    "nsURI": "https://corios.com/sas/data_step",
     "eClassifiers": [
       {
         "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -1377,8 +1376,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1394,31 +1393,31 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "dimensions",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EInt"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "variables",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "initial_values",
             "containment": true,
+            "name": "initial_values",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//ASTNode"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1438,8 +1437,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1447,13 +1446,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "body",
             "containment": true,
+            "name": "body",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1469,8 +1468,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1478,23 +1477,23 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "datasets",
             "containment": true,
+            "name": "datasets",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "statements",
             "containment": true,
+            "name": "statements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1518,8 +1517,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1535,8 +1534,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "start",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1544,8 +1543,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "stop",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1553,8 +1552,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "by",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1562,8 +1561,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "until",
             "containment": true,
+            "name": "until",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1587,8 +1586,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1596,13 +1595,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Variables"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1626,8 +1625,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1647,8 +1646,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1656,13 +1655,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "variables",
             "containment": true,
+            "name": "variables",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Variables"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -1690,8 +1689,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1699,13 +1698,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "specs",
             "containment": true,
+            "name": "specs",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/1/FormatSpec"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1725,8 +1724,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1734,8 +1733,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "condition",
             "containment": true,
+            "name": "condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1743,8 +1742,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "consequence",
             "containment": true,
+            "name": "consequence",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
@@ -1752,8 +1751,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "alternative",
             "containment": true,
+            "name": "alternative",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
@@ -1777,8 +1776,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1794,8 +1793,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "location",
             "containment": true,
+            "name": "location",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/VariableAccess"
@@ -1803,8 +1802,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "value",
             "containment": true,
+            "name": "value",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1828,8 +1827,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1853,8 +1852,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1862,22 +1861,22 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "datasets",
             "containment": true,
+            "name": "datasets",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "by",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1897,8 +1896,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1906,12 +1905,12 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "datasets",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -1931,8 +1930,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1940,8 +1939,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "expression",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -1949,28 +1948,28 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
+            "containment": true,
             "name": "selectors",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "consequences",
             "containment": true,
+            "name": "consequences",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "alternative",
             "containment": true,
+            "name": "alternative",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Statement"
@@ -1990,8 +1989,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -1999,8 +1998,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "dataset",
             "containment": true,
+            "name": "dataset",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Dataset"
@@ -2024,8 +2023,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2033,22 +2032,22 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "specs",
             "containment": true,
+            "name": "specs",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/1/SetSpec"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "upperBound": -1,
             "name": "by",
             "eType": {
               "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
               "$ref": "#//EString"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -2068,8 +2067,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2077,8 +2076,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "condition",
             "containment": true,
+            "name": "condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/0/Expression"
@@ -2087,11 +2086,11 @@
         ]
       }
     ],
+    "nsURI": "https://corios.com/sas/data_step",
     "name": "sas2pyspark.ast.data_step"
   },
   {
     "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
-    "nsURI": "https://corios.com/sas/sql",
     "eClassifiers": [
       {
         "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -2105,8 +2104,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2150,8 +2149,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2175,8 +2174,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2184,8 +2183,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "table",
             "containment": true,
+            "name": "table",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/TableName"
@@ -2209,8 +2208,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2218,8 +2217,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "expression",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2227,8 +2226,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "containment": true,
             "name": "lower",
-            "containment": true,
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2236,8 +2235,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "upper",
             "containment": true,
+            "name": "upper",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2261,8 +2260,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2270,23 +2269,23 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "conditions",
             "containment": true,
+            "name": "conditions",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "consequences",
             "containment": true,
+            "name": "consequences",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -2306,8 +2305,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2323,8 +2322,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "table",
             "containment": true,
+            "name": "table",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/TableName"
@@ -2348,8 +2347,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2357,8 +2356,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "quantity",
             "containment": true,
+            "name": "quantity",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2386,8 +2385,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2395,8 +2394,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "expression",
             "containment": true,
+            "name": "expression",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2424,8 +2423,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2445,8 +2444,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2454,8 +2453,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "column_name",
             "containment": true,
+            "name": "column_name",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Column"
@@ -2471,8 +2470,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "function_application",
             "containment": true,
+            "name": "function_application",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/FunctionApplication"
@@ -2492,8 +2491,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2509,8 +2508,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "column_name",
             "containment": true,
+            "name": "column_name",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Column"
@@ -2538,8 +2537,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2563,8 +2562,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2572,28 +2571,28 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "projections",
             "containment": true,
+            "name": "projections",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Projection"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "relations",
             "containment": true,
+            "name": "relations",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Relation"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "condition",
             "containment": true,
+            "name": "condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2609,8 +2608,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "union",
             "containment": true,
+            "name": "union",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Query"
@@ -2626,18 +2625,18 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "groupings",
             "containment": true,
+            "name": "groupings",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Grouping"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "having_condition",
             "containment": true,
+            "name": "having_condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2645,13 +2644,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "orderings",
             "containment": true,
+            "name": "orderings",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Ordering"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -2671,8 +2670,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2680,8 +2679,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "name",
             "containment": true,
+            "name": "name",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/TableName"
@@ -2689,8 +2688,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "query",
             "containment": true,
+            "name": "query",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Query"
@@ -2714,8 +2713,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2747,8 +2746,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2768,8 +2767,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2785,8 +2784,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "condition",
             "containment": true,
+            "name": "condition",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
@@ -2810,8 +2809,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2819,23 +2818,23 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "relations",
             "containment": true,
+            "name": "relations",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Relation"
-            }
+            },
+            "upperBound": -1
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "joins",
             "containment": true,
+            "name": "joins",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Join"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -2855,8 +2854,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2872,13 +2871,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "arguments",
             "containment": true,
+            "name": "arguments",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -2902,8 +2901,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2927,8 +2926,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2956,8 +2955,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -2981,8 +2980,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3002,8 +3001,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3011,13 +3010,13 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "statements",
             "containment": true,
+            "name": "statements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Statement"
-            }
+            },
+            "upperBound": -1
           }
         ]
       },
@@ -3037,8 +3036,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3046,8 +3045,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "query",
             "containment": true,
+            "name": "query",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Query"
@@ -3071,8 +3070,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3080,8 +3079,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "query",
             "containment": true,
+            "name": "query",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Query"
@@ -3113,8 +3112,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3122,8 +3121,8 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "table",
             "containment": true,
+            "name": "table",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/TableName"
@@ -3155,8 +3154,8 @@
         "eStructuralFeatures": [
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
             "containment": true,
+            "name": "position",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#//Position"
@@ -3164,254 +3163,18 @@
           },
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "elements",
             "containment": true,
+            "name": "elements",
             "eType": {
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
               "$ref": "#/2/Expression"
-            }
+            },
+            "upperBound": -1
           }
         ]
       }
     ],
+    "nsURI": "https://corios.com/sas/sql",
     "name": "sas2pyspark.ast.sql"
-  },
-  {
-    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
-    "nsURI": "https://corios.com/sas/python",
-    "eClassifiers": [
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "BaseParenthesizableWhitespace",
-        "eSuperTypes": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#//ASTNode"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//Position"
-            }
-          }
-        ]
-      },
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "SimpleWhitespace",
-        "eSuperTypes": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#/3/BaseParenthesizableWhitespace"
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#//ASTNode"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//Position"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "value",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EString"
-            }
-          }
-        ]
-      },
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "Newline",
-        "eSuperTypes": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#//ASTNode"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//Position"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "value",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//EObject"
-            }
-          }
-        ]
-      },
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "EmptyLine",
-        "eSuperTypes": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#//ASTNode"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//Position"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "indent",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EBoolean"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "whitespace",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#/3/SimpleWhitespace"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "comment",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//EObject"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "newline",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#/3/Newline"
-            }
-          }
-        ]
-      }
-    ],
-    "name": "libcst._nodes.whitespace"
-  },
-  {
-    "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
-    "nsURI": "https://corios.com/sas/python",
-    "eClassifiers": [
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "Module",
-        "eSuperTypes": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-            "$ref": "#//ASTNode"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "position",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//Position"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "body",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#//EObject"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "header",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#/3/EmptyLine"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "upperBound": -1,
-            "name": "footer",
-            "containment": true,
-            "eType": {
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-              "$ref": "#/3/EmptyLine"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "encoding",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EString"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "default_indent",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EString"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "default_newline",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EString"
-            }
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "has_trailing_newline",
-            "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
-              "$ref": "#//EBoolean"
-            }
-          }
-        ]
-      }
-    ],
-    "name": "libcst._nodes.module"
   }
 ]

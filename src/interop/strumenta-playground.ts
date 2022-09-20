@@ -48,6 +48,9 @@ export function saveForStrumentaPlayground<R extends Node>(
 
 export class ParserTrace {
     constructor(private eo: EObject) {
+        if (!eo.eClass == PARSER_TRACE_ECLASS) {
+            throw new Error("Not a parser trace: " + eo.eClass);
+        }
     }
 
     get rootNode(): ParserNode {
@@ -68,6 +71,10 @@ export class ParserTrace {
         } else {
             return [];
         }
+    }
+
+    get name(): string | undefined {
+        return this.eo.get("name");
     }
 
     private getEObjectID(eObject: EObject): string {
@@ -181,6 +188,9 @@ export class TranspilationTrace {
     private sourceToTarget = new Map<string, EObject>()
 
     constructor(private eo: EObject) {
+        if (!eo.eClass == TRANSPILATION_TRACE_ECLASS) {
+            throw new Error("Not a transpilation trace: " + eo.eClass);
+        }
         this.examineTargetNode(this.rootTargetNode.eo);
     }
 
@@ -206,6 +216,10 @@ export class TranspilationTrace {
 
     get rootTargetNode(): TargetNode {
         return new TargetNode(this.eo.get("targetResult").get("root"), this)
+    }
+
+    get name(): string | undefined {
+        return this.eo.get("name");
     }
 
     private getEObjectID(eObject: EObject): string {
@@ -282,7 +296,7 @@ export class TranspilationTraceLoader {
                            uri = 'transpiler-trace.json'): TranspilationTrace {
         const resource = this.resourceSet.create({uri: uri});
         return withLanguageMetamodel(
-            this.languages, targetLang,  this.resourceSet, resource,
+            this.languages, sourceLang,  this.resourceSet, resource,
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
             () => new TranspilationTrace(loadEObject(text, resource, TRANSPILATION_TRACE_ECLASS))));
