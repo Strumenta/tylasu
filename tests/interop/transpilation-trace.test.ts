@@ -127,7 +127,7 @@ describe('Transpilation traces', function() {
             expect(trace.rootTargetNode.getRole()).to.eql("root");
             expect(trace.rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
         });
-
+/*
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",
         function () {
             this.timeout(0);
@@ -164,5 +164,5 @@ describe('Transpilation traces', function() {
             expect(trace.rootTargetNode.getChildren("unexisting").length).to.eql(0);
             expect(trace.rootTargetNode.getRole()).to.eql("targetAST");
             expect(trace.rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
-        });
+        });*/
 });

@@ -1,3 +1,5 @@
+import {Node} from "./model";
+
 function sign(number: number): number {
     return number > 0 ? +1 : number < 0 ? -1 : 0;
 }
@@ -18,6 +20,10 @@ export class Point {
         } else {
             return sign(this.line - other.line);
         }
+    }
+
+    equals(other: Point): boolean {
+        return this.compareTo(other) == 0;
     }
 
     isAfter(other: Point): boolean {
@@ -57,4 +63,29 @@ export class Position {
             return cmp;
         }
     }
+
+
+    isEmpty(): boolean {
+        return this.start.equals(this.end)
+    }
+
+    /**
+     * Tests whether the given object is contained in the interval represented by this object.
+     * @param object the object to test: could be a Point, a Position, or a Node.
+     */
+    contains(object: Point | Position | Node | null | undefined): boolean {
+        if (object instanceof Point) {
+            return this.start.isBeforeOrSame(object) && this.end.isAfterOrSame(object);
+        } else if (object instanceof Position) {
+            return (this.start.isBeforeOrSame(object.start) && this.end.isAfterOrSame(object.end))
+        } else if (object instanceof Node) {
+            return this.contains(object.position);
+        } else {
+            return false;
+        }
+    }
+}
+
+export function pos(startLine: number, startCol: number, endLine: number, endCol: number): Position {
+    return new Position(new Point(startLine, startCol), new Point(endLine, endCol));
 }

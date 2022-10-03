@@ -58,6 +58,13 @@ export abstract class Origin {
     get sourceText(): string | undefined {
         return undefined;
     }
+    /**
+     * Tests whether the given position is contained in the interval represented by this object.
+     * @param position the position
+     */
+    contains(position?: Position): boolean {
+        return this.position?.contains(position) || false;
+    }
 }
 
 export abstract class Node extends Origin {

@@ -1,6 +1,6 @@
-import {Node} from "./model/model";
+import {Node} from "../model/model";
 
-declare module './model/model' {
+declare module '../model/model' {
     export interface Node {
         /**
          * A generator that walks over the whole AST starting from this node, depth-first.
@@ -8,11 +8,11 @@ declare module './model/model' {
         walk(): Generator<Node>;
         /**
          * A generator that walks over the whole AST starting from the children of this node.
-         * @param walker a function that generates a sequence of nodes. By default this is the depth-first
+         * @param walker a function that generates a sequence of nodes. By default, this is the depth-first
          * "walk" function.
          * For post-order traversal, use "walkLeavesFirst".
          */
-        walkDescendants(walker: typeof walk): Generator<Node>;
+        walkDescendants(walker?: typeof walk): Generator<Node>;
 
         /**
          * A generator that walks over the direct children of this node.

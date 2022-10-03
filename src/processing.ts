@@ -1,5 +1,5 @@
 import {Node} from "./model/model";
-import {walk} from "./traversing";
+import {walk} from "./traversing/structurally";
 import {first, pipe} from "iter-ops";
 
 declare module './model/model' {

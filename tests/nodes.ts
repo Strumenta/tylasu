@@ -5,15 +5,15 @@ export class Box extends Node {
     @Reflect.metadata("design:arrayElementType", Node)
     contents: Node[];
 
-    constructor(public name: string, contents: Node[]) {
-        super();
+    constructor(public name: string, contents: Node[], positionOverride?: Position) {
+        super(positionOverride);
         this.contents = contents;
     }
 }
 
 export class Item extends Node {
-    constructor(public name: string) {
-        super();
+    constructor(public name: string, positionOverride?: Position) {
+        super(positionOverride);
     }
 }
 
@@ -31,8 +31,8 @@ export class SomeNode extends Node {
     @Property()
     fib: Fibo
 
-    constructor(a?: string, protected specifiedPosition?: Position) {
-        super(specifiedPosition);
+    constructor(a?: string, positionOverride?: Position) {
+        super(positionOverride);
         this.a = a;
     }
 }
@@ -46,8 +46,8 @@ export class SomeNodeInPackage extends Node {
     @Children()
     multi: SomeNode[] = [];
 
-    constructor(a?: string, protected specifiedPosition?: Position) {
-        super(specifiedPosition);
+    constructor(a?: string, positionOverride?: Position) {
+        super(positionOverride);
         this.a = a;
     }
 }
