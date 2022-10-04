@@ -465,13 +465,17 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
+    const referencesTracker = new ReferencesTracker(resource);
     if (Array.isArray(data)) {
         for (const pkg of data) {
-            loadEObject(pkg, resource);
+            const result = importJsonObject(pkg, resource, null, true, referencesTracker);
+            resource.add(result);
         }
     } else {
-        loadEObject(data, resource);
+        const result = importJsonObject(data, resource, null, true, referencesTracker);
+        resource.add(result);
     }
+    referencesTracker.resolveAllReferences();
     return registerPackages(resource);
 }
 
@@ -531,9 +535,22 @@ class ReferencesTracker {
             }
             throw new Error("Not supported: " + uri);
         } else {
-            const referred = this.resource.getEObject(uri);
-            if (referred == null) {
-                throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+            let referred: any = this.resource.getEObject(uri);
+            if (!referred) {
+                if (uri.startsWith("/")) {
+                    const components = uri.substring(1).split("/");
+                    referred = this.resource.getEObject("/").eContents();
+                    for (const fragment of components) {
+                        if (Array.isArray(referred)) {
+                            referred = referred[parseInt(fragment)];
+                        } else {
+                            referred = referred.get(fragment);
+                        }
+                    }
+                }
+                if (!referred) {
+                    throw new Error(`Unresolved reference ${uri} in resource ${this.resource.get("uri")}`);
+                }
             }
             return referred;
         }
