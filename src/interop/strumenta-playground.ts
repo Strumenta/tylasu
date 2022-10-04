@@ -7,7 +7,7 @@ import {
     Result,
     toEObject
 } from "./ecore";
-import {Node} from "../model/model";
+import {Node, NodeDefinition} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
@@ -61,7 +61,7 @@ export class ParserTrace {
         } else {
             root = ast;
         }
-        return new ParserNode(root, this);
+        return new ParserNode(root, undefined, this);
     }
 
     get issues(): Issue[] {
@@ -82,8 +82,9 @@ export class ParserTrace {
     }
 }
 
-export abstract class TraceNode {
+export abstract class TraceNode extends Node {
     protected constructor(public eo: EObject) {
+        super();
     }
 
     getType(): string {
@@ -107,6 +108,27 @@ export abstract class TraceNode {
         }
     }
 
+    get position(): Position | undefined {
+        return this.getPosition();
+    }
+
+    protected get nodeDefinition(): NodeDefinition {
+        return {
+            package: this.eo.eClass.eContainer.get("name") as string,
+            name: this.eo.eClass.get("name") as string,
+            properties: this.getProperties()
+        };
+    }
+
+    getProperties(): any {
+        const result: any = {};
+        for (const attr of this.eo.eClass.get("eAllAttributes")) {
+            const name = attr.get("name");
+            result[name] = { child: false };
+        }
+        return result;
+    }
+
     getAttributes(): { [name: string]: any } {
         const result: any = {};
         for (const attr of this.eo.eClass.get("eAllAttributes")) {
@@ -117,19 +139,33 @@ export abstract class TraceNode {
     }
 }
 
-class ParserNode extends TraceNode {
+export class ParserNode extends TraceNode {
 
-    constructor(eo: EObject, protected trace: ParserTrace) {
+    constructor(eo: EObject, parent: ParserNode | undefined, protected trace: ParserTrace) {
         super(eo);
+        this.parent = parent;
     }
 
     getChildren(role?: string): ParserNode[] {
         return this.eo.eContents()
             .filter((c) => c.eContainingFeature.get("name") != "position")
             .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new ParserNode(c, this.trace));
+            .map((c) => new ParserNode(c, this, this.trace));
     }
 
+    get children(): Node[] {
+        return this.getChildren();
+    }
+
+    getProperties(): any {
+        const def = super.getProperties();
+        this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .forEach((c) => {
+                def[c.eContainingFeature.get("name")] = { child: true };
+            });
+        return def;
+    }
 }
 
 export interface Language {

@@ -14,7 +14,7 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 export type NodeDefinition = {
     package?: string,
     name?: string,
-    properties: any,
+    properties: any, //{ [name: string | symbol]: { type?: any, arrayType?: any, child?: any } },
     resolved?: boolean;
 };
 
@@ -94,12 +94,16 @@ export abstract class Node extends Origin {
     }
 
     getChildNames(): string[] {
-        const props = getNodeDefinition(this)?.properties || {};
+        const props = this.nodeDefinition?.properties || {};
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
+    protected get nodeDefinition(): NodeDefinition | undefined {
+        return getNodeDefinition(this);
+    }
+
     get properties(): PropertyDescription[] {
-        const props = getNodeDefinition(this)?.properties || {};
+        const props = this.nodeDefinition?.properties || {};
         return Object.getOwnPropertyNames(props).map(p => {
             return { name: p, value: this[p] };
         });
