@@ -2,21 +2,23 @@ import {expect} from "chai";
 import * as fs from "fs";
 import {IssueSeverity, IssueType, ParserTraceLoader, Point, Position} from "../../src";
 
-describe('Parser traces', function() {
+describe('Parser traces – Kolasu metamodel V1', function() {
 
-    it("Can load parser traces built using Kolasu metamodel V1 (RPG)",
+    const rpgMetamodel =
+        JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/metamodel.json").toString());
+    const rpgLoader = new ParserTraceLoader({
+        name: "rpg",
+        uri: "file://tests/data/playground/rpgexamples/metamodel.json",
+        metamodel: rpgMetamodel
+    });
+
+    it("Can load reference RPG parser trace: BBSAACCLVR",
         function () {
             this.timeout(0);
 
-            const metamodel =
-                JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/metamodel.json").toString());
-            const loader = new ParserTraceLoader({
-                name: "rpg",
-                uri: "file://tests/data/playground/rpgexamples/metamodel.json",
-                metamodel: metamodel
-            });
+
             const code = fs.readFileSync("tests/data/playground/rpgexamples/BBSAACCLVR.json").toString();
-            const trace = loader.loadParserTrace(code, "rpg");
+            const trace = rpgLoader.loadParserTrace(code, "rpg");
 
             expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(trace.rootNode.getSimpleType()).to.eql("CompilationUnit");
@@ -31,7 +33,17 @@ describe('Parser traces', function() {
             expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
         });
 
-    it("Can load parser traces built using Kolasu metamodel V1 (SAS)",
+    for (const example of ["JD_001", "moulinette", "open-weather", "plugconv"]) {
+        it(`Can load RPG parser trace: ${example}`,
+            function () {
+                this.timeout(0);
+                const code = fs.readFileSync(`tests/data/playground/rpgexamples/${example}.json`).toString();
+                const trace = rpgLoader.loadParserTrace(code, "rpg");
+                expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit", example);
+            });
+    }
+
+    it("Can load SAS parser trace",
         function () {
             this.timeout(0);
 
