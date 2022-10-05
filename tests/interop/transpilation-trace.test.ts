@@ -1,6 +1,15 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {loadEObject, loadEPackages, Point, Position, TranspilationTraceLoader} from "../../src";
+import {
+    findByPosition,
+    loadEObject,
+    loadEPackages, Point,
+    pos,
+    Position,
+    SourceNode,
+    TargetNode,
+    TranspilationTraceLoader
+} from "../../src";
 import {THE_AST_EPACKAGE} from "../../src/interop/kolasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
 import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
@@ -106,26 +115,38 @@ describe('Transpilation traces', function() {
             const example = fs.readFileSync("tests/data/playground/rpgtojava-transpilation-example.json").toString();
             const trace = loader.loadTranspilationTrace(example);
 
-            expect(trace.rootSourceNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
-            expect(trace.rootSourceNode.getSimpleType()).to.eql("CompilationUnit");
-            expect(trace.rootSourceNode.getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
-            expect(trace.rootSourceNode.getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
-            expect(trace.rootSourceNode.getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
-            expect(trace.rootSourceNode.getChildren().length).to.eql(11);
-            expect(trace.rootSourceNode.getChildren("mainStatements").length).to.eql(5);
-            expect(trace.rootSourceNode.getRole()).to.eql("root");
-            expect(trace.rootSourceNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
+            const rootSourceNode = trace.rootSourceNode;
+            expect(rootSourceNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(rootSourceNode.getSimpleType()).to.eql("CompilationUnit");
+            expect(rootSourceNode.getPosition()).to.eql(pos(1, 0,32, 30));
+            expect(rootSourceNode.getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(rootSourceNode.getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(rootSourceNode.getChildren().length).to.eql(11);
+            expect(rootSourceNode.getChildren("mainStatements").length).to.eql(5);
+            expect(rootSourceNode.getRole()).to.eql("root");
+            expect(rootSourceNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
+            let foundSourceNode = findByPosition(rootSourceNode, pos(1, 0,32, 30)) as SourceNode;
+            expect(foundSourceNode.eo == rootSourceNode.eo).to.be.true;
+            const descNode = rootSourceNode.children[3].children[1] as SourceNode;
+            foundSourceNode = findByPosition(descNode, descNode.position) as SourceNode;
+            expect(foundSourceNode.eo == descNode.eo).to.be.true;
 
-            expect(trace.rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
-            expect(trace.rootTargetNode.getSimpleType()).to.eql("JCompilationUnit");
-            expect(trace.rootTargetNode.getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
-            expect(trace.rootTargetNode.getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
-            expect(trace.rootTargetNode.getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
-            expect(trace.rootTargetNode.getChildren().length).to.eql(1);
-            expect(trace.rootTargetNode.getChildren("declarations").length).to.eql(1);
-            expect(trace.rootTargetNode.getChildren("unexisting").length).to.eql(0);
-            expect(trace.rootTargetNode.getRole()).to.eql("root");
-            expect(trace.rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
+            const rootTargetNode = trace.rootTargetNode;
+            expect(rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(rootTargetNode.getSimpleType()).to.eql("JCompilationUnit");
+            expect(rootTargetNode.getDestination()).to.eql(pos(1, 0, 29, 0));
+            expect(rootTargetNode.getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(rootTargetNode.getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(rootTargetNode.getChildren().length).to.eql(1);
+            expect(rootTargetNode.getChildren("declarations").length).to.eql(1);
+            expect(rootTargetNode.getChildren("unexisting").length).to.eql(0);
+            expect(rootTargetNode.getRole()).to.eql("root");
+            expect(rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
+            let foundTargetNode = findByPosition(rootTargetNode, pos(1, 0, 29, 0)) as TargetNode;
+            expect(foundTargetNode.eo == rootTargetNode.eo).to.be.true;
+            const descTargetNode = rootTargetNode.children[0].children[5] as TargetNode;
+            foundTargetNode = findByPosition(descTargetNode, descTargetNode.position) as TargetNode;
+            expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;
         });
 /*
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",

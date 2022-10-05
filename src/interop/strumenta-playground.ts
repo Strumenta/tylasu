@@ -279,6 +279,20 @@ export class SourceNode extends TraceNode {
             .map((c) => new SourceNode(c, this.trace));
     }
 
+    get children(): Node[] {
+        return this.getChildren();
+    }
+
+    getProperties(): any {
+        const def = super.getProperties();
+        this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .forEach((c) => {
+                def[c.eContainingFeature.get("name")] = { child: true };
+            });
+        return def;
+    }
+
 }
 
 export class TargetNode extends TraceNode {
@@ -287,12 +301,20 @@ export class TargetNode extends TraceNode {
         super(eo);
     }
 
-    getDestination(): Position | null {
+    getPosition(): Position | null {
         const raw = this.eo.get("destination");
         if (raw == null) {
             return null
         }
         return fromEObject(raw) as Position;
+    }
+
+    getDestination(): Position | null {
+        return this.getPosition();
+    }
+
+    getSourcePosition(): Position | null {
+        return super.getPosition();
     }
 
     getSourceNode(): SourceNode | null {
@@ -309,6 +331,21 @@ export class TargetNode extends TraceNode {
             .filter((c) => c.eContainingFeature.get("name") != "destination")
             .filter((c) => role == null || role == c.eContainingFeature.get("name"))
             .map((c) => new TargetNode(c, this.trace));
+    }
+
+    get children(): Node[] {
+        return this.getChildren();
+    }
+
+    getProperties(): any {
+        const def = super.getProperties();
+        this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .filter((c) => c.eContainingFeature.get("name") != "destination")
+            .forEach((c) => {
+                def[c.eContainingFeature.get("name")] = { child: true };
+            });
+        return def;
     }
 }
 
