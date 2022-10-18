@@ -1,7 +1,6 @@
-import {Node, Origin} from "../model/model";
+import {Node, Origin, Point, Position} from "../";
 import {Token} from "antlr4ts";
 import {ParseTree} from "antlr4ts/tree";
-import {Point, Position} from "../model/position";
 import {Interval} from "antlr4ts/misc";
 import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";

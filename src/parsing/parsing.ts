@@ -16,7 +16,7 @@ import {Interval} from "antlr4ts/misc";
 import {ErrorNode} from "antlr4ts/tree";
 import {walk} from "../traversing/structurally";
 import {assignParents} from "../processing";
-import {} from "../interop/antlr4";
+import "../interop/antlr4";
 
 let now: () => number;
 

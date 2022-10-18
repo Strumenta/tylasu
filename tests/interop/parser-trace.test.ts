@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {findByPosition, IssueSeverity, IssueType, ParserNode, ParserTraceLoader, Point, pos, Position} from "../../src";
+import {findByPosition, IssueSeverity, IssueType, Point, pos, Position} from "../../src";
+import {ParserNode, ParserTraceLoader} from "../../src/interop/strumenta-playground";
 import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
 
 ensureEcoreContainsAllDataTypes();
@@ -72,6 +73,8 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(foundNode.eo == descNode.eo).to.be.true;
             expect(rootNode.getChildren().length).to.equal(44);
             expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(44);
+            // foundNode = findByPosition(rootNode, pos(20, 28, 20, 29)) as ParserNode;
+            // expect(foundNode).not.to.be.undefined;
             const child = rootNode.getChildren("statementsAndDeclarations")[0];
             expect(child.getRole()).to.equal("statementsAndDeclarations");
             expect(child.getAttributes()).to.eql({ name: "fileloc" });

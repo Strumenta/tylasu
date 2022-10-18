@@ -32,7 +32,7 @@ declare module '../model/model' {
 }
 
 export function findByPosition(node: Node, position: Position, selfContained = false): Node | undefined {
-    for (const n of node.searchByPosition(position, selfContained)) {
+    for (const n of searchByPosition(node, position, selfContained)) {
         return n;
     }
     return undefined;

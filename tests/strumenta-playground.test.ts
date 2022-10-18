@@ -1,6 +1,8 @@
 import {expect} from "chai";
 
-import {Issue, registerECoreModel, saveForStrumentaPlayground} from "../src";
+import {Issue} from "../src";
+import {registerECoreModel} from "../src/interop/ecore";
+import {saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import * as fs from "fs";

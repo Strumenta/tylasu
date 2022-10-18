@@ -8,7 +8,7 @@ import {
     SYMBOL_CLASS_DEFINITION,
     SYMBOL_NODE_NAME,
     toEObject, loadEPackages, loadEObject, generateASTModel, Result
-} from "../src";
+} from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
