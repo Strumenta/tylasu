@@ -3,7 +3,7 @@
 	"description": "AST building blocks for JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"license": "Apache-2.0",
 	"keywords": [
 		"ast",
@@ -24,19 +24,29 @@
 	"exports": {
 		".": {
 			"import": "./dist/esm/index.js",
-			"require": "./dist/cjs/index.js"
+			"require": "./dist/cjs/index.js",
+			"types": "./dist/types/index.d.ts"
 		},
 		"./parsing": {
 			"import": "./dist/esm/parsing/index.js",
-			"require": "./dist/cjs/parsing/index.js"
+			"require": "./dist/cjs/parsing/index.js",
+			"types": "./dist/types/parsing/index.d.ts"
+		},
+		,
+		"./mapping": {
+			"import": "./dist/esm/mapping.js",
+			"require": "./dist/cjs/mapping.js",
+			"types": "./dist/types/mapping.d.ts"
 		},
 		"./interop/ecore": {
 			"import": "./dist/esm/interop/ecore.js",
-			"require": "./dist/cjs/interop/ecore.js"
+			"require": "./dist/cjs/interop/ecore.js",
+			"types": "./dist/types/interop/ecore.d.ts"
 		},
 		"./interop/strumenta-playground": {
 			"import": "./dist/esm/interop/strumenta-playground.js",
-			"require": "./dist/cjs/interop/strumenta-playground.js"
+			"require": "./dist/cjs/interop/strumenta-playground.js",
+			"types": "./dist/types/interop/strumenta-playground.d.ts"
 		}
 	},
 	"typesVersions": {

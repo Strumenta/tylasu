@@ -4,7 +4,7 @@ import {Child, Node, NODE_DEFINITION_SYMBOL, registerNodeDefinition} from "./mod
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
 import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
-import {ParseTreeOrigin} from "./parsing/parse-tree";
+import {ParseTreeOrigin} from "./parsing";
 
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
