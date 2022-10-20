@@ -32,7 +32,6 @@
 			"require": "./dist/cjs/parsing/index.js",
 			"types": "./dist/types/parsing/index.d.ts"
 		},
-		,
 		"./mapping": {
 			"import": "./dist/esm/mapping.js",
 			"require": "./dist/cjs/mapping.js",
