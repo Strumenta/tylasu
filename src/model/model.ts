@@ -65,6 +65,15 @@ export abstract class Origin {
     contains(position?: Position): boolean {
         return this.position?.contains(position) || false;
     }
+
+    /**
+     * Tests whether the given position overlaps the interval represented by this object.
+     * @param position the position
+     */
+    overlaps(position?: Position): boolean {
+        return this.position?.overlaps(position) || false
+    }
+
 }
 
 export abstract class Node extends Origin {

@@ -1,6 +1,6 @@
 import {Node} from "../model/model";
 import {Position} from "../model/position";
-import {walk} from "./structurally";
+import {last, pipe} from "iter-ops";
 
 declare module '../model/model' {
     export interface Node {
@@ -9,19 +9,20 @@ declare module '../model/model' {
          * @param selfContained whether the starting node position contains the positions of all its children.
          * If **true** no further search will be performed in subtrees where the root node falls outside the given position.
          * If **false (default)** the research will cover all nodes from the starting node to the leaves.
-         * @return the nearest node to the given [position]. Null if none is found.
+         * @return the node most closely containing the given [position]. `undefined` if none is found.
          * @see searchByPosition
          */
-        findByPosition(position: Position, selfContained: boolean);
+        findByPosition(position: Position, selfContained?: boolean): Node | undefined;
 
         /**
          * @param position the position where to search for nodes
          * @param selfContained whether the starting node position contains the positions of all its children.
          * If **true**: no further search will be performed in subtrees where the root node falls outside the given position.
-         * If **false (default)**: the research will cover all nodes from the starting node to the leaves.
-         * @return all nodes contained within the given [position] using depth-first search. Empty list if none are found.
+         * * If **false (default)**: the search will cover all nodes from the starting node to the leaves.
+         * In any case, the search stops at the first subtree found to be containing the position.
+         * @return all nodes containing the given [position] using depth-first search. Empty list if none are found.
          */
-        searchByPosition(position: Position, selfContained: boolean): Generator<Node>;
+        searchByPosition(position: Position, selfContained?: boolean): Generator<Node>;
 
         /**
          * @param position the position within which the walk should remain
@@ -32,10 +33,7 @@ declare module '../model/model' {
 }
 
 export function findByPosition(node: Node, position: Position, selfContained = false): Node | undefined {
-    for (const n of searchByPosition(node, position, selfContained)) {
-        return n;
-    }
-    return undefined;
+    return pipe(searchByPosition(node, position, selfContained), last()).first;
 }
 
 Node.prototype.findByPosition = function(position: Position, selfContained = false) {
@@ -43,12 +41,26 @@ Node.prototype.findByPosition = function(position: Position, selfContained = fal
 };
 
 export function* searchByPosition(node: Node, position: Position, selfContained = false): Generator<Node> {
-    if (selfContained) {
-        yield* walkWithin(node, position);
-    } else {
-        for (const n of walk(node)) {
-            if (position.contains(n)) {
-                yield n;
+    const contains = node.contains(position);
+    if (!selfContained || contains) {
+        if (node.children.length == 0) {
+            if (contains) {
+                yield node;
+            }
+        } else {
+            let returnedSelf = false;
+            for (const c of node.children) {
+                const nodes = searchByPosition(c, position, selfContained);
+                for (const n of nodes) {
+                    if (!returnedSelf) {
+                        yield node;
+                        returnedSelf = true;
+                    }
+                    yield n;
+                }
+            }
+            if (contains && !returnedSelf) {
+                yield node;
             }
         }
     }
@@ -68,7 +80,7 @@ export function* walkWithin(node: Node, position: Position): Generator<Node> {
     if (position.contains(node)) {
         yield node;
         yield* walkWithinChildren();
-    } else if (node.contains(position)) {
+    } else if (node.overlaps(position)) {
         yield* walkWithinChildren();
     }
 }

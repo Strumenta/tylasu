@@ -136,7 +136,7 @@ describe('Transpilation traces', function() {
             expect(rootTargetNode.getRole()).to.eql("root");
             expect(rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
             let foundTargetNode = findByPosition(rootTargetNode, pos(1, 0, 29, 0)) as TargetNode;
-            expect(foundTargetNode.eo == rootTargetNode.eo).to.be.true;
+            expect(foundTargetNode.parent.eo == rootTargetNode.eo).to.be.true;
             const descTargetNode = rootTargetNode.children[0].children[5] as TargetNode;
             foundTargetNode = findByPosition(descTargetNode, descTargetNode.position) as TargetNode;
             expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;

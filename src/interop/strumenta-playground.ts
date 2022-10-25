@@ -268,6 +268,14 @@ export class SourceNode extends TraceNode {
         super(eo);
     }
 
+    get parent(): SourceNode {
+        if (super.parent) {
+            return super.parent as SourceNode;
+        } else if (this.eo.eContainer) {
+            return super.parent = new SourceNode(this.eo.eContainer, this.trace);
+        }
+    }
+
     getDestinationNode(): TargetNode | null {
         return this.trace.getDestinationNode(this);
     }
@@ -299,6 +307,15 @@ export class TargetNode extends TraceNode {
 
     constructor(eo: EObject, protected trace: TranspilationTrace) {
         super(eo);
+    }
+
+    get parent(): TargetNode | undefined {
+        if (super.parent) {
+            return super.parent as TargetNode;
+        } else {
+            const sourceNode = this.getSourceNode();
+            return super.parent = sourceNode?.parent?.getDestinationNode();
+        }
     }
 
     getPosition(): Position | null {

@@ -979,6 +979,10 @@
       },
       "declarations" : [
         {
+          "origin" : {
+            "eClass" : "https://strumenta.com/rpg/model#//Subroutine",
+            "$ref" : "//@sourceResult/@root/@subroutines.0"
+          },
           "destination" : {
             "start" : {
               "line" : 1

@@ -30,7 +30,7 @@ export class Point {
         return !other || this.compareTo(other) > 0;
     }
 
-    isAfterOrSame(other: Point): boolean {
+    isSameOrAfter(other: Point): boolean {
         return !other || this.compareTo(other) >= 0;
     }
 
@@ -38,7 +38,7 @@ export class Point {
         return other && this.compareTo(other) < 0;
     }
 
-    isBeforeOrSame(other: Point): boolean {
+    isSameOrBefore(other: Point): boolean {
         return other && this.compareTo(other) <= 0;
     }
 }
@@ -75,14 +75,27 @@ export class Position {
      */
     contains(object: Point | Position | Node | null | undefined): boolean {
         if (object instanceof Point) {
-            return this.start.isBeforeOrSame(object) && this.end.isAfterOrSame(object);
+            return this.start.isSameOrBefore(object) && this.end.isSameOrAfter(object);
         } else if (object instanceof Position) {
-            return (this.start.isBeforeOrSame(object.start) && this.end.isAfterOrSame(object.end))
+            return (this.start.isSameOrBefore(object.start) && this.end.isSameOrAfter(object.end))
         } else if (object instanceof Node) {
             return this.contains(object.position);
         } else {
             return false;
         }
+    }
+
+    /**
+     * Tests whether the given position overlaps the interval represented by this object.
+     * @param position the position
+     */
+    overlaps(position?: Position): boolean {
+        return (position != null) && (
+            (this.start.isSameOrAfter(position.start) && this.start.isSameOrBefore(position.end)) ||
+            (this.end.isSameOrAfter(position.start) && this.end.isSameOrBefore(position.end)) ||
+            (position.start.isSameOrAfter(this.start) && position.start.isSameOrBefore(this.end)) ||
+            (position.end.isSameOrAfter(this.start) && position.end.isSameOrBefore(this.end))
+        )
     }
 }
 
