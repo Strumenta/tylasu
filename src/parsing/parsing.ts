@@ -68,7 +68,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
     /**
      * Creates the first-stage lexer and parser.
      */
-    createParser(inputStream: CharStream, issues: Issue[]): P {
+    protected createParser(inputStream: CharStream, issues: Issue[]): P {
         const lexer = this.createANTLRLexer(inputStream);
         this.injectErrorCollectorInLexer(lexer, issues);
         const tokenStream = this.createTokenStream(lexer);
@@ -85,7 +85,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      * Checks the parse tree for correctness. If you're concerned about performance, you may want to override this to
      * do nothing.
      */
-    verifyParseTree(parser: ANTLRParser, issues: Issue[], root: ParserRuleContext): void {
+    protected verifyParseTree(parser: ANTLRParser, issues: Issue[], root: ParserRuleContext): void {
         const lastToken = parser.inputStream.get(parser.inputStream.index);
         if (lastToken.type != Token.EOF) {
             issues.push(
@@ -109,6 +109,10 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
             });
     }
 
+    /**
+     * Executes only the first stage of the parser, i.e., the production of a parse tree. Usually, you'll want to use
+     * the [parse] method, that returns an AST which is simpler to use and query.
+     */
     parseFirstStage(inputStream: CharStream, measureLexingTime = false): FirstStageParsingResult<C> {
         const issues: Issue[] = [];
         let lexingTime: number;
@@ -165,6 +169,9 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         assignParents(ast);
     }
 
+    /**
+     * Performs "lexing" on the given code stream, i.e., it breaks it into tokens.
+     */
     lex(inputStream: CharStream, onlyFromDefaultChannel = true): LexingResult {
         const issues: Issue[] = [];
         const tokens: Token[] = [];
