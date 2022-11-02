@@ -12,8 +12,8 @@ import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
 import {PARSER_TRACE_ECLASS} from "./parser-package";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2} from "./kolasu-v2-metamodel";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
+import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2, THE_NODE_ECLASS as THE_NODE_ECLASS_V2} from "./kolasu-v2-metamodel";
+import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
@@ -137,6 +137,21 @@ export abstract class TraceNode extends Node {
         }
         return result;
     }
+
+    getPathFromRoot(): (string | number)[] {
+        if (this.parent) {
+            const ft = this.eo.eContainingFeature;
+            const path = (this.parent as TraceNode).getPathFromRoot();
+            path.push(ft.get("name"));
+            if (ft.get("many")) {
+                const children = this.eo.eContainer.get(ft.get("name"));
+                path.push(children.indexOf(this.eo));
+            }
+            return path;
+        } else {
+            return [];
+        }
+    }
 }
 
 export class ParserNode extends TraceNode {
@@ -241,7 +256,7 @@ export class TranspilationTrace {
     getDestinationNode(sourceNode: SourceNode): TargetNode | null {
         const targetEO = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
         if (targetEO == null) {
-            return null
+            return null;
         }
         return new TargetNode(targetEO, this);
     }
@@ -271,7 +286,7 @@ export class SourceNode extends TraceNode {
     get parent(): SourceNode {
         if (super.parent) {
             return super.parent as SourceNode;
-        } else if (this.eo.eContainer) {
+        } else if (this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
             return super.parent = new SourceNode(this.eo.eContainer, this.trace);
         }
     }
@@ -312,9 +327,8 @@ export class TargetNode extends TraceNode {
     get parent(): TargetNode | undefined {
         if (super.parent) {
             return super.parent as TargetNode;
-        } else {
-            const sourceNode = this.getSourceNode();
-            return super.parent = sourceNode?.parent?.getDestinationNode();
+        } else if (this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
+            return super.parent = new TargetNode(this.eo.eContainer, this.trace);
         }
     }
 

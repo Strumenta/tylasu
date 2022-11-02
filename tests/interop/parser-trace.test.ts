@@ -30,6 +30,8 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.rootNode.getChildren().length).to.eql(28);
             expect(trace.rootNode.getChildren("mainStatements").length).to.eql(5);
             expect(trace.rootNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
+            expect(trace.rootNode.getChildren("mainStatements")[1].getChildren()[0].getPathFromRoot()).to.eql(
+                ['mainStatements', 1, 'formatName']);
             expect(trace.issues.length).to.eql(3);
             expect(trace.issues[0].type).to.eql(IssueType.SEMANTIC);
             expect(trace.issues[0].message).to.eql("Physical line of type FileDescription are currently ignored");

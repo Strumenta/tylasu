@@ -19,10 +19,16 @@ export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory:
     type.prototype[NODE_FACTORY_SYMBOL] = factory;
 }
 
+/**
+ * Marks a property of a node as mapped from a property of another node of a different name.
+ * @param type the source node's type.
+ * @param propertyName the name of the target property.
+ * @param path the path in the source node that will be mapped to the target property.
+ */
 export function registerPropertyMapping<T extends Node>(
-    type: new (...args: any[]) => T, methodName: string, path: string = methodName): any {
-    const propInfo = registerNodeProperty(type, methodName);
-    propInfo.path = path || methodName;
+    type: new (...args: any[]) => T, propertyName: string, path: string = propertyName): any {
+    const propInfo = registerNodeProperty(type, propertyName);
+    propInfo.path = path || propertyName;
     return propInfo;
 }
 
@@ -43,6 +49,11 @@ export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
     };
 }
 
+/**
+ * Marks a property of a node as mapped from a property of another node of a different name.
+ * @param path the path in the source node that will be mapped to the target property.
+ * @deprecated this will eventually be replaced by Kolasu-style transformers.
+ */
 export function Mapped(path?: string): (target, methodName: string) => void {
     return function (target, methodName: string) {
         registerPropertyMapping(target, methodName, path);
