@@ -305,12 +305,18 @@ export function ASTNode<T extends Node>(pkg: string, name: string) {
     };
 }
 
+/**
+ * Declares the decorated property as the holder of a child node.
+ */
 export function Child(): (target, methodName: string) => void {
     return function (target, methodName: string) {
         registerNodeChild(target, methodName);
     };
 }
 
+/**
+ * Declares the decorated property as the holder of a collection of child nodes.
+ */
 export function Children(): (target, methodName: string) => void {
     return function (target, methodName: string) {
         const props = registerNodeChild(target, methodName);

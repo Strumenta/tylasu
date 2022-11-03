@@ -60,6 +60,13 @@ export function Mapped(path?: string): (target, methodName: string) => void {
     };
 }
 
+/**
+ * Decorator to register an initializer method on a Node. When a node is instantiated as the target of a
+ * transformation, after its properties have been set, the transformer calls the init method, if any.
+ * @param target the target type.
+ * @param methodName the name of the init method.
+ * @deprecated this will be replaced by Kolasu-style transformers.
+ */
 // Since target is any-typed (see https://www.typescriptlang.org/docs/handbook/decorators.html),
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function Init(target, methodName: string): void {
