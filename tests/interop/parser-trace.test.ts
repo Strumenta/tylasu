@@ -71,7 +71,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             let foundNode = findByPosition(rootNode, pos(16, 0,349, 0)) as ParserNode;
             expect(foundNode.eo == rootNode.eo).to.be.true;
             const descNode = rootNode.children[3].children[7] as ParserNode;
-            foundNode = findByPosition(descNode, descNode.position) as ParserNode;
+            foundNode = findByPosition(descNode, descNode.position!) as ParserNode;
             expect(foundNode.eo == descNode.eo).to.be.true;
             expect(rootNode.getChildren().length).to.equal(44);
             expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(44);

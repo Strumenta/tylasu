@@ -28,6 +28,7 @@ import {
 } from "./kolasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
+import {strict} from "assert";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -221,7 +222,7 @@ export interface LocalDateTime {
 }
 
 export interface Result {
-    root: Node;
+    root: Node | undefined;
     issues: Issue[];
 }
 
@@ -250,7 +251,7 @@ function decodeEnumLiteral(eType, literalName: string) {
     }
 }
 
-export function fromEObject(obj: EObject | any, parent?: Node): ASTElement {
+export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | undefined {
     if(!obj) {
         return undefined;
     }
@@ -330,7 +331,7 @@ export class EObjectGenerator {
     toEObject(node: Node): EObject {
         return toEObject(node);
     }
-    fromEObject(eObject: EObject): ASTElement {
+    fromEObject(eObject: EObject): ASTElement | undefined {
         return fromEObject(eObject);
     }
 }
@@ -406,7 +407,7 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
-    let nodeSuperclass = undefined;
+    let nodeSuperclass;
     if(superclasses.length > 1) {
         throw new Error("A class can have at most one superclass");
     } else if(superclasses.length == 1) {
@@ -468,11 +469,11 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
     const referencesTracker = new ReferencesTracker(resource);
     if (Array.isArray(data)) {
         for (const pkg of data) {
-            const result = importJsonObject(pkg, resource, null, true, referencesTracker);
+            const result = importJsonObject(pkg, resource, undefined, true, referencesTracker);
             resource.add(result);
         }
     } else {
-        const result = importJsonObject(data, resource, null, true, referencesTracker);
+        const result = importJsonObject(data, resource, undefined, true, referencesTracker);
         resource.add(result);
     }
     referencesTracker.resolveAllReferences();
@@ -515,7 +516,7 @@ class ReferencesTracker {
     }
 
     getReferredObject(uri: string) {
-        let eClass = undefined;
+        let eClass;
         try {
             eClass = findEClass(uri, this.resource);
         } catch (e) {
@@ -563,7 +564,7 @@ class ReferencesTracker {
  * @param resource where to look for to resolve references to types.
  * @param eClass the class of the object, if not specified in the `data`.
  */
-export function loadEObject(data: unknown, resource: Resource, eClass?: EClass): EObject | undefined {
+export function loadEObject(data: unknown, resource: Resource, eClass?: EClass): EObject {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
@@ -649,13 +650,15 @@ function importJsonObject(
                 type: IssueType[obj.type],
                 message: obj.message,
                 severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
-                position: obj.position ? importJsonObject(obj.position, resource, null, strict, referencesTracker) : undefined
+                position: obj.position ? importJsonObject(obj.position, resource, undefined, strict, referencesTracker) : undefined
             });
         } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
             eClass = THE_POINT_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_POSITION_ECLASS)) {
             eClass = THE_POSITION_ECLASS;
-        } else {
+        }
+
+        if (!eClass) {
             throw new Error(`EClass is not specified and not present in the object. Property names: ${propertyNames}`);
         }
     }

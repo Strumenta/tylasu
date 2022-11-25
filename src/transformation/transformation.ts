@@ -78,7 +78,7 @@ export function Init(target, methodName: string): void {
 //-----------------//
 
 export function fillChildAST<FROM, TO extends Node>(
-    node: TO, property: string, tree: FROM, transformer: (node: FROM) => TO): TO[] {
+    node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO): TO[] {
     const propDef = ensureNodeDefinition(node).properties[property];
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
@@ -95,7 +95,7 @@ export function fillChildAST<FROM, TO extends Node>(
             } else if (tree && tree[path[segment]]) {
                 tree = tree[path[segment]];
             } else {
-                tree = null;
+                tree = undefined;
                 break;
             }
         }
@@ -130,8 +130,8 @@ function makeNode(factory, tree: unknown) {
 }
 
 export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node {
-    if (!tree) {
-        return undefined;
+    if (typeof tree !== "object" || !tree) {
+        throw new Error("tree must be an object");
     }
     const factory = tree[NODE_FACTORY_SYMBOL];
     let node: Node;
@@ -154,7 +154,7 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     } else {
         node = new GenericNode();
     }
-    return node.withParent(parent);
+    return parent ? node.withParent(parent) : node;
 }
 
 @ASTNode("", "GenericNode")

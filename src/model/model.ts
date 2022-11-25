@@ -12,8 +12,8 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 };
 
 export type NodeDefinition = {
-    package?: string,
-    name?: string,
+    package: string,
+    name: string,
     properties: any, //{ [name: string | symbol]: { type?: any, arrayType?: any, child?: any } },
     resolved?: boolean;
 };
@@ -86,7 +86,7 @@ export abstract class Node extends Origin {
 
     get children(): Node[] {
         const names = this.getChildNames();
-        const children = [];
+        const children : Node[] = [];
 
         function addChildren(child) {
             if (child) {
@@ -168,7 +168,7 @@ export abstract class Node extends Origin {
         return this.positionOverride || this.origin?.position;
     }
 
-    set position(newPos: Position) {
+    set position(newPos: Position | undefined) {
         this.positionOverride = newPos;
     }
 }
@@ -256,7 +256,7 @@ export function registerNodeDefinition<T extends Node>(
             }
         }
     }
-    if(pkg !== undefined) {
+    if(pkg !== undefined && name !== undefined) {
         NODE_TYPES[pkg].nodes[name] = target;
     }
     target[NODE_DEFINITION_SYMBOL] = def;

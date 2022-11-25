@@ -17,7 +17,7 @@ export interface Named extends PossiblyNamed {
  * A reference associated by using a name.
  */
 export class ReferenceByName<N extends PossiblyNamed> {
-    constructor(public readonly name: string, public referred: N = null) {}
+    constructor(public readonly name: string, public referred: N | undefined = undefined) {}
 
     toString(): string {
         if (this.referred == null) {

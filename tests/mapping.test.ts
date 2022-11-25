@@ -29,11 +29,11 @@ class MySetStatement extends Node {
 }
 
 describe('Mapping of Parse Trees to ASTs', function() {
-    it("Mapping of null/undefined",
-        function () {
-            expect(toAST(undefined)).to.be.undefined;
-            expect(toAST(null)).to.be.undefined;
-        });
+    // it("Mapping of null/undefined",
+    //     function () {
+    //         expect(toAST(undefined)).to.be.undefined;
+    //         expect(toAST(null)).to.be.undefined;
+    //     });
     it("Generic node",
         function () {
             const node = new ParserRuleContext().toAST();

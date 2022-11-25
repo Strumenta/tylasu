@@ -30,9 +30,9 @@ describe('Parsing', function() {
             const parser = new SLParser();
             const result = parser.parse(code);
             expect(result.root instanceof CompilationUnit).to.be.true;
-            expect(result.root.origin instanceof ParseTreeOrigin).to.be.true;
-            const origin = result.root.origin as ParseTreeOrigin;
-            expect(origin.parseTree).to.equal(result.firstStage.root);
+            expect(result.root!.origin instanceof ParseTreeOrigin).to.be.true;
+            const origin = result.root!.origin as ParseTreeOrigin;
+            expect(origin.parseTree).to.equal(result.firstStage!.root);
             expect(result.code).to.equal(code);
         });
 });

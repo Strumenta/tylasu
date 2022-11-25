@@ -34,7 +34,7 @@ describe('Strumenta Playground', function() {
 });
 
 class TestParser extends EcoreEnabledParser<NodeSubclass, any, any> {
-    protected createANTLRLexer(inputStream: CharStream): Lexer {
+    protected createANTLRLexer(inputStream: CharStream): any {
         return undefined;
     }
 

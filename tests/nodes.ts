@@ -27,7 +27,7 @@ export enum Fibo {
 @ASTNode("", "SomeNode")
 export class SomeNode extends Node {
     @Property()
-    a: string;
+    a?: string;
     @Property()
     fib: Fibo
 
@@ -40,7 +40,7 @@ export class SomeNode extends Node {
 @ASTNode("some.package", "SomeNodeInPackage")
 export class SomeNodeInPackage extends Node {
     @Property()
-    a: string;
+    a?: string;
     @Child()
     someNode: SomeNode;
     @Children()

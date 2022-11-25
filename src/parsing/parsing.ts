@@ -115,7 +115,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      */
     parseFirstStage(inputStream: CharStream, measureLexingTime = false): FirstStageParsingResult<C> {
         const issues: Issue[] = [];
-        let lexingTime: number;
+        let lexingTime: number | undefined = undefined;
         const time = now();
         const parser = this.createParser(inputStream, issues);
         if (measureLexingTime) {
@@ -148,7 +148,10 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         const firstStage = this.parseFirstStage(code, measureLexingTime);
         const issues = firstStage.issues;
         let ast = this.parseTreeToAst(firstStage.root!, considerPosition, issues)
-        this.assignParents(ast);
+
+        if (ast)
+            this.assignParents(ast);
+
         ast = ast ? this.postProcessAst(ast, issues) : ast;
         if (ast != null && !considerPosition) {
             for(const node of walk(ast)) {
@@ -156,7 +159,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
             }
         }
         const text = code.getText(Interval.of(0, code.size - 1));
-        return new ParsingResult(text, ast, issues, null, firstStage, now() - start);
+        return new ParsingResult(text, ast, issues, undefined, firstStage, now() - start);
     }
 
     /**
@@ -203,7 +206,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
     protected injectErrorCollectorInLexer(lexer: Lexer, issues: Issue[]): void {
         lexer.removeErrorListeners();
         lexer.addErrorListener({
-            syntaxError(recognizer: Recognizer<number, any>, offendingSymbol: number, line: number, charPositionInLine: number, msg: string) {
+            syntaxError(recognizer: Recognizer<number, any>, offendingSymbol: number | undefined, line: number, charPositionInLine: number, msg: string) {
                 issues.push(
                     Issue.lexical(
                         msg || "unspecified",
@@ -216,7 +219,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
     protected injectErrorCollectorInParser(parser: ANTLRParser, issues: Issue[]): void {
         parser.removeErrorListeners();
         parser.addErrorListener({
-            syntaxError(recognizer: Recognizer<Token, any>, offendingSymbol: Token, line: number, charPositionInLine: number, msg: string) {
+            syntaxError(recognizer: Recognizer<Token, any>, offendingSymbol: Token | undefined, line: number, charPositionInLine: number, msg: string) {
                 issues.push(
                     Issue.syntactic(
                         msg || "unspecified",
@@ -229,10 +232,10 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
 
 export class CodeProcessingResult<D> {
     code: string;
-    data: D;
+    data: D | undefined;
     issues: Issue[];
 
-    constructor(code: string, data: D, issues: Issue[]) {
+    constructor(code: string, data: D | undefined, issues: Issue[]) {
         this.issues = issues;
         this.data = data;
         this.code = code;
@@ -246,7 +249,7 @@ export class CodeProcessingResult<D> {
 
 export class LexingResult extends CodeProcessingResult<Token[]> {
 
-    time: number;
+    time?: number;
 
     constructor(code: string, data: Token[], issues: Issue[], time?: number) {
         super(code, data, issues);
@@ -255,9 +258,9 @@ export class LexingResult extends CodeProcessingResult<Token[]> {
 }
 
 export class FirstStageParsingResult<C extends ParserRuleContext> extends CodeProcessingResult<C> {
-    incompleteNode: Node;
-    time: number;
-    lexingTime: number;
+    incompleteNode?: Node;
+    time?: number;
+    lexingTime?: number;
 
     constructor(code: string, data: C, issues: Issue[], time?: number, lexingTime?: number, incompleteNode?: Node) {
         super(code, data, issues);
@@ -266,19 +269,19 @@ export class FirstStageParsingResult<C extends ParserRuleContext> extends CodePr
         this.incompleteNode = incompleteNode;
     }
 
-    get root(): C {
+    get root(): C | undefined {
         return this.data;
     }
 }
 
 export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> extends CodeProcessingResult<RootNode> {
 
-    incompleteNode: Node;
-    firstStage: FirstStageParsingResult<C>;
-    time: number;
+    incompleteNode?: Node;
+    firstStage?: FirstStageParsingResult<C>;
+    time?: number;
 
     constructor(
-        code: string, data: RootNode, issues: Issue[],
+        code: string, data: RootNode | undefined, issues: Issue[],
         incompleteNode?: Node, firstStage?: FirstStageParsingResult<C>, time?: number) {
         super(code, data, issues);
         this.incompleteNode = incompleteNode;
@@ -286,7 +289,7 @@ export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> e
         this.time = time;
     }
 
-    get root(): RootNode {
+    get root(): RootNode | undefined {
         return this.data;
     }
 }
