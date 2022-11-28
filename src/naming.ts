@@ -1,4 +1,3 @@
-
 /**
  * An entity that can have a name
  */

@@ -6,6 +6,12 @@ import {RuleNode} from "antlr4ts/tree/RuleNode";
 import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
 import {ParseTreeOrigin} from "./parsing";
 
+/**
+ * Registers the decorated node as a target for transformation from the given `type`.
+ *
+ * Note: this will eventually be integrated with Kolasu-style transformers.
+ * @param type the type of the source node to map to this node.
+ */
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
