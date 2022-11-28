@@ -4,10 +4,10 @@ import {Issue} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
 import {saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
-import {CharStream, Lexer, TokenStream} from "antlr4ts";
+import {CharStream, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
-import {ParsingResult} from "../src/parsing/parsing";
+import {ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
 
 describe('Strumenta Playground', function() {
