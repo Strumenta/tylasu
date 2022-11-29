@@ -4,6 +4,14 @@ function sign(number: number): number {
     return number > 0 ? +1 : number < 0 ? -1 : 0;
 }
 
+/**
+ * A location in a source code file.
+ * The line should be in 1..n, the column in 0..n.
+ *
+ * Consider a file with one line, containing text "HELLO":
+ * - the point before the first character will be Point(1, 0)
+ * - the point at the end of the first line, after the letter "O" will be Point(1, 5)
+ */
 export class Point {
     constructor(public readonly line: number, public readonly column: number) {
         if(line < 1) {
@@ -49,6 +57,15 @@ export class Point {
 
 export const START_POINT = new Point(1, 0);
 
+/**
+ *  An area in a source file, from start to end.
+ *  The start point is the point right before the starting character.
+ *  The end point is the point right after the last character.
+ *  An empty position will have coinciding points.
+ *
+ *  Consider a file with one line, containing text "HELLO".
+ *  The Position of such text will be Position(Point(1, 0), Point(1, 5)).
+ */
 export class Position {
     constructor(public readonly start: Point, public readonly end: Point) {}
 
