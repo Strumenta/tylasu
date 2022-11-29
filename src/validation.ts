@@ -17,15 +17,15 @@ export class Issue {
         this.position = position;
     }
 
-    static lexical(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position: Position | undefined = undefined): Issue {
+    static lexical(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position?: Position): Issue {
         return new Issue(IssueType.LEXICAL, message, severity, position);
     }
 
-    static syntactic(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position: Position | undefined = undefined): Issue {
+    static syntactic(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position?: Position): Issue {
         return new Issue(IssueType.SYNTACTIC, message, severity, position);
     }
 
-    static semantic(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position: Position | undefined = undefined): Issue {
+    static semantic(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position?: Position): Issue {
         return new Issue(IssueType.SEMANTIC, message, severity, position);
     }
 }
