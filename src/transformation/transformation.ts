@@ -154,7 +154,7 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     } else {
         node = new GenericNode();
     }
-    return parent ? node.withParent(parent) : node;
+    return node.withParent(parent);
 }
 
 @ASTNode("", "GenericNode")

@@ -154,7 +154,7 @@ export abstract class Node extends Origin {
         this[name].push(child.withParent(this));
     }
 
-    withParent(parent: Node): this {
+    withParent(parent?: Node): this {
         this.parent = parent;
         return this;
     }
