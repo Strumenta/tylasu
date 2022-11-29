@@ -29,6 +29,8 @@ export function positionOfParseTree(parseTree: ParseTree): Position | undefined 
 
         if (stopToken)
             return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
+        else
+            return Point.ofTokenStart(startToken).asPosition();
     } else if(parseTree instanceof TerminalNode) {
         return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
     }

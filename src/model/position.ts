@@ -41,6 +41,10 @@ export class Point {
     isSameOrBefore(other: Point): boolean {
         return other && this.compareTo(other) <= 0;
     }
+
+    asPosition(): Position {
+        return new Position(this, this);
+    }
 }
 
 export const START_POINT = new Point(1, 0);
@@ -57,16 +61,19 @@ export class Position {
             return 1;
         }
         const cmp = this.start.compareTo(other.start);
-        if (cmp == 0) {
+        if (cmp == 0 && this.end) {
             return this.end.compareTo(other.end);
         } else {
             return cmp;
         }
     }
 
-
+    /**
+     * If this Position has both a start and an end, and they are the same,
+     * then it is considered empty.
+     */
     isEmpty(): boolean {
-        return this.start.equals(this.end)
+        return this.end !== undefined && this.start.equals(this.end)
     }
 
     /**
