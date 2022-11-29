@@ -12,8 +12,8 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 };
 
 export type NodeDefinition = {
-    package: string,
-    name: string,
+    package?: string,
+    name?: string,
     properties: any, //{ [name: string | symbol]: { type?: any, arrayType?: any, child?: any } },
     resolved?: boolean;
 };

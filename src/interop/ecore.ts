@@ -28,7 +28,6 @@ import {
 } from "./kolasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
-import {strict} from "assert";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
@@ -81,7 +80,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     constructor[ECLASS_SYMBOL] = eClass;
     const proto = Object.getPrototypeOf(constructor);
     const parentNodeDef = getNodeDefinition(proto);
-    if(parentNodeDef) {
+    if(parentNodeDef && parentNodeDef.package && parentNodeDef.name) {
         const {packageDef, ePackage} = registerEPackage(parentNodeDef.package, {});
         const superclass = registerEClass(parentNodeDef.name, packageDef, ePackage);
         eClass.get("eSuperTypes").add(superclass);
@@ -131,7 +130,7 @@ export function registerECoreModel(packageName: string, args: { nsPrefix?: strin
     return ePackage;
 }
 
-export function ensureECoreModel(packageName: string): EPackage {
+export function ensureECoreModel(packageName = ""): EPackage {
     ensurePackage(packageName);
     if(!NODE_TYPES[packageName][EPACKAGE_SYMBOL]) {
         return registerECoreModel(packageName);
