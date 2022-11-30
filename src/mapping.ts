@@ -41,19 +41,19 @@ registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
 //Augment the ParseTree class with a toAST method
 declare module 'antlr4ts/tree' {
     export interface ParseTree {
-        toAST(parent?: Node): Node | undefined;
+        toAST(parent?: Node): Node;
     }
     export interface RuleNode {
-        toAST(parent?: Node): Node | undefined;
+        toAST(parent?: Node): Node;
     }
     export interface TerminalNode {
-        toAST(parent?: Node): Node | undefined;
+        toAST(parent?: Node): Node;
     }
 }
 
-RuleNode.prototype.toAST = function(parent?: Node): Node | undefined {
-    return toAST(this, parent);
+RuleNode.prototype.toAST = function(parent?: Node): Node {
+    return toAST(this, parent)!;
 };
-TerminalNode.prototype.toAST = function(parent?: Node): Node | undefined {
-    return toAST(this, parent);
+TerminalNode.prototype.toAST = function(parent?: Node): Node {
+    return toAST(this, parent)!;
 };
