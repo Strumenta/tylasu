@@ -86,11 +86,11 @@ export class Position {
     }
 
     /**
-     * If this Position has both a start and an end, and they are the same,
-     * then it is considered empty.
+     * If start and end are the same,
+     * then this Position is considered empty.
      */
     isEmpty(): boolean {
-        return this.end !== undefined && this.start.equals(this.end)
+        return this.start.equals(this.end)
     }
 
     /**
