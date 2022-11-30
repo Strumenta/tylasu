@@ -41,7 +41,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
     /**
      * Creates the lexer.
      */
-    protected abstract createANTLRLexer(inputStream: CharStream): Lexer;
+    protected abstract createANTLRLexer(inputStream: CharStream): Lexer | undefined;
 
     /**
      * Creates the first-stage parser.
@@ -69,7 +69,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
      * Creates the first-stage lexer and parser.
      */
     protected createParser(inputStream: CharStream, issues: Issue[]): P {
-        const lexer = this.createANTLRLexer(inputStream);
+        const lexer = this.createANTLRLexer(inputStream)!;
         this.injectErrorCollectorInLexer(lexer, issues);
         const tokenStream = this.createTokenStream(lexer);
         const parser = this.createANTLRParser(tokenStream);
@@ -179,7 +179,7 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
         const issues: Issue[] = [];
         const tokens: Token[] = [];
         const time = now();
-        const lexer = this.createANTLRLexer(inputStream);
+        const lexer = this.createANTLRLexer(inputStream)!;
         this.injectErrorCollectorInLexer(lexer, issues);
         let t: Token;
         do {

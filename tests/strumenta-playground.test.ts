@@ -4,7 +4,7 @@ import {Issue} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
 import {saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
-import {CharStream, TokenStream} from "antlr4ts";
+import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
 import {ParsingResult} from "../src/parsing";
@@ -34,7 +34,7 @@ describe('Strumenta Playground', function() {
 });
 
 class TestParser extends EcoreEnabledParser<NodeSubclass, any, any> {
-    protected createANTLRLexer(inputStream: CharStream): any {
+    protected createANTLRLexer(inputStream: CharStream): Lexer | undefined {
         return undefined;
     }
 
