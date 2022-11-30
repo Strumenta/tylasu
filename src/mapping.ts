@@ -19,7 +19,7 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 // toAST //
 //-------//
 
-export function toAST(tree: ParseTree, parent?: Node): Node {
+export function toAST(tree: ParseTree, parent?: Node): Node | undefined {
     const node = transform(tree, parent, toAST);
     if(node && !node.origin) { //Give a chance to custom factories to set a different node
         node.origin = new ParseTreeOrigin(tree);
@@ -38,19 +38,19 @@ registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
 //Augment the ParseTree class with a toAST method
 declare module 'antlr4ts/tree' {
     export interface ParseTree {
-        toAST(parent?: Node): Node;
+        toAST(parent?: Node): Node | undefined;
     }
     export interface RuleNode {
-        toAST(parent?: Node): Node;
+        toAST(parent?: Node): Node | undefined;
     }
     export interface TerminalNode {
-        toAST(parent?: Node): Node;
+        toAST(parent?: Node): Node | undefined;
     }
 }
 
-RuleNode.prototype.toAST = function(parent?: Node): Node {
+RuleNode.prototype.toAST = function(parent?: Node): Node | undefined {
     return toAST(this, parent);
 };
-TerminalNode.prototype.toAST = function(parent?: Node): Node {
+TerminalNode.prototype.toAST = function(parent?: Node): Node | undefined {
     return toAST(this, parent);
 };

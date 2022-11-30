@@ -78,7 +78,7 @@ export function Init(target, methodName: string): void {
 //-----------------//
 
 export function fillChildAST<FROM, TO extends Node>(
-    node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO): TO[] {
+    node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
     const propDef = ensureNodeDefinition(node).properties[property];
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
@@ -106,11 +106,11 @@ export function fillChildAST<FROM, TO extends Node>(
                 if (Array.isArray(tree)) {
                     node[property] = [];
                     for (const i in tree) {
-                        node[property].push(transformer(tree[i]).withParent(node));
+                        node[property].push(transformer(tree[i])?.withParent(node));
                     }
                     return node[property];
                 } else {
-                    node[property] = transformer(tree).withParent(node);
+                    node[property] = transformer(tree)?.withParent(node);
                     return [node[property]];
                 }
             } else {
@@ -129,9 +129,9 @@ function makeNode(factory, tree: unknown) {
     }
 }
 
-export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node {
+export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node | undefined {
     if (typeof tree !== "object" || !tree) {
-        throw new Error("tree must be an object");
+        return undefined;
     }
     const factory = tree[NODE_FACTORY_SYMBOL];
     let node: Node;
