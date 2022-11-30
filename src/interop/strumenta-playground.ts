@@ -99,12 +99,12 @@ export abstract class TraceNode extends Node {
         return this.eo.eContainingFeature.get("name");
     }
 
-    getPosition(): Position | null {
+    getPosition(): Position | undefined {
         const raw = this.eo.get("position");
         if (raw) {
             return fromEObject(raw) as Position;
         } else {
-            return null;
+            return undefined;
         }
     }
 
@@ -190,7 +190,7 @@ export interface Language {
 }
 
 function withLanguageMetamodel<T>(
-    languages: { [p: string]: Language }, language: string, resourceSet: ResourceSet, resource: Resource,
+    languages: { [p: string]: Language }, language: string | undefined, resourceSet: ResourceSet, resource: Resource,
     fn: () => T): T {
     if (language) {
         // The trace DOES NOT contain a reference to the language URI
@@ -283,7 +283,7 @@ export class SourceNode extends TraceNode {
         super(eo);
     }
 
-    get parent(): SourceNode {
+    get parent(): SourceNode | undefined {
         if (super.parent) {
             return super.parent as SourceNode;
         } else if (this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
@@ -332,19 +332,19 @@ export class TargetNode extends TraceNode {
         }
     }
 
-    getPosition(): Position | null {
+    getPosition(): Position | undefined {
         const raw = this.eo.get("destination");
         if (raw == null) {
-            return null
+            return undefined
         }
         return fromEObject(raw) as Position;
     }
 
-    getDestination(): Position | null {
+    getDestination(): Position | undefined {
         return this.getPosition();
     }
 
-    getSourcePosition(): Position | null {
+    getSourcePosition(): Position | undefined {
         return super.getPosition();
     }
 

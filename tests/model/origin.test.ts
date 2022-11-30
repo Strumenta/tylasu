@@ -16,12 +16,12 @@ display 2 * 3`;
             const parseTreeRoot = parser.compilationUnit();
             expect(parser.numberOfSyntaxErrors).to.equal(0);
             const rootOrigin = new ParseTreeOrigin(parseTreeRoot);
-            expect(rootOrigin.position.compareTo(
+            expect(rootOrigin.position!.compareTo(
                 new Position(new Point(1, 0), new Point(3, 13)))
             ).to.equal(0);
 
             const inputStatement = new ParseTreeOrigin(parseTreeRoot.statement(1));
-            expect(inputStatement.position.compareTo(
+            expect(inputStatement.position!.compareTo(
                 new Position(new Point(2, 0), new Point(2, 17)))
             ).to.equal(0);
         });

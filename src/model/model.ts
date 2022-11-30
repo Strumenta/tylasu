@@ -86,7 +86,7 @@ export abstract class Node extends Origin {
 
     get children(): Node[] {
         const names = this.getChildNames();
-        const children = [];
+        const children : Node[] = [];
 
         function addChildren(child) {
             if (child) {
@@ -154,7 +154,7 @@ export abstract class Node extends Origin {
         this[name].push(child.withParent(this));
     }
 
-    withParent(parent: Node): this {
+    withParent(parent?: Node): this {
         this.parent = parent;
         return this;
     }
@@ -168,7 +168,7 @@ export abstract class Node extends Origin {
         return this.positionOverride || this.origin?.position;
     }
 
-    set position(newPos: Position) {
+    set position(newPos: Position | undefined) {
         this.positionOverride = newPos;
     }
 }
@@ -256,7 +256,7 @@ export function registerNodeDefinition<T extends Node>(
             }
         }
     }
-    if(pkg !== undefined) {
+    if(pkg !== undefined && name !== undefined) {
         NODE_TYPES[pkg].nodes[name] = target;
     }
     target[NODE_DEFINITION_SYMBOL] = def;

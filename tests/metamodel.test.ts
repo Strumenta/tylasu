@@ -10,8 +10,8 @@ describe('Meta model', function() {
             expect(NODE_TYPES[""].nodes["SomeNode"]).to.equal(SomeNode);
             const def = getNodeDefinition(SomeNode);
             expect(def).not.to.be.undefined;
-            expect(def.package).to.equal("");
-            expect(def.name).to.equal("SomeNode");
+            expect(def!.package).to.equal("");
+            expect(def!.name).to.equal("SomeNode");
         });
     it("info recorded in some named package",
         function () {
@@ -19,7 +19,7 @@ describe('Meta model', function() {
             expect(NODE_TYPES["some.package"].nodes["SomeNodeInPackage"]).to.equal(SomeNodeInPackage);
             const def = getNodeDefinition(SomeNodeInPackage);
             expect(def).not.to.be.undefined;
-            expect(def.package).to.equal("some.package");
-            expect(def.name).to.equal("SomeNodeInPackage");
+            expect(def!.package).to.equal("some.package");
+            expect(def!.name).to.equal("SomeNodeInPackage");
         });
 });

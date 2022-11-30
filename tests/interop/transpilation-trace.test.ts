@@ -112,8 +112,8 @@ describe('Transpilation traces', function() {
             expect(rootSourceNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootSourceNode.getSimpleType()).to.eql("CompilationUnit");
             expect(rootSourceNode.getPosition()).to.eql(pos(1, 0,32, 30));
-            expect(rootSourceNode.getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
-            expect(rootSourceNode.getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
+            expect(rootSourceNode.getDestinationNode()!.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(rootSourceNode.getDestinationNode()!.getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
             expect(rootSourceNode.children.length).to.eql(11);
             expect(rootSourceNode.getChildren("mainStatements").length).to.eql(5);
             expect(rootSourceNode.getRole()).to.eql("root");
@@ -122,25 +122,25 @@ describe('Transpilation traces', function() {
             expect(foundSourceNode.eo == rootSourceNode.eo).to.be.true;
             const descNode = rootSourceNode.children[3].children[1] as SourceNode;
             expect(descNode.getPathFromRoot()).to.eql(["dataDefinitions", 3, "type"]);
-            foundSourceNode = findByPosition(descNode, descNode.position) as SourceNode;
+            foundSourceNode = findByPosition(descNode, descNode.position!) as SourceNode;
             expect(foundSourceNode.eo == descNode.eo).to.be.true;
 
             const rootTargetNode = trace.rootTargetNode;
             expect(rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
             expect(rootTargetNode.getSimpleType()).to.eql("JCompilationUnit");
             expect(rootTargetNode.getDestination()).to.eql(pos(1, 0, 29, 0));
-            expect(rootTargetNode.getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
-            expect(rootTargetNode.getSourceNode().getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
+            expect(rootTargetNode.getSourceNode()!.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(rootTargetNode.getSourceNode()!.getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
             expect(rootTargetNode.getChildren().length).to.eql(1);
             expect(rootTargetNode.getChildren("declarations").length).to.eql(1);
             expect(rootTargetNode.getChildren("unexisting").length).to.eql(0);
             expect(rootTargetNode.getRole()).to.eql("root");
             expect(rootTargetNode.getChildren("declarations")[0].getRole()).to.eql("declarations");
             let foundTargetNode = findByPosition(rootTargetNode, pos(1, 0, 29, 0)) as TargetNode;
-            expect(foundTargetNode.parent.eo == rootTargetNode.eo).to.be.true;
+            expect(foundTargetNode.parent!.eo == rootTargetNode.eo).to.be.true;
             const descTargetNode = rootTargetNode.children[0].children[5] as TargetNode;
             expect(descTargetNode.getPathFromRoot()).to.eql(['declarations', 0, 'members', 5]);
-            foundTargetNode = findByPosition(descTargetNode, descTargetNode.position) as TargetNode;
+            foundTargetNode = findByPosition(descTargetNode, descTargetNode.position!) as TargetNode;
             expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;
         });
 /*

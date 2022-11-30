@@ -24,7 +24,13 @@ declare module "../model/position" {
 
 export function positionOfParseTree(parseTree: ParseTree): Position | undefined {
     if(parseTree instanceof ParserRuleContext) {
-        return new Position(Point.ofTokenStart(parseTree.start), Point.ofTokenEnd(parseTree.stop));
+        const startToken = parseTree.start;
+        const stopToken = parseTree.stop;
+
+        if (stopToken)
+            return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
+        else
+            return Point.ofTokenStart(startToken).asPosition();
     } else if(parseTree instanceof TerminalNode) {
         return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
     }
@@ -35,7 +41,7 @@ Point.ofTokenStart = function (token: Token): Point {
 }
 
 Point.ofTokenEnd = function (token: Token): Point {
-    const length = (token.type == Token.EOF) ? 0 : token.text.length;
+    const length = (token.type == Token.EOF) ? 0 : token.text?.length ?? 0;
     return new Point(token.line, token.charPositionInLine + length)
 }
 
@@ -55,7 +61,7 @@ export class ParseTreeOrigin extends Origin {
     }
 
     get position(): Position | undefined {
-        return Position.ofParseTree(this.parseTree);
+        return this.parseTree ? Position.ofParseTree(this.parseTree) : undefined;
     }
 
     get sourceText(): string | undefined {
