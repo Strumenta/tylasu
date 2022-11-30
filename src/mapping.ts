@@ -19,7 +19,10 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 // toAST //
 //-------//
 
-export function toAST(tree: ParseTree, parent?: Node): Node | undefined {
+export function toAST(tree?: ParseTree | null, parent?: Node): Node | undefined {
+    if (tree == null)
+        tree = undefined;
+
     const node = transform(tree, parent, toAST);
     if(node && !node.origin) { //Give a chance to custom factories to set a different node
         node.origin = new ParseTreeOrigin(tree);
