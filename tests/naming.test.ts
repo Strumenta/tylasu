@@ -1,8 +1,5 @@
-import {Named, Node, ReferenceByName, START_POINT} from "../src";
+import {Named, Node, ReferenceByName} from "../src";
 import {expect} from "chai";
-import {SimpleLangLexer} from "./parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 
 class MyNode extends Node implements Named {
     constructor(public name: string) {
