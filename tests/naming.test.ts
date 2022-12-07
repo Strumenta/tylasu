@@ -58,13 +58,6 @@ describe('Naming', function() {
         });
     it("Named reference is not a Node",
         function () {
-            let ref : ReferenceByName<NotNode> | undefined = undefined;
-            try {
-                ref = new ReferenceByName<NotNode>("foo", new NotNode("foo"));
-            }
-            catch (e) {
-                expect(e).to.be.not.null;
-            }
-            expect(ref).to.be.undefined;
+            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))).to.throw;
         });
 });
