@@ -1,7 +1,8 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, GenericNode, Node} from "../src";
+import {ASTNode, Child, GenericNode, Node, PossiblyNamed, ReferenceByName} from "../src";
 import {JSONGenerator} from "../src/interop/json";
+import {Indexer} from "../src/interop/indexing";
 
 describe('JSON generator', function() {
     it("Empty AST",
@@ -88,6 +89,76 @@ describe('JSON generator', function() {
         function () {
             expect(() => require("./wrong-node")).to.throw;
         });
+    it("Node with resolved reference by name",
+        function () {
+            const jsonGenerator = new JSONGenerator();
+
+            const referencedNode = new DummyNamedNode("referencedNode");
+            const referencedNodeJson = jsonGenerator.toJSON(referencedNode, Indexer.computeIds(referencedNode));
+            const referencedNodeExpectedJson = {
+                id: "0",
+                type: "DummyNamedNode",
+                name: "referencedNode"
+            };
+            expect(referencedNodeJson).to.deep.equal(referencedNodeExpectedJson);
+
+            const reference = new ReferenceByName<DummyNamedNode>("referencedNode");
+            const nodeWithReference = new NodeWithReference("nodeWithReference", reference);
+            nodeWithReference.namedNode = referencedNode;
+            nodeWithReference.reference!.referred = referencedNode;
+            const nodeWithReferenceJson = new JSONGenerator().toJSON(nodeWithReference, Indexer.computeIds(nodeWithReference));
+            const nodeWithReferenceExpectedJson = {
+                id: "0",
+                type: "NodeWithReference",
+                name: "nodeWithReference",
+                namedNode: {
+                    id: "1",
+                    name: "referencedNode",
+                    type: "DummyNamedNode"
+                },
+                reference: {
+                    name: "referencedNode",
+                    referred: "1"
+                }
+            };
+            expect(nodeWithReferenceJson).to.deep.equal(nodeWithReferenceExpectedJson);
+        });
+    it("Node with unresolved reference by name",
+        function () {
+            const node = new NodeWithReference(
+                "nodeWithReference",
+                new ReferenceByName<NodeWithReference>("unknown"));
+            const json = new JSONGenerator().toJSON(node, Indexer.computeIds(node));
+            expect(json).to.deep.equal({
+                id: "0",
+                type: "NodeWithReference",
+                name: "nodeWithReference",
+                reference: {
+                    name: "unknown",
+                    referred: undefined
+                }
+            });
+        });
+    it("Node with resolved self-reference by name",
+        function () {
+            const jsonGenerator = new JSONGenerator();
+
+            const node = new NodeWithSelfReference("node", new ReferenceByName<NodeWithSelfReference>("node"));
+            node.reference!.referred = node;
+
+            const nodeJson = jsonGenerator.toJSON(node, Indexer.computeIds(node));
+            const nodeExpectedJson = {
+                id: "0",
+                type: "NodeWithSelfReference",
+                name: "node",
+                reference: {
+                    name: "node",
+                    referred: "0"
+                }
+            };
+
+            expect(nodeJson).to.deep.equal(nodeExpectedJson);
+        });
 });
 
 @ASTNode("", "NodeWithChildren")
@@ -97,4 +168,32 @@ class NodeWithChildren extends Node {
     singleChild: NodeWithChildren
     @Child()
     childrenCollection: NodeWithChildren[]
+}
+
+@ASTNode("", "DummyNamedNode")
+class DummyNamedNode extends Node implements PossiblyNamed {
+    constructor(
+        public name?: string
+    ) {
+        super();
+    }
+}
+
+@ASTNode("", "NodeWithReference")
+class NodeWithReference extends Node implements PossiblyNamed {
+    constructor(
+        public name?: string,
+        public reference?: ReferenceByName<DummyNamedNode>) {
+        super();
+    }
+    @Child() namedNode?: DummyNamedNode;
+}
+
+@ASTNode("", "NodeWithSelfReference")
+class NodeWithSelfReference extends Node implements PossiblyNamed {
+    constructor(
+        public name?: string,
+        public reference?: ReferenceByName<NodeWithSelfReference>) {
+        super();
+    }
 }

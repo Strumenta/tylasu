@@ -1,22 +1,31 @@
 import {ensureNodeDefinition, Node} from "../model/model";
+import {ReferenceByName} from "../naming";
+import {Indexer} from "./indexing";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
-export function toJSON(node: Node): any {
-    return node[TO_JSON_SYMBOL]();
+export function toJSON(node: Node, withIds?: Indexer): any {
+    return node[TO_JSON_SYMBOL](withIds);
 }
 
 export class JSONGenerator {
-    toJSON(node: Node): any {
-        return toJSON(node);
+    toJSON(node: Node, withIds?: Indexer): any {
+        return toJSON(node, withIds);
     }
 }
 
-Node.prototype[TO_JSON_SYMBOL] = function () {
+Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
     const def = ensureNodeDefinition(this);
     const result = {
         type: (def.package ? def.package + "." : "") + def.name
     };
+
+    if (withIds) {
+        const id = withIds.getId(this);
+        if (id)
+            result["id"] = id;
+    }
+
     const node = this as Node;
     for(const p in node) {
         if(p == 'parent' || p == 'parseTreeNode') {
@@ -26,11 +35,21 @@ Node.prototype[TO_JSON_SYMBOL] = function () {
         if(element !== undefined && element !== null) {
             if(node.isChild(p)) {
                 if(element instanceof Node) {
-                    result[p] = toJSON(element);
+                    result[p] = toJSON(element, withIds);
                 } else if(Array.isArray(element)) {
-                    result[p] = element.map(toJSON);
+                    result[p] = element.map(e => toJSON(e));
                 }
-            } else if(typeof node[p] !== "function") {
+            }
+            else if (element instanceof ReferenceByName) {
+                const reference = element as ReferenceByName<any>;
+                result[p] = {
+                    name: reference.name
+                }
+                if (withIds) {
+                    result[p]["referred"] = reference.resolved ? withIds.getId(reference.referred) : undefined;
+                }
+            }
+            else if(typeof node[p] !== "function") {
                 result[p] = node[p];
             }
         }
