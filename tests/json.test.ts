@@ -211,7 +211,7 @@ class NodeWithReference extends Node implements PossiblyNamed {
 
 @ASTNode("", "NodeWithSelfReference")
 class NodeWithSelfReference extends Node implements PossiblyNamed {
-    @Property() public reference?: ReferenceByName<NodeWithReference>;
+    @Property() public reference?: ReferenceByName<NodeWithSelfReference>;
 
     constructor(
         public name?: string,
