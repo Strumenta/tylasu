@@ -57,19 +57,12 @@ export class OnlyReferencedIdProvider implements IdProvider {
 
 export const COMPUTE_NODE_IDS_SYMBOL = Symbol("computeIds");
 Node.prototype[COMPUTE_NODE_IDS_SYMBOL] = function (
-    walker: (node: Node) => Generator<Node> = this.walk,
+    walker: (node: Node) => Generator<Node> = node => node.walk(),
     idProvider: IdProvider = new SequentialIdProvider()) : Indexer {
 
     const nodeIds: NodeId[] = [];
 
-    // for (const node of walker(this)) {
-    //     const id = idProvider.getId(node);
-    //     if (id)
-    //         nodeIds.push({ node: node, id: id });
-    // }
-
-    // FIXME: use the walker given in the arguments
-    for (const node of this.walk()) {
+    for (const node of walker(this)) {
         const id = idProvider.getId(node);
         if (id)
             nodeIds.push({ node: node, id: id });
@@ -80,7 +73,7 @@ Node.prototype[COMPUTE_NODE_IDS_SYMBOL] = function (
 
 export const COMPUTE_REF_NODE_IDS_SYMBOL = Symbol("computeReferencedIds");
 Node.prototype[COMPUTE_REF_NODE_IDS_SYMBOL] = function (
-    walker: (node: Node) => Generator<Node> = this.walk,
+    walker: (node: Node) => Generator<Node> = node => node.walk(),
     idProvider: IdProvider = new OnlyReferencedIdProvider(this)) : Indexer {
 
     return this[COMPUTE_NODE_IDS_SYMBOL](walker, idProvider);
