@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, GenericNode, Node, PossiblyNamed, ReferenceByName} from "../src";
+import {ASTNode, Child, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
 import {JSONGenerator} from "../src/interop/json";
 import {Indexer} from "../src/interop/indexing";
 
@@ -159,6 +159,26 @@ describe('JSON generator', function() {
 
             expect(nodeJson).to.deep.equal(nodeExpectedJson);
         });
+    it("Node with resolved self-reference by name using IDs for references only",
+        function () {
+            const jsonGenerator = new JSONGenerator();
+
+            const node = new NodeWithSelfReference("node", new ReferenceByName<NodeWithSelfReference>("node"));
+            node.reference!.referred = node;
+
+            const nodeJson = jsonGenerator.toJSON(node, Indexer.computeReferencedIds(node));
+            const nodeExpectedJson = {
+                id: "0",
+                type: "NodeWithSelfReference",
+                name: "node",
+                reference: {
+                    name: "node",
+                    referred: "0"
+                }
+            };
+
+            expect(nodeJson).to.deep.equal(nodeExpectedJson);
+        });
 });
 
 @ASTNode("", "NodeWithChildren")
@@ -191,9 +211,12 @@ class NodeWithReference extends Node implements PossiblyNamed {
 
 @ASTNode("", "NodeWithSelfReference")
 class NodeWithSelfReference extends Node implements PossiblyNamed {
+    @Property() public reference?: ReferenceByName<NodeWithReference>;
+
     constructor(
         public name?: string,
-        public reference?: ReferenceByName<NodeWithSelfReference>) {
+        reference?: ReferenceByName<NodeWithSelfReference>) {
         super();
+        this.reference = reference;
     }
 }
