@@ -58,15 +58,7 @@ describe('Naming', function() {
         });
     it("Named reference is not a Node",
         function () {
-            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))).to.throw();
+            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))
+            ).to.throw(Error, new RegExp(".*\\bNotNode\\b.*"));
         });
 });
-
-describe("Side tests useful for named references", function () {
-    it("Finding out the name of the prototype of an object that is not a node", function() {
-        expect(() =>
-            new ReferenceByName("not a node", new NotNode("definitely not a node"))
-        ).to.throw(Error, new RegExp(".*\\bNotNode\\b.*"));
-    });
-});
-
