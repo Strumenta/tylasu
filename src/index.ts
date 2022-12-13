@@ -1,6 +1,6 @@
 export * from './model/position';
 export * from './model/model';
-export * from "./naming";
+export * from "./model/naming";
 export * from "./traversing/structurally";
 export * from "./traversing/by-position";
 export * from "./processing";
