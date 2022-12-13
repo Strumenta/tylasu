@@ -58,6 +58,6 @@ describe('Naming', function() {
         });
     it("Named reference is not a Node",
         function () {
-            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))).to.throw;
+            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))).to.throw();
         });
 });
