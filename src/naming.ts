@@ -16,6 +16,10 @@ export interface Named extends PossiblyNamed {
     name: string;
 }
 
+function objectPrototypeName(object) {
+    return Object.getPrototypeOf(object).constructor.name;
+}
+
 /**
  * A reference associated by using a name.
  */
@@ -32,7 +36,7 @@ export class ReferenceByName<N extends PossiblyNamed> {
 
     set referred(referred : N | undefined) {
         if (referred != undefined && !(referred instanceof Node))
-            throw new Error(`We cannot enforce it statically but only Node should be referred to. Instead ${referred} was assigned (class: ${typeof (referred)})`);
+            throw new Error(`We cannot enforce it statically but only Node should be referred to. Instead ${referred} was assigned (class: ${objectPrototypeName(referred)})`);
         this._referred = referred;
     }
 
