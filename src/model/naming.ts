@@ -17,7 +17,7 @@ export interface Named extends PossiblyNamed {
 }
 
 function objectPrototypeName(object) {
-    return Object.getPrototypeOf(object).constructor.name;
+    return Object.getPrototypeOf(object)?.constructor?.name;
 }
 
 /**
