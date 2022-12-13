@@ -1,5 +1,5 @@
 import {ensureNodeDefinition, Node} from "../model/model";
-import {ReferenceByName} from "../naming";
+import {ReferenceByName} from "../model/naming";
 import {Indexer} from "./indexing";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");

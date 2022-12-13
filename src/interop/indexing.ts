@@ -1,5 +1,5 @@
 import {Node} from "../model/model";
-import {ReferenceByName} from "../naming";
+import {ReferenceByName} from "../model/naming";
 
 export type NodeId = {
     node: Node;

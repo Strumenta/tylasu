@@ -1,6 +1,6 @@
 import {
     Node
-} from "./model/model";
+} from "./model";
 
 /**
  * An entity that can have a name
