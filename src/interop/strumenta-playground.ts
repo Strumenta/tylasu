@@ -253,10 +253,10 @@ export class TranspilationTrace {
         tn.eContents().forEach((c) => this.examineTargetNode(c));
     }
 
-    getDestinationNode(sourceNode: SourceNode): TargetNode | null {
+    getDestinationNode(sourceNode: SourceNode): TargetNode | undefined {
         const targetEO = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
-        if (targetEO == null) {
-            return null;
+        if (!targetEO) {
+            return undefined;
         }
         return new TargetNode(targetEO, this);
     }
@@ -291,7 +291,7 @@ export class SourceNode extends TraceNode {
         }
     }
 
-    getDestinationNode(): TargetNode | null {
+    getDestinationNode(): TargetNode | undefined {
         return this.trace.getDestinationNode(this);
     }
 
@@ -348,10 +348,10 @@ export class TargetNode extends TraceNode {
         return super.getPosition();
     }
 
-    getSourceNode(): SourceNode | null {
+    getSourceNode(): SourceNode | undefined {
         const rawOrigin = this.eo.get("origin");
-        if (rawOrigin == null) {
-            return null;
+        if (!rawOrigin) {
+            return undefined;
         }
         return new SourceNode(rawOrigin, this.trace);
     }

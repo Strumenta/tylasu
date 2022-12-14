@@ -1,13 +1,14 @@
-import {Named, Node, ReferenceByName, START_POINT} from "../src";
+import {Named, Node, ReferenceByName} from "../src";
 import {expect} from "chai";
-import {SimpleLangLexer} from "./parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 
 class MyNode extends Node implements Named {
     constructor(public name: string) {
         super();
     }
+}
+
+class NotNode implements Named {
+    constructor(public name: string) {}
 }
 
 describe('Naming', function() {
@@ -45,5 +46,19 @@ describe('Naming', function() {
             expect(ref.tryToResolve([new MyNode("fOo")])).to.be.false;
             expect(ref.resolved).to.be.false;
         });
+    it("Named reference is a Node",
+        function () {
+            const ref = new ReferenceByName<MyNode>("foo", new MyNode("foo"));
+            expect(ref).not.to.be.null;
+        });
+    it("Undefined named reference assignment",
+        function () {
+            const ref = new ReferenceByName<MyNode>("foo", undefined);
+            expect(ref).not.to.be.null;
+        });
+    it("Named reference is not a Node",
+        function () {
+            expect(() => new ReferenceByName<NotNode>("foo", new NotNode("foo"))
+            ).to.throw(Error, new RegExp(".*\\bNotNode\\b.*"));
+        });
 });
-
