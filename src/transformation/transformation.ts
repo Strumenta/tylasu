@@ -3,9 +3,103 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL, registerNodeDefinition,
+    NODE_DEFINITION_SYMBOL, Origin,
+    registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
+import {Issue, IssueSeverity} from "../validation";
+import {Position} from "../model/position";
+
+/**
+ * Implementation of a tree-to-tree transformation. For each source node type, we can register a factory that knows how
+ * to create a transformed node. Then, this transformer can read metadata in the transformed node to recursively
+ * transform and assign children.
+ * If no factory is provided for a source node type, a GenericNode is created, and the processing of the subtree stops
+ * there.
+ */
+export class ASTTransformer {
+    private readonly _issues: Issue[];
+    private allowGenericNode: boolean;
+
+    get issues() : Issue[] {
+        return this._issues;
+    }
+
+    /**
+     * Factories that map from source tree node to target tree node.
+     */
+    private factories = [];
+    private knownClasses = [];
+
+    /**
+     * @param issues Additional issues found during the transformation process.
+     * @param allowGenericNode Use GenericNode as a strategy for missing factories for nodes.
+     */
+    constructor(issues: Issue[] = [], allowGenericNode = true) {
+        this._issues = issues;
+        this.allowGenericNode = allowGenericNode;
+    }
+
+    addIssue = function(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position?: Position) : Issue {
+        const issue = Issue.semantic(message, severity, position);
+        this._issues.push(issue);
+        return issue;
+    }
+
+    transform = function(source?: any, parent?: Node) : Node | undefined {
+        if (source == undefined)
+            return undefined;
+
+        if (Array.isArray(source))
+            throw Error("Mapping error: received collection when value was expected");
+
+        const factory = this.getNodeFactory(source);
+        let node: Node | undefined;
+
+        if (factory != undefined) {
+            node = makeNode(factory, source);
+
+            if (node == undefined)
+                return undefined;
+
+            // TODO: node.processProperties
+
+            factory.finalizer(node);
+            node.parent = parent;
+        }
+        else {
+            if (this.allowGenericNode) {
+                const origin : Node | undefined = this.asOrigin(source);
+                node = new GenericNode(parent).withOrigin(origin);
+                this._issues.push(
+                    Issue.semantic(
+                        `Source node not mapped: ${Object.getPrototypeOf(source).constructor.name}`,
+                        IssueSeverity.INFO,
+                        origin?.position
+                    )
+                );
+            }
+            else {
+                throw new Error(`Unable to translate node ${source} (class ${Object.getPrototypeOf(source).constructor.name})`)
+            }
+        }
+
+        return node;
+    }
+
+    getNodeFactory = function<S extends any, T extends Node>(source: any) : Node | undefined {
+        return undefined; // TODO
+    }
+
+    asOrigin = function(source: any) : Origin | undefined {
+        if (source instanceof Origin)
+            return source;
+        else
+            return undefined;
+    }
+}
+
+
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -159,7 +253,12 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
 }
 
 @ASTNode("", "GenericNode")
-export class GenericNode extends Node {}
+export class GenericNode extends Node {
+    constructor(parent?: Node) {
+        super();
+        this.parent = parent;
+    }
+}
 
 @ASTNode("", "ErrorNode")
 export class ErrorNode extends Node {

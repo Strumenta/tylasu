@@ -1,13 +1,15 @@
 import {expect} from "chai";
 
 import {
+    ASTTransformer,
     Child,
     ErrorNode,
     Init,
+    IssueSeverity,
     Mapped,
     Node,
     NodeTransform,
-    PartiallyInitializedNode,
+    PartiallyInitializedNode, pos, Position,
     Property,
     transform
 } from "../../src";
@@ -94,4 +96,38 @@ describe('AST transformations', function() {
             expect(node.a).to.equal("OK");
             expect(node.b).to.be.undefined;
         });
+});
+
+describe("Transformers", function () {
+   it("Correctly collecting issues", function () {
+       const transformer = new ASTTransformer();
+       transformer.addIssue("error", IssueSeverity.ERROR);
+       transformer.addIssue("warning", IssueSeverity.WARNING);
+       transformer.addIssue("info", IssueSeverity.INFO, pos(1, 0, 1, 2));
+
+       expect(transformer.issues[0].message
+       ).to.be.equal("error");
+       expect(transformer.issues[1].message
+       ).to.be.equal("warning");
+       expect(transformer.issues[2].message
+       ).to.be.equal("info");
+   });
+   it("Transform function does not accept collections as source", function () {
+       const transformer = new ASTTransformer();
+       expect(() =>
+           transformer.transform([])
+       ).to.throw();
+   });
+    it("No node factories defined, with allowGenericNode=false", function () {
+        const transformer = new ASTTransformer(undefined, false);
+        expect(() =>
+            transformer.transform(new A())
+        ).to.throw();
+    });
+    it("No node factories defined, with allowGenericNode=true", function () {
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.transform(new A());
+        expect(transformer.issues.length).to.equal(1);
+        expect(transformer.issues[0].message).to.contain("not mapped: A");
+    });
 });
