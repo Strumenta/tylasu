@@ -99,7 +99,7 @@ describe('AST transformations', function() {
 });
 
 describe("Transformers", function () {
-   it("Correctly collecting issues", function () {
+    it("Correctly collecting issues", function () {
        const transformer = new ASTTransformer();
        transformer.addIssue("error", IssueSeverity.ERROR);
        transformer.addIssue("warning", IssueSeverity.WARNING);
@@ -118,16 +118,22 @@ describe("Transformers", function () {
            transformer.transform([])
        ).to.throw();
    });
-    it("No node factories defined, with allowGenericNode=false", function () {
-        const transformer = new ASTTransformer(undefined, false);
-        expect(() =>
-            transformer.transform(new A())
-        ).to.throw();
+   it("No node factories defined, with allowGenericNode=false", function () {
+       const transformer = new ASTTransformer(undefined, false);
+       expect(() =>
+           transformer.transform(new A())
+       ).to.throw();
     });
-    it("No node factories defined, with allowGenericNode=true", function () {
-        const transformer = new ASTTransformer(undefined, true);
-        transformer.transform(new A());
-        expect(transformer.issues.length).to.equal(1);
-        expect(transformer.issues[0].message).to.contain("not mapped: A");
+   it("No node factories defined, with allowGenericNode=true", function () {
+       const transformer = new ASTTransformer(undefined, true);
+       transformer.transform(new A());
+       expect(transformer.issues.length).to.equal(1);
+       expect(transformer.issues[0].message).to.contain("not mapped: A");
     });
+   it("Factory returns undefined node", function () {
+       const transformer = new ASTTransformer(undefined, true);
+       // TODO: register factory
+       transformer.transform(new A());
+       // TODO: check the node gets transformed to undefined
+   });
 });
