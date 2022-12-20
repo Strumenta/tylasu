@@ -246,15 +246,21 @@ export class ASTTransformer {
     }
 
     getNodeFactory<S extends any, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
-        const factory = this.factories.get(type) as NodeFactory<any, any>;
+
+        let nodeClass = type;
+
+        if (!isClassType(type) && typeof type === 'object')
+            nodeClass = Object.getPrototypeOf(type).constructor;
+
+        const factory = this.factories.get(nodeClass) as NodeFactory<any, any>;
         
-        if (!factory)
+        if (factory)
             return factory as NodeFactory<S, T>;
 
         // FIXME: The closer ancestor should be given precedence over the farther ones
         // This is not guaranteed by just cycling over these entries
         for (const [key, value] of this.factories.entries()) {
-            if (isSuperClass(key, type))
+            if (isSuperClass(key, nodeClass))
                 return value;
         }
 

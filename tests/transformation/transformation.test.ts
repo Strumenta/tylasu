@@ -7,12 +7,13 @@ import {
     Init,
     IssueSeverity,
     Mapped,
-    Node,
+    Node, NodeFactory,
     NodeTransform,
     PartiallyInitializedNode, pos, Position,
     Property,
     transform
 } from "../../src";
+import exp = require("constants");
 
 class A extends Node {
     child: Node;
@@ -130,10 +131,33 @@ describe("Transformers", function () {
        expect(transformer.issues.length).to.equal(1);
        expect(transformer.issues[0].message).to.contain("not mapped: A");
     });
-   it("Factory returns undefined node", function () {
-       const transformer = new ASTTransformer(undefined, true);
-       // TODO: register factory
-       transformer.transform(new A());
-       // TODO: check the node gets transformed to undefined
-   });
+    it("Factory that transform from a node A to a node C", function () {
+        let tree: Node | undefined = new A();
+        expect(tree).to.be.instanceof(A);
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(A,(source) => new C());
+        tree = transformer.transform(tree);
+        expect(tree).to.be.instanceof(C);
+    });
+    it("Factory is expected to act on the whole tree", function () {
+        const tree = new A();
+        tree.child = new C();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(C,(source) => new A());
+        transformer.transform(tree);
+
+        expect(tree.child).to.be.instanceof(A);
+    });
+    it("Factory that returns an undefined node", function () {
+        const tree = new A();
+        tree.child = new C();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(C,(source) => undefined);
+        transformer.transform(tree);
+
+        expect(tree.child).to.be.undefined;
+    });
 });
