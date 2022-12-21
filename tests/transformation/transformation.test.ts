@@ -66,6 +66,9 @@ class D extends Node {
     }
 }
 
+class AA extends A {}
+class AAA extends AA {}
+
 describe('AST transformations', function() {
     it("A => B, model to model",
         function () {
@@ -175,5 +178,15 @@ describe("Transformers", function () {
         tree = transformer.transform(tree);
 
         expect(tree).to.be.undefined;
+    });
+    it("Select the closest node factory in the class hierarchy", function () {
+        const tree = new AAA();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(A,(source) => new B());
+        transformer.registerNodeFactory(AA, (source) => new C());
+
+        const transformedTree = transformer.transform(tree);
+        expect(transformedTree).to.be.instanceof(C);
     });
 });
