@@ -167,14 +167,14 @@ export class ASTTransformer {
                 node = new GenericNode(parent).withOrigin(origin);
                 this._issues.push(
                     Issue.semantic(
-                        `Source node not mapped: ${Object.getPrototypeOf(source).constructor.name}`,
+                        `Source node not mapped: ${getNodeDefinition(source)?.name}`,
                         IssueSeverity.INFO,
                         origin?.position
                     )
                 );
             }
             else {
-                throw new Error(`Unable to translate node ${source} (class ${Object.getPrototypeOf(source).constructor.name})`)
+                throw new Error(`Unable to translate node ${source} (class ${getNodeDefinition(source)?.name})`)
             }
         }
 
