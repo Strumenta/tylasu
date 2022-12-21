@@ -170,7 +170,6 @@ export class ASTTransformer {
                         this.setChild(childNodeFactory, source, node!, propertyName);
                     }
                 } else {
-                    // TODO: case where MAPPED is used
                     factory.children.set(childKey, NO_CHILD_NODE);
                 }
             });
