@@ -151,6 +151,7 @@ describe('Transpilation traces', function() {
             expect(rootTargetNode.getChildren("declarations").length).to.eql(1);
             expect(rootTargetNode.getChildren("unexisting").length).to.eql(0);
             expect(rootTargetNode.getRole()).to.eql("root");
+
             const declaration = rootTargetNode.getChildren("declarations")[0];
             expect(declaration.getRole()).to.eql("declarations");
             const declSourceNode = declaration.getSourceNode();
@@ -162,6 +163,15 @@ describe('Transpilation traces', function() {
             expect(descTargetNode.getPathFromRoot()).to.eql(['declarations', 0, 'members', 5]);
             foundTargetNode = findByPosition(descTargetNode, descTargetNode.position!) as TargetNode;
             expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;
+
+            const secondField = declaration.getChildren("members")[1];
+            expect(secondField.getRole()).to.eql("members");
+            expect(secondField.getAttributes()["name"]).to.eql("RESULT");
+            const fieldSourceNode = secondField.getSourceNode();
+            expect(fieldSourceNode).not.to.be.undefined;
+            expect(fieldSourceNode!.getType()).to.equal("com.strumenta.rpgparser.parsing.StandaloneField");
+            expect(fieldSourceNode!.getAttributes()["name"]).to.eql("RESULT");
+            expect(fieldSourceNode!.getPosition()).to.eql(pos(5, 0, 5, 49));
         });
 /*
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",
