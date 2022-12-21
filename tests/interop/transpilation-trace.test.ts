@@ -127,10 +127,8 @@ describe('Transpilation traces', function() {
             expect(foundSourceNode.eo == descNode.eo).to.be.true;
             const destNode = descNode!.parent!.getDestinationNode();
             expect(destNode).not.to.be.undefined;
-            expect(destNode!.getType()).to.equal(
-                "com.strumenta.javaast.JFieldDecl");
-            expect(destNode!.getDestination()).to.eql(
-                pos(5, 0, 6, 0));
+            expect(destNode!.getType()).to.equal("com.strumenta.javaast.JFieldDecl");
+            expect(destNode!.getDestination()).to.eql(pos(5, 0, 6, 0));
             expect(destNode!.getAttributes()["name"]).to.equal("A");
 
             const subroutine0 = rootSourceNode.getChildren("subroutines")[0];
