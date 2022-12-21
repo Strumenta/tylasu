@@ -30,7 +30,7 @@ function getClassTypeName(type) : string | undefined {
 
 export class NodeFactory<Source, Output extends Node> {
     constructor(
-        public constr: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
+        public constructorFunction: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
         public children: Map<string, ChildNodeFactory<Source, any, any> | undefined> = new Map(),
         public finalizer: (Output) => void = () => undefined
     ) {}
@@ -239,7 +239,7 @@ export class ASTTransformer {
         let node : Node | undefined;
 
         try {
-            node = factory.constr(source, this, factory);
+            node = factory.constructorFunction(source, this, factory);
         } catch (e) {
             if (allowGenericNode)
                 node = new ErrorNode(e);
