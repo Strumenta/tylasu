@@ -127,7 +127,6 @@ export class ASTTransformer {
      * Factories that map from source tree node to target tree node.
      */
     private factories = new Map<any, NodeFactory<any, any>>();
-    private knownClasses = new Map<string, any>(); //<-- TODO: not sure about this piece of the port from Kolasu
 
     /**
      * @param issues Additional issues found during the transformation process.
