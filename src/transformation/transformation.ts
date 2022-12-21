@@ -10,24 +10,6 @@ import {
 import {Issue, IssueSeverity} from "../validation";
 import {Position} from "../model/position";
 
-function isClassType(type) : boolean {
-    return typeof type == 'function' &&
-        type.name != undefined &&
-        new RegExp(`[class\\s+${type.name}.*]`).test(type.toString());
-}
-
-function isSuperClass(subClass, superClass) : boolean {
-    return isClassType(superClass) &&
-        // eslint-disable-next-line no-prototype-builtins
-        superClass.prototype.constructor.isPrototypeOf(subClass);
-}
-
-function getClassTypeName(type) : string | undefined {
-    if (isClassType(type))
-        return type.name;
-    else return undefined;
-}
-
 export class NodeFactory<Source, Output extends Node> {
     constructor(
         public constructorFunction: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
@@ -43,7 +25,9 @@ export class NodeFactory<Source, Output extends Node> {
        type?: any
     ) : NodeFactory<Source, Output> {
 
-        const prefix = isClassType(type) ? `${getClassTypeName(type)}#` : "";
+        const nodeDefinition = getNodeDefinition(type);
+        const prefix = nodeDefinition?.name ? `${nodeDefinition.name}#` : "";
+
         this.children.set(prefix + name, new ChildNodeFactory(prefix + name, get, set));
         return this;
     }
@@ -161,7 +145,8 @@ export class ASTTransformer {
 
             Object.keys(node).forEach(propertyName => {
                 const nodeClass = Object.getPrototypeOf(node).constructor;
-                const prefix = isClassType(nodeClass) ? `${nodeClass.name}#` : "";
+                const nodeDefinition = getNodeDefinition(node!);
+                const prefix = nodeDefinition?.name ? `${nodeClass.name}#` : "";
                 const childKey: string = prefix + propertyName;
                 const childNodeFactory = factory.children.get(childKey);
                 if (childNodeFactory) {
@@ -255,10 +240,7 @@ export class ASTTransformer {
 
     getNodeFactory<S extends any, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
 
-        let nodeClass = type;
-
-        if (!isClassType(type) && typeof type === 'object')
-            nodeClass = Object.getPrototypeOf(type).constructor;
+        let nodeClass = type.constructor;
 
         while (nodeClass) {
             const factory : NodeFactory<S, T> | undefined = this.factories.get(nodeClass);
@@ -275,18 +257,12 @@ export class ASTTransformer {
         factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
     ) : NodeFactory<S, T> {
 
-        if (!isClassType(nodeClass))
-            throw Error(`${nodeClass} must be a class type`);
-
         const nodeFactory = new NodeFactory(factory);
         this.factories.set(nodeClass, nodeFactory);
         return nodeFactory;
     }
 
     public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
-        if (!isSuperClass(nodeClass, Node))
-            throw new Error(`${nodeClass} must be a subclass type of Node`);
-
         return this.registerNodeFactory(
             nodeClass,
             (node: T, t, f) => node
