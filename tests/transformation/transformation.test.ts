@@ -140,24 +140,40 @@ describe("Transformers", function () {
         tree = transformer.transform(tree);
         expect(tree).to.be.instanceof(C);
     });
+    it("Identity transformation", function () {
+        const tree = new A();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerIdentityTransformation(A);
+        const transformedTree = transformer.transform(tree);
+
+        expect(transformedTree).to.be.instanceof(A);
+    });
     it("Factory is expected to act on the whole tree", function () {
         const tree = new A();
         tree.child = new C();
 
         const transformer = new ASTTransformer(undefined, true);
+        transformer.registerIdentityTransformation(A)
+            .withChild(
+                (source: A) => source.child,
+                (target: A, child?: Node) => target.child = child!,
+                "child",
+                A
+            );
         transformer.registerNodeFactory(C,(source) => new A());
-        transformer.transform(tree);
+        const transformedTree = transformer.transform(tree);
 
-        expect(tree.child).to.be.instanceof(A);
+        expect(transformedTree).to.be.instanceof(A);
+        expect((transformedTree as A).child).to.be.instanceof(A);
     });
     it("Factory that returns an undefined node", function () {
-        const tree = new A();
-        tree.child = new C();
+        let tree : Node | undefined = new A();
 
         const transformer = new ASTTransformer(undefined, true);
-        transformer.registerNodeFactory(C,(source) => undefined);
-        transformer.transform(tree);
+        transformer.registerNodeFactory(A,(source) => undefined);
+        tree = transformer.transform(tree);
 
-        expect(tree.child).to.be.undefined;
+        expect(tree).to.be.undefined;
     });
 });

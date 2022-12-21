@@ -22,6 +22,12 @@ function isSuperClass(subClass, superClass) : boolean {
         superClass.prototype.constructor.isPrototypeOf(subClass);
 }
 
+function getClassTypeName(type) : string | undefined {
+    if (isClassType(type))
+        return type.name;
+    else return undefined;
+}
+
 export class NodeFactory<Source, Output extends Node> {
     constructor(
         public constr: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
@@ -33,10 +39,12 @@ export class NodeFactory<Source, Output extends Node> {
     withChild = function<Target extends any, Child extends any>(
        get: (s: Source) => any | undefined,
        set: (t: Target, c?: Child) => void,
-       name: string //<-- TODO: in Kolasu it is possible to also pass a type as a last parameter
+       name: string,
+       type?: any
     ) : NodeFactory<Source, Output> {
 
-        this.children.set(name, new ChildNodeFactory(name, get, set));
+        const prefix = isClassType(type) ? `${getClassTypeName(type)}#` : "";
+        this.children.set(prefix + name, new ChildNodeFactory(prefix + name, get, set));
         return this;
     }
 
@@ -153,7 +161,9 @@ export class ASTTransformer {
                 return undefined;
 
             Object.keys(node).forEach(propertyName => {
-                const childKey: string = propertyName; //<-- TODO: in Kolasu the class qualified name can be used as a prefix
+                const nodeClass = Object.getPrototypeOf(node).constructor;
+                const prefix = isClassType(nodeClass) ? `${nodeClass.name}#` : "";
+                const childKey: string = prefix + propertyName;
                 const childNodeFactory = factory.children.get(childKey);
                 if (childNodeFactory) {
                     if (childNodeFactory !== NO_CHILD_NODE) {
@@ -161,7 +171,7 @@ export class ASTTransformer {
                     }
                 } else {
                     // TODO: case where MAPPED is used
-                    return factory.children.set(childKey, NO_CHILD_NODE);
+                    factory.children.set(childKey, NO_CHILD_NODE);
                 }
             });
 
@@ -280,13 +290,13 @@ export class ASTTransformer {
         return nodeFactory;
     }
 
-    public registerIdentityTransformation<T extends Node>(nodeClass: any) {
+    public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
         if (!isSuperClass(nodeClass, Node))
             throw new Error(`${nodeClass} must be a subclass type of Node`);
 
-        this.registerNodeFactory(
+        return this.registerNodeFactory(
             nodeClass,
-            (node: Node, t, f) => node
+            (node: T, t, f) => node
         );
     }
 }
