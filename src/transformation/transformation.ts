@@ -3,11 +3,12 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL, Origin, Property,
+    NODE_DEFINITION_SYMBOL,
+    Origin,
     registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
-import {Issue, IssueSeverity} from "../validation";
+import {Issue, IssueSeverity, IssueType} from "../validation";
 import {Position} from "../model/position";
 
 export class NodeFactory<Source, Output extends Node> {
@@ -56,8 +57,15 @@ export class NodeFactory<Source, Output extends Node> {
         } else {
             const sourcePropName : string | undefined = Object.keys(src).find(e => e == elem);
 
-            if (!sourcePropName)
+            if (!sourcePropName) {
+                // TODO: issue a warning "reference to a missing property"
+                // new Issue(
+                //     IssueType.SEMANTIC,
+                //     `A missing property has been referenced: ${elem} in ${src} (class: ${Object.getPrototypeOf(src).constructor.name})`,
+                //     IssueSeverity.WARNING
+                // )
                 return undefined;
+            }
 
             const sourceProp = src[sourcePropName];
             return sourceProp instanceof Function ? sourceProp() : sourceProp;
