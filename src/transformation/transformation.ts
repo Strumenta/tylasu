@@ -57,7 +57,7 @@ export class NodeFactory<Source, Output extends Node> {
             const sourcePropName : string | undefined = Object.keys(src).find(e => e == elem);
 
             if (!sourcePropName)
-                throw new Error(`${elem} not found in ${src} (class: ${Object.getPrototypeOf(src).constructor.name})`)
+                return undefined;
 
             const sourceProp = src[sourcePropName];
             return sourceProp instanceof Function ? sourceProp() : sourceProp;
