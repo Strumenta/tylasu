@@ -73,6 +73,7 @@ export class NodeFactory<Source, Output extends Node> {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class ChildNodeFactory<Source, Target, Child> {
     constructor(
         public name: string,
@@ -96,7 +97,7 @@ export class ChildNodeFactory<Source, Target, Child> {
 const NO_CHILD_NODE = new ChildNodeFactory<any, any, any>(
     "",
     (node) => node,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     (target, child) => {}
 );
 
@@ -200,6 +201,7 @@ export class ASTTransformer {
         childNodeFactory: ChildNodeFactory<any, any, any>,
         source: any,
         node: Node,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         propertyDescription: string
     ) : void {
         const src = childNodeFactory.get(this.getSource(node, source));
@@ -273,6 +275,7 @@ export class ASTTransformer {
     public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
         return this.registerNodeFactory(
             nodeClass,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             (node: T, t, f) => node
         );
     }
