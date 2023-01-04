@@ -8,7 +8,7 @@ import {
     registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
-import {Issue, IssueSeverity, IssueType} from "../validation";
+import {Issue, IssueSeverity} from "../validation";
 import {Position} from "../model/position";
 
 export class NodeFactory<Source, Output extends Node> {
@@ -33,11 +33,11 @@ export class NodeFactory<Source, Output extends Node> {
         return this;
     }
 
-    withFinalizer = function (finalizer: (Output) => void) {
+    withFinalizer = function (finalizer: (Output) => void) : void {
         this.finalizer = finalizer;
     }
 
-    getter : (Source) => any = function(path: string) {
+    getter : (Source) => any = function(path: string) : (Source) => any {
         return function(src: Source) {
             let sub = src;
 
@@ -80,7 +80,7 @@ export class ChildNodeFactory<Source, Target, Child> {
         public setter: (Target, Child?) => void
     ) {}
 
-    set = function(node: Target, child?: Child) {
+    set = function(node: Target, child?: Child) : void {
         try {
             this.setter(node, child);
         } catch (e) {
