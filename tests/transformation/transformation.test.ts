@@ -1,6 +1,7 @@
 import {expect} from "chai";
 
 import {
+    ASTNode,
     ASTTransformer,
     Child,
     ErrorNode,
@@ -15,6 +16,7 @@ import {
 } from "../../src";
 import exp = require("constants");
 
+@ASTNode("", "A")
 class A extends Node {
     child: Node;
     property: number;
