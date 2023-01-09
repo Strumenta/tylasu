@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {assertASTsAreEqual} from "../../src/testing/testing";
-import {ASTNode, Children, Node, PossiblyNamed, Property} from "../../src";
+import {ASTNode, Children, Node, Point, Position, PossiblyNamed, Property} from "../../src";
 
 describe('AssertASTsAreEqual', function() {
     it("the very same node instance compared with itself must pass", function () {
@@ -15,6 +15,24 @@ describe('AssertASTsAreEqual', function() {
         expect(() =>
             assertASTsAreEqual(simpleNode1, simpleNode2)
         ).not.to.throw();
+    });
+    it("nodes with different positions must pass when considerPosition == false", function () {
+        const simpleNode1 : Node = new SimpleNode("node");
+        simpleNode1.position = Position.ofPoint(new Point(1, 0));
+        const simpleNode2 : Node = new SimpleNode("node");
+        simpleNode1.position = Position.ofPoint(new Point(2, 0));
+        expect(() =>
+            assertASTsAreEqual(simpleNode1, simpleNode2)
+        ).not.to.throw();
+    });
+    it("nodes with different positions must NOT pass when considerPosition == true", function () {
+        const simpleNode1 : Node = new SimpleNode("node");
+        simpleNode1.position = Position.ofPoint(new Point(1, 0));
+        const simpleNode2 : Node = new SimpleNode("node");
+        simpleNode1.position = Position.ofPoint(new Point(2, 0));
+        expect(() =>
+            assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
+        ).to.throw();
     });
     it("two different node instances of the same type and with different values must NOT pass", function () {
         const simpleNode1 : Node = new SimpleNode("node");

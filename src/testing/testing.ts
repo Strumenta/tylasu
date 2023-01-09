@@ -10,7 +10,7 @@ export function assertASTsAreEqual(
     considerPosition = false
 ) {
     if (areSameType(expected, actual)) {
-        if (considerPosition) { // TODO: create unit test for this case
+        if (considerPosition) {
             assert(expected.position == actual.position, `${context}.position`)
         }
         expected.properties.forEach(expectedProperty => {
