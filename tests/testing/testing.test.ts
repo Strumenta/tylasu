@@ -1,5 +1,5 @@
-import {expect} from "chai";
-import {assertASTsAreEqual} from "../../src/testing/testing";
+import {assert, expect} from "chai";
+import {assertASTsAreEqual, NODES_NOT_SAME_TYPE_MESSAGE} from "../../src/testing/testing";
 import {ASTNode, Children, Node, PossiblyNamed, Property, ReferenceByName} from "../../src";
 import exp = require("constants");
 
@@ -75,7 +75,7 @@ describe('AssertASTsAreEqual', function() {
     it("two different nodes with same property names but one is a Node and the other is a string, then must NOT pass", function () {
         const treeWithLegitSubTree = new SimpleNode("A", []);
         const treeWithStringSubTree = new NodeWithStringSubTree("A", "sub-tree");
-        expect(
+        expect(() =>
             assertASTsAreEqual(treeWithLegitSubTree, treeWithStringSubTree)
         ).to.throw();
     });
