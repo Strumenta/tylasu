@@ -125,10 +125,18 @@ describe('Transpilation traces', function() {
             expect(descNode.getPathFromRoot()).to.eql(["dataDefinitions", 3, "type"]);
             foundSourceNode = findByPosition(descNode, descNode.position!) as SourceNode;
             expect(foundSourceNode.eo == descNode.eo).to.be.true;
+            const destNode = descNode!.parent!.getDestinationNode();
+            expect(destNode).not.to.be.undefined;
+            expect(destNode!.getType()).to.equal("com.strumenta.javaast.JFieldDecl");
+            expect(destNode!.getDestination()).to.eql(pos(5, 0, 6, 0));
+            expect(destNode!.getAttributes()["name"]).to.equal("A");
+
             const subroutine0 = rootSourceNode.getChildren("subroutines")[0];
             expect(subroutine0).not.to.be.undefined;
             expect(subroutine0.getDestinationNode()).not.to.be.undefined;
-            expect(subroutine0.getDestinationNode()!.getType()).to.equal("com.strumenta.javaast.JClassDeclaration");
+            expect(subroutine0.getDestinationNode()!.getType()).to.equal(
+                "com.strumenta.javaast.JClassDeclaration");
+            expect(subroutine0.getDestinationNode()!.getDestination()).to.eql(pos(1, 0, 29, 0));
 
             const rootTargetNode = trace.rootTargetNode;
             expect(rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
@@ -141,6 +149,7 @@ describe('Transpilation traces', function() {
             expect(rootTargetNode.getChildren("declarations").length).to.eql(1);
             expect(rootTargetNode.getChildren("unexisting").length).to.eql(0);
             expect(rootTargetNode.getRole()).to.eql("root");
+
             const declaration = rootTargetNode.getChildren("declarations")[0];
             expect(declaration.getRole()).to.eql("declarations");
             const declSourceNode = declaration.getSourceNode();
@@ -152,6 +161,15 @@ describe('Transpilation traces', function() {
             expect(descTargetNode.getPathFromRoot()).to.eql(['declarations', 0, 'members', 5]);
             foundTargetNode = findByPosition(descTargetNode, descTargetNode.position!) as TargetNode;
             expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;
+
+            const secondField = declaration.getChildren("members")[1];
+            expect(secondField.getRole()).to.eql("members");
+            expect(secondField.getAttributes()["name"]).to.eql("RESULT");
+            const fieldSourceNode = secondField.getSourceNode();
+            expect(fieldSourceNode).not.to.be.undefined;
+            expect(fieldSourceNode!.getType()).to.equal("com.strumenta.rpgparser.parsing.StandaloneField");
+            expect(fieldSourceNode!.getAttributes()["name"]).to.eql("RESULT");
+            expect(fieldSourceNode!.getPosition()).to.eql(pos(5, 0, 5, 49));
         });
 /*
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",
