@@ -29,6 +29,7 @@ export interface IdProvider {
 export class SequentialIdProvider implements IdProvider {
     constructor(private counter: number = 0) {}
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getId(node: Node): string | undefined {
         return (this.counter++).toString();
     }
