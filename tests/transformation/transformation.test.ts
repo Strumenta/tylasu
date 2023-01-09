@@ -1,17 +1,22 @@
 import {expect} from "chai";
 
 import {
+    ASTNode,
+    ASTTransformer,
     Child,
     ErrorNode,
     Init,
+    IssueSeverity,
     Mapped,
-    Node,
+    Node, NodeFactory,
     NodeTransform,
-    PartiallyInitializedNode,
+    PartiallyInitializedNode, pos, Position,
     Property,
     transform
 } from "../../src";
+import exp = require("constants");
 
+@ASTNode("", "A")
 class A extends Node {
     child: Node;
     property: number;
@@ -63,6 +68,9 @@ class D extends Node {
     }
 }
 
+class AA extends A {}
+class AAA extends AA {}
+
 describe('AST transformations', function() {
     it("A => B, model to model",
         function () {
@@ -94,4 +102,93 @@ describe('AST transformations', function() {
             expect(node.a).to.equal("OK");
             expect(node.b).to.be.undefined;
         });
+});
+
+describe("Transformers", function () {
+    it("Correctly collecting issues", function () {
+       const transformer = new ASTTransformer();
+       transformer.addIssue("error", IssueSeverity.ERROR);
+       transformer.addIssue("warning", IssueSeverity.WARNING);
+       transformer.addIssue("info", IssueSeverity.INFO, pos(1, 0, 1, 2));
+
+       expect(transformer.issues[0].message
+       ).to.be.equal("error");
+       expect(transformer.issues[1].message
+       ).to.be.equal("warning");
+       expect(transformer.issues[2].message
+       ).to.be.equal("info");
+   });
+   it("Transform function does not accept collections as source", function () {
+       const transformer = new ASTTransformer();
+       expect(() =>
+           transformer.transform([])
+       ).to.throw();
+   });
+   it("No node factories defined, with allowGenericNode=false", function () {
+       const transformer = new ASTTransformer(undefined, false);
+       expect(() =>
+           transformer.transform(new A())
+       ).to.throw();
+    });
+   it("No node factories defined, with allowGenericNode=true", function () {
+       const transformer = new ASTTransformer(undefined, true);
+       transformer.transform(new A());
+       expect(transformer.issues.length).to.equal(1);
+       expect(transformer.issues[0].message).to.contain("not mapped: A");
+    });
+    it("Factory that transform from a node A to a node C", function () {
+        let tree: Node | undefined = new A();
+        expect(tree).to.be.instanceof(A);
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(A,(source) => new C());
+        tree = transformer.transform(tree);
+        expect(tree).to.be.instanceof(C);
+    });
+    it("Identity transformation", function () {
+        const tree = new A();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerIdentityTransformation(A);
+        const transformedTree = transformer.transform(tree);
+
+        expect(transformedTree).to.be.instanceof(A);
+    });
+    it("Factory is expected to act on the whole tree", function () {
+        const tree = new A();
+        tree.child = new C();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerIdentityTransformation(A)
+            .withChild(
+                (source: A) => source.child,
+                (target: A, child?: Node) => target.child = child!,
+                "child",
+                A
+            );
+        transformer.registerNodeFactory(C,(source) => new A());
+        const transformedTree = transformer.transform(tree);
+
+        expect(transformedTree).to.be.instanceof(A);
+        expect((transformedTree as A).child).to.be.instanceof(A);
+    });
+    it("Factory that returns an undefined node", function () {
+        let tree : Node | undefined = new A();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(A,(source) => undefined);
+        tree = transformer.transform(tree);
+
+        expect(tree).to.be.undefined;
+    });
+    it("Select the closest node factory in the class hierarchy", function () {
+        const tree = new AAA();
+
+        const transformer = new ASTTransformer(undefined, true);
+        transformer.registerNodeFactory(A,(source) => new B());
+        transformer.registerNodeFactory(AA, (source) => new C());
+
+        const transformedTree = transformer.transform(tree);
+        expect(transformedTree).to.be.instanceof(C);
+    });
 });

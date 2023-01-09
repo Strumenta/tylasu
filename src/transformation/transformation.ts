@@ -3,9 +3,285 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL, registerNodeDefinition,
+    NODE_DEFINITION_SYMBOL,
+    Origin,
+    registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
+import {Issue, IssueSeverity} from "../validation";
+import {Position} from "../model/position";
+
+export class NodeFactory<Source, Output extends Node> {
+    constructor(
+        public constructorFunction: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
+        public children: Map<string, ChildNodeFactory<Source, any, any> | undefined> = new Map(),
+        public finalizer: (Output) => void = () => undefined
+    ) {}
+
+    // TODO: port other overrides of the withChild method?
+    withChild = function<Target extends any, Child extends any>(
+       get: (s: Source) => any | undefined,
+       set: (t: Target, c?: Child) => void,
+       name: string,
+       type?: any
+    ) : NodeFactory<Source, Output> {
+
+        const nodeDefinition = getNodeDefinition(type);
+        const prefix = nodeDefinition?.name ? `${nodeDefinition.name}#` : "";
+
+        this.children.set(prefix + name, new ChildNodeFactory(prefix + name, get, set));
+        return this;
+    }
+
+    withFinalizer = function (finalizer: (Output) => void) : void {
+        this.finalizer = finalizer;
+    }
+
+    getter : (Source) => any = function(path: string) : (Source) => any {
+        return function(src: Source) {
+            let sub = src;
+
+            for (const elem in path.split(".")) {
+                if (sub == null)
+                    break;
+                sub = this.getSubExpression(sub, elem);
+            }
+
+            return sub;
+        }
+    }
+
+    private getSubExpression : any | undefined = function (src: any, elem: string) {
+        if (Array.isArray(src)) {
+            return src.map(it => this.getSubExpression(it!, elem));
+        } else {
+            const sourcePropName : string | undefined = Object.keys(src).find(e => e == elem);
+
+            if (!sourcePropName) {
+                // TODO: issue a warning "reference to a missing property"
+                // new Issue(
+                //     IssueType.SEMANTIC,
+                //     `A missing property has been referenced: ${elem} in ${src} (class: ${Object.getPrototypeOf(src).constructor.name})`,
+                //     IssueSeverity.WARNING
+                // )
+                return undefined;
+            }
+
+            const sourceProp = src[sourcePropName];
+            return sourceProp instanceof Function ? sourceProp() : sourceProp;
+        }
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export class ChildNodeFactory<Source, Target, Child> {
+    constructor(
+        public name: string,
+        public get: (Source) => any | undefined,
+        public setter: (Target, Child?) => void
+    ) {}
+
+    set = function(node: Target, child?: Child) : void {
+        try {
+            this.setter(node, child);
+        } catch (e) {
+            // TODO: pass e as the cause of this error
+            throw Error(`${this.name} could not set child ${child} of ${node} using ${this.setter}`);
+        }
+    }
+}
+
+/**
+ * Sentinel value used to represent the information that a given property is not a child node.
+ */
+const NO_CHILD_NODE = new ChildNodeFactory<any, any, any>(
+    "",
+    (node) => node,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    (target, child) => {}
+);
+
+/**
+ * Implementation of a tree-to-tree transformation. For each source node type, we can register a factory that knows how
+ * to create a transformed node. Then, this transformer can read metadata in the transformed node to recursively
+ * transform and assign children.
+ * If no factory is provided for a source node type, a GenericNode is created, and the processing of the subtree stops
+ * there.
+ */
+export class ASTTransformer {
+    private readonly _issues: Issue[];
+    private readonly allowGenericNode: boolean;
+
+    get issues() : Issue[] {
+        return this._issues;
+    }
+
+    /**
+     * Factories that map from source tree node to target tree node.
+     */
+    private factories = new Map<any, NodeFactory<any, any>>();
+
+    /**
+     * @param issues Additional issues found during the transformation process.
+     * @param allowGenericNode Use GenericNode as a strategy for missing factories for nodes.
+     */
+    constructor(issues: Issue[] = [], allowGenericNode = true) {
+        this._issues = issues;
+        this.allowGenericNode = allowGenericNode;
+    }
+
+    addIssue(message: string, severity: IssueSeverity = IssueSeverity.ERROR, position?: Position) : Issue {
+        const issue = Issue.semantic(message, severity, position);
+        this._issues.push(issue);
+        return issue;
+    }
+
+    transform(source?: any, parent?: Node) : Node | undefined {
+        if (source == undefined)
+            return undefined;
+
+        if (Array.isArray(source))
+            throw Error("Mapping error: received collection when value was expected");
+
+        const factory: NodeFactory<any, any> | undefined = this.getNodeFactory(source);
+        let node: Node | undefined;
+
+        if (factory != undefined) {
+            node = this.makeNode(factory, source);
+
+            if (node == undefined)
+                return undefined;
+
+            Object.keys(node).forEach(propertyName => {
+                const nodeClass = Object.getPrototypeOf(node).constructor;
+                const nodeDefinition = getNodeDefinition(node!);
+                const prefix = nodeDefinition?.name ? `${nodeClass.name}#` : "";
+                const childKey: string = prefix + propertyName;
+                const childNodeFactory = factory.children.get(childKey);
+                if (childNodeFactory) {
+                    if (childNodeFactory !== NO_CHILD_NODE) {
+                        this.setChild(childNodeFactory, source, node!, propertyName);
+                    }
+                } else {
+                    factory.children.set(childKey, NO_CHILD_NODE);
+                }
+            });
+
+            factory.finalizer(node);
+            node.parent = parent;
+        }
+        else {
+            if (this.allowGenericNode) {
+                const origin : Origin | undefined = this.asOrigin(source);
+                node = new GenericNode(parent).withOrigin(origin);
+                this._issues.push(
+                    Issue.semantic(
+                        `Source node not mapped: ${getNodeDefinition(source)?.name}`,
+                        IssueSeverity.INFO,
+                        origin?.position
+                    )
+                );
+            }
+            else {
+                throw new Error(`Unable to translate node ${source} (class ${getNodeDefinition(source)?.name})`)
+            }
+        }
+
+        return node;
+    }
+
+    asOrigin(source: any) : Origin | undefined {
+        if (source instanceof Origin)
+            return source;
+        else
+            return undefined;
+    }
+
+    setChild(
+        childNodeFactory: ChildNodeFactory<any, any, any>,
+        source: any,
+        node: Node,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        propertyDescription: string
+    ) : void {
+        const src = childNodeFactory.get(this.getSource(node, source));
+
+        let child: any | undefined;
+        if (Array.isArray(src)) {
+            child = src.map(it => this.transform(it, node)).filter(n => n != undefined);
+        }
+        else {
+            child = this.transform(src, node);
+        }
+
+        try {
+            childNodeFactory.set(node, child);
+        } catch (e) {
+            throw new Error(`Could not set child ${childNodeFactory}`);
+        }
+    }
+
+    getSource(node: Node, source: any) : any {
+        return source;
+    }
+
+    makeNode<S extends any, T extends Node>(
+        factory: NodeFactory<S, T>,
+        source: S,
+        allowGenericNode = true
+    ) : Node | undefined {
+
+        let node : Node | undefined;
+
+        try {
+            node = factory.constructorFunction(source, this, factory);
+        } catch (e) {
+            if (allowGenericNode)
+                node = new ErrorNode(e);
+            else
+                throw e;
+        }
+
+        if (node)
+            node.withOrigin(this.asOrigin(source));
+
+        return node;
+    }
+
+    getNodeFactory<S extends any, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
+
+        let nodeClass = type.constructor;
+
+        while (nodeClass) {
+            const factory : NodeFactory<S, T> | undefined = this.factories.get(nodeClass);
+            if (factory)
+                return factory as NodeFactory<S, T>;
+            nodeClass = Object.getPrototypeOf(nodeClass);
+        }
+
+        return undefined;
+    }
+
+    public registerNodeFactory<S extends any, T extends Node>(
+        nodeClass: any,
+        factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
+    ) : NodeFactory<S, T> {
+
+        const nodeFactory = new NodeFactory(factory);
+        this.factories.set(nodeClass, nodeFactory);
+        return nodeFactory;
+    }
+
+    public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
+        return this.registerNodeFactory(
+            nodeClass,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            (node: T, t, f) => node
+        );
+    }
+}
+
+
 
 //-----------------------------------//
 // Factory and metadata registration //
@@ -159,7 +435,12 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
 }
 
 @ASTNode("", "GenericNode")
-export class GenericNode extends Node {}
+export class GenericNode extends Node {
+    constructor(parent?: Node) {
+        super();
+        this.parent = parent;
+    }
+}
 
 @ASTNode("", "ErrorNode")
 export class ErrorNode extends Node {

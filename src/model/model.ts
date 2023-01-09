@@ -278,7 +278,7 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
 }
 
 export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string | symbol): any {
-    if (methodName == "parent" || methodName == "children" || methodName == "parseTreeNode") {
+    if (methodName == "parent" || methodName == "children" || methodName == "origin") {
         methodName = Symbol(methodName);
     }
     const definition = ensureNodeDefinition(type);
