@@ -59,5 +59,7 @@ export function assertASTsAreEqual(
 }
 
 function areSameType(a, b) : boolean {
-    return typeof a == typeof b; // FIXME: this won't check they are of the same types other than "object"s
+    return typeof a == 'object' &&
+        typeof a == typeof b &&
+        Object.getPrototypeOf(a) === Object.getPrototypeOf(b);
 }
