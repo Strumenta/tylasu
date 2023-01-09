@@ -1,7 +1,6 @@
-import {assert, expect} from "chai";
-import {assertASTsAreEqual, NODES_NOT_SAME_TYPE_MESSAGE} from "../../src/testing/testing";
-import {ASTNode, Children, Node, PossiblyNamed, Property, ReferenceByName} from "../../src";
-import exp = require("constants");
+import {expect} from "chai";
+import {assertASTsAreEqual} from "../../src/testing/testing";
+import {ASTNode, Children, Node, PossiblyNamed, Property} from "../../src";
 
 describe('AssertASTsAreEqual', function() {
     it("the very same node instance compared with itself must pass", function () {
