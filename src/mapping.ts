@@ -1,9 +1,9 @@
 import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
-import {Child, Node, NODE_DEFINITION_SYMBOL, registerNodeDefinition} from "./model/model";
+import {Child, Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
-import {GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
+import {ASTTransformer, GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
 import {ParseTreeOrigin} from "./parsing";
 
 /**
@@ -43,6 +43,43 @@ export class GenericParseTreeNode extends GenericNode {
 }
 
 registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
+
+/**
+ * Implements a transformation from an ANTLR parse tree (the output of the parser) to an AST (a higher-level
+ * representation of the source code).
+ */
+export class ParseTreeToASTTransformer extends ASTTransformer {
+
+    /**
+     * Performs the transformation of a node and, recursively, its descendants. In addition to the overridden method,
+     * it also assigns the parseTreeNode to the AST node so that it can keep track of its position.
+     * However, a node factory can override the parseTreeNode of the nodes it creates (but not the parent).
+     */
+    transform(source?: any, parent?: Node): Node | undefined {
+        const node = super.transform(source, parent);
+        if (node != undefined && node.origin == undefined && source instanceof ParserRuleContext) {
+            node.withParseTreeNode(source);
+        }
+        return node;
+    }
+
+    getSource(node: Node, source: any): any {
+        const origin = node.origin;
+        if (origin instanceof ParseTreeOrigin)
+            return origin.parseTree;
+        else
+            return source;
+    }
+
+    asOrigin(source: any): Origin | undefined {
+        // TODO: how to check if source is a ParseTree?
+        // if (source instanceof ParseTree)
+        //     return new ParseTreeOrigin(source);
+        // else
+        //     return undefined;
+        return new ParseTreeOrigin(source);
+    }
+}
 
 //Augment the ParseTree class with a toAST method
 declare module 'antlr4ts/tree' {
