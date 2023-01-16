@@ -76,6 +76,12 @@ export abstract class Origin {
 
 }
 
+/**
+ * The Abstract Syntax Tree will be constituted by instances of Node.
+ *
+ * It implements Origin as it could be the source of a AST-to-AST transformation, so the node itself can be
+ * the Origin of another node.
+ */
 export abstract class Node extends Origin {
     parent?: Node;
     origin?: Origin;

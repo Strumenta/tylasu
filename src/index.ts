@@ -1,3 +1,8 @@
+/**
+ * This is the core module you get by importing from `@strumenta/tylasu`. Other optional modules are available, each
+ * may require additional dependencies.
+ * @module core
+ */
 export * from './model/position';
 export * from './model/model';
 export * from "./model/naming";
