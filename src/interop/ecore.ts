@@ -14,7 +14,7 @@ import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {getEPackage} from "./ecore-basic";
 import {
-    KOLASU_URI_V2,
+    STARLASU_URI_V2,
     THE_ISSUE_ECLASS,
     THE_ISSUE_SEVERITY_EENUM,
     THE_ISSUE_TYPE_EENUM,
@@ -25,7 +25,7 @@ import {
     THE_POINT_ECLASS,
     THE_POSITION_ECLASS,
     THE_RESULT_ECLASS
-} from "./kolasu-v2-metamodel";
+} from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
 
@@ -393,7 +393,7 @@ function defineProperty(classDef, name) {
 
 function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
     const nsURI = eClass?.eContainer?.get("nsURI");
-    return (nsURI == KOLASU_URI_V1 || nsURI == KOLASU_URI_V2) && eClass.get("name") == refClass.get("name");
+    return (nsURI == KOLASU_URI_V1 || nsURI == STARLASU_URI_V2) && eClass.get("name") == refClass.get("name");
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {

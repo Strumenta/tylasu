@@ -9,7 +9,7 @@
     "abstract" : true,
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ]
   }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -17,7 +17,7 @@
     "abstract" : true,
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ]
   }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -47,7 +47,7 @@
     "name" : "JParameterDeclaration",
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ],
     "eStructuralFeatures" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
@@ -89,7 +89,7 @@
     "abstract" : true,
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ]
   }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -97,7 +97,7 @@
     "abstract" : true,
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ]
   }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -214,7 +214,7 @@
     "abstract" : true,
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ]
   }, {
     "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
@@ -503,7 +503,7 @@
     "name" : "JBlock",
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ],
     "eStructuralFeatures" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -585,7 +585,7 @@
     "name" : "JClassDeclaration",
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ],
     "eStructuralFeatures" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
@@ -610,7 +610,7 @@
     "name" : "JCompilationUnit",
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-      "$ref" : "https://strumenta.com/kolasu/v2#//ASTNode"
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
     } ],
     "eStructuralFeatures" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",

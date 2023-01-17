@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {findByPosition, Point, pos, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import { SourceNode, TargetNode, TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
-import {THE_AST_EPACKAGE} from "../../src/interop/kolasu-v2-metamodel";
+import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
 import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
 import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";

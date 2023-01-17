@@ -12,7 +12,7 @@ import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
 import {PARSER_TRACE_ECLASS} from "./parser-package";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2, THE_NODE_ECLASS as THE_NODE_ECLASS_V2} from "./kolasu-v2-metamodel";
+import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2, THE_NODE_ECLASS as THE_NODE_ECLASS_V2} from "./starlasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";

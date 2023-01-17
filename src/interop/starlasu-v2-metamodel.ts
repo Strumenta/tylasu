@@ -3,12 +3,12 @@ import {IssueSeverity, IssueType} from "../validation";
 import {EList} from "ecore";
 import {addLiteral, getEPackage} from "./ecore-basic";
 
-// Kolasu model definition
+// Starlasu model definition
 
-export const KOLASU_URI_V2 = "https://strumenta.com/kolasu/v2";
+export const STARLASU_URI_V2 = "https://strumenta.com/starlasu/v2";
 
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V2 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: KOLASU_URI_V2 });
+export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: STARLASU_URI_V2 });
+export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: STARLASU_URI_V2 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
 export const THE_ORIGIN_ECLASS = Ecore.EClass.create({
     name: "Origin",
@@ -224,6 +224,15 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     upperBound: -1
 }));
 
+export const THE_PLACEHOLDER_ELEMENT_ECLASS = Ecore.EClass.create({
+    name: "PlaceholderElement",
+    interface: true
+});
+THE_PLACEHOLDER_ELEMENT_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "placeholderName",
+    eType: Ecore.EString
+}));
+
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
@@ -238,3 +247,4 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_PLACEHOLDER_ELEMENT_ECLASS);
