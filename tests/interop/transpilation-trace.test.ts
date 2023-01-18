@@ -30,8 +30,8 @@ describe('Transpilation traces', function() {
                 const resource = resourceSet.create({uri: 'file:/tests/data/playground/java-metamodels.json'})
                 const data = JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString());
                 resource.parse(data);
-                const jcompilationunit = resource.eContents()[0].eContents()[30];
-                expect(jcompilationunit.get("name")).to.eql( "JCompilationUnit");
+                const jcompilationunit = resource.eContents()[0].eContents().find(c => c.get("name") == "JCompilationUnit");
+                expect(jcompilationunit).not.to.be.null;
                 const declarations = jcompilationunit.eContents()[0];
                 expect(declarations.get("name")).to.eql( "declarations");
                 expect(declarations.get("eType").get("name")).to.eql("JClassDeclaration");
@@ -48,8 +48,8 @@ describe('Transpilation traces', function() {
                     expect(rpgMetamodelsResource.eContents().length).to.eql(1);
                     const javaast = rpgMetamodelsResource.eContents()[0];
                     expect(javaast.eClass.get("name")).to.eql("EPackage");
-                    expect(javaast.eContents().length).to.eql(31);
-                    const jCompilationUnit = javaast.eContents()[30];
+                    expect(javaast.eContents().length).to.eql(42);
+                    const jCompilationUnit = javaast.eContents().find(c => c.get("name") == "JCompilationUnit");
                     expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
                     expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
                     expect(jCompilationUnit.eContents().length).to.eql(1);
@@ -78,8 +78,8 @@ describe('Transpilation traces', function() {
 
             const javaast = javaMetamodelsResource.eContents()[0];
             expect(javaast.eClass.get("name")).to.eql("EPackage");
-            expect(javaast.eContents().length).to.eql(31);
-            const jCompilationUnit = javaast.eContents()[30];
+            expect(javaast.eContents().length).to.eql(42);
+            const jCompilationUnit = javaast.eContents().find(c => c.get("name") == "JCompilationUnit");
             expect(jCompilationUnit.eClass.get("name")).to.eql("EClass");
             expect(jCompilationUnit.get("name")).to.eql("JCompilationUnit");
             expect(jCompilationUnit.eContents().length).to.eql(1);
@@ -111,10 +111,10 @@ describe('Transpilation traces', function() {
             const rootSourceNode = trace.rootSourceNode;
             expect(rootSourceNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootSourceNode.getSimpleType()).to.eql("CompilationUnit");
-            expect(rootSourceNode.getPosition()).to.eql(pos(1, 0,32, 30));
-            expect(rootSourceNode.getDestinationNode()!.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(rootSourceNode.getPosition()).to.eql(pos(1, 0,36, 30));
+            expect(rootSourceNode.getDestinationNode()!.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
             expect(rootSourceNode.getDestinationNode()!.getDestination()).to.eql(
-                new Position(new Point(1, 0), new Point(29, 0)));
+                new Position(new Point(1, 0), new Point(37, 0)));
             expect(rootSourceNode.children.length).to.eql(11);
             expect(rootSourceNode.getChildren("mainStatements").length).to.eql(5);
             expect(rootSourceNode.getRole()).to.eql("root");
@@ -127,24 +127,24 @@ describe('Transpilation traces', function() {
             expect(foundSourceNode.eo == descNode.eo).to.be.true;
             const destNode = descNode!.parent!.getDestinationNode();
             expect(destNode).not.to.be.undefined;
-            expect(destNode!.getType()).to.equal("com.strumenta.javaast.JFieldDecl");
-            expect(destNode!.getDestination()).to.eql(pos(5, 0, 6, 0));
+            expect(destNode!.getType()).to.equal("com.strumenta.javalangmodule.ast.JFieldDecl");
+            expect(destNode!.getDestination()).to.eql(pos(5, 0, 5, 15));
             expect(destNode!.getAttributes()["name"]).to.equal("A");
 
-            const subroutine0 = rootSourceNode.getChildren("subroutines")[0];
-            expect(subroutine0).not.to.be.undefined;
-            expect(subroutine0.getDestinationNode()).not.to.be.undefined;
-            expect(subroutine0.getDestinationNode()!.getType()).to.equal(
-                "com.strumenta.javaast.JClassDeclaration");
-            expect(subroutine0.getDestinationNode()!.getDestination()).to.eql(pos(1, 0, 29, 0));
+            const stmt0 = rootSourceNode.getChildren("subroutines")[0].getChildren("statements")[0];
+            expect(stmt0).not.to.be.undefined;
+            expect(stmt0.getDestinationNode()).not.to.be.undefined;
+            expect(stmt0.getDestinationNode()!.getType()).to.equal(
+                "com.strumenta.javalangmodule.ast.JExpressionStatement");
+            expect(stmt0.getDestinationNode()!.getDestination()).to.eql(pos(14, 0, 14, 17));
 
             const rootTargetNode = trace.rootTargetNode;
-            expect(rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(rootTargetNode.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
             expect(rootTargetNode.getSimpleType()).to.eql("JCompilationUnit");
-            expect(rootTargetNode.getDestination()).to.eql(pos(1, 0, 29, 0));
+            expect(rootTargetNode.getDestination()).to.eql(pos(1, 0, 37, 0));
             expect(rootTargetNode.getSourceNode()!.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootTargetNode.getSourceNode()!.getPosition()).to.eql(
-                new Position(new Point(1, 0), new Point(32, 30)));
+                new Position(new Point(1, 0), new Point(36, 30)));
             expect(rootTargetNode.getChildren().length).to.eql(1);
             expect(rootTargetNode.getChildren("declarations").length).to.eql(1);
             expect(rootTargetNode.getChildren("unexisting").length).to.eql(0);
@@ -152,9 +152,6 @@ describe('Transpilation traces', function() {
 
             const declaration = rootTargetNode.getChildren("declarations")[0];
             expect(declaration.getRole()).to.eql("declarations");
-            const declSourceNode = declaration.getSourceNode();
-            expect(declSourceNode).not.to.be.undefined;
-            expect(declSourceNode!.getType()).to.equal("com.strumenta.rpgparser.model.Subroutine");
             let foundTargetNode = findByPosition(rootTargetNode, pos(1, 0, 29, 0)) as TargetNode;
             expect(foundTargetNode.parent!.eo == rootTargetNode.eo).to.be.true;
             const descTargetNode = rootTargetNode.children[0].children[5] as TargetNode;
@@ -167,9 +164,9 @@ describe('Transpilation traces', function() {
             expect(secondField.getAttributes()["name"]).to.eql("RESULT");
             const fieldSourceNode = secondField.getSourceNode();
             expect(fieldSourceNode).not.to.be.undefined;
-            expect(fieldSourceNode!.getType()).to.equal("com.strumenta.rpgparser.parsing.StandaloneField");
+            expect(fieldSourceNode!.getType()).to.equal("com.strumenta.rpgparser.model.StandaloneField");
             expect(fieldSourceNode!.getAttributes()["name"]).to.eql("RESULT");
-            expect(fieldSourceNode!.getPosition()).to.eql(pos(5, 0, 5, 49));
+            expect(fieldSourceNode!.getPosition()).to.eql(pos(6, 0, 6, 49));
         });
 /*
     it("Can load transpilation trace produced by Pylasu as TranspilationTrace instance",
@@ -196,14 +193,14 @@ describe('Transpilation traces', function() {
             expect(trace.rootSourceNode.getType()).to.eql("com.strumenta.sas.Program");
             expect(trace.rootSourceNode.getSimpleType()).to.eql("Program");
             expect(trace.rootSourceNode.getPosition()).to.eql(new Position(new Point(1, 0), new Point(32, 30)));
-            expect(trace.rootSourceNode.getDestinationNode().getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.rootSourceNode.getDestinationNode().getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
             expect(trace.rootSourceNode.getDestinationNode().getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
             expect(trace.rootSourceNode.getChildren().length).to.eql(11);
             expect(trace.rootSourceNode.getChildren("mainStatements").length).to.eql(5);
             expect(trace.rootSourceNode.getRole()).to.eql("sourceAST");
             expect(trace.rootSourceNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
 
-            expect(trace.rootTargetNode.getType()).to.eql("com.strumenta.javaast.JCompilationUnit");
+            expect(trace.rootTargetNode.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
             expect(trace.rootTargetNode.getSimpleType()).to.eql("JCompilationUnit");
             expect(trace.rootTargetNode.getDestination()).to.eql(new Position(new Point(1, 0), new Point(29, 0)));
             expect(trace.rootTargetNode.getSourceNode().getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");

@@ -76,13 +76,16 @@ export abstract class Origin {
 
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Destination {}
+
 /**
  * The Abstract Syntax Tree will be constituted by instances of Node.
  *
  * It implements Origin as it could be the source of a AST-to-AST transformation, so the node itself can be
  * the Origin of another node.
  */
-export abstract class Node extends Origin {
+export abstract class Node extends Origin implements Destination {
     parent?: Node;
     origin?: Origin;
 

@@ -1,5 +1,5 @@
 {
-  "eClass": "https://strumenta.com/kolasu/transpilation/v1#//TranspilationTrace",
+  "eClass": "https://strumenta.com/starlasu/transpilation/v1#//TranspilationTrace",
   "generatedCode": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import lit\n\nspark = SparkSession.builder.getOrCreate()\nA = b\n__array_arrayname = [\"one\", \"two\", \"three\", \"four\"]\nfor i in range(1, 5 + 1):\n    A = A.withColumn(\"y\", lit(2))\n",
   "sourceResult": {
     "root": {
