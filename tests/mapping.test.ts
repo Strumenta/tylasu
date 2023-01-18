@@ -8,6 +8,7 @@ import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
 import {ParseTreeOrigin} from "../src/parsing/parse-tree";
 import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer, toAST} from "../src/mapping";
 import {Position} from "../src/model/position";
+import {assertASTsAreEqual} from "../src/testing/testing";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
@@ -108,9 +109,7 @@ describe('ParseTreeToASTTransformer', function () {
 
         const transformedCU = transformer.transform(pt)!;
 
-        // TODO: enable this when PR gets accepted and merged
-        // assertASTsAreEqual(cu, transformedCU, considerPosition = true)
-
+        assertASTsAreEqual(cu, transformedCU, "<root>",true);
         expect(transformedCU.hasValidParents()).to.be.true;
         assert.isEmpty(transformedCU.invalidPositions());
     });
