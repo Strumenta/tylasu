@@ -99,7 +99,7 @@ describe('ParseTreeToASTTransformer', function () {
         const pt = parser.compilationUnit();
 
         const transformer = new ParseTreeToASTTransformer();
-        configure(transformer)
+        configure(transformer);
 
         const cu = new CU([
             new SetStatement("foo", 123).withParseTreeNode(pt.statement(0)),
@@ -111,11 +111,8 @@ describe('ParseTreeToASTTransformer', function () {
         // TODO: enable this when PR gets accepted and merged
         // assertASTsAreEqual(cu, transformedCU, considerPosition = true)
 
-        // TODO: port hasValidParents
-        // expect(transformedCU.hasValidParents()).to.be.true;
-
-        // TODO: port invalidPositions
-        // assert.isNotOk(transformedCU.invalidPositions().firstOrNull());
+        expect(transformedCU.hasValidParents()).to.be.true;
+        assert.isEmpty(transformedCU.invalidPositions());
     });
 });
 

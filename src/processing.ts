@@ -1,4 +1,4 @@
-import {Node} from "./model/model";
+import {Node, registerNodeChild} from "./model/model";
 import {walk} from "./traversing/structurally";
 import {first, pipe} from "iter-ops";
 
@@ -12,6 +12,9 @@ declare module './model/model' {
          * @return the first node in the AST for which the predicate is true. Returns undefined if none are found.
          */
         find(predicate: (n: Node, index: number) => boolean, walker?: typeof walk): Node | undefined;
+
+        hasValidParents(parent ?: Node) : boolean;
+        invalidPositions() : Generator<Node>;
     }
 }
 
@@ -43,4 +46,26 @@ export function assignParents(node: Node): void {
         c.parent = this;
         assignParents(c);
     }
+}
+
+Node.prototype.hasValidParents = function(parent?: Node) : boolean {
+    return this.parent == parent &&
+        this.children
+            .map(c => c.hasValidParents(this))
+            .reduce((res, val) => res && val, true);
+}
+
+function* getInvalidPositions(node: Node): Generator<Node> {
+    for (const n of this.walk()) {
+        if (n.position == undefined || (
+            // If the parent position is null, we can't say anything about this node's position
+            n.parent?.position != undefined && !(n.parent?.position.contains(n.position.start) && n.parent?.position.contains(n.position.end))
+        )) {
+            yield n;
+        }
+    }
+}
+
+Node.prototype.invalidPositions = function() {
+    return getInvalidPositions(this);
 }
