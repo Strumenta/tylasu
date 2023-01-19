@@ -48,8 +48,10 @@ describe('Parser traces – Kolasu metamodel V1', function() {
                 expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit", example);
             });
     }
+});
 
-    it("Can load SAS parser trace",
+describe('Parser traces – Starlasu metamodel V2', function() {
+    it("Can load SAS parser traces",
         function () {
             this.timeout(0);
 
@@ -60,9 +62,9 @@ describe('Parser traces – Kolasu metamodel V1', function() {
                 uri: "file://tests/data/playground/sas-examples/metamodel.json",
                 metamodel: metamodel
             });
-            const code = fs.readFileSync(
+            let code = fs.readFileSync(
                 "tests/data/playground/sas-examples/open-source_covid-19-sas_data_import-data-jhu.sas.json").toString();
-            const trace = loader.loadParserTrace(code, "sas");
+            let trace = loader.loadParserTrace(code, "sas");
 
             const rootNode = trace.rootNode;
             expect(rootNode.getType()).to.eql("com.strumenta.sas.ast.SourceFile");
@@ -85,5 +87,13 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.issues[0].message).to.equal("Unparsed macro code: `filename `");
             expect(trace.issues[0].severity).to.equal(IssueSeverity.WARNING);
             expect(trace.issues[0].position).to.eql(pos(43, 8,43, 17));
+
+            code = fs.readFileSync(
+                "tests/data/playground/sas-examples/open-source_sas-cert-prep-data_professional-prep-guide_cre8permdata.sas.json").toString();
+            trace = loader.loadParserTrace(code, "sas");
+            expect(trace).not.to.be.undefined;
+            expect(trace.rootNode).not.to.be.undefined;
+            expect(trace.rootNode.position).to.eql(pos(15, 0, 10161, 0));
+            expect(trace.issues).to.eql([]);
         });
 });
