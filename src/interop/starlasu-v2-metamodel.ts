@@ -123,6 +123,16 @@ THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").at(1).set("eGenericType"
     eTypeParameter: THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0)
 }));
 
+export const THE_ERROR_NODE_INTERFACE = Ecore.EClass.create({
+    name: "ErrorNode",
+    interface: true
+});
+THE_ERROR_NODE_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "message",
+    eType: Ecore.EString,
+    lowerBound: 1
+}));
+
 export const THE_LOCAL_DATE_ECLASS  = Ecore.EClass.create({
     name: "LocalDate"
 });
@@ -268,6 +278,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ERROR_NODE_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
