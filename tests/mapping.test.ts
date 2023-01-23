@@ -9,6 +9,7 @@ import {ParseTreeOrigin} from "../src/parsing/parse-tree";
 import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer, toAST} from "../src/mapping";
 import {Position} from "../src/model/position";
 import {assertASTsAreEqual} from "../src/testing/testing";
+import {GenericErrorNode} from "../src/model/errors";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
@@ -109,9 +110,59 @@ describe('ParseTreeToASTTransformer', function () {
 
         const transformedCU = transformer.transform(pt)!;
 
-        assertASTsAreEqual(cu, transformedCU, "<root>",true);
+        assertASTsAreEqual(cu, transformedCU, "<root>", true);
         expect(transformedCU.hasValidParents()).to.be.true;
-        assert.isEmpty(transformedCU.invalidPositions());
+        expect(transformedCU.invalidPositions()).to.be.empty;
+    });
+    it("Test transformation with errors", function () {
+        const code = "set foo = \ndisplay @@@";
+        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+        const pt = parser.compilationUnit();
+        expect(parser.numberOfSyntaxErrors).to.equal(2);
+
+        const transformer = new ParseTreeToASTTransformer();
+        configure(transformer);
+
+        const cu = new CU([
+            new GenericErrorNode(undefined, "Exception java.lang.IllegalStateException: Parse error")
+                .withParseTreeNode(pt.statement(0)),
+            new GenericErrorNode(undefined, "Exception java.lang.IllegalStateException: Parse error")
+                .withParseTreeNode(pt.statement(1))
+        ]).withParseTreeNode(pt);
+        const transformedCU = transformer.transform(pt) as CU;
+        assertASTsAreEqual(cu, transformedCU, undefined, true);
+
+        expect(transformedCU.hasValidParents()).to.be.true;
+        expect(transformedCU.invalidPositions()).to.be.empty;
+    });
+    it("Test generic node", function () {
+        const code = "set foo = 123\ndisplay 456";
+        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+        const pt = parser.compilationUnit();
+
+        const transformer = new ParseTreeToASTTransformer();
+        assertASTsAreEqual(new GenericNode(), transformer.transform(pt)!);
+    });
+    it("test generic AST transformer", function () {
+        const code = "set foo = 123\ndisplay 456";
+        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+        const pt = parser.compilationUnit();
+
+        const transformer = new ASTTransformer();
+        configure(transformer);
+
+        // Compared to ParseTreeToASTTransformer, the base class ASTTransformer does not assign a parse tree node
+        // to each AST node
+        const cu = new CU([
+            new SetStatement("foo", 123),
+            new DisplayIntStatement(456)
+        ]);
+        const transformedCU = transformer.transform(pt)!;
+        assertASTsAreEqual(cu, transformedCU, undefined, true);
+        expect(transformedCU.hasValidParents()).to.be.true;
     });
 });
 
