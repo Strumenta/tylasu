@@ -29,10 +29,19 @@ describe('AssertASTsAreEqual', function() {
         const simpleNode1 : Node = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
         const simpleNode2 : Node = new SimpleNode("node");
-        simpleNode1.position = Position.ofPoint(new Point(2, 0));
+        simpleNode2.position = Position.ofPoint(new Point(2, 0));
         expect(() =>
             assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
         ).to.throw();
+    });
+    it("nodes with equal positions must pass when considerPosition == true", function () {
+        const simpleNode1 : Node = new SimpleNode("node");
+        simpleNode1.position = Position.ofPoint(new Point(1, 0));
+        const simpleNode2 : Node = new SimpleNode("node");
+        simpleNode2.position = Position.ofPoint(new Point(1, 0));
+        expect(() =>
+            assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
+        ).not.to.throw();
     });
     it("two different node instances of the same type and with different values must NOT pass", function () {
         const simpleNode1 : Node = new SimpleNode("node");
