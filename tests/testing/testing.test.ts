@@ -5,25 +5,19 @@ import {ASTNode, Children, Node, Point, Position, PossiblyNamed, Property} from 
 describe('AssertASTsAreEqual', function() {
     it("the very same node instance compared with itself must pass", function () {
         const simpleNode1 : Node = new SimpleNode("node");
-        expect(() =>
-            assertASTsAreEqual(simpleNode1, simpleNode1)
-        ).not.to.throw();
+        assertASTsAreEqual(simpleNode1, simpleNode1);
     });
     it("two different node instances of the same type and with the same values must pass", function () {
         const simpleNode1 : Node = new SimpleNode("node");
         const simpleNode2 : Node = new SimpleNode("node");
-        expect(() =>
-            assertASTsAreEqual(simpleNode1, simpleNode2)
-        ).not.to.throw();
+        assertASTsAreEqual(simpleNode1, simpleNode2)
     });
     it("nodes with different positions must pass when considerPosition == false", function () {
         const simpleNode1 : Node = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
         const simpleNode2 : Node = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(2, 0));
-        expect(() =>
-            assertASTsAreEqual(simpleNode1, simpleNode2)
-        ).not.to.throw();
+        assertASTsAreEqual(simpleNode1, simpleNode2)
     });
     it("nodes with different positions must NOT pass when considerPosition == true", function () {
         const simpleNode1 : Node = new SimpleNode("node");
@@ -39,9 +33,7 @@ describe('AssertASTsAreEqual', function() {
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
         const simpleNode2 : Node = new SimpleNode("node");
         simpleNode2.position = Position.ofPoint(new Point(1, 0));
-        expect(() =>
-            assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
-        ).not.to.throw();
+        assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
     });
     it("two different node instances of the same type and with different values must NOT pass", function () {
         const simpleNode1 : Node = new SimpleNode("node");
@@ -75,9 +67,7 @@ describe('AssertASTsAreEqual', function() {
                 new SimpleNode("D")
             ])
         ]);
-        expect(() =>
-            assertASTsAreEqual(tree1, tree2)
-        ).not.to.throw();
+        assertASTsAreEqual(tree1, tree2)
     });
     it("two trees of height = 3 with different node on the 3rd level", function () {
         const tree1 =
