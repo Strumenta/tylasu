@@ -11,7 +11,7 @@ export function assertASTsAreEqual(
 ) {
     if (areSameType(expected, actual)) {
         if (considerPosition) {
-            assert(expected.position!.equals(actual.position!), `${context}.position`);
+            expect(actual.position!.equals(expected.position!)).to.be.true;
         }
         expected.properties.forEach(expectedProperty => {
             const actualPropValue = actual.properties.find(p => p.name == expectedProperty.name)!.value;
