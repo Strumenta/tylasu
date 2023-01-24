@@ -121,6 +121,10 @@ export class Position {
             (position.end.isSameOrAfter(this.start) && position.end.isSameOrBefore(this.end))
         )
     }
+
+    public equals(obj: Position) : boolean {
+        return this.compareTo(obj) == 0;
+    }
 }
 
 export function pos(startLine: number, startCol: number, endLine: number, endCol: number): Position {
