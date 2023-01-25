@@ -9,23 +9,23 @@ import {
     registerNodeProperty
 } from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
-import {EClass, EClassifier, EList, EObject, EPackage, Resource} from "ecore";
+import {EClass, EClassifier, EList, EObject, EPackage, EReference, Resource} from "ecore";
 import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {getEPackage} from "./ecore-basic";
 import {
-    KOLASU_URI_V2,
+    STARLASU_URI_V2,
     THE_ISSUE_ECLASS,
     THE_ISSUE_SEVERITY_EENUM,
     THE_ISSUE_TYPE_EENUM,
     THE_LOCAL_DATE_ECLASS,
     THE_LOCAL_DATE_TIME_ECLASS,
     THE_LOCAL_TIME_ECLASS,
-    THE_NODE_ECLASS,
+    THE_NODE_ECLASS, THE_NODE_ORIGIN_ECLASS,
     THE_POINT_ECLASS,
     THE_POSITION_ECLASS,
-    THE_RESULT_ECLASS
-} from "./kolasu-v2-metamodel";
+    THE_RESULT_ECLASS, THE_TEXT_FILE_DESTINATION_ECLASS
+} from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
 
@@ -293,6 +293,12 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
             issues: (obj.get("issues") as EList)?.map(fromEObject) as Issue[] || []
         };
     }
+    if(isBuiltInClass(eClass, THE_NODE_ORIGIN_ECLASS)) {
+        return fromEObject(obj.get("node")) as Node;
+    }
+    if(isBuiltInClass(eClass, THE_TEXT_FILE_DESTINATION_ECLASS)) {
+        return fromEObject(obj.get("position")) as Position;
+    }
     const ePackage = eClass.eContainer as EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
@@ -393,7 +399,7 @@ function defineProperty(classDef, name) {
 
 function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
     const nsURI = eClass?.eContainer?.get("nsURI");
-    return (nsURI == KOLASU_URI_V1 || nsURI == KOLASU_URI_V2) && eClass.get("name") == refClass.get("name");
+    return (nsURI == KOLASU_URI_V1 || nsURI == STARLASU_URI_V2) && eClass.get("name") == refClass.get("name");
 }
 
 function generateASTClass(eClass, pkg: PackageDescription) {
@@ -515,6 +521,9 @@ class ReferencesTracker {
     }
 
     getReferredObject(uri: string) {
+        if (uri === undefined) {
+            return undefined;
+        }
         let eClass;
         try {
             eClass = findEClass(uri, this.resource);
@@ -669,7 +678,13 @@ function importJsonObject(
                 if (feature.isTypeOf('EAttribute')) {
                     eObject.set(key, obj[key]);
                 } else if (feature.isTypeOf('EReference')) {
-                    const eType = feature.get("eType");
+                    let eType = feature.get("eType");
+                    if (!eType) {
+                        const eGenericType = feature.get("eGenericType");
+                        if (eGenericType) {
+                            eType = eGenericType.get("eClassifier");
+                        }
+                    }
                     if (feature.get("containment") === true) {
                         if (feature.get("many")) {
                             if (obj[key]) {
@@ -691,7 +706,7 @@ function importJsonObject(
                                 eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
                             }
                         }
-                    } else if (feature.get("containment") === false) {
+                    } else if (feature.isKindOf(EReference)) {
                         const refValue = obj[key];
                         referencesTracker.trackReference(eObject, feature, refValue);
                     } else {

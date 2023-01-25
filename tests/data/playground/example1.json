@@ -1,13 +1,13 @@
 {
   "ast": {
-    "eClass": "https://strumenta.com/kolasu/v2#//Result",
+    "eClass": "https://strumenta.com/starlasu/v2#//Result",
     "root": {
       "eClass": "#/0/NodeSubclass",
       "a": "root"
     },
     "issues": [
       {
-        "eClass": "https://strumenta.com/kolasu/v2#//Issue",
+        "eClass": "https://strumenta.com/starlasu/v2#//Issue",
         "type": "SEMANTIC",
         "message": "Something's wrong",
         "severity": "ERROR"

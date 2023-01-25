@@ -2,7 +2,7 @@ import * as Ecore from "ecore/dist/ecore";
 import {
     getEPackage,
 } from "./ecore-basic";
-import {THE_NODE_ECLASS} from "./kolasu-v2-metamodel";
+import {THE_NODE_ECLASS} from "./starlasu-v2-metamodel";
 
 export const KOLASU_PARSER_URI_V1 = "https://strumenta.com/kolasu/parser/v1";
 export const PARSER_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_PARSER_URI_V1 });

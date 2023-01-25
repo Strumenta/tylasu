@@ -50,7 +50,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "value",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EString"
             }
           }
@@ -109,7 +109,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "indent",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EBoolean"
             }
           },
@@ -202,7 +202,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "encoding",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EString"
             }
           },
@@ -210,7 +210,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "default_indent",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EString"
             }
           },
@@ -218,7 +218,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "default_newline",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EString"
             }
           },
@@ -226,7 +226,7 @@
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "has_trailing_newline",
             "eType": {
-              "eClass": "https://strumenta.com/kolasu/v2#//EDataType",
+              "eClass": "https://strumenta.com/starlasu/v2#//EDataType",
               "$ref": "#//EBoolean"
             }
           }

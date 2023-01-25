@@ -3,22 +3,38 @@ import {IssueSeverity, IssueType} from "../validation";
 import {EList} from "ecore";
 import {addLiteral, getEPackage} from "./ecore-basic";
 
-// Kolasu model definition
+// Starlasu model definition
 
-export const KOLASU_URI_V2 = "https://strumenta.com/kolasu/v2";
+export const STARLASU_URI_V2 = "https://strumenta.com/starlasu/v2";
 
-export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: KOLASU_URI_V2 });
-export const THE_AST_EPACKAGE = getEPackage("com.strumenta.kolasu.v2", { nsURI: KOLASU_URI_V2 });
+export const THE_AST_RESOURCE = Ecore.ResourceSet.create().create({ uri: STARLASU_URI_V2 });
+export const THE_AST_EPACKAGE = getEPackage("StrumentaLanguageSupport", { nsURI: STARLASU_URI_V2 });
 THE_AST_RESOURCE.get("contents").add(THE_AST_EPACKAGE);
 export const THE_ORIGIN_ECLASS = Ecore.EClass.create({
     name: "Origin",
     abstract: true
+});
+export const THE_DESTINATION_INTERFACE = Ecore.EClass.create({
+    name: "Destination",
+    interface: true
 });
 export const THE_NODE_ECLASS = Ecore.EClass.create({
     name: "ASTNode",
     abstract: true,
 });
 THE_NODE_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
+THE_NODE_ECLASS.get("eSuperTypes").add(THE_DESTINATION_INTERFACE);
+export const THE_NODE_ORIGIN_ECLASS = Ecore.EClass.create({
+    name: "NodeOrigin"
+});
+THE_NODE_ORIGIN_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
+THE_NODE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "node",
+    eType: THE_NODE_ECLASS,
+    containment: false,
+    lowerBound: 1
+}));
+
 export const THE_POINT_ECLASS = Ecore.EClass.create({
     name: "Point"
 });
@@ -54,14 +70,14 @@ THE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
 }));
 THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "destination",
-    eType: THE_POSITION_ECLASS,
+    eType: THE_DESTINATION_INTERFACE,
     containment: true,
     lowerBound: 0
 }));
 THE_NODE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "origin",
     eType: THE_ORIGIN_ECLASS,
-    containment: false,
+    containment: true,
     lowerBound: 0
 }));
 
@@ -105,6 +121,16 @@ THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.cre
 }));
 THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").at(1).set("eGenericType", Ecore.EGenericType.create({
     eTypeParameter: THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0)
+}));
+
+export const THE_ERROR_NODE_INTERFACE = Ecore.EClass.create({
+    name: "ErrorNode",
+    interface: true
+});
+THE_ERROR_NODE_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "message",
+    eType: Ecore.EString,
+    lowerBound: 1
 }));
 
 export const THE_LOCAL_DATE_ECLASS  = Ecore.EClass.create({
@@ -224,13 +250,35 @@ THE_RESULT_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     upperBound: -1
 }));
 
+export const THE_PLACEHOLDER_ELEMENT_INTERFACE = Ecore.EClass.create({
+    name: "PlaceholderElement",
+    interface: true
+});
+THE_PLACEHOLDER_ELEMENT_INTERFACE.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "placeholderName",
+    eType: Ecore.EString
+}));
+
+export const THE_TEXT_FILE_DESTINATION_ECLASS = Ecore.EClass.create({
+    name: "TextFileDestination"
+});
+THE_TEXT_FILE_DESTINATION_ECLASS.get("eSuperTypes").add(THE_DESTINATION_INTERFACE);
+THE_TEXT_FILE_DESTINATION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "position",
+    eType: THE_POSITION_ECLASS,
+    containment: true
+}));
+
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_DESTINATION_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NAMED_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_REFERENCE_BY_NAME_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ERROR_NODE_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_TIME_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_LOCAL_DATE_TIME_ECLASS);
@@ -238,3 +286,5 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_SEVERITY_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_TYPE_EENUM);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_PLACEHOLDER_ELEMENT_INTERFACE);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_TEXT_FILE_DESTINATION_ECLASS);

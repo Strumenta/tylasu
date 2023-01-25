@@ -1,6 +1,5 @@
 import {Node} from "../model/model";
 import {fail} from "assert";
-import {strict as assert} from "assert";
 import {expect} from "chai";
 
 export function assertASTsAreEqual(
@@ -11,7 +10,10 @@ export function assertASTsAreEqual(
 ) {
     if (areSameType(expected, actual)) {
         if (considerPosition) {
-            expect(actual.position!.equals(expected.position!)).to.be.true;
+            expect(
+                actual.position!.equals(expected.position!),
+                `${context}.position`
+            ).to.be.true;
         }
         expected.properties.forEach(expectedProperty => {
             const actualPropValue = actual.properties.find(p => p.name == expectedProperty.name)!.value;
@@ -26,8 +28,10 @@ export function assertASTsAreEqual(
                 );
             }
             else if (Array.isArray(actualPropValue) && Array.isArray(expectedPropValue)) {
-                assert(actualPropValue.length == expectedPropValue.length,
-                    `${context}, property ${expectedProperty.name} has length ${expectedPropValue.length}, but found ${actualPropValue.length}`);
+                expect(
+                    actualPropValue.length,
+                    `${context}, property ${expectedProperty.name} has length ${expectedPropValue.length}, but found ${actualPropValue.length}`
+                ).to.equal(expectedPropValue.length)
                 for (let i = 0; i < expectedPropValue.length; i++) {
                     const expectedElement = expectedPropValue[i];
                     const actualElement = actualPropValue[i];
@@ -41,15 +45,18 @@ export function assertASTsAreEqual(
                         );
                     }
                     else if (typeof expectedElement != "object" && typeof actualElement != "object") {
-                        assert(expectedElement == actualElement,
-                            `${context}, property ${expectedProperty.name}[${i}] is ${expectedPropValue[i]}, but found ${actualPropValue[i]}`);
+                        expect(
+                            actualElement,
+                            `${context}, property ${expectedProperty.name}[${i}] is ${expectedPropValue[i]}, but found ${actualPropValue[i]}`
+                        ).to.equal(expectedElement);
                     }
                 }
             }
             else {
-                assert(
-                    expectedPropValue == actualPropValue,
-                    `${context}, comparing property ${expectedProperty.name}`);
+                expect(
+                    actualPropValue,
+                    `${context}, comparing property ${expectedProperty.name}`
+                ).to.equal(expectedPropValue);
             }
         });
     }

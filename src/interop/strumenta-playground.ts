@@ -12,10 +12,14 @@ import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
 import {PARSER_TRACE_ECLASS} from "./parser-package";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2, THE_NODE_ECLASS as THE_NODE_ECLASS_V2} from "./kolasu-v2-metamodel";
+import {
+    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
+    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
+    THE_NODE_ORIGIN_ECLASS
+} from "./starlasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
-import {TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
+import {THE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R, any>, name: string,
@@ -236,18 +240,24 @@ export class ParserTraceLoader {
 }
 
 export class TranspilationTrace {
-    private sourceToTarget = new Map<string, EObject>()
+    private sourceToTarget = new Map<string, EObject>();
+    public issues: Issue[] = [];
 
     constructor(private eo: EObject) {
-        if (!eo.eClass == TRANSPILATION_TRACE_ECLASS) {
+        if (!eo.eClass == THE_TRANSPILATION_TRACE_ECLASS) {
             throw new Error("Not a transpilation trace: " + eo.eClass);
         }
+        this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
         this.examineTargetNode(this.rootTargetNode.eo);
     }
 
     private examineTargetNode(tn: EObject) {
-        if (tn.get("origin") != null) {
-            const sourceID = this.getEObjectID(tn.get("origin"));
+        let origin = tn.get("origin");
+        if (origin?.eClass == THE_NODE_ORIGIN_ECLASS) {
+            origin = origin.get("node");
+        }
+        if (origin) {
+            const sourceID = this.getEObjectID(origin);
             this.sourceToTarget.set(sourceID, tn);
         }
         tn.eContents().forEach((c) => this.examineTargetNode(c));
@@ -335,7 +345,7 @@ export class TargetNode extends TraceNode {
     getPosition(): Position | undefined {
         const raw = this.eo.get("destination");
         if (raw == null) {
-            return undefined
+            return undefined;
         }
         return fromEObject(raw) as Position;
     }
@@ -349,7 +359,10 @@ export class TargetNode extends TraceNode {
     }
 
     getSourceNode(): SourceNode | undefined {
-        const rawOrigin = this.eo.get("origin");
+        let rawOrigin = this.eo.get("origin");
+        if (rawOrigin?.eClass == THE_NODE_ORIGIN_ECLASS) {
+            rawOrigin = rawOrigin.get("node");
+        }
         if (!rawOrigin) {
             return undefined;
         }
@@ -359,6 +372,7 @@ export class TargetNode extends TraceNode {
     getChildren(role?: string): TargetNode[] {
         return this.eo.eContents()
             .filter((c) => c.eContainingFeature.get("name") != "position")
+            .filter((c) => c.eContainingFeature.get("name") != "origin")
             .filter((c) => c.eContainingFeature.get("name") != "destination")
             .filter((c) => role == null || role == c.eContainingFeature.get("name"))
             .map((c) => new TargetNode(c, this.trace));
@@ -403,6 +417,6 @@ export class TranspilationTraceLoader {
             this.languages, sourceLang,  this.resourceSet, resource,
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
-            () => new TranspilationTrace(loadEObject(text, resource, TRANSPILATION_TRACE_ECLASS))));
+            () => new TranspilationTrace(loadEObject(text, resource, THE_TRANSPILATION_TRACE_ECLASS))));
     }
 }

@@ -39,7 +39,25 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
         });
 
-    for (const example of ["JD_001", "moulinette", "open-weather", "plugconv"]) {
+    it("Can load reference RPG parser trace: open-weather",
+        function () {
+            this.timeout(0);
+
+
+            const code = fs.readFileSync("tests/data/playground/rpgexamples/open-weather.json").toString();
+            const trace = rpgLoader.loadParserTrace(code, "rpg");
+            const rootNode = trace.rootNode;
+            expect(rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(rootNode.getSimpleType()).to.eql("CompilationUnit");
+            const child = rootNode.getChildren("dataDefinitions")[3];
+            expect(child.getProperties()).to.eql({
+                name: { child: false },
+                keywords: { child: true }
+            });
+            expect(child.getAttributes()).to.eql({ name: 'ENDPOINT' });
+        });
+
+    for (const example of ["JD_001", "moulinette", "plugconv"]) {
         it(`Can load RPG parser trace: ${example}`,
             function () {
                 this.timeout(0);
@@ -48,8 +66,10 @@ describe('Parser traces – Kolasu metamodel V1', function() {
                 expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit", example);
             });
     }
+});
 
-    it("Can load SAS parser trace",
+describe('Parser traces – Starlasu metamodel V2', function() {
+    it("Can load SAS parser traces",
         function () {
             this.timeout(0);
 
@@ -60,30 +80,38 @@ describe('Parser traces – Kolasu metamodel V1', function() {
                 uri: "file://tests/data/playground/sas-examples/metamodel.json",
                 metamodel: metamodel
             });
-            const code = fs.readFileSync(
-                "tests/data/playground/sas-examples/open-source_covid-19-sas_data_import-data-ihme.sas.json").toString();
-            const trace = loader.loadParserTrace(code, "sas");
+            let code = fs.readFileSync(
+                "tests/data/playground/sas-examples/open-source_covid-19-sas_data_import-data-jhu.sas.json").toString();
+            let trace = loader.loadParserTrace(code, "sas");
 
             const rootNode = trace.rootNode;
             expect(rootNode.getType()).to.eql("com.strumenta.sas.ast.SourceFile");
             expect(rootNode.getSimpleType()).to.eql("SourceFile");
-            expect(rootNode.getPosition()).to.eql(pos(16, 0,349, 0));
-            let foundNode = findByPosition(rootNode, pos(16, 0,349, 0)) as ParserNode;
+            expect(rootNode.getPosition()).to.eql(pos(12, 0,369, 0));
+            let foundNode = findByPosition(rootNode, pos(12, 0,369, 0)) as ParserNode;
             expect(foundNode.eo == rootNode.eo).to.be.true;
-            const descNode = rootNode.children[3].children[7] as ParserNode;
+            const descNode = rootNode.children[10].children[7] as ParserNode;
             foundNode = findByPosition(descNode, descNode.position!) as ParserNode;
             expect(foundNode.eo == descNode.eo).to.be.true;
-            expect(rootNode.getChildren().length).to.equal(44);
-            expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(44);
+            expect(rootNode.getChildren().length).to.equal(18);
+            expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(18);
             // foundNode = findByPosition(rootNode, pos(20, 28, 20, 29)) as ParserNode;
             // expect(foundNode).not.to.be.undefined;
             const child = rootNode.getChildren("statementsAndDeclarations")[0];
             expect(child.getRole()).to.equal("statementsAndDeclarations");
-            expect(child.getAttributes()).to.eql({ name: "fileloc" });
-            expect(trace.issues.length).to.equal(5);
+            expect(child.getAttributes()).to.eql({ name: "importSheets" });
+            expect(trace.issues.length).to.equal(1);
             expect(trace.issues[0].type).to.equal(IssueType.SEMANTIC);
-            expect(trace.issues[0].message).to.equal("Unparsed macro code");
+            expect(trace.issues[0].message).to.equal("Unparsed macro code: `filename `");
             expect(trace.issues[0].severity).to.equal(IssueSeverity.WARNING);
-            expect(trace.issues[0].position).to.eql(pos(36, 1,36, 50));
+            expect(trace.issues[0].position).to.eql(pos(43, 8,43, 17));
+
+            code = fs.readFileSync(
+                "tests/data/playground/sas-examples/open-source_sas-cert-prep-data_professional-prep-guide_cre8permdata.sas.json").toString();
+            trace = loader.loadParserTrace(code, "sas");
+            expect(trace).not.to.be.undefined;
+            expect(trace.rootNode).not.to.be.undefined;
+            expect(trace.rootNode.position).to.eql(pos(15, 0, 10161, 0));
+            expect(trace.issues).to.eql([]);
         });
 });
