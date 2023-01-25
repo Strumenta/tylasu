@@ -72,12 +72,10 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
     }
 
     asOrigin(source: any): Origin | undefined {
-        // TODO: how to check if source is a ParseTree?
-        // if (source instanceof ParseTree)
-        //     return new ParseTreeOrigin(source);
-        // else
-        //     return undefined;
-        return new ParseTreeOrigin(source);
+        if (source instanceof ParserRuleContext || source instanceof TerminalNode)
+            return new ParseTreeOrigin(source);
+        else
+            return undefined;
     }
 }
 
