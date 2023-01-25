@@ -39,7 +39,25 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
         });
 
-    for (const example of ["JD_001", "moulinette", "open-weather", "plugconv"]) {
+    it("Can load reference RPG parser trace: open-weather",
+        function () {
+            this.timeout(0);
+
+
+            const code = fs.readFileSync("tests/data/playground/rpgexamples/open-weather.json").toString();
+            const trace = rpgLoader.loadParserTrace(code, "rpg");
+            const rootNode = trace.rootNode;
+            expect(rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
+            expect(rootNode.getSimpleType()).to.eql("CompilationUnit");
+            const child = rootNode.getChildren("dataDefinitions")[3];
+            expect(child.getProperties()).to.eql({
+                name: { child: false },
+                keywords: { child: true }
+            });
+            expect(child.getAttributes()).to.eql({ name: 'ENDPOINT' });
+        });
+
+    for (const example of ["JD_001", "moulinette", "plugconv"]) {
         it(`Can load RPG parser trace: ${example}`,
             function () {
                 this.timeout(0);
