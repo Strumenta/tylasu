@@ -55,6 +55,7 @@ Node.prototype.hasValidParents = function(parent?: Node) : boolean {
             .reduce((res, val) => res && val, true);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function* getInvalidPositions(node: Node): Generator<Node> {
     for (const n of this.walk()) {
         if (n.position == undefined || (
