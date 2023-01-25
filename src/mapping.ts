@@ -57,7 +57,7 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
      */
     transform(source?: any, parent?: Node): Node | undefined {
         const node = super.transform(source, parent);
-        if (node != undefined && node.origin == undefined && source instanceof ParserRuleContext) {
+        if (node && node.origin && source instanceof ParserRuleContext) {
             node.withParseTreeNode(source);
         }
         return node;
