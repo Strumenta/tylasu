@@ -11,7 +11,8 @@ export function assertASTsAreEqual(
     if (areSameType(expected, actual)) {
         if (considerPosition) {
             expect(
-                actual.position!.equals(expected.position!),
+                (actual.position == undefined && expected.position == undefined)
+                || actual.position!.equals(expected.position!),
                 `${context}.position`
             ).to.be.true;
         }
