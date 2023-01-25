@@ -7,7 +7,7 @@ export function assertASTsAreEqual(
     actual: Node,
     context = "<root>",
     considerPosition = false
-) {
+): void {
     if (areSameType(expected, actual)) {
         if (considerPosition) {
             expect(

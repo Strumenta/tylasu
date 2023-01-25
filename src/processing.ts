@@ -1,4 +1,4 @@
-import {Node, registerNodeChild} from "./model/model";
+import {Node} from "./model/model";
 import {walk} from "./traversing/structurally";
 import {first, pipe} from "iter-ops";
 
