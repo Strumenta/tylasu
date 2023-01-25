@@ -1,11 +1,12 @@
 {
 	"name": "@strumenta/tylasu",
-	"description": "AST building blocks for JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
+	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.1.9",
+	"version": "1.2.0",
 	"license": "Apache-2.0",
 	"keywords": [
+		"antlr",
 		"ast",
 		"starlasu",
 		"traversal",
