@@ -10,10 +10,7 @@ export function assertASTsAreEqual(
 ): void {
     if (areSameType(expected, actual)) {
         if (considerPosition) {
-            expect(
-                actual.position!.equals(expected.position!),
-                `${context}.position`
-            ).to.be.true;
+            expect(actual.position, `${context}.position`).to.eql(expected.position);
         }
         expected.properties.forEach(expectedProperty => {
             const actualPropValue = actual.properties.find(p => p.name == expectedProperty.name)!.value;
