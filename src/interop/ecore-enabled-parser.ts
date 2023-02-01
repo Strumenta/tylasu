@@ -1,6 +1,6 @@
-import {Node} from "../model/model";
+import {Node} from "..";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
-import {Parser} from "../parsing/parsing";
+import {Parser} from "../parsing";
 import {Resource} from "ecore";
 import {THE_AST_EPACKAGE} from "./starlasu-v2-metamodel";
 import {EcoreMetamodelSupport} from "./ecore";

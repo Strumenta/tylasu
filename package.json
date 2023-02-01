@@ -97,7 +97,7 @@
 		"build": "yarn run build:esm && yarn run build:cjs",
 		"build:esm": "tsc --module es6 --outDir dist/esm",
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
-		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts",
+		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ts -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
 		"test": "yarn run build-test-parser && cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha -r ts-node/register \"tests/**/*.test.ts\"",
