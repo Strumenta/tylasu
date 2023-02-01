@@ -10,17 +10,18 @@ import {ParseTreeOrigin} from "../src/parsing/parse-tree";
 class CompilationUnit extends Node {}
 
 class SLParser extends Parser<CompilationUnit, SimpleLangParser, CompilationUnitContext> {
-        protected createANTLRLexer(inputStream: CharStream): Lexer {
-                return new SimpleLangLexer(inputStream);
-        }
+    protected createANTLRLexer(inputStream: CharStream): Lexer {
+        return new SimpleLangLexer(inputStream);
+    }
 
-        protected createANTLRParser(tokenStream: TokenStream): SimpleLangParser {
-                return new SimpleLangParser(tokenStream);
-        }
+    protected createANTLRParser(tokenStream: TokenStream): SimpleLangParser {
+        return new SimpleLangParser(tokenStream);
+    }
 
-        protected parseTreeToAst(parseTreeRoot: CompilationUnitContext, considerPosition: boolean, issues: Issue[]): CompilationUnit | undefined {
-                return new CompilationUnit().withParseTreeNode(parseTreeRoot);
-        }
+    protected parseTreeToAst(parseTreeRoot: CompilationUnitContext, considerPosition: boolean, issues: Issue[]):
+        CompilationUnit | undefined {
+        return new CompilationUnit().withParseTreeNode(parseTreeRoot);
+    }
 }
 
 describe('Parsing', function() {
@@ -33,6 +34,7 @@ describe('Parsing', function() {
             expect(result.root!.origin instanceof ParseTreeOrigin).to.be.true;
             const origin = result.root!.origin as ParseTreeOrigin;
             expect(origin.parseTree).to.equal(result.firstStage!.root);
+            expect(result.root!.parseTree).to.equal(result.firstStage!.root);
             expect(result.code).to.equal(code);
         });
 });

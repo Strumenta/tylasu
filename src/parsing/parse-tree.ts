@@ -77,6 +77,7 @@ export class ParseTreeOrigin extends Origin {
 
 declare module '../model/model' {
     export interface Node {
+        parseTree?: ParseTree;
         withParseTreeNode(parseTree?: ParseTree): this;
     }
 }
@@ -97,6 +98,16 @@ export function withParseTreeNode(node: Node, parseTree?: ParseTree): Node {
 Node.prototype.withParseTreeNode = function (parseTree) {
     return withParseTreeNode(this, parseTree);
 }
+
+Object.defineProperty(Node.prototype, "parseTree", {
+    get(): ParseTree | undefined {
+        if (this.origin instanceof ParseTreeOrigin) {
+            return this.origin.parseTree;
+        } else {
+            return undefined;
+        }
+    }
+});
 
 ParserRuleContext.prototype.getOriginalText = function () {
     const a = this.start.startIndex;
