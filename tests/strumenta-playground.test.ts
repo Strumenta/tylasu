@@ -4,16 +4,22 @@ import {Issue} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
 import {saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
-import {CharStream, Lexer, TokenStream} from "antlr4ts";
+import {CharStream, CommonToken, Lexer, Token, TokenStream} from "antlr4ts";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
 import {ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
+import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 
 describe('Strumenta Playground', function() {
     it("Export", function () {
+        // We assign a fake parse tree, to ensure that we don't attempt to serialize ANTLR parse trees into the model.
+        const fakePT = new TerminalNode(new CommonToken(Token.EOF));
+        (fakePT.symbol as CommonToken).line = 1;
+        (fakePT.symbol as CommonToken).charPositionInLine = 0;
         const result = new ParsingResult<NodeSubclass, any>(
-            "some code", new NodeSubclass("root"), [Issue.semantic("Something's wrong")]);
+            "some code", new NodeSubclass("root").withParseTreeNode(fakePT),
+            [Issue.semantic("Something's wrong")]);
         const testParser = new TestParser();
         const resourceSet = Ecore.ResourceSet.create();
         const mmResource = resourceSet.create({ uri: "some.package" });

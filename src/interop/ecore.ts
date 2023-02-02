@@ -229,7 +229,7 @@ export interface Result {
 
 export type ASTElement = Node | Position | Issue | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
 
-function decodeEnumLiteral(eType, literalName: string) {
+function decodeEnumLiteral(eType, literalName: string | number) {
     if(!literalName) {
         return undefined;
     }
@@ -350,27 +350,33 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
     if(!eClass) {
         throw new Error("Unknown class " + def.name + " in package " + def.package);
     }
-    const result = eClass.create();
-    eClass.get("eAllStructuralFeatures").forEach(a => {
-        if(a.isTypeOf('EAttribute')) {
-            const name = a.get("name");
+    const eObject = eClass.create();
+    for (const name in def.properties) {
+        const p = def.properties[name];
+        const feature = eClass.get("eAllStructuralFeatures").find(f => f.get("name") == name);
+        if (!feature) {
+            throw new Error(`Unknown feature: ${name} of ${eClass.get("name")}`);
+        }
+        if(p.child) {
+            eObject.set(name, toEObject(this[name], eObject, feature));
+        } else {
             const value = this[name];
-            if(value !== undefined && value !== null && a.get("eType") && a.get("eType").isTypeOf("EEnum")) {
-                const literal = a.get("eType").get("eLiterals").find(l => l.get("value") === value);
+            const eType = feature.get("eType");
+            if(value !== undefined && value !== null && eType && eType.isTypeOf("EEnum")) {
+                const literal = eType.get("eLiterals").find(l => l.get("value") === value);
                 if(literal) {
-                    result.set(name, literal.get("name"));
+                    eObject.set(name, literal.get("name"));
                 } else {
-                    throw new Error(`No literal has value ${value} in enum ${a.get("eType").get("name")}`)
+                    throw new Error(`No literal has value ${value} in enum ${eType.get("name")}`)
                 }
             } else {
-                result.set(name, value);
+                eObject.set(name, value);
             }
-        } else if(a.isTypeOf('EReference')) {
-            const name = a.get("name");
-            result.set(name, toEObject(this[name], result, a));
         }
-    });
-    return result;
+    }
+    eObject.set("position", toEObject(this.position, eObject));
+    // TODO origin, destination
+    return eObject;
 }
 
 Position.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {

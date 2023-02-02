@@ -3,6 +3,19 @@
     "eClass": "https://strumenta.com/starlasu/v2#//Result",
     "root": {
       "eClass": "#/0/NodeSubclass",
+      "position": {
+        "eClass": "https://strumenta.com/starlasu/v2#//Position",
+        "start": {
+          "eClass": "https://strumenta.com/starlasu/v2#//Point",
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "eClass": "https://strumenta.com/starlasu/v2#//Point",
+          "line": 1,
+          "column": 0
+        }
+      },
       "a": "root"
     },
     "issues": [
