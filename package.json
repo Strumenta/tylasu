@@ -3,7 +3,7 @@
 	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"license": "Apache-2.0",
 	"keywords": [
 		"antlr",
@@ -43,6 +43,11 @@
 			"require": "./dist/cjs/interop/ecore.js",
 			"types": "./dist/types/interop/ecore.d.ts"
 		},
+		"./interop/ecore-enabled-parser": {
+			"import": "./dist/esm/interop/ecore-enabled-parser.js",
+			"require": "./dist/cjs/interop/ecore-enabled-parser.js",
+			"types": "./dist/types/interop/ecore-enabled-parser.d.ts"
+		},
 		"./interop/strumenta-playground": {
 			"import": "./dist/esm/interop/strumenta-playground.js",
 			"require": "./dist/cjs/interop/strumenta-playground.js",
@@ -59,6 +64,9 @@
 			],
 			"interop/ecore": [
 				"dist/types/interop/ecore.d.ts"
+			],
+			"interop/ecore-enabled-parser": [
+				"dist/types/interop/ecore-enabled-parser.d.ts"
 			],
 			"interop/strumenta-playground": [
 				"dist/types/interop/strumenta-playground.d.ts"

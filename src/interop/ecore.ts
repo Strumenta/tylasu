@@ -28,6 +28,8 @@ import {
 } from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
+export * as starlasu_v2 from "./starlasu-v2-metamodel";
+export * as kolasu_v1 from "./kolasu-v1-metamodel";
 
 export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");

@@ -10,11 +10,13 @@ similar support in other languages.
 Tylasu come with optional facilities for integration with ANTLR, specifically the 
 [antlr4ts](https://github.com/tunnelvisionlabs/antlr4ts) implementation.
 
-## Documentation
+## Documentation and Examples
 
 The high-level documentation of the concepts that make up StarLasu is available on [the StarLasu repository](https://github.com/Strumenta/StarLasu) on GitHub.
 
 The documentation of Tylasu's APIs, that implement those concepts, is available at https://strumenta.github.io/tylasu/.
+
+A project showcasing some basic usage of Tylasu [is also available](https://github.com/Strumenta/tylasu-hello-world).
 
 ## Building and Releasing
 
