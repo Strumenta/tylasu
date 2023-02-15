@@ -12,7 +12,7 @@ import * as Ecore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, EReference, Resource} from "ecore";
 import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
-import {getEPackage} from "./ecore-basic";
+import {addLiteral, getEPackage} from "./ecore-basic";
 import {
     STARLASU_URI_V2,
     THE_ISSUE_ECLASS,
@@ -35,6 +35,10 @@ export const TO_EOBJECT_SYMBOL = Symbol("toEObject");
 export const ECLASS_SYMBOL = Symbol("EClass");
 export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
+
+const THE_ECORE_URI = "http://www.eclipse.org/emf/2002/Ecore";
+const THE_ECORE_EPACKAGE = Ecore.EPackage.Registry.getEPackage(THE_ECORE_URI);
+const THE_ENUM_ECLASS = THE_ECORE_EPACKAGE.get("eClassifiers").find((c: EClassifier) => c.get("name") == "EEnum");
 
 function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const packageDef = NODE_TYPES[packageName];
@@ -229,7 +233,7 @@ export interface Result {
 
 export type ASTElement = Node | Position | Issue | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
 
-function decodeEnumLiteral(eType, literalName: string | number) {
+function decodeEnumLiteral(eType, literalName: string | number | unknown) {
     if(!literalName) {
         return undefined;
     }
@@ -632,18 +636,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
     }
 }
 
-/**
- * Interprets a JSON object as an EObject.
- * @param obj the input object.
- * @param resource where to look for to resolve references to types.
- * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
- * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
- * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function importJsonObject(
-    obj: any, resource: Resource, eClass?: EClass,
-    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
+function ensureEClass(obj: any, eClass: EClass | undefined, resource: Resource): EClass {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
@@ -662,12 +655,7 @@ function importJsonObject(
         } else if(samePropertiesAs(propertyNames, THE_LOCAL_DATE_TIME_ECLASS)) {
             eClass = THE_LOCAL_TIME_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_ISSUE_ECLASS)) {
-            return THE_ISSUE_ECLASS.create({
-                type: IssueType[obj.type],
-                message: obj.message,
-                severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
-                position: obj.position ? importJsonObject(obj.position, resource, undefined, strict, referencesTracker) : undefined
-            });
+            return THE_ISSUE_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_POINT_ECLASS)) {
             eClass = THE_POINT_ECLASS;
         } else if(samePropertiesAs(propertyNames, THE_POSITION_ECLASS)) {
@@ -677,6 +665,40 @@ function importJsonObject(
         if (!eClass) {
             throw new Error(`EClass is not specified and not present in the object. Property names: ${propertyNames}`);
         }
+    }
+    return eClass;
+}
+
+/**
+ * Interprets a JSON object as an EObject.
+ * @param obj the input object.
+ * @param resource where to look for to resolve references to types.
+ * @param eClass if the object does not specify an EClass, this method will use this parameter, if provided.
+ * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
+ * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function importJsonObject(
+    obj: any, resource: Resource, eClass?: EClass,
+    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
+    eClass = ensureEClass(obj, eClass, resource);
+    if (eClass == THE_ISSUE_ECLASS) {
+        return eClass.create({
+            type: IssueType[obj.type],
+            message: obj.message,
+            severity: obj.severity !== undefined ? IssueSeverity[obj.severity] : undefined,
+            position: obj.position ?
+                importJsonObject(obj.position, resource, undefined, strict, referencesTracker) :
+                undefined
+        });
+    } else if (eClass == THE_ENUM_ECLASS) {
+        const theEnum = Ecore.EEnum.create({
+            name: obj.name
+        });
+        obj.eLiterals?.forEach((name: string, value: number) => {
+            addLiteral(theEnum, name, value);
+        })
+        return theEnum;
     }
     const eObject = eClass.create({});
     for (const key in obj) {

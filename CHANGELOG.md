@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.3] – Not yet released
+
+### Fixed
+- Correctly import enums from Ecore
+
 ## [1.2.2] – 2023-02-02
 
 ### Added
