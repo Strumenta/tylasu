@@ -695,8 +695,12 @@ function importJsonObject(
         const theEnum = Ecore.EEnum.create({
             name: obj.name
         });
-        obj.eLiterals?.forEach((name: string, value: number) => {
-            addLiteral(theEnum, name, value);
+        obj.eLiterals?.forEach((name: string | any, index: number) => {
+            if (typeof name === 'string') {
+                addLiteral(theEnum, name, index);
+            } else {
+                addLiteral(theEnum, name?.name, typeof name?.value === 'number' ? name.value : index);
+            }
         })
         return theEnum;
     }
