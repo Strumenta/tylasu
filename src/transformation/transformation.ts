@@ -19,11 +19,11 @@ export class NodeFactory<Source, Output extends Node> {
     ) {}
 
     // TODO: port other overrides of the withChild method?
-    withChild = function<Target extends any, Child extends any>(
-       get: (s: Source) => any | undefined,
-       set: (t: Target, c?: Child) => void,
-       name: string,
-       type?: any
+    withChild<Target extends any, Child extends any>(
+        get: (s: Source) => any | undefined,
+        set: (t: Target, c?: Child) => void,
+        name: string,
+        type?: any
     ) : NodeFactory<Source, Output> {
 
         const nodeDefinition = getNodeDefinition(type);
@@ -33,12 +33,12 @@ export class NodeFactory<Source, Output extends Node> {
         return this;
     }
 
-    withFinalizer = function (finalizer: (Output) => void) : void {
+    withFinalizer(finalizer: (Output) => void) : void {
         this.finalizer = finalizer;
     }
 
-    getter : (Source) => any = function(path: string) : (Source) => any {
-        return function(src: Source) {
+    getter(path: string) : (Source) => any {
+        return (src: Source) => {
             let sub = src;
 
             for (const elem in path.split(".")) {
@@ -51,7 +51,7 @@ export class NodeFactory<Source, Output extends Node> {
         }
     }
 
-    private getSubExpression : any | undefined = function (src: any, elem: string) {
+    private getSubExpression(src: any, elem: string) : any | undefined {
         if (Array.isArray(src)) {
             return src.map(it => this.getSubExpression(it!, elem));
         } else {
@@ -81,7 +81,7 @@ export class ChildNodeFactory<Source, Target, Child> {
         public setter: (Target, Child?) => void
     ) {}
 
-    set = function(node: Target, child?: Child) : void {
+    set(node: Target, child?: Child) : void {
         try {
             this.setter(node, child);
         } catch (e) {

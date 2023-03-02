@@ -232,14 +232,14 @@ export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition
 
 export function registerNodeDefinition<T extends Node>(
     target: { new(...args: any[]): T }, pkg?: string, name?: string): NodeDefinition {
-    let def;
+    let def: NodeDefinition;
     if(pkg !== undefined) {
-        if(!name) {
+        if (!name) {
             throw new Error("Package name without node name");
         }
         ensurePackage(pkg);
         const existingTarget = NODE_TYPES[pkg].nodes[name];
-        if(existingTarget && existingTarget !== target) {
+        if (existingTarget && existingTarget !== target) {
             nodeRedefinitionStrategy(name, target, existingTarget);
         }
     }
@@ -247,7 +247,7 @@ export function registerNodeDefinition<T extends Node>(
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
         if((existingDef.package !== undefined && existingDef.package != pkg) ||
             (existingDef.name !== undefined && existingDef.name != name)) {
-            throw new Error(`Type ${target} is already defined as ${JSON.stringify(existingDef)}`);
+            throw new Error(`Type ${pkg}.${name} (${target}) is already defined as ${JSON.stringify(existingDef)}`);
         } else {
             def = existingDef;
             def.package = pkg;
