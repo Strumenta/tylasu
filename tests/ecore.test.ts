@@ -35,7 +35,7 @@ describe('Metamodel', function() {
             expect(ePackage.get("eClassifiers").size() >= 1).to.be.true;
             const eClass = ePackage.get("eClassifiers").find(ec => ec.get('name') == "SomeNodeInPackage");
             expect(eClass).not.to.be.undefined;
-            expect(eClass.get('eStructuralFeatures').size()).to.equal(3);
+            expect(eClass.get('eStructuralFeatures').size()).to.equal(4);
             expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("a");
             expect(eClass.get('eStructuralFeatures').at(0).get("upperBound")).to.equal(1);
             expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("someNode");
@@ -43,6 +43,8 @@ describe('Metamodel', function() {
             expect(eClass.get('eStructuralFeatures').at(2).get("name")).to.equal("multi");
             expect(eClass.get('eStructuralFeatures').at(2).get("upperBound")).to.equal(-1);
             expect(eClass.get('eStructuralFeatures').at(2).get("containment")).to.be.true;
+            expect(eClass.get('eStructuralFeatures').at(3).get("name")).to.equal("selfRef");
+            expect(eClass.get('eStructuralFeatures').at(3).get("containment")).to.be.true;
         });
     it("inheritance",
         function () {
@@ -56,15 +58,16 @@ describe('Metamodel', function() {
             expect(eClass.get('eStructuralFeatures').size()).to.equal(2);
             expect(eClass.get('eStructuralFeatures').at(0).get("name")).to.equal("b");
             expect(eClass.get('eStructuralFeatures').at(1).get("name")).to.equal("anotherChild");
-            expect(eClass.get('eAllStructuralFeatures').length).to.equal(8);
+            expect(eClass.get('eAllStructuralFeatures').length).to.equal(9);
             expect(eClass.get('eAllStructuralFeatures')[0].get("name")).to.equal("position");
             expect(eClass.get('eAllStructuralFeatures')[1].get("name")).to.equal("destination");
             expect(eClass.get('eAllStructuralFeatures')[2].get("name")).to.equal("origin");
             expect(eClass.get('eAllStructuralFeatures')[3].get("name")).to.equal("a");
             expect(eClass.get('eAllStructuralFeatures')[4].get("name")).to.equal("someNode");
             expect(eClass.get('eAllStructuralFeatures')[5].get("name")).to.equal("multi");
-            expect(eClass.get('eAllStructuralFeatures')[6].get("name")).to.equal("b");
-            expect(eClass.get('eAllStructuralFeatures')[7].get("name")).to.equal("anotherChild");
+            expect(eClass.get('eAllStructuralFeatures')[6].get("name")).to.equal("selfRef");
+            expect(eClass.get('eAllStructuralFeatures')[7].get("name")).to.equal("b");
+            expect(eClass.get('eAllStructuralFeatures')[8].get("name")).to.equal("anotherChild");
         });
 });
 

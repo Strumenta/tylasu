@@ -3,7 +3,7 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL,
+    NODE_DEFINITION_SYMBOL, NodeProperty,
     Origin,
     registerNodeDefinition,
     registerNodeProperty
@@ -19,7 +19,7 @@ export class NodeFactory<Source, Output extends Node> {
     ) {}
 
     // TODO: port other overrides of the withChild method?
-    withChild<Target extends any, Child extends any>(
+    withChild<Target, Child>(
         get: (s: Source) => any | undefined,
         set: (t: Target, c?: Child) => void,
         name: string,
@@ -225,7 +225,7 @@ export class ASTTransformer {
         return source;
     }
 
-    makeNode<S extends any, T extends Node>(
+    makeNode<S, T extends Node>(
         factory: NodeFactory<S, T>,
         source: S,
         allowGenericNode = true
@@ -248,7 +248,7 @@ export class ASTTransformer {
         return node;
     }
 
-    getNodeFactory<S extends any, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
+    getNodeFactory<S, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
 
         let nodeClass = type.constructor;
 
@@ -262,7 +262,7 @@ export class ASTTransformer {
         return undefined;
     }
 
-    public registerNodeFactory<S extends any, T extends Node>(
+    public registerNodeFactory<S, T extends Node>(
         nodeClass: any,
         factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
     ) : NodeFactory<S, T> {
@@ -356,7 +356,7 @@ export function Init(target, methodName: string): void {
 
 export function fillChildAST<FROM, TO extends Node>(
     node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
-    const propDef = ensureNodeDefinition(node).properties[property];
+    const propDef = ensureNodeDefinition(node).properties[property] as NodeProperty | any;
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
         const path = propertyPath.split(".");

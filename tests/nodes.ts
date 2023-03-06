@@ -45,6 +45,8 @@ export class SomeNodeInPackage extends Node {
     someNode: SomeNode;
     @Children()
     multi: SomeNode[] = [];
+    @Child()
+    selfRef: SomeNodeInPackage;
 
     constructor(a?: string, positionOverride?: Position) {
         super(positionOverride);

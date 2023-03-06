@@ -53,6 +53,19 @@
             "lowerBound": 0,
             "upperBound": -1,
             "containment": true
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "name": "selfRef",
+            "eType": {
+              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+            },
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1,
+            "containment": true
           }
         ]
       },
@@ -105,6 +118,19 @@
             "lowerBound": 0,
             "upperBound": -1,
             "containment": true
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "name": "selfRef",
+            "eType": {
+              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+            },
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1,
+            "containment": true
           }
         ]
       },
@@ -123,6 +149,10 @@
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "b",
+            "eType": {
+              "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+            },
             "ordered": true,
             "unique": true,
             "lowerBound": 0,
@@ -192,6 +222,19 @@
             "lowerBound": 0,
             "upperBound": -1,
             "containment": true
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "name": "selfRef",
+            "eType": {
+              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+            },
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1,
+            "containment": true
           }
         ]
       },
@@ -210,6 +253,10 @@
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "b",
+            "eType": {
+              "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+            },
             "ordered": true,
             "unique": true,
             "lowerBound": 0,
@@ -279,6 +326,19 @@
             "lowerBound": 0,
             "upperBound": -1,
             "containment": true
+          },
+          {
+            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+            "name": "selfRef",
+            "eType": {
+              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
+            },
+            "ordered": true,
+            "unique": true,
+            "lowerBound": 0,
+            "upperBound": 1,
+            "containment": true
           }
         ]
       },
@@ -297,6 +357,10 @@
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "b",
+            "eType": {
+              "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+            },
             "ordered": true,
             "unique": true,
             "lowerBound": 0,

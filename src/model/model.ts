@@ -1,7 +1,9 @@
 import {Position} from "./position";
 import "reflect-metadata";
+import {Concept, Containment, Feature, Link, Metamodel, Property as LProperty} from "lioncore";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
+export const CONCEPT_SYMBOL = Symbol("concept");
 
 export type PackageDescription = {
     name: string,
@@ -11,47 +13,75 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
     "": { name: "", nodes: {} }
 };
 
+export type NodeProperty = {
+    type?: any,
+    child?: boolean,
+    inherited?: boolean,
+    multiple?: boolean
+}
+
 export type NodeDefinition = {
     package?: string,
     name?: string,
-    properties: any, //{ [name: string | symbol]: { type?: any, arrayType?: any, child?: any } },
-    resolved?: boolean;
+    properties: { [name: string | symbol]: NodeProperty },
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
     const target = typeof node === "function" ? node : node.constructor;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        const definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
-        if(definition && definition.properties && !definition.resolved) {
-            try {
-                let metadataHolder;
-                try {
-                    metadataHolder = new (node as any)();
-                } catch (_) {
-                    metadataHolder = node;
-                }
-                let noTypesToFind = true;
-                let atLeastOneFound = false;
-                for(const p in definition.properties) {
-                    noTypesToFind = false;
-                    const type = Reflect.getMetadata("design:type", metadataHolder, p);
-                    atLeastOneFound = atLeastOneFound || !!type;
-                    definition.properties[p].type = type;
-                    if(type === Array) {
-                        definition.properties[p].arrayType =
-                            Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
-                    }
-                }
-                definition.resolved = noTypesToFind || atLeastOneFound;
-            } catch (e) {
-                //Ignore
-            }
-        }
-        return definition;
+        return target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     } else {
         return undefined;
     }
 }
+
+export const METAMODELS = new Map<string, Metamodel>();
+
+export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept {
+    const nodeDefinition = getNodeDefinition(node);
+    if (!Object.prototype.hasOwnProperty.call(node, CONCEPT_SYMBOL)) {
+        const pkg = nodeDefinition?.package;
+        const name = nodeDefinition?.name;
+        if (pkg && name) {
+            let metamodel = METAMODELS.get(pkg);
+            if (!metamodel) {
+                metamodel = new Metamodel(pkg, pkg);
+                METAMODELS.set(pkg, metamodel);
+            }
+            const concept = new Concept(metamodel, name, pkg + "." + name, false);
+            node[CONCEPT_SYMBOL] = concept; // We need this to avoid infinite recursion for self-referencing nodes
+            const features: Feature[] = [];
+            for (const pName in nodeDefinition!.properties) {
+                const property = nodeDefinition.properties[pName];
+                let feature: Feature;
+                if (property.child) {
+                    const containment = new Containment(concept, pName, concept.qualifiedName() + "." + pName);
+                    if (property.type) try {
+                        containment.type = getConcept(property.type);
+                    } catch {
+                        // Ignore
+                    }
+                    feature = containment;
+                } else {
+                    feature = new LProperty(concept, pName, concept.qualifiedName() + "." + pName);
+                }
+                if (property.multiple) {
+                    if (feature instanceof Link) {
+                        feature.multiple = true;
+                    }
+                }
+                features.push(feature);
+            }
+            node[CONCEPT_SYMBOL] = concept.havingFeatures(...features);
+        } else {
+            throw new Error(
+                `Cannot derive a Concept for ${node} – definition is missing or has no package/name: ${JSON.stringify(nodeDefinition)}`);
+        }
+    }
+    return node[CONCEPT_SYMBOL] as Concept;
+}
+
+
 
 export abstract class Origin {
     abstract get position(): Position | undefined;
@@ -118,6 +148,10 @@ export abstract class Node extends Origin implements Destination {
 
     protected get nodeDefinition(): NodeDefinition | undefined {
         return getNodeDefinition(this);
+    }
+
+    get concept(): Concept | undefined {
+        return getConcept(Object.getPrototypeOf(this));
     }
 
     get properties(): PropertyDescription[] {
@@ -286,13 +320,28 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     return definition;
 }
 
-export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string | symbol): any {
+export function registerNodeProperty<T extends Node>(
+    type: { new(...args: any[]): T }, methodName: string | symbol
+): any {
     if (methodName == "parent" || methodName == "children" || methodName == "origin") {
         methodName = Symbol(methodName);
     }
     const definition = ensureNodeDefinition(type);
     if (!definition.properties[methodName]) {
         definition.properties[methodName] = {};
+        let metadataHolder;
+        try {
+            metadataHolder = new (type as any)();
+        } catch (_) {
+            metadataHolder = type;
+        }
+        const pType = Reflect.getMetadata("design:type", metadataHolder, methodName);
+        if(pType === Array) {
+            definition.properties[methodName].type =
+                Reflect.getMetadata("design:arrayElementType", metadataHolder, methodName);
+        } else {
+            definition.properties[methodName].type = pType;
+        }
     }
     return definition.properties[methodName];
 }
