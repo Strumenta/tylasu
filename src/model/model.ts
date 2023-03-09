@@ -23,13 +23,16 @@ export type NodeProperty = {
 export type NodeDefinition = {
     package?: string,
     name?: string,
+    extends?: NodeDefinition,
     properties: { [name: string | symbol]: NodeProperty },
 };
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
-    const target = typeof node === "function" ? node : node.constructor;
-    if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        return target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
+    if (node instanceof Node) {
+        node = Object.getPrototypeOf(node).constructor;
+    }
+    if(Object.prototype.hasOwnProperty.call(node, NODE_DEFINITION_SYMBOL)) {
+        return node[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     } else {
         return undefined;
     }
@@ -38,6 +41,9 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
 export const METAMODELS = new Map<string, Metamodel>();
 
 export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept {
+    if (node instanceof Node) {
+        node = Object.getPrototypeOf(node).constructor;
+    }
     const nodeDefinition = getNodeDefinition(node);
     if (!Object.prototype.hasOwnProperty.call(node, CONCEPT_SYMBOL)) {
         const pkg = nodeDefinition?.package;
@@ -71,6 +77,12 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
                     }
                 }
                 features.push(feature);
+            }
+            if (nodeDefinition.extends) {
+                const superclass = Object.getPrototypeOf(node);
+                if (superclass != Node) {
+                    concept.extends = getConcept(superclass);
+                }
             }
             node[CONCEPT_SYMBOL] = concept.havingFeatures(...features);
         } else {
@@ -294,6 +306,7 @@ export function registerNodeDefinition<T extends Node>(
             properties: {}
         };
         if(existingDef) {
+            def.extends = existingDef;
             for(const prop in existingDef.properties) {
                 def.properties[prop] = {inherited: true, ...existingDef.properties[prop]};
             }
