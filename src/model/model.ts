@@ -29,7 +29,7 @@ export type NodeDefinition = {
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
     if (node instanceof Node) {
-        node = Object.getPrototypeOf(node).constructor;
+        node = node.constructor as any;
     }
     if(Object.prototype.hasOwnProperty.call(node, NODE_DEFINITION_SYMBOL)) {
         return node[NODE_DEFINITION_SYMBOL] as NodeDefinition;
