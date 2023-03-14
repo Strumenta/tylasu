@@ -5,18 +5,20 @@ import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {ParseTreeOrigin} from "../src/parsing/parse-tree";
+import {ParseTreeOrigin} from "../src/parsing";
 import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer, toAST} from "../src/mapping";
-import {Position} from "../src/model/position";
+import {Position} from "../src";
 import {assertASTsAreEqual} from "../src/testing/testing";
 import {GenericErrorNode} from "../src/model/errors";
+
+const ID_PROPERTY = Symbol("id");
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
     //Explicit mapping
     @Child()
     @Mapped("ID")
-    id: Node;
+    [ID_PROPERTY]: Node;
     //Implicit mapping (same name)
     @Child()
     EQUAL: Node;
@@ -81,7 +83,7 @@ describe('Mapping of Parse Trees to ASTs', function() {
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;
             const origin = mySetStatement.origin as ParseTreeOrigin;
             expect(origin.parseTree).to.equal(setStmt);
-            expect(mySetStatement.id).not.to.be.undefined;
+            expect(mySetStatement[ID_PROPERTY]).not.to.be.undefined;
             expect(mySetStatement.EQUAL).not.to.be.undefined;
             expect(mySetStatement.set).to.be.undefined;
             expect(mySetStatement.expression).not.to.be.undefined;

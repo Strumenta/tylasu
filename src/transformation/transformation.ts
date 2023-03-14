@@ -331,7 +331,7 @@ export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
  * Note: this will eventually be integrated with Kolasu-style transformers.
  * @param path the path in the source node that will be mapped to the target property.
  */
-export function Mapped(path?: string): (target, methodName: string) => void {
+export function Mapped(path?: string): (target, methodName: string | symbol) => void {
     return function (target, methodName: string) {
         registerPropertyMapping(target, methodName, path);
     };
@@ -355,7 +355,7 @@ export function Init(target, methodName: string): void {
 //-----------------//
 
 export function fillChildAST<FROM, TO extends Node>(
-    node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
+    node: TO, property: string | symbol, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
     const propDef = ensureNodeDefinition(node).properties[property] as NodeProperty | any;
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
@@ -416,7 +416,7 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
         node = makeNode(factory, tree);
         const def = getNodeDefinition(node);
         if (def) {
-            for (const p in def.properties) {
+            for (const p of Reflect.ownKeys(def.properties)) {
                 fillChildAST(node, p, tree, transformer);
             }
         }

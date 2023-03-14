@@ -4,7 +4,7 @@ import {NodeSubclass, SomeNode, SomeNodeInPackage} from "./nodes";
 import {Concept, Containment, Link} from "lioncore";
 
 function getFeatureByName(concept: Concept, name: string) {
-    return concept.allFeatures().find(f => f.simpleName == name);
+    return concept.allFeatures().find(f => f.name == name);
 }
 
 describe('Lionweb metamodel', function() {
@@ -13,7 +13,7 @@ describe('Lionweb metamodel', function() {
             const concept = getConcept(SomeNodeInPackage)!;
             //TODO bug in Lioncore? expect(concept!.namespaceQualifier()).to.equal("some.package");
             expect(concept.extends).to.be.undefined;
-            expect(concept.simpleName).to.equal("SomeNodeInPackage");
+            expect(concept.name).to.equal("SomeNodeInPackage");
             expect(concept.qualifiedName()).to.equal("some.package.SomeNodeInPackage");
             expect(getFeatureByName(concept, "doesntExist")).to.be.undefined;
             expect(getFeatureByName(concept, "a")).not.to.be.undefined;
@@ -38,7 +38,7 @@ describe('Lionweb metamodel', function() {
             const parentConcept = getConcept(SomeNodeInPackage);
             expect(concept.extends).to.equal(parentConcept);
             //TODO bug in Lioncore? expect(concept!.namespaceQualifier()).to.equal("some.package");
-            expect(concept.simpleName).to.equal("NodeSubclass");
+            expect(concept.name).to.equal("NodeSubclass");
             expect(concept.qualifiedName()).to.equal("some.package.NodeSubclass");
             expect(getFeatureByName(concept, "doesntExist")).to.be.undefined;
             expect(getFeatureByName(concept, "a")).not.to.be.undefined;
@@ -62,7 +62,7 @@ describe('Lionweb metamodel', function() {
             const parentConcept = getConcept(new SomeNodeInPackage());
             expect(concept.extends).to.equal(parentConcept);
             //TODO bug in Lioncore? expect(concept!.namespaceQualifier()).to.equal("some.package");
-            expect(concept.simpleName).to.equal("NodeSubclass");
+            expect(concept.name).to.equal("NodeSubclass");
             expect(concept.qualifiedName()).to.equal("some.package.NodeSubclass");
             expect(getFeatureByName(concept, "doesntExist")).to.be.undefined;
             expect(getFeatureByName(concept, "a")).not.to.be.undefined;

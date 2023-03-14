@@ -1,6 +1,6 @@
 import {Position} from "./position";
 import "reflect-metadata";
-import {Concept, Containment, Feature, Link, Metamodel, Property as LProperty} from "lioncore";
+import {Concept, Containment, Feature, Id, Link, Metamodel, Node as LNode, Property as LProperty} from "lioncore";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 export const CONCEPT_SYMBOL = Symbol("concept");
@@ -127,9 +127,10 @@ export interface Destination {}
  * It implements Origin as it could be the source of a AST-to-AST transformation, so the node itself can be
  * the Origin of another node.
  */
-export abstract class Node extends Origin implements Destination {
+export abstract class Node extends Origin implements Destination, LNode {
     parent?: Node;
     origin?: Origin;
+    id: Id;
 
     constructor(protected positionOverride?: Position) {
         super();
@@ -336,9 +337,6 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
 export function registerNodeProperty<T extends Node>(
     type: { new(...args: any[]): T }, methodName: string | symbol
 ): any {
-    if (methodName == "parent" || methodName == "children" || methodName == "origin") {
-        methodName = Symbol(methodName);
-    }
     const definition = ensureNodeDefinition(type);
     if (!definition.properties[methodName]) {
         definition.properties[methodName] = {};
@@ -360,7 +358,7 @@ export function registerNodeProperty<T extends Node>(
 }
 
 export function registerNodeChild<T extends Node>(
-    type: new (...args: any[]) => T, methodName: string): any {
+    type: new (...args: any[]) => T, methodName: string | symbol): any {
     const propInfo = registerNodeProperty(type, methodName);
     propInfo.child = true;
     return propInfo;
@@ -379,8 +377,8 @@ export function ASTNode<T extends Node>(pkg: string, name: string) {
 /**
  * Declares the decorated property as the holder of a child node.
  */
-export function Child(): (target, methodName: string) => void {
-    return function (target, methodName: string) {
+export function Child(): (target, methodName: string | symbol) => void {
+    return function (target, methodName: string | symbol) {
         registerNodeChild(target, methodName);
     };
 }
