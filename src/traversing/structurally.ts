@@ -1,23 +1,23 @@
-import {Node} from "../model/model";
+import {ASTNode} from "../model/model";
 
 declare module '../model/model' {
-    export interface Node {
+    export interface ASTNode {
         /**
          * A generator that walks over the whole AST starting from this node, depth-first.
          */
-        walk(): Generator<Node>;
+        walk(): Generator<ASTNode>;
         /**
          * A generator that walks over the whole AST starting from the children of this node.
          * @param walker a function that generates a sequence of nodes. By default, this is the depth-first
          * "walk" function.
          * For post-order traversal, use "walkLeavesFirst".
          */
-        walkDescendants(walker?: typeof walk): Generator<Node>;
+        walkDescendants(walker?: typeof walk): Generator<ASTNode>;
 
         /**
          * A generator that walks over the direct children of this node.
          */
-        walkChildren(): Generator<Node>;
+        walkChildren(): Generator<ASTNode>;
     }
 }
 
@@ -25,7 +25,7 @@ declare module '../model/model' {
  * A generator that walks the whole AST starting from the provided node, depth-first.
  * @param node the starting node.
  */
-export function* walk(node: Node): Generator<Node> {
+export function* walk(node: ASTNode): Generator<ASTNode> {
     const stack = [node];
     while(stack.length > 0) {
         const currentNode = stack.pop();
@@ -36,7 +36,7 @@ export function* walk(node: Node): Generator<Node> {
     }
 }
 
-Node.prototype.walk = function() {
+ASTNode.prototype.walk = function() {
     return walk(this);
 };
 
@@ -46,7 +46,7 @@ Node.prototype.walk = function() {
  * @param walker a function that generates a sequence of nodes. By default this is the depth-first "walk" function.
  * For post-order traversal, use "walkLeavesFirst".
  */
-export function* walkDescendants(node: Node, walker: typeof walk = walk): Generator<Node> {
+export function* walkDescendants(node: ASTNode, walker: typeof walk = walk): Generator<ASTNode> {
     for(const n of walker(node)) {
         if(n != node) {
             yield n;
@@ -54,7 +54,7 @@ export function* walkDescendants(node: Node, walker: typeof walk = walk): Genera
     }
 }
 
-Node.prototype.walkDescendants = function(walker: typeof walk = walk) {
+ASTNode.prototype.walkDescendants = function(walker: typeof walk = walk) {
     return walkDescendants(this, walker)
 };
 
@@ -62,15 +62,15 @@ Node.prototype.walkDescendants = function(walker: typeof walk = walk) {
 /**
  * @return all direct children of this node.
  */
-export function* walkChildren(node: Node): Generator<Node> {
+export function* walkChildren(node: ASTNode): Generator<ASTNode> {
     for (const property of node.properties) {
         const value = property.value;
-        if (value instanceof Node) {
+        if (value instanceof ASTNode) {
             yield value;
         }
         if(Array.isArray(value)) {
             for (let i = 0; i < value.length; i++){
-                if(value[i] instanceof Node) {
+                if(value[i] instanceof ASTNode) {
                     yield value[i];
                 }
             }
@@ -78,6 +78,6 @@ export function* walkChildren(node: Node): Generator<Node> {
     }
 }
 
-Node.prototype.walkChildren = function() {
+ASTNode.prototype.walkChildren = function() {
     return walkDescendants(this);
 };

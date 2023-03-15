@@ -1,20 +1,20 @@
-import {ensureNodeDefinition, Node} from "../model/model";
+import {ensureNodeDefinition, ASTNode} from "../model/model";
 import {ReferenceByName} from "../model/naming";
 import {Indexer} from "./indexing";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
 
-export function toJSON(node: Node, withIds?: Indexer): any {
+export function toJSON(node: ASTNode, withIds?: Indexer): any {
     return node[TO_JSON_SYMBOL](withIds);
 }
 
 export class JSONGenerator {
-    toJSON(node: Node, withIds?: Indexer): any {
+    toJSON(node: ASTNode, withIds?: Indexer): any {
         return toJSON(node, withIds);
     }
 }
 
-Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
+ASTNode.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
     const def = ensureNodeDefinition(this);
     const result = {
         type: (def.package ? def.package + "." : "") + def.name
@@ -26,7 +26,7 @@ Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
             result["id"] = id;
     }
 
-    const node = this as Node;
+    const node = this as ASTNode;
     for(const p in node) {
         if(p == 'parent' || p == 'parseTreeNode') {
             continue;
@@ -34,7 +34,7 @@ Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
         const element = node[p];
         if(element !== undefined && element !== null) {
             if(node.isChild(p)) {
-                if(element instanceof Node) {
+                if(element instanceof ASTNode) {
                     result[p] = toJSON(element, withIds);
                 } else if(Array.isArray(element)) {
                     result[p] = element.map(e => toJSON(e));

@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Issue, Node, NODE_TYPES, Point, Position} from "../../src";
+import {Issue, ASTNode, NODE_TYPES, Point, Position} from "../../src";
 import {
     fromEObject,
     generateASTClasses,
@@ -161,7 +161,7 @@ describe("Import/export", function () {
         const result = fromEObject(example1) as Result;
         expect(result.issues.length).to.equal(258);
         const node = result.root as any;
-        expect(node instanceof Node).to.be.true;
+        expect(node instanceof ASTNode).to.be.true;
         expect(node.statementsAndDeclarations.length).to.equal(26);
     });
     it("importing using raw Ecore.js",
@@ -188,10 +188,10 @@ export class CompilationUnit extends Node {
 \tstatements;
 }`);
                 let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
-                expect(node instanceof Node).to.be.true;
+                expect(node instanceof ASTNode).to.be.true;
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
                 node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
-                expect(node instanceof Node).to.be.true;
+                expect(node instanceof ASTNode).to.be.true;
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
                 //Subclassing
                 expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
@@ -215,10 +215,10 @@ export class StringLiteral extends Expression {
                 expect(cu).not.to.be.undefined;
                 expect(cu.eClass?.get("name")).to.equal("CompilationUnit");
                 expect(cu.get("position")).not.to.be.undefined;
-                node = fromEObject(cu) as Node & any;
-                expect(node instanceof Node).to.be.true;
+                node = fromEObject(cu) as ASTNode & any;
+                expect(node instanceof ASTNode).to.be.true;
                 expect(node.statements.length).to.equal(2);
-                expect(node.statements.filter(s => s instanceof Node).length).to.equal(2);
+                expect(node.statements.filter(s => s instanceof ASTNode).length).to.equal(2);
                 expect(node.statements[1].visibility).to.equal(1);
                 expect(node.position).not.to.be.undefined;
                 expect(node.position.start).not.to.be.undefined;

@@ -1,17 +1,17 @@
-import {ASTNode, Child, Children, Node, Position, Property} from "../src";
+import {NodeName, Child, Children, ASTNode, Position, Property} from "../src";
 
-export class Box extends Node {
+export class Box extends ASTNode {
     @Children()
-    @Reflect.metadata("design:arrayElementType", Node)
-    contents: Node[];
+    @Reflect.metadata("design:arrayElementType", ASTNode)
+    contents: ASTNode[];
 
-    constructor(public name: string, contents: Node[], positionOverride?: Position) {
+    constructor(public name: string, contents: ASTNode[], positionOverride?: Position) {
         super(positionOverride);
         this.contents = contents;
     }
 }
 
-export class Item extends Node {
+export class Item extends ASTNode {
     constructor(public name: string, positionOverride?: Position) {
         super(positionOverride);
     }
@@ -24,8 +24,8 @@ export enum Fibo {
     D = B + C
 }
 
-@ASTNode("", "SomeNode")
-export class SomeNode extends Node {
+@NodeName("", "SomeNode")
+export class SomeNode extends ASTNode {
     @Property()
     a?: string;
     @Property()
@@ -37,8 +37,8 @@ export class SomeNode extends Node {
     }
 }
 
-@ASTNode("some.package", "SomeNodeInPackage")
-export class SomeNodeInPackage extends Node {
+@NodeName("some.package", "SomeNodeInPackage")
+export class SomeNodeInPackage extends ASTNode {
     @Property()
     a?: string;
     @Child()
@@ -54,7 +54,7 @@ export class SomeNodeInPackage extends Node {
     }
 }
 
-@ASTNode("some.package", "NodeSubclass")
+@NodeName("some.package", "NodeSubclass")
 export class NodeSubclass extends SomeNodeInPackage {
     @Property()
     a: string;
@@ -64,5 +64,5 @@ export class NodeSubclass extends SomeNodeInPackage {
     anotherChild: SomeNodeInPackage;
 }
 
-@ASTNode("another.package", "SomeNodeInPackage")
-export class SomeNodeInAnotherPackage extends Node {}
+@NodeName("another.package", "SomeNodeInPackage")
+export class SomeNodeInAnotherPackage extends ASTNode {}

@@ -1,4 +1,4 @@
-import {Node} from "..";
+import {ASTNode} from "..";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
 import {Parser} from "../parsing";
 import {Resource} from "ecore";
@@ -10,7 +10,7 @@ import {EcoreMetamodelSupport} from "./ecore";
  * In particular, this parser can generate the metamodel. We can then use toEObject(node) to translate a tree
  * into its EMF representation.
  */
-export abstract class EcoreEnabledParser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext>
+export abstract class EcoreEnabledParser<R extends ASTNode, P extends ANTLRParser, C extends ParserRuleContext>
     extends Parser<R, P, C> implements EcoreMetamodelSupport {
 
     /**

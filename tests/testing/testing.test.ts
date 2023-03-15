@@ -1,57 +1,57 @@
 import {expect} from "chai";
 import {assertASTsAreEqual} from "../../src/testing/testing";
-import {ASTNode, Children, Node, Point, Position, PossiblyNamed, Property} from "../../src";
+import {NodeName, Children, ASTNode, Point, Position, PossiblyNamed, Property} from "../../src";
 
 describe('AssertASTsAreEqual', function() {
     it("the very same node instance compared with itself must pass", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
         assertASTsAreEqual(simpleNode1, simpleNode1);
     });
     it("two different node instances of the same type and with the same values must pass", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
-        const simpleNode2 : Node = new SimpleNode("node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
+        const simpleNode2 : ASTNode = new SimpleNode("node");
         assertASTsAreEqual(simpleNode1, simpleNode2)
     });
     it("nodes with different positions must pass when considerPosition == false", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
-        const simpleNode2 : Node = new SimpleNode("node");
+        const simpleNode2 : ASTNode = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(2, 0));
         assertASTsAreEqual(simpleNode1, simpleNode2)
     });
     it("nodes with different positions must NOT pass when considerPosition == true", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
-        const simpleNode2 : Node = new SimpleNode("node");
+        const simpleNode2 : ASTNode = new SimpleNode("node");
         simpleNode2.position = Position.ofPoint(new Point(2, 0));
         expect(() =>
             assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
         ).to.throw("position");
     });
     it("nodes with equal positions must pass when considerPosition == true", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
         simpleNode1.position = Position.ofPoint(new Point(1, 0));
-        const simpleNode2 : Node = new SimpleNode("node");
+        const simpleNode2 : ASTNode = new SimpleNode("node");
         simpleNode2.position = Position.ofPoint(new Point(1, 0));
         assertASTsAreEqual(simpleNode1, simpleNode2, "<root>", true)
     });
     it("two different node instances of the same type and with different values must NOT pass", function () {
-        const simpleNode1 : Node = new SimpleNode("node");
-        const simpleNode2 : Node = new SimpleNode("different node");
+        const simpleNode1 : ASTNode = new SimpleNode("node");
+        const simpleNode2 : ASTNode = new SimpleNode("different node");
         expect(() =>
             assertASTsAreEqual(simpleNode1, simpleNode2)
         ).to.throw("expected 'different node' to equal 'node'");
     });
     it("two different node instances of two different types, but with same values must NOT pass", function () {
-        const node1 : Node = new SimpleNode("node");
-        const node2 : Node = new AnotherSimpleNode("node");
+        const node1 : ASTNode = new SimpleNode("node");
+        const node2 : ASTNode = new AnotherSimpleNode("node");
         expect(() =>
             assertASTsAreEqual(node1, node2)
         ).to.throw("nodes are not of the same type");
     });
     it("two different node instances of two different types, and with different values must NOT pass", function () {
-        const node1 : Node = new SimpleNode("node");
-        const node2 : Node = new AnotherSimpleNode("different node");
+        const node1 : ASTNode = new SimpleNode("node");
+        const node2 : ASTNode = new AnotherSimpleNode("different node");
         expect(() =>
             assertASTsAreEqual(node1, node2)
         ).to.throw("nodes are not of the same type");
@@ -97,30 +97,30 @@ describe('AssertASTsAreEqual', function() {
     });
 });
 
-@ASTNode("", "SimpleNode")
-class SimpleNode extends Node implements PossiblyNamed {
+@NodeName("", "SimpleNode")
+class SimpleNode extends ASTNode implements PossiblyNamed {
     @Property() public name?: string;
-    @Children() public subTree: Node[];
-    constructor(name?: string, subTree: Node[] = []) {
+    @Children() public subTree: ASTNode[];
+    constructor(name?: string, subTree: ASTNode[] = []) {
         super();
         this.name = name;
         this.subTree = subTree;
     }
 }
 
-@ASTNode("", "AnotherSimpleNode")
-class AnotherSimpleNode extends Node implements PossiblyNamed {
+@NodeName("", "AnotherSimpleNode")
+class AnotherSimpleNode extends ASTNode implements PossiblyNamed {
     @Property() public name?: string;
-    @Children() public subTree: Node[];
-    constructor(name?: string, subTree: Node[] = []) {
+    @Children() public subTree: ASTNode[];
+    constructor(name?: string, subTree: ASTNode[] = []) {
         super();
         this.name = name;
         this.subTree = subTree;
     }
 }
 
-@ASTNode("", "NodeWithStringSubTree")
-class NodeWithStringSubTree extends Node implements PossiblyNamed {
+@NodeName("", "NodeWithStringSubTree")
+class NodeWithStringSubTree extends ASTNode implements PossiblyNamed {
     @Property() public name?: string;
     @Children() public subTree?: string;
     constructor(name?: string, subTree?: string) {

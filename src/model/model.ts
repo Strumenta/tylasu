@@ -1,7 +1,7 @@
 import {Position} from "./position";
 import "reflect-metadata";
 import {
-    Concept, Containment, Feature, Id, Link, Metamodel, Node as LNode, Property as LProperty,
+    Concept, Containment, Feature, Id, Link, Metamodel, Node, Property as LProperty,
     booleanDatatype, intDatatype, stringDatatype, jsonDatatype
 } from "lioncore";
 
@@ -10,7 +10,7 @@ export const CONCEPT_SYMBOL = Symbol("concept");
 
 export type PackageDescription = {
     name: string,
-    nodes: { [name: string]: new (...args: any[]) => Node }
+    nodes: { [name: string]: new (...args: any[]) => ASTNode }
 };
 export const NODE_TYPES: { [name: string]: PackageDescription } = {
     "": { name: "", nodes: {} }
@@ -30,8 +30,8 @@ export type NodeDefinition = {
     properties: { [name: string | symbol]: NodeProperty },
 };
 
-export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
-    if (node instanceof Node) {
+export function getNodeDefinition(node: ASTNode | (new (...args: any[]) => ASTNode)): NodeDefinition | undefined {
+    if (node instanceof ASTNode) {
         node = node.constructor as any;
     }
     if(Object.prototype.hasOwnProperty.call(node, NODE_DEFINITION_SYMBOL)) {
@@ -61,8 +61,8 @@ function setPropertyType(lionProp: LProperty, property: NodeProperty) {
     }
 }
 
-export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept {
-    if (node instanceof Node) {
+export function getConcept(node: ASTNode | (new (...args: any[]) => ASTNode)): Concept {
+    if (node instanceof ASTNode) {
         node = Object.getPrototypeOf(node).constructor;
     }
     const nodeDefinition = getNodeDefinition(node);
@@ -105,7 +105,7 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
             }
             if (nodeDefinition.extends) {
                 const superclass = Object.getPrototypeOf(node);
-                if (superclass != Node) {
+                if (superclass != ASTNode) {
                     concept.extends = getConcept(superclass);
                 }
             }
@@ -152,8 +152,8 @@ export interface Destination {}
  * It implements Origin as it could be the source of a AST-to-AST transformation, so the node itself can be
  * the Origin of another node.
  */
-export abstract class Node extends Origin implements Destination, LNode {
-    parent?: Node;
+export abstract class ASTNode extends Origin implements Destination, Node {
+    parent?: ASTNode;
     origin?: Origin;
     id: Id;
 
@@ -161,13 +161,13 @@ export abstract class Node extends Origin implements Destination, LNode {
         super();
     }
 
-    get children(): Node[] {
+    get children(): ASTNode[] {
         const names = this.getChildNames();
-        const children : Node[] = [];
+        const children : ASTNode[] = [];
 
         function addChildren(child) {
             if (child) {
-                if (child instanceof Node) {
+                if (child instanceof ASTNode) {
                     children.push(child);
                 } else if (Array.isArray(child)) {
                     child.forEach(addChildren);
@@ -203,7 +203,7 @@ export abstract class Node extends Origin implements Destination, LNode {
         return this.getChildNames().indexOf(name) >= 0;
     }
 
-    setChild(name: string, child?: Node): void {
+    setChild(name: string, child?: ASTNode): void {
         if(!this.isChild(name)) {
             throw new Error("Not a child: " + name);
         }
@@ -216,13 +216,13 @@ export abstract class Node extends Origin implements Destination, LNode {
         if(this.id && child && !child.id) {
             child.id = this.id + "." + name;
         }
-        if(this[name] instanceof Node) {
+        if(this[name] instanceof ASTNode) {
             this[name].parent = undefined;
         }
         this[name] = child?.withParent(this);
     }
 
-    addChild(name: string, child: Node): void {
+    addChild(name: string, child: ASTNode): void {
         if(!this.isChild(name)) {
             throw new Error("Not a child: " + name);
         }
@@ -241,7 +241,7 @@ export abstract class Node extends Origin implements Destination, LNode {
         this[name].push(child.withParent(this));
     }
 
-    withParent(parent?: Node): this {
+    withParent(parent?: ASTNode): this {
         this.parent = parent;
         return this;
     }
@@ -271,17 +271,17 @@ export interface PropertyDescription {
 }
 
 export class NodeVisitor {
-    visit(node: Node): void {
+    visit(node: ASTNode): void {
         this.visitNode(node);
         this.visitChildren(node);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected visitNode(ast: Node): void {
+    protected visitNode(ast: ASTNode): void {
         //By default, do nothing
     }
 
-    protected visitChildren(node: Node): void {
+    protected visitChildren(node: ASTNode): void {
         node.children.forEach(c => this.visit(c));
     }
 }
@@ -298,12 +298,12 @@ export function ensurePackage(packageName: string): PackageDescription {
 }
 
 export function errorOnRedefinition<T>(
-    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): ASTNode }): void {
     throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
 }
 
 export function warnOnRedefinition<T>(
-    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): ASTNode }): void {
     console.warn(`Redefining ${name} from`, existingTarget, 'to', target);
 }
 
@@ -313,7 +313,7 @@ export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition
     nodeRedefinitionStrategy = strategy;
 }
 
-export function registerNodeDefinition<T extends Node>(
+export function registerNodeDefinition<T extends ASTNode>(
     target: { new(...args: any[]): T }, pkg?: string, name?: string): NodeDefinition {
     let def: NodeDefinition;
     if(pkg !== undefined) {
@@ -356,7 +356,7 @@ export function registerNodeDefinition<T extends Node>(
     return def;
 }
 
-export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }): NodeDefinition {
+export function ensureNodeDefinition(node: ASTNode | { new (...args: any[]): ASTNode }): NodeDefinition {
     let definition = getNodeDefinition(node);
     if (!definition) {
         if(typeof node === 'function') {
@@ -370,7 +370,7 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     return definition;
 }
 
-export function registerNodeProperty<T extends Node>(
+export function registerNodeProperty<T extends ASTNode>(
     type: { new(...args: any[]): T }, methodName: string | symbol
 ): any {
     const definition = ensureNodeDefinition(type);
@@ -393,7 +393,7 @@ export function registerNodeProperty<T extends Node>(
     return definition.properties[methodName];
 }
 
-export function registerNodeChild<T extends Node>(
+export function registerNodeChild<T extends ASTNode>(
     type: new (...args: any[]) => T, methodName: string | symbol): any {
     const propInfo = registerNodeProperty(type, methodName);
     propInfo.child = true;
@@ -404,7 +404,7 @@ export function registerNodeChild<T extends Node>(
 // Decorators //
 //------------//
 
-export function ASTNode<T extends Node>(pkg: string, name: string) {
+export function NodeName<T extends ASTNode>(pkg: string, name: string) {
     return function (target: new (...args: any[]) => T): void {
         registerNodeDefinition(target, pkg, name);
     };

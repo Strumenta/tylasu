@@ -1,6 +1,6 @@
 import {assert, expect} from "chai";
 
-import {ASTTransformer, Child, GenericNode, Mapped, Node} from "../src";
+import {ASTTransformer, Child, GenericNode, Mapped, ASTNode} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -14,34 +14,34 @@ import {GenericErrorNode} from "../src/model/errors";
 const ID_PROPERTY = Symbol("id");
 
 @ASTNodeFor(SetStmtContext)
-class MySetStatement extends Node {
+class MySetStatement extends ASTNode {
     //Explicit mapping
     @Child()
     @Mapped("ID")
-    [ID_PROPERTY]: Node;
+    [ID_PROPERTY]: ASTNode;
     //Implicit mapping (same name)
     @Child()
-    EQUAL: Node;
+    EQUAL: ASTNode;
     //No mapping (name doesn't match)
     @Child()
-    set: Node;
+    set: ASTNode;
     @Child()
     expression: any;
     //Erroneous mapping
     @Child()
     @Mapped("nonExistent")
-    nonExistent: Node;
+    nonExistent: ASTNode;
 }
 
-class CU extends Node {
-    statements : Node[]
-    constructor(statements : Node[] = [], specifiedPosition ?: Position) {
+class CU extends ASTNode {
+    statements : ASTNode[]
+    constructor(statements : ASTNode[] = [], specifiedPosition ?: Position) {
         super(specifiedPosition);
         this.statements = statements;
     }
 }
 
-class DisplayIntStatement extends Node {
+class DisplayIntStatement extends ASTNode {
     value : number;
     constructor(value : number, specifiedPosition ?: Position) {
         super(specifiedPosition);
@@ -49,7 +49,7 @@ class DisplayIntStatement extends Node {
     }
 }
 
-class SetStatement extends Node {
+class SetStatement extends ASTNode {
     variable : string;
     value : number;
     constructor(variable = "", value = 0, specifiedPosition ?: Position) {
@@ -173,7 +173,7 @@ const configure = function(transformer: ASTTransformer) : void {
     transformer.registerNodeFactory(CompilationUnitContext, source => new CU())
         .withChild(
             (source: CompilationUnitContext) => source.statement(),
-            (target: CU, child?: Node[]) => target.statements = child!,
+            (target: CU, child?: ASTNode[]) => target.statements = child!,
             "statements",
             CompilationUnitContext
         );

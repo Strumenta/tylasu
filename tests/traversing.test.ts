@@ -1,10 +1,10 @@
 import {expect} from "chai";
 
-import {Node, pos, Position} from "../src";
+import {ASTNode, pos, Position} from "../src";
 import {Box, Item} from "./nodes";
 import {map, pipe, reduce} from "iter-ops";
 
-function printSequence(sequence: Generator<Node>): string {
+function printSequence(sequence: Generator<ASTNode>): string {
     return pipe(sequence, map(n => {
         if(n instanceof Box || n instanceof Item) {
             return n.name;
@@ -14,7 +14,7 @@ function printSequence(sequence: Generator<Node>): string {
     }), reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "")).first;
 }
 
-function* of(node?: Node): Generator<Node> {
+function* of(node?: ASTNode): Generator<ASTNode> {
     if (node) {
         yield node;
     }

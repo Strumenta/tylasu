@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
+import {NodeName, Child, GenericNode, ASTNode, PossiblyNamed, Property, ReferenceByName} from "../src";
 import {JSONGenerator} from "../src/interop/json";
 import {Indexer} from "../src/interop/indexing";
 
@@ -181,8 +181,8 @@ describe('JSON generator', function() {
         });
 });
 
-@ASTNode("", "NodeWithChildren")
-class NodeWithChildren extends Node {
+@NodeName("", "NodeWithChildren")
+class NodeWithChildren extends ASTNode {
     payload: number
     @Child()
     singleChild: NodeWithChildren
@@ -190,8 +190,8 @@ class NodeWithChildren extends Node {
     childrenCollection: NodeWithChildren[]
 }
 
-@ASTNode("", "DummyNamedNode")
-class DummyNamedNode extends Node implements PossiblyNamed {
+@NodeName("", "DummyNamedNode")
+class DummyNamedNode extends ASTNode implements PossiblyNamed {
     constructor(
         public name?: string
     ) {
@@ -199,8 +199,8 @@ class DummyNamedNode extends Node implements PossiblyNamed {
     }
 }
 
-@ASTNode("", "NodeWithReference")
-class NodeWithReference extends Node implements PossiblyNamed {
+@NodeName("", "NodeWithReference")
+class NodeWithReference extends ASTNode implements PossiblyNamed {
     constructor(
         public name?: string,
         public reference?: ReferenceByName<DummyNamedNode>) {
@@ -209,8 +209,8 @@ class NodeWithReference extends Node implements PossiblyNamed {
     @Child() namedNode?: DummyNamedNode;
 }
 
-@ASTNode("", "NodeWithSelfReference")
-class NodeWithSelfReference extends Node implements PossiblyNamed {
+@NodeName("", "NodeWithSelfReference")
+class NodeWithSelfReference extends ASTNode implements PossiblyNamed {
     @Property() public reference?: ReferenceByName<NodeWithSelfReference>;
 
     constructor(

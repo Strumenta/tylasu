@@ -1,4 +1,4 @@
-import {Node, Origin, Point, Position} from "../";
+import {ASTNode, Origin, Point, Position} from "../";
 import {Token} from "antlr4ts";
 import {ParseTree} from "antlr4ts/tree";
 import {Interval} from "antlr4ts/misc";
@@ -76,7 +76,7 @@ export class ParseTreeOrigin extends Origin {
 }
 
 declare module '../model/model' {
-    export interface Node {
+    export interface ASTNode {
         parseTree?: ParseTree;
         withParseTreeNode(parseTree?: ParseTree): this;
     }
@@ -88,18 +88,18 @@ declare module 'antlr4ts/ParserRuleContext' {
     }
 }
 
-export function withParseTreeNode(node: Node, parseTree?: ParseTree): Node {
+export function withParseTreeNode(node: ASTNode, parseTree?: ParseTree): ASTNode {
     if (parseTree) {
         node.origin = new ParseTreeOrigin(parseTree);
     }
     return node;
 }
 
-Node.prototype.withParseTreeNode = function (parseTree) {
+ASTNode.prototype.withParseTreeNode = function (parseTree) {
     return withParseTreeNode(this, parseTree);
 }
 
-Object.defineProperty(Node.prototype, "parseTree", {
+Object.defineProperty(ASTNode.prototype, "parseTree", {
     get(): ParseTree | undefined {
         if (this.origin instanceof ParseTreeOrigin) {
             return this.origin.parseTree;

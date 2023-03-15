@@ -7,7 +7,7 @@ import {
     Result,
     toEObject
 } from "./ecore";
-import {Node, NodeDefinition} from "../model/model";
+import {ASTNode, NodeDefinition} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
@@ -21,7 +21,7 @@ import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_E
 import {Issue} from "../validation";
 import {THE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
-export function saveForStrumentaPlayground<R extends Node>(
+export function saveForStrumentaPlayground<R extends ASTNode>(
     result: ParsingResult<R, any>, name: string,
     metamodelSupport: EcoreMetamodelSupport, callback: (data: any, error: any) => void): void {
     const resourceSet = Ecore.ResourceSet.create();
@@ -86,7 +86,7 @@ export class ParserTrace {
     }
 }
 
-export abstract class TraceNode extends Node {
+export abstract class TraceNode extends ASTNode {
     protected constructor(public eo: EObject) {
         super();
     }
@@ -172,7 +172,7 @@ export class ParserNode extends TraceNode {
             .map((c) => new ParserNode(c, this, this.trace));
     }
 
-    get children(): Node[] {
+    get children(): ASTNode[] {
         return this.getChildren();
     }
 
@@ -309,7 +309,7 @@ export class SourceNode extends TraceNode {
             .map((c) => new SourceNode(c, this.trace));
     }
 
-    get children(): Node[] {
+    get children(): ASTNode[] {
         return this.getChildren();
     }
 
@@ -371,7 +371,7 @@ export class TargetNode extends TraceNode {
             .map((c) => new TargetNode(c, this.trace));
     }
 
-    get children(): Node[] {
+    get children(): ASTNode[] {
         return this.getChildren();
     }
 

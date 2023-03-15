@@ -2,7 +2,7 @@ import {
     ensureNodeDefinition,
     ensurePackage,
     getNodeDefinition,
-    Node,
+    ASTNode,
     NODE_TYPES,
     PackageDescription,
     registerNodeDefinition,
@@ -177,7 +177,7 @@ export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObj
         } else if(obj) {
             const propertyNames = Object.getOwnPropertyNames(obj);
             if(samePropertiesAs(propertyNames, THE_RESULT_ECLASS) &&
-                obj.root instanceof Node &&
+                obj.root instanceof ASTNode &&
                 Array.isArray(obj.issues)) {
                 return THE_RESULT_ECLASS.create({
                     root: toEObject(obj.root),
@@ -227,11 +227,11 @@ export interface LocalDateTime {
 }
 
 export interface Result {
-    root: Node | undefined;
+    root: ASTNode | undefined;
     issues: Issue[];
 }
 
-export type ASTElement = Node | Position | Issue | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
+export type ASTElement = ASTNode | Position | Issue | LocalDate | LocalTime | LocalDateTime | Result | ASTElement[];
 
 function decodeEnumLiteral(eType, literalName: string | number | unknown) {
     if(!literalName) {
@@ -256,7 +256,7 @@ function decodeEnumLiteral(eType, literalName: string | number | unknown) {
     }
 }
 
-export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | undefined {
+export function fromEObject(obj: EObject | any, parent?: ASTNode): ASTElement | undefined {
     if(!obj) {
         return undefined;
     }
@@ -295,12 +295,12 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
     }
     if(isBuiltInClass(eClass, THE_RESULT_ECLASS)) {
         return {
-            root: fromEObject(obj.get("root")) as Node,
+            root: fromEObject(obj.get("root")) as ASTNode,
             issues: (obj.get("issues") as EList)?.map(fromEObject) as Issue[] || []
         };
     }
     if(isBuiltInClass(eClass, THE_NODE_ORIGIN_ECLASS)) {
-        return fromEObject(obj.get("node")) as Node;
+        return fromEObject(obj.get("node")) as ASTNode;
     }
     if(isBuiltInClass(eClass, THE_TEXT_FILE_DESTINATION_ECLASS)) {
         return fromEObject(obj.get("position")) as Position;
@@ -339,7 +339,7 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
 }
 
 export class EObjectGenerator {
-    toEObject(node: Node): EObject {
+    toEObject(node: ASTNode): EObject {
         return toEObject(node);
     }
     fromEObject(eObject: EObject): ASTElement | undefined {
@@ -347,7 +347,7 @@ export class EObjectGenerator {
     }
 }
 
-Node.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
+ASTNode.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
     const def = ensureNodeDefinition(this);
     const ePackage = ensureECoreModel(def.package);
     const eClass = ePackage.get("eClassifiers").find(c => c.get("name") == def.name);
@@ -416,7 +416,7 @@ function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
 
 function generateASTClass(eClass, pkg: PackageDescription) {
     if(isBuiltInClass(eClass, THE_NODE_ECLASS)) {
-        return Node;
+        return ASTNode;
     }
     const className = eClass.get("name");
     if (pkg.nodes[className]) {
@@ -433,11 +433,11 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     }
     if(nodeSuperclass) {
         //TODO check it actually derives from node!
-        const superclass: typeof Node = nodeSuperclass;
+        const superclass: typeof ASTNode = nodeSuperclass;
         const classDef = class GeneratedNodeClass extends superclass {};
         classDef[SYMBOL_NODE_NAME] = className;
         //TODO include decorator that records where the class has been loaded from?
-        const superClassName = nodeSuperclass == Node ? "Node" : nodeSuperclass[SYMBOL_NODE_NAME];
+        const superClassName = nodeSuperclass == ASTNode ? "Node" : nodeSuperclass[SYMBOL_NODE_NAME];
         // TODO we don't generate interfaces yet
         // const implementsClause = interfaces.length > 0 ? ` implements ${interfaces.map(i => i.get("name")).join(", ")}` : "";
         classDef[SYMBOL_CLASS_DEFINITION] =

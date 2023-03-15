@@ -1,9 +1,9 @@
-import {Node} from "../model/model";
+import {ASTNode} from "../model/model";
 import {Position} from "../model/position";
 import {last, pipe} from "iter-ops";
 
 declare module '../model/model' {
-    export interface Node {
+    export interface ASTNode {
         /**
          * @param position the position where to search for nodes
          * @param selfContained whether the starting node position contains the positions of all its children.
@@ -12,7 +12,7 @@ declare module '../model/model' {
          * @return the node most closely containing the given [position]. `undefined` if none is found.
          * @see searchByPosition
          */
-        findByPosition(position: Position, selfContained?: boolean): Node | undefined;
+        findByPosition(position: Position, selfContained?: boolean): ASTNode | undefined;
 
         /**
          * @param position the position where to search for nodes
@@ -22,25 +22,25 @@ declare module '../model/model' {
          * In any case, the search stops at the first subtree found to be containing the position.
          * @return all nodes containing the given [position] using depth-first search. Empty list if none are found.
          */
-        searchByPosition(position: Position, selfContained?: boolean): Generator<Node>;
+        searchByPosition(position: Position, selfContained?: boolean): Generator<ASTNode>;
 
         /**
          * @param position the position within which the walk should remain
          * @return walks the AST within the given [position] starting from this node, depth-first.
          */
-        walkWithin(position: Position): Generator<Node>;
+        walkWithin(position: Position): Generator<ASTNode>;
     }
 }
 
-export function findByPosition(node: Node, position: Position, selfContained = false): Node | undefined {
+export function findByPosition(node: ASTNode, position: Position, selfContained = false): ASTNode | undefined {
     return pipe(searchByPosition(node, position, selfContained), last()).first;
 }
 
-Node.prototype.findByPosition = function(position: Position, selfContained = false) {
+ASTNode.prototype.findByPosition = function(position: Position, selfContained = false) {
     return findByPosition(this, position, selfContained);
 };
 
-export function* searchByPosition(node: Node, position: Position, selfContained = false): Generator<Node> {
+export function* searchByPosition(node: ASTNode, position: Position, selfContained = false): Generator<ASTNode> {
     const contains = node.contains(position);
     if (!selfContained || contains) {
         if (node.children.length == 0) {
@@ -66,11 +66,11 @@ export function* searchByPosition(node: Node, position: Position, selfContained 
     }
 }
 
-Node.prototype.searchByPosition = function(position: Position, selfContained = false) {
+ASTNode.prototype.searchByPosition = function(position: Position, selfContained = false) {
     return searchByPosition(this, position, selfContained);
 };
 
-export function* walkWithin(node: Node, position: Position): Generator<Node> {
+export function* walkWithin(node: ASTNode, position: Position): Generator<ASTNode> {
     function* walkWithinChildren() {
         for (const c of node.children) {
             yield* walkWithin(c, position);
@@ -85,6 +85,6 @@ export function* walkWithin(node: Node, position: Position): Generator<Node> {
     }
 }
 
-Node.prototype.walkWithin = function(position: Position) {
+ASTNode.prototype.walkWithin = function(position: Position) {
     return walkWithin(this, position);
 };

@@ -1,7 +1,7 @@
-import {Named, Node, ReferenceByName} from "../src";
+import {Named, ASTNode, ReferenceByName} from "../src";
 import {expect} from "chai";
 
-class MyNode extends Node implements Named {
+class MyNode extends ASTNode implements Named {
     constructor(public name: string) {
         super();
     }

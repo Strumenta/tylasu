@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {
     errorOnRedefinition,
-    Node,
+    ASTNode,
     NODE_TYPES,
     registerNodeDefinition,
     setNodeRedefinitionStrategy,
@@ -10,8 +10,8 @@ import {
 } from "../src";
 import {fail} from "assert";
 
-class Foo extends Node {}
-class Bar extends Node {}
+class Foo extends ASTNode {}
+class Bar extends ASTNode {}
 
 describe('AST management facilities', function() {
     it("By default, redefining a node errors",

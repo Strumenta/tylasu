@@ -1,5 +1,5 @@
 import {Position} from "./position";
-import {ASTNode, Node} from "./model";
+import {NodeName, ASTNode} from "./model";
 
 /**
  * An AST node that marks the presence of an error, for example a syntactic or semantic error in the original tree.
@@ -12,8 +12,8 @@ export interface ErrorNode {
 /**
  * Generic implementation of ErrorNode.
  */
-@ASTNode("", "GenericErrorNode")
-export class GenericErrorNode extends Node implements ErrorNode {
+@NodeName("", "GenericErrorNode")
+export class GenericErrorNode extends ASTNode implements ErrorNode {
     message: string;
 
     constructor(error?: Error, message?: string) {

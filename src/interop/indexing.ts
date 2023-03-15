@@ -1,53 +1,53 @@
-import {Node} from "../model/model";
+import {ASTNode} from "../model/model";
 import {ReferenceByName} from "../model/naming";
 
 export type NodeId = {
-    node: Node;
+    node: ASTNode;
     id?: string;
 }
 
 export class Indexer {
     constructor(private nodes: NodeId[]) {}
 
-    getId(node: Node): string | undefined {
+    getId(node: ASTNode): string | undefined {
         return this.nodes.find(nid => nid.node === node)?.id;
     }
 
-    static computeIds(node: Node) : Indexer {
+    static computeIds(node: ASTNode) : Indexer {
         return node[COMPUTE_NODE_IDS_SYMBOL]();
     }
 
-    static computeReferencedIds(node: Node) : Indexer {
+    static computeReferencedIds(node: ASTNode) : Indexer {
         return node[COMPUTE_REF_NODE_IDS_SYMBOL]();
     }
 }
 
 export interface IdProvider {
-    getId(node: Node) : string | undefined
+    getId(node: ASTNode) : string | undefined
 }
 
 export class SequentialIdProvider implements IdProvider {
     constructor(private counter: number = 0) {}
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getId(node: Node): string | undefined {
+    getId(node: ASTNode): string | undefined {
         return (this.counter++).toString();
     }
 }
 
 export class OnlyReferencedIdProvider implements IdProvider {
-    private referencedElements: Node[] = [];
+    private referencedElements: ASTNode[] = [];
 
-    constructor(private root: Node, private idProvider: IdProvider = new SequentialIdProvider()) {
+    constructor(private root: ASTNode, private idProvider: IdProvider = new SequentialIdProvider()) {
         for (const node of root.walk()) {
             node.properties
                 .filter(p => p.value instanceof ReferenceByName)
-                .map(p => (p.value as ReferenceByName<any>).referred as Node)
+                .map(p => (p.value as ReferenceByName<any>).referred as ASTNode)
                 .forEach(node => this.referencedElements.push(node));
         }
     }
 
-    getId(node: Node): string | undefined {
+    getId(node: ASTNode): string | undefined {
         const referencedNode = this.referencedElements.find(n => node === n);
         if (referencedNode)
             return this.idProvider.getId(referencedNode);
@@ -56,8 +56,8 @@ export class OnlyReferencedIdProvider implements IdProvider {
 }
 
 export const COMPUTE_NODE_IDS_SYMBOL = Symbol("computeIds");
-Node.prototype[COMPUTE_NODE_IDS_SYMBOL] = function (
-    walker: (node: Node) => Generator<Node> = node => node.walk(),
+ASTNode.prototype[COMPUTE_NODE_IDS_SYMBOL] = function (
+    walker: (node: ASTNode) => Generator<ASTNode> = node => node.walk(),
     idProvider: IdProvider = new SequentialIdProvider()) : Indexer {
 
     const nodeIds: NodeId[] = [];
@@ -72,8 +72,8 @@ Node.prototype[COMPUTE_NODE_IDS_SYMBOL] = function (
 }
 
 export const COMPUTE_REF_NODE_IDS_SYMBOL = Symbol("computeReferencedIds");
-Node.prototype[COMPUTE_REF_NODE_IDS_SYMBOL] = function (
-    walker: (node: Node) => Generator<Node> = node => node.walk(),
+ASTNode.prototype[COMPUTE_REF_NODE_IDS_SYMBOL] = function (
+    walker: (node: ASTNode) => Generator<ASTNode> = node => node.walk(),
     idProvider: IdProvider = new OnlyReferencedIdProvider(this)) : Indexer {
 
     return this[COMPUTE_NODE_IDS_SYMBOL](walker, idProvider);

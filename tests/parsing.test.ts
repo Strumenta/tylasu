@@ -1,13 +1,13 @@
 import {expect} from "chai";
 
-import {Issue, Node} from "../src";
+import {Issue, ASTNode} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStream, Lexer, TokenStream} from "antlr4ts";
 import {CompilationUnitContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {Parser} from "../src/parsing/parsing";
 import {ParseTreeOrigin} from "../src/parsing/parse-tree";
 
-class CompilationUnit extends Node {}
+class CompilationUnit extends ASTNode {}
 
 class SLParser extends Parser<CompilationUnit, SimpleLangParser, CompilationUnitContext> {
     protected createANTLRLexer(inputStream: CharStream): Lexer {

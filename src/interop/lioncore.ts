@@ -1,13 +1,13 @@
 import {ModelAPI} from "lioncore/types/api";
-import {Node, NODE_TYPES} from "../model/model";
+import {ASTNode, NODE_TYPES} from "../model/model";
 import {Concept, Containment, Feature} from "lioncore";
 
-export const tylasuAPI: ModelAPI<Node> = {
-    conceptOf(node: Node): Concept {
+export const tylasuAPI: ModelAPI<ASTNode> = {
+    conceptOf(node: ASTNode): Concept {
         return node.concept!;
-    }, getFeatureValue(node: Node, feature: Feature): unknown {
+    }, getFeatureValue(node: ASTNode, feature: Feature): unknown {
         return node[feature.name];
-    }, nodeFor(parent: Node | undefined, concept: Concept, id: string, settings: { [p: string]: unknown }): Node {
+    }, nodeFor(parent: ASTNode | undefined, concept: Concept, id: string, settings: { [p: string]: unknown }): ASTNode {
         const qName = concept.qualifiedName();
         const pkgName = qName.substring(0, qName.length - concept.name.length - 1);
         const pkg = NODE_TYPES[pkgName];
@@ -23,9 +23,9 @@ export const tylasuAPI: ModelAPI<Node> = {
         } else {
             throw new Error(`Unknown node class: ${concept.name} in package ${pkg}`);
         }
-    }, setFeatureValue(node: Node, feature: Feature, value: unknown): void {
+    }, setFeatureValue(node: ASTNode, feature: Feature, value: unknown): void {
         if (feature instanceof Containment) {
-            node.setChild(feature.name, value ? value as Node : undefined);
+            node.setChild(feature.name, value ? value as ASTNode : undefined);
         } else {
             node[feature.name] = value;
         }

@@ -1,4 +1,4 @@
-import {Node} from "./model";
+import {ASTNode} from "./model";
 
 function sign(number: number): number {
     return number > 0 ? +1 : number < 0 ? -1 : 0;
@@ -97,12 +97,12 @@ export class Position {
      * Tests whether the given object is contained in the interval represented by this object.
      * @param object the object to test: could be a Point, a Position, or a Node.
      */
-    contains(object: Point | Position | Node | null | undefined): boolean {
+    contains(object: Point | Position | ASTNode | null | undefined): boolean {
         if (object instanceof Point) {
             return this.start.isSameOrBefore(object) && this.end.isSameOrAfter(object);
         } else if (object instanceof Position) {
             return (this.start.isSameOrBefore(object.start) && this.end.isSameOrAfter(object.end))
-        } else if (object instanceof Node) {
+        } else if (object instanceof ASTNode) {
             return this.contains(object.position);
         } else {
             return false;

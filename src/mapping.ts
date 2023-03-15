@@ -1,6 +1,6 @@
 import {ParseTree} from "antlr4ts/tree/ParseTree";
 import {ParserRuleContext} from "antlr4ts";
-import {Child, Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
+import {Child, ASTNode, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
 import {RuleNode} from "antlr4ts/tree/RuleNode";
 import {ASTTransformer, GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
@@ -13,7 +13,7 @@ import {ParseTreeOrigin} from "./parsing";
  * @param type the type of the source node to map to this node.
  */
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
-    return function (target: new () => Node): void {
+    return function (target: new () => ASTNode): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
             registerNodeDefinition(target);
         }
@@ -25,7 +25,7 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 // toAST //
 //-------//
 
-export function toAST(tree?: ParseTree | null, parent?: Node): Node | undefined {
+export function toAST(tree?: ParseTree | null, parent?: ASTNode): ASTNode | undefined {
     if (tree == null)
         tree = undefined;
 
@@ -55,7 +55,7 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
      * it also assigns the parseTreeNode to the AST node so that it can keep track of its position.
      * However, a node factory can override the parseTreeNode of the nodes it creates (but not the parent).
      */
-    transform(source?: any, parent?: Node): Node | undefined {
+    transform(source?: any, parent?: ASTNode): ASTNode | undefined {
         const node = super.transform(source, parent);
         if (node && node.origin && source instanceof ParserRuleContext) {
             node.withParseTreeNode(source);
@@ -63,7 +63,7 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
         return node;
     }
 
-    getSource(node: Node, source: any): any {
+    getSource(node: ASTNode, source: any): any {
         const origin = node.origin;
         if (origin instanceof ParseTreeOrigin)
             return origin.parseTree;
@@ -82,19 +82,19 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
 //Augment the ParseTree class with a toAST method
 declare module 'antlr4ts/tree' {
     export interface ParseTree {
-        toAST(parent?: Node): Node;
+        toAST(parent?: ASTNode): ASTNode;
     }
     export interface RuleNode {
-        toAST(parent?: Node): Node;
+        toAST(parent?: ASTNode): ASTNode;
     }
     export interface TerminalNode {
-        toAST(parent?: Node): Node;
+        toAST(parent?: ASTNode): ASTNode;
     }
 }
 
-RuleNode.prototype.toAST = function(parent?: Node): Node {
+RuleNode.prototype.toAST = function(parent?: ASTNode): ASTNode {
     return toAST(this, parent)!;
 };
-TerminalNode.prototype.toAST = function(parent?: Node): Node {
+TerminalNode.prototype.toAST = function(parent?: ASTNode): ASTNode {
     return toAST(this, parent)!;
 };

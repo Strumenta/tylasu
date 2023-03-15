@@ -1,5 +1,5 @@
 import {
-    Node
+    ASTNode
 } from "./model";
 
 /**
@@ -35,7 +35,7 @@ export class ReferenceByName<N extends PossiblyNamed> {
     }
 
     set referred(referred : N | undefined) {
-        if (referred != undefined && !(referred instanceof Node))
+        if (referred != undefined && !(referred instanceof ASTNode))
             throw new Error(`We cannot enforce it statically but only Node should be referred to. Instead ${referred} was assigned (class: ${objectPrototypeName(referred)})`);
         this._referred = referred;
     }

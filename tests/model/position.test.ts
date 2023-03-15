@@ -1,11 +1,11 @@
 import {expect} from "chai";
 
-import {Point, START_POINT, Node, Position} from "../../src";
+import {Point, START_POINT, ASTNode, Position} from "../../src";
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {SetStmtContext, SimpleLangParser} from "../parser/SimpleLangParser";
 
-class MySetStatement extends Node {}
+class MySetStatement extends ASTNode {}
 
 describe('Position', function() {
     it("Point comparisons",

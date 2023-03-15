@@ -1,14 +1,14 @@
 import {expect} from "chai";
 
 import {
-    ASTNode,
+    NodeName,
     ASTTransformer,
     Child,
     ErrorNode,
     Init,
     IssueSeverity,
     Mapped,
-    Node, NodeFactory,
+    ASTNode, NodeFactory,
     NodeTransform,
     PartiallyInitializedNode, pos, Position,
     Property,
@@ -16,9 +16,9 @@ import {
 } from "../../src";
 import exp = require("constants");
 
-@ASTNode("", "A")
-class A extends Node {
-    child: Node;
+@NodeName("", "A")
+class A extends ASTNode {
+    child: ASTNode;
     property: number;
     other: string;
     method() {
@@ -33,10 +33,10 @@ class A extends Node {
 }
 
 @NodeTransform(A)
-class B extends Node {
+class B extends ASTNode {
     @Child()
     @Mapped("child")
-    aChild: Node;
+    aChild: ASTNode;
     @Property()
     property: number;
     @Mapped("other")
@@ -56,9 +56,9 @@ class B extends Node {
     }
 }
 
-class C extends Node {}
+class C extends ASTNode {}
 @NodeTransform(C)
-class D extends Node {
+class D extends ASTNode {
     a;
     b;
     @Init
@@ -137,7 +137,7 @@ describe("Transformers", function () {
        expect(transformer.issues[0].message).to.contain("not mapped: A");
     });
     it("Factory that transform from a node A to a node C", function () {
-        let tree: Node | undefined = new A();
+        let tree: ASTNode | undefined = new A();
         expect(tree).to.be.instanceof(A);
 
         const transformer = new ASTTransformer(undefined, true);
@@ -162,7 +162,7 @@ describe("Transformers", function () {
         transformer.registerIdentityTransformation(A)
             .withChild(
                 (source: A) => source.child,
-                (target: A, child?: Node) => target.child = child!,
+                (target: A, child?: ASTNode) => target.child = child!,
                 "child",
                 A
             );
@@ -173,7 +173,7 @@ describe("Transformers", function () {
         expect((transformedTree as A).child).to.be.instanceof(A);
     });
     it("Factory that returns an undefined node", function () {
-        let tree : Node | undefined = new A();
+        let tree : ASTNode | undefined = new A();
 
         const transformer = new ASTTransformer(undefined, true);
         transformer.registerNodeFactory(A,(source) => undefined);

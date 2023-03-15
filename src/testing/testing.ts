@@ -1,10 +1,10 @@
-import {Node} from "../model/model";
+import {ASTNode} from "../model/model";
 import {fail} from "assert";
 import {expect} from "chai";
 
 export function assertASTsAreEqual(
-    expected: Node,
-    actual: Node,
+    expected: ASTNode,
+    actual: ASTNode,
     context = "<root>",
     considerPosition = false
 ): void {
@@ -16,10 +16,10 @@ export function assertASTsAreEqual(
             const actualPropValue = actual.properties.find(p => p.name == expectedProperty.name)!.value;
             const expectedPropValue = expectedProperty.value;
 
-            if (actualPropValue instanceof Node && expectedPropValue instanceof Node) {
+            if (actualPropValue instanceof ASTNode && expectedPropValue instanceof ASTNode) {
                 assertASTsAreEqual(
-                    actualPropValue as Node,
-                    expectedPropValue as Node,
+                    actualPropValue as ASTNode,
+                    expectedPropValue as ASTNode,
                     `${context}.${expectedProperty.name}`,
                     considerPosition
                 );
@@ -33,10 +33,10 @@ export function assertASTsAreEqual(
                     const expectedElement = expectedPropValue[i];
                     const actualElement = actualPropValue[i];
 
-                    if (expectedElement instanceof Node && actualElement instanceof Node) {
+                    if (expectedElement instanceof ASTNode && actualElement instanceof ASTNode) {
                         assertASTsAreEqual(
-                            expectedElement as Node,
-                            actualElement as Node,
+                            expectedElement as ASTNode,
+                            actualElement as ASTNode,
                             `${context}.${expectedProperty.name}[${i}]`,
                             considerPosition
                         );

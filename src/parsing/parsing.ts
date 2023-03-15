@@ -11,7 +11,7 @@ import {
 } from "antlr4ts";
 import {Issue, IssueSeverity} from "../validation";
 import {Point, Position} from "../model/position";
-import {Node} from "../model/model";
+import {ASTNode} from "../model/model";
 import {Interval} from "antlr4ts/misc";
 import {ErrorNode} from "antlr4ts/tree";
 import {walk} from "../traversing/structurally";
@@ -36,7 +36,7 @@ try {
     }
 }
 
-export abstract class Parser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext> {
+export abstract class Parser<R extends ASTNode, P extends ANTLRParser, C extends ParserRuleContext> {
 
     /**
      * Creates the lexer.
@@ -258,11 +258,11 @@ export class LexingResult extends CodeProcessingResult<Token[]> {
 }
 
 export class FirstStageParsingResult<C extends ParserRuleContext> extends CodeProcessingResult<C> {
-    incompleteNode?: Node;
+    incompleteNode?: ASTNode;
     time?: number;
     lexingTime?: number;
 
-    constructor(code: string, data: C, issues: Issue[], time?: number, lexingTime?: number, incompleteNode?: Node) {
+    constructor(code: string, data: C, issues: Issue[], time?: number, lexingTime?: number, incompleteNode?: ASTNode) {
         super(code, data, issues);
         this.time = time;
         this.lexingTime = lexingTime;
@@ -274,15 +274,15 @@ export class FirstStageParsingResult<C extends ParserRuleContext> extends CodePr
     }
 }
 
-export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> extends CodeProcessingResult<RootNode> {
+export class ParsingResult<RootNode extends ASTNode, C extends ParserRuleContext> extends CodeProcessingResult<RootNode> {
 
-    incompleteNode?: Node;
+    incompleteNode?: ASTNode;
     firstStage?: FirstStageParsingResult<C>;
     time?: number;
 
     constructor(
         code: string, data: RootNode | undefined, issues: Issue[],
-        incompleteNode?: Node, firstStage?: FirstStageParsingResult<C>, time?: number) {
+        incompleteNode?: ASTNode, firstStage?: FirstStageParsingResult<C>, time?: number) {
         super(code, data, issues);
         this.incompleteNode = incompleteNode;
         this.firstStage = firstStage;

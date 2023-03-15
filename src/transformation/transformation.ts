@@ -1,8 +1,8 @@
 import {
-    ASTNode,
+    NodeName,
     ensureNodeDefinition,
     getNodeDefinition,
-    Node,
+    ASTNode,
     NODE_DEFINITION_SYMBOL, NodeProperty,
     Origin,
     registerNodeDefinition,
@@ -11,7 +11,7 @@ import {
 import {Issue, IssueSeverity} from "../validation";
 import {Position} from "../model/position";
 
-export class NodeFactory<Source, Output extends Node> {
+export class NodeFactory<Source, Output extends ASTNode> {
     constructor(
         public constructorFunction: (s: Source, t: ASTTransformer, f: NodeFactory<Source, Output>) => Output | undefined,
         public children: Map<string, ChildNodeFactory<Source, any, any> | undefined> = new Map(),
@@ -136,7 +136,7 @@ export class ASTTransformer {
         return issue;
     }
 
-    transform(source?: any, parent?: Node) : Node | undefined {
+    transform(source?: any, parent?: ASTNode) : ASTNode | undefined {
         if (source == undefined)
             return undefined;
 
@@ -144,7 +144,7 @@ export class ASTTransformer {
             throw Error("Mapping error: received collection when value was expected");
 
         const factory: NodeFactory<any, any> | undefined = this.getNodeFactory(source);
-        let node: Node | undefined;
+        let node: ASTNode | undefined;
 
         if (factory != undefined) {
             node = this.makeNode(factory, source);
@@ -200,7 +200,7 @@ export class ASTTransformer {
     setChild(
         childNodeFactory: ChildNodeFactory<any, any, any>,
         source: any,
-        node: Node,
+        node: ASTNode,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         propertyDescription: string
     ) : void {
@@ -221,17 +221,17 @@ export class ASTTransformer {
         }
     }
 
-    getSource(node: Node, source: any) : any {
+    getSource(node: ASTNode, source: any) : any {
         return source;
     }
 
-    makeNode<S, T extends Node>(
+    makeNode<S, T extends ASTNode>(
         factory: NodeFactory<S, T>,
         source: S,
         allowGenericNode = true
-    ) : Node | undefined {
+    ) : ASTNode | undefined {
 
-        let node : Node | undefined;
+        let node : ASTNode | undefined;
 
         try {
             node = factory.constructorFunction(source, this, factory);
@@ -248,7 +248,7 @@ export class ASTTransformer {
         return node;
     }
 
-    getNodeFactory<S, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
+    getNodeFactory<S, T extends ASTNode>(type: any) : NodeFactory<S, T> | undefined {
 
         let nodeClass = type.constructor;
 
@@ -262,7 +262,7 @@ export class ASTTransformer {
         return undefined;
     }
 
-    public registerNodeFactory<S, T extends Node>(
+    public registerNodeFactory<S, T extends ASTNode>(
         nodeClass: any,
         factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
     ) : NodeFactory<S, T> {
@@ -272,7 +272,7 @@ export class ASTTransformer {
         return nodeFactory;
     }
 
-    public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
+    public registerIdentityTransformation<T extends ASTNode>(nodeClass: any) : NodeFactory<T, T> {
         return this.registerNodeFactory(
             nodeClass,
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -291,7 +291,7 @@ export const NODE_FACTORY_SYMBOL = Symbol("nodeFactory");
 export const INIT_SYMBOL = Symbol("init");
 
 //TODO for future version: allow multiple factories, keyed by name (string | symbol).
-export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory: (tree: T) => Node): void {
+export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory: (tree: T) => ASTNode): void {
     type.prototype[NODE_FACTORY_SYMBOL] = factory;
 }
 
@@ -301,14 +301,14 @@ export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory:
  * @param propertyName the name of the target property.
  * @param path the path in the source node that will be mapped to the target property.
  */
-export function registerPropertyMapping<T extends Node>(
+export function registerPropertyMapping<T extends ASTNode>(
     type: new (...args: any[]) => T, propertyName: string, path: string = propertyName): any {
     const propInfo = registerNodeProperty(type, propertyName);
     propInfo.path = path || propertyName;
     return propInfo;
 }
 
-export function registerInitializer<T extends Node>(type: new (...args: any[]) => T, methodName: string): void {
+export function registerInitializer<T extends ASTNode>(type: new (...args: any[]) => T, methodName: string): void {
     type[INIT_SYMBOL] = methodName;
 }
 
@@ -316,8 +316,8 @@ export function registerInitializer<T extends Node>(type: new (...args: any[]) =
 // Decorators //
 //------------//
 
-export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
-    return function (target: new () => Node): void {
+export function NodeTransform<T extends ASTNode>(type: new (...args: any[]) => T) {
+    return function (target: new () => ASTNode): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
             registerNodeDefinition(target);
         }
@@ -354,7 +354,7 @@ export function Init(target, methodName: string): void {
 // Transformations //
 //-----------------//
 
-export function fillChildAST<FROM, TO extends Node>(
+export function fillChildAST<FROM, TO extends ASTNode>(
     node: TO, property: string | symbol, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
     const propDef = ensureNodeDefinition(node).properties[property] as NodeProperty | any;
     const propertyPath = propDef.path || property;
@@ -400,18 +400,18 @@ export function fillChildAST<FROM, TO extends Node>(
 
 function makeNode(factory, tree: unknown) {
     try {
-        return factory(tree) as Node;
+        return factory(tree) as ASTNode;
     } catch (e) {
         return new ErrorNode(e);
     }
 }
 
-export function transform(tree: unknown, parent?: Node, transformer: typeof transform = transform): Node | undefined {
+export function transform(tree: unknown, parent?: ASTNode, transformer: typeof transform = transform): ASTNode | undefined {
     if (typeof tree !== "object" || !tree) {
         return undefined;
     }
     const factory = tree[NODE_FACTORY_SYMBOL];
-    let node: Node;
+    let node: ASTNode;
     if (factory) {
         node = makeNode(factory, tree);
         const def = getNodeDefinition(node);
@@ -434,23 +434,23 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     return node.withParent(parent);
 }
 
-@ASTNode("", "GenericNode")
-export class GenericNode extends Node {
-    constructor(parent?: Node) {
+@NodeName("", "GenericNode")
+export class GenericNode extends ASTNode {
+    constructor(parent?: ASTNode) {
         super();
         this.parent = parent;
     }
 }
 
-@ASTNode("", "ErrorNode")
-export class ErrorNode extends Node {
+@NodeName("", "ErrorNode")
+export class ErrorNode extends ASTNode {
     constructor(readonly error: Error) {
         super();
     }
 }
 
 export class PartiallyInitializedNode extends ErrorNode {
-    constructor(readonly node: Node, error: Error) {
+    constructor(readonly node: ASTNode, error: Error) {
         super(error);
     }
 }
