@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Issue, Node, NODE_TYPES, Point, Position} from "../src";
+import {Issue, Node, NODE_TYPES, Point, Position} from "../../src";
 import {
     fromEObject,
     generateASTClasses,
@@ -8,12 +8,12 @@ import {
     SYMBOL_CLASS_DEFINITION,
     SYMBOL_NODE_NAME,
     toEObject, loadEPackages, loadEObject, generateASTModel, Result
-} from "../src/interop/ecore";
-import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
+} from "../../src/interop/ecore";
+import {Fibo, SomeNode, SomeNodeInPackage} from "../nodes";
 import * as Ecore from "ecore/dist/ecore";
 import * as fs from "fs";
-import {KOLASU_URI_V1} from "../src/interop/kolasu-v1-metamodel";
-import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../src/interop/kolasu-v1-metamodel";
+import {KOLASU_URI_V1} from "../../src/interop/kolasu-v1-metamodel";
+import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../../src/interop/kolasu-v1-metamodel";
 
 describe('Metamodel', function() {
     it("Base metamodel", function () {
@@ -236,7 +236,9 @@ export class StringLiteral extends Expression {
         };
         const eObject = toEObject(result);
         expect(eObject.get("issues").size()).to.equal(1);
+        expect(eObject.get("root").eClass.get("name")).to.equal("SomeNodeInPackage");
         const object = fromEObject(eObject) as Result;
         expect(object.issues.length).to.equal(1);
+        expect(object.root instanceof SomeNodeInPackage).to.be.true;
     });
 });

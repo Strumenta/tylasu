@@ -1,6 +1,9 @@
 import {Position} from "./position";
 import "reflect-metadata";
-import {Concept, Containment, Feature, Id, Link, Metamodel, Node as LNode, Property as LProperty} from "lioncore";
+import {
+    Concept, Containment, Feature, Id, Link, Metamodel, Node as LNode, Property as LProperty,
+    booleanDatatype, intDatatype, stringDatatype
+} from "lioncore";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 export const CONCEPT_SYMBOL = Symbol("concept");
@@ -40,6 +43,16 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
 
 export const METAMODELS = new Map<string, Metamodel>();
 
+function setPropertyType(lionProp: LProperty, property: NodeProperty) {
+    if (property.type === String) {
+        lionProp.type = stringDatatype;
+    } else if (property.type === Number) {
+        lionProp.type = intDatatype;
+    } else if (property.type === Boolean) {
+        lionProp.type = booleanDatatype;
+    }
+}
+
 export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept {
     if (node instanceof Node) {
         node = Object.getPrototypeOf(node).constructor;
@@ -55,6 +68,7 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
                 METAMODELS.set(pkg, metamodel);
             }
             const concept = new Concept(metamodel, name, pkg + "." + name, false);
+            metamodel.elements.push(concept);
             node[CONCEPT_SYMBOL] = concept; // We need this to avoid infinite recursion for self-referencing nodes
             const features: Feature[] = [];
             for (const pName in nodeDefinition!.properties) {
@@ -69,7 +83,9 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
                     }
                     feature = containment;
                 } else {
-                    feature = new LProperty(concept, pName, concept.qualifiedName() + "." + pName);
+                    const lionProp = new LProperty(concept, pName, concept.qualifiedName() + "." + pName);
+                    setPropertyType(lionProp, property);
+                    feature = lionProp;
                 }
                 if (property.multiple) {
                     if (feature instanceof Link) {
@@ -164,7 +180,7 @@ export abstract class Node extends Origin implements Destination, LNode {
     }
 
     get concept(): Concept | undefined {
-        return getConcept(Object.getPrototypeOf(this));
+        return getConcept(this);
     }
 
     get properties(): PropertyDescription[] {

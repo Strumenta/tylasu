@@ -1082,9 +1082,9 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-"lioncore@file:../lioncore-typescript/npm/lioncore-0.6.1.tgz":
-  version "0.6.1"
-  resolved "file:../lioncore-typescript/npm/lioncore-0.6.1.tgz#96c75c1fb0eb9d61eb83e6d7e0db259afc0e37ee"
+"lioncore@file:../lioncore-typescript/npm/lioncore-0.6.4.tgz":
+  version "0.6.4"
+  resolved "file:../lioncore-typescript/npm/lioncore-0.6.4.tgz#3ca093484b786c4b3aeab2809b6d98b924e7177f"
   dependencies:
     "@deno/shim-deno" "~0.12.0"
     ajv "^8.12.0"

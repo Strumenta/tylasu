@@ -12,3 +12,4 @@ export * from "./processing";
 export * from "./transformation/transformation";
 export * from "./validation";
 export * from "./interop/json";
+export * from "./interop/lioncore";

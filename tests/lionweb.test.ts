@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import {getConcept} from "../src";
+import {getConcept, Issue, METAMODELS, tylasuAPI} from "../src";
 import {NodeSubclass, SomeNode, SomeNodeInPackage} from "./nodes";
-import {Concept, Containment, Link} from "lioncore";
+import {Concept, Containment, deserializeModel, Link, serializeModel} from "lioncore";
 
 function getFeatureByName(concept: Concept, name: string) {
     return concept.allFeatures().find(f => f.name == name);
@@ -58,7 +58,7 @@ describe('Lionweb metamodel', function() {
         });
     it("Works on instances",
         function () {
-            const concept = getConcept(new NodeSubclass())!;
+            const concept = new NodeSubclass().concept!;
             const parentConcept = getConcept(new SomeNodeInPackage());
             expect(concept.extends).to.equal(parentConcept);
             //TODO bug in Lioncore? expect(concept!.namespaceQualifier()).to.equal("some.package");
@@ -79,5 +79,18 @@ describe('Lionweb metamodel', function() {
             const anotherChildF = getFeatureByName(concept, "anotherChild") as Link;
             expect(anotherChildF instanceof Containment).to.be.true;
             expect(anotherChildF.type).to.equal(parentConcept);
+        });
+    it("Serialize/deserialize roundtrip", function () {
+            const result = {
+                root: new SomeNodeInPackage("root"),
+                issues: [Issue.semantic("Something's wrong")]
+            };
+            const serializedModel = serializeModel([result.root], tylasuAPI);
+            expect(serializedModel.nodes.length).to.equal(1);
+            const nodes =
+                deserializeModel(serializedModel, tylasuAPI, METAMODELS.get("some.package")!, []);
+            expect(nodes.length).to.equal(1);
+            expect(nodes[0] instanceof SomeNodeInPackage).to.be.true;
+            expect((nodes[0] as SomeNodeInPackage).a).to.equal("root");
         });
 });
