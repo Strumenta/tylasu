@@ -1,6 +1,6 @@
 import {ModelAPI} from "lioncore/types/api";
 import {Node, NODE_TYPES} from "../model/model";
-import {Concept, Feature} from "lioncore";
+import {Concept, Containment, Feature} from "lioncore";
 
 export const tylasuAPI: ModelAPI<Node> = {
     conceptOf(node: Node): Concept {
@@ -24,7 +24,11 @@ export const tylasuAPI: ModelAPI<Node> = {
             throw new Error(`Unknown node class: ${concept.name} in package ${pkg}`);
         }
     }, setFeatureValue(node: Node, feature: Feature, value: unknown): void {
-        node[feature.name] = value;
+        if (feature instanceof Containment) {
+            node.setChild(feature.name, value ? value as Node : undefined);
+        } else {
+            node[feature.name] = value;
+        }
     }
 
 }

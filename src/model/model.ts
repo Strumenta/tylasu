@@ -2,7 +2,7 @@ import {Position} from "./position";
 import "reflect-metadata";
 import {
     Concept, Containment, Feature, Id, Link, Metamodel, Node as LNode, Property as LProperty,
-    booleanDatatype, intDatatype, stringDatatype
+    booleanDatatype, intDatatype, stringDatatype, jsonDatatype
 } from "lioncore";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
@@ -42,6 +42,14 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
 }
 
 export const METAMODELS = new Map<string, Metamodel>();
+export const STARLASU_URL = "https://strumenta.com/starlasu/v3";
+export const STARLASU_METAMODEL = new Metamodel("starlasu", STARLASU_URL);
+export const AST_NODE_CONCEPT = new Concept(STARLASU_METAMODEL, "ASTNode", STARLASU_URL + "/ASTNode", true);
+const positionProperty = new LProperty(AST_NODE_CONCEPT, "position", AST_NODE_CONCEPT.id + "/position");
+positionProperty.type = jsonDatatype;
+AST_NODE_CONCEPT.havingFeatures(positionProperty);
+STARLASU_METAMODEL.elements.push(AST_NODE_CONCEPT);
+METAMODELS.set(STARLASU_METAMODEL.id, STARLASU_METAMODEL);
 
 function setPropertyType(lionProp: LProperty, property: NodeProperty) {
     if (property.type === String) {
@@ -59,15 +67,16 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
     }
     const nodeDefinition = getNodeDefinition(node);
     if (!Object.prototype.hasOwnProperty.call(node, CONCEPT_SYMBOL)) {
-        const pkg = nodeDefinition?.package;
+        const pkg = nodeDefinition?.package || "";
         const name = nodeDefinition?.name;
-        if (pkg && name) {
+        if (name) {
             let metamodel = METAMODELS.get(pkg);
             if (!metamodel) {
                 metamodel = new Metamodel(pkg, pkg);
                 METAMODELS.set(pkg, metamodel);
             }
             const concept = new Concept(metamodel, name, pkg + "." + name, false);
+            concept.extends = AST_NODE_CONCEPT;
             metamodel.elements.push(concept);
             node[CONCEPT_SYMBOL] = concept; // We need this to avoid infinite recursion for self-referencing nodes
             const features: Feature[] = [];
@@ -103,7 +112,7 @@ export function getConcept(node: Node | (new (...args: any[]) => Node)): Concept
             node[CONCEPT_SYMBOL] = concept.havingFeatures(...features);
         } else {
             throw new Error(
-                `Cannot derive a Concept for ${node} – definition is missing or has no package/name: ${JSON.stringify(nodeDefinition)}`);
+                `Cannot derive a Concept for ${node} – definition is missing or has no name: ${JSON.stringify(nodeDefinition)}`);
         }
     }
     return node[CONCEPT_SYMBOL] as Concept;
@@ -194,20 +203,23 @@ export abstract class Node extends Origin implements Destination, LNode {
         return this.getChildNames().indexOf(name) >= 0;
     }
 
-    setChild(name: string, child: Node): void {
+    setChild(name: string, child?: Node): void {
         if(!this.isChild(name)) {
             throw new Error("Not a child: " + name);
         }
         if(Array.isArray(this[name])) {
             throw new Error(name + " is a collection, use addChild");
         }
-        if(child.parent && child.parent != this) {
+        if(child?.parent && child?.parent != this) {
             throw new Error("Child already has a different parent");
+        }
+        if(this.id && child && !child.id) {
+            child.id = this.id + "." + name;
         }
         if(this[name] instanceof Node) {
             this[name].parent = undefined;
         }
-        this[name] = child.withParent(this);
+        this[name] = child?.withParent(this);
     }
 
     addChild(name: string, child: Node): void {
@@ -223,6 +235,9 @@ export abstract class Node extends Origin implements Destination, LNode {
         if(!this[name]) {
             this[name] = [];
         }
+        if(this.id && child && !child.id) {
+            child.id = `${this.id}.${name}[${this[name].length}]`;
+        }
         this[name].push(child.withParent(this));
     }
 
@@ -233,6 +248,11 @@ export abstract class Node extends Origin implements Destination, LNode {
 
     withOrigin(origin?: Origin): this {
         this.origin = origin;
+        return this;
+    }
+
+    withPosition(position?: Position): this {
+        this.positionOverride = position;
         return this;
     }
 
