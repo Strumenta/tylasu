@@ -18,8 +18,8 @@ export function assertASTsAreEqual(
 
             if (actualPropValue instanceof Node && expectedPropValue instanceof Node) {
                 assertASTsAreEqual(
-                    actualPropValue as Node,
                     expectedPropValue as Node,
+                    actualPropValue as Node,
                     `${context}.${expectedProperty.name}`,
                     considerPosition
                 );
