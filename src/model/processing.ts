@@ -1,8 +1,9 @@
-import {Node} from "./model/model";
-import {walk} from "./traversing/structurally";
+import {Node} from "./model";
+import {walk} from "../traversing/structurally";
 import {first, pipe} from "iter-ops";
+import {Issue, IssueSeverity} from "../validation";
 
-declare module './model/model' {
+declare module './model' {
     export interface Node {
         /**
          * Finds the first node that satisfies a condition among this node's descendants.
@@ -69,4 +70,21 @@ function* getInvalidPositions(node: Node): Generator<Node> {
 
 Node.prototype.invalidPositions = function() {
     return getInvalidPositions(this);
+}
+
+export class CodeProcessingResult<D> {
+    code: string;
+    data: D | undefined;
+    issues: Issue[];
+
+    constructor(code: string, data: D | undefined, issues: Issue[]) {
+        this.issues = issues;
+        this.data = data;
+        this.code = code;
+    }
+
+    get correct(): boolean {
+        return !this.issues.find(i => i.severity != IssueSeverity.INFO);
+    }
+
 }

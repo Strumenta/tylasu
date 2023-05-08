@@ -15,7 +15,7 @@ import {Node} from "../model/model";
 import {Interval} from "antlr4ts/misc";
 import {ErrorNode} from "antlr4ts/tree";
 import {walk} from "../traversing/structurally";
-import {assignParents} from "../processing";
+import {assignParents, CodeProcessingResult} from "../model/processing";
 import "../interop/antlr4";
 
 let now: () => number;
@@ -228,23 +228,6 @@ export abstract class Parser<R extends Node, P extends ANTLRParser, C extends Pa
             }
         });
     }
-}
-
-export class CodeProcessingResult<D> {
-    code: string;
-    data: D | undefined;
-    issues: Issue[];
-
-    constructor(code: string, data: D | undefined, issues: Issue[]) {
-        this.issues = issues;
-        this.data = data;
-        this.code = code;
-    }
-
-    get correct(): boolean {
-        return !this.issues.find(i => i.severity != IssueSeverity.INFO);
-    }
-
 }
 
 export class LexingResult extends CodeProcessingResult<Token[]> {
