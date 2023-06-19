@@ -9,7 +9,7 @@ import {
 } from "./ecore";
 import {Node, NodeDefinition} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
-import {EObject, EPackage, Resource, ResourceSet} from "ecore";
+import {EList, EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
 import {PARSER_TRACE_ECLASS} from "./parser-package";
 import {
@@ -313,8 +313,8 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
     // }
     //
     get generatedFiles(): TargetWorkspaceFile[] {
-        //return new TargetNode(this.eo.get("targetResult").get("root"), this)
-        throw Error()
+        const eos = this.eo.get("generatedFiles") as EList;
+        return eos.map((eo) => new TargetWorkspaceFile(eo, this));
     }
 
     get name(): string | undefined {
@@ -323,18 +323,28 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
 
 }
 
-abstract class AbstractWorkspaceFile {}
+abstract class AbstractWorkspaceFile {
+    constructor(protected eo: EObject, protected trace: WorkspaceTranspilationTrace) {
+
+    }
+
+}
 
 export class SourceWorkspaceFile extends AbstractWorkspaceFile {
+    constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
+        super(eo, trace);
+    }
 
 }
 
 export class TargetWorkspaceFile extends AbstractWorkspaceFile {
-
+    constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
+        super(eo, trace);
+    }
 }
 
 export class SourceNode extends TraceNode {
-    constructor(eo: EObject, protected trace: TranspilationTrace) {
+    constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
         super(eo);
     }
 
@@ -375,7 +385,7 @@ export class SourceNode extends TraceNode {
 
 export class TargetNode extends TraceNode {
 
-    constructor(eo: EObject, protected trace: TranspilationTrace) {
+    constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
         super(eo);
     }
 
@@ -472,6 +482,6 @@ export class TranspilationTraceLoader {
             this.languages, sourceLang,  this.resourceSet, resource,
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
-                () => new TranspilationTrace(loadEObject(text, resource, THE_TRANSPILATION_TRACE_ECLASS))));
+                () => new WorkspaceTranspilationTrace(loadEObject(text, resource, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS))));
     }
 }
