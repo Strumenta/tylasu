@@ -94,13 +94,15 @@ THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EA
     eType: Ecore.EString,
     upperBound: 1
 }));
-THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "originalFiles",
+    containment: true,
     eType: THE_WORKSPACE_FILE_ECLASS,
     upperBound: -1
 }));
-THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
     name: "generatedFiles",
+    containment: true,
     eType: THE_WORKSPACE_FILE_ECLASS,
     upperBound: -1
 }));

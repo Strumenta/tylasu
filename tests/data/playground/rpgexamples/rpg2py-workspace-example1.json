@@ -1,7 +1,7 @@
 {
   "eClass" : "https://strumenta.com/starlasu/transpilation/v2#//WorkspaceTranspilationTrace",
   "originalFiles" : [ {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qddssrc/DEORD.dds",
+    "path" : "qddssrc/DEORD.dds",
     "code" : "     A                                      REF(SAMREF)\n     A          R FDETO\n     A            ODORID    R               REFFLD(ORID)\n     A            ODYEAR    R               REFFLD(YEAR)\n     A            ODLINE    R\n     A            ODARID    R               REFFLD(ARID)\n     A            ODQTY     R               TEXT('ORDERED QUANTITY')\n     A                                      COLHDG('ORDER' 'QUANTITY')\n     A                                      REFFLD(QUANTITY)\n     A            ODQTYLIV  R               TEXT('DELIVERED QUANTITY')\n     A                                      COLHDG('DELIV' 'QUANTITY')\n     A                                      REFFLD(QUANTITY)\n     A            ODPRICE   R               REFFLD(UNITPRICE)\n     A            ODTOT     R               REFFLD(TOTPRICE)\n     A            ODTOTVAT  R               REFFLD(TOTPRICE)\n     A                                      TEXT('TOTAL LINE WITH VAT')\n     A                                      COLHDG('TOTAL LINE' 'WITH VAT')\n     A          K ODLINE\n     A          K ODORID\n     A          K ODYEAR",
     "result" : {
       "root" : {
@@ -506,7 +506,7 @@
       }
     }
   }, {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qddssrc/CUSTOMER.dds",
+    "path" : "qddssrc/CUSTOMER.dds",
     "code" : "     A                                      UNIQUE\n     A          R FCUST\n     A            CUID           5P 0       TEXT('CUSTOMER ID')\n     A            CUSTNM        30A         TEXT('CUSTOMER NAME')\n     A            CUPHONE       15A         TEXT('PHONE NUMBER')\n     A            CUVAT         12A         TEXT('VAT NUMBER')\n     A            CUMAIL        50A         TEXT('ADDRESS MAIL')\n     A            CULINE1       50A         TEXT('ADDRESS LINE')\n     A            CULINE2       50A         TEXT('ADDRESS LINE')\n     A            CULINE3       50A         TEXT('ADDRESS LINE')\n     A            CUZIP         10A         TEXT('ZIP CODE')\n     A            CUCITY        30A         TEXT('CYTY')\n     A            CUCOUN         2A         TEXT('COUNTRY CODE')\n     A            CUCAT          2A         TEXT('CUSTOMER CATEGORY')\n     A            CULIMCRE       9P 2       TEXT('CREDIT LIMIT')\n     A            CUCREDIT       9P 2       TEXT('CREDIT')\n     A            CULASTORD      8P 0       TEXT('LAST ORDER DATE')\n     A            CUCREA          L         TEXT('CREATEIN DATE')\n     A            CUMODID       10A         TEXT('LAST MOD USER')\n     A            CUDEL          1A         TEXT('DELETE CODE X=DELETED')\n     A          K CUID\n",
     "result" : {
       "root" : {
@@ -1279,7 +1279,7 @@
       }
     }
   }, {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qddssrc/CUSTOME1.dds",
+    "path" : "qddssrc/CUSTOME1.dds",
     "code" : "     A                                      UNIQUE\n     A          R FCUST                     PFILE(CUSTOMER)\n     A          K CUID",
     "result" : {
       "root" : {
@@ -1372,7 +1372,7 @@
       }
     }
   }, {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qddssrc/ARTICLE.dds",
+    "path" : "qddssrc/ARTICLE.dds",
     "code" : "     A                                      REF(SAMREF)\n     A          R FARTI\n     A            ARID      R\n     A            ARDESC    R\n     A            ARSALEPR  R               REFFLD(UNITPRICE)\n     A                                      TEXT('REF SALE PRICE')\n     A                                      COLHDG('REF' 'SALE' 'PRICE')\n     A                                      EDTCDE(2)\n     A            ARWHSPR   R               REFFLD(UNITPRICE)\n     A                                      TEXT('STOCK PRICE')\n     A                                      COLHDG('STOCK' 'PRICE')\n     A                                      EDTCDE(2)\n     A            ARTIFA    R               REFFLD(FAID)\n     A            ARSTOCK   R               REFFLD(QUANTITY)\n     A                                      TEXT('STOCK')\n     A                                      COLHDG('STOCK')\n     A                                      EDTCDE(2)\n     A            ARMINQTY  R               REFFLD(QUANTITY)\n     A                                      TEXT('MINIMUM STOCK')\n     A                                      COLHDG('MINIMUM' 'STOCK')\n     A                                      EDTCDE(2)\n     A            ARCUSQTY  R               REFFLD(QUANTITY)\n     A                                      TEXT('CUSTOMER ORDER QUANTITY')\n     A                                      COLHDG('CUSTOMER' 'ORDER' 'QTY')\n     A            ARPURQTY  R               REFFLD(QUANTITY)\n     A                                      TEXT('PURCHASE ORDER QUANTITY')\n     A                                      COLHDG('PRUCHASE' 'ORDER' 'QTY')\n     A                                      EDTCDE(2)\n     A            ARVATCD   R               REFFLD(VATCODE)\n     A            ARCREA          L         TEXT('CREATION DATE')\n     A                                      COLHDG('CREAETION' 'DATE')\n     A            ARMOD           Z         TEXT('LAST MODIFICATION')\n     A                                      COLHDG('LAST' 'MODIFICATION')\n     A            ARMODID       10          TEXT('LAS MOD BY')\n     A                                      COLHDG('LAST' 'MODIF.' 'BY')\n     A            ARDEL     R               REFFLD(DLCODE)\n     A            ALIAS         10          TEXT('RESERVED')\n     A            #TEMP         10          TEXT('RESERVED')",
     "result" : {
       "root" : {
@@ -2297,7 +2297,7 @@
       }
     }
   }, {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qddssrc/ORDER.dds",
+    "path" : "qddssrc/ORDER.dds",
     "code" : "     A                                      REF(SAMREF)\n     A          R FORDE\n     A            ORID      R\n     A            ORYEAR    R               REFFLD(YEAR)\n     A            ORCUID    R               REFFLD(CUID)\n     A            ORDATE         8  0       TEXT('ORDER DATE')\n     A                                      COLHDG('ORDER' 'DATE')\n     A            ORDATDEL       8  0       TEXT('DELIVERY DATE')\n     A                                      COLHDG('DELIVERY' 'DATE')\n     A            ORDATCLO       8  0       TEXT('CLOSE DATE')\n     A                                      COLHDG('CLOSE' 'DATE')\n",
     "result" : {
       "root" : {
@@ -2614,7 +2614,7 @@
       }
     }
   }, {
-    "path" : "/Users/ftomassetti/repos/rpg-to-python-transpiler/sample/rpgle/qrpglesrc/CUS200.rpgle",
+    "path" : "qrpglesrc/CUS200.rpgle",
     "code" : "      *\n     FCUSTOME1  UF   E           K Disk\n      *\n     C     *LOVAL        SETLL     FCUST\n     C                   READ      CUSTOME1\n     C                   DOW       NOT %EOF()\n     C     CUID          DSPLY\n     C                   READ      CUSTOME1\n     C                   ENDDO\n     C                   SETON                                          LR\n",
     "result" : {
       "root" : {

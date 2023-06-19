@@ -19,7 +19,7 @@ import {
 } from "./starlasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
-import {THE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
+import {THE_TRANSPILATION_TRACE_ECLASS, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R, any>, name: string,
@@ -239,19 +239,15 @@ export class ParserTraceLoader {
     }
 }
 
-export class TranspilationTrace {
-    private sourceToTarget = new Map<string, EObject>();
+abstract class AbstractTranspilationTrace {
+    protected sourceToTarget = new Map<string, EObject>();
     public issues: Issue[] = [];
 
-    constructor(private eo: EObject) {
-        if (!eo.eClass == THE_TRANSPILATION_TRACE_ECLASS) {
-            throw new Error("Not a transpilation trace: " + eo.eClass);
-        }
-        this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
-        this.examineTargetNode(this.rootTargetNode.eo);
+    constructor(protected eo: EObject) {
+
     }
 
-    private examineTargetNode(tn: EObject) {
+    protected examineTargetNode(tn: EObject) {
         let origin = tn.get("origin");
         if (origin?.eClass == THE_NODE_ORIGIN_ECLASS) {
             origin = origin.get("node");
@@ -263,12 +259,28 @@ export class TranspilationTrace {
         tn.eContents().forEach((c) => this.examineTargetNode(c));
     }
 
+    protected getEObjectID(eObject: EObject): string {
+        return eObject.fragment();
+    }
+
     getDestinationNode(sourceNode: SourceNode): TargetNode | undefined {
         const targetEO = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
         if (!targetEO) {
             return undefined;
         }
         return new TargetNode(targetEO, this);
+    }
+}
+
+export class TranspilationTrace extends AbstractTranspilationTrace {
+
+    constructor(eo: EObject) {
+        super(eo)
+        if (!eo.eClass == THE_TRANSPILATION_TRACE_ECLASS) {
+            throw new Error("Not a transpilation trace: " + eo.eClass);
+        }
+        this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
+        this.examineTargetNode(this.rootTargetNode.eo);
     }
 
     get rootSourceNode(): SourceNode {
@@ -283,9 +295,42 @@ export class TranspilationTrace {
         return this.eo.get("name");
     }
 
-    private getEObjectID(eObject: EObject): string {
-        return eObject.fragment();
+}
+
+export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
+
+    constructor(eo: EObject) {
+        super(eo)
+        if (!eo.eClass == THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS) {
+            throw new Error("Not a workspace transpilation trace: " + eo.eClass);
+        }
+        this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
+        //this.examineTargetNode(this.rootTargetNode.eo);
     }
+
+    // get rootSourceNode(): SourceNode {
+    //     return new SourceNode(this.eo.get("sourceResult").get("root"), this)
+    // }
+    //
+    get generatedFiles(): TargetWorkspaceFile[] {
+        //return new TargetNode(this.eo.get("targetResult").get("root"), this)
+        throw Error()
+    }
+
+    get name(): string | undefined {
+        return this.eo.get("name");
+    }
+
+}
+
+abstract class AbstractWorkspaceFile {}
+
+export class SourceWorkspaceFile extends AbstractWorkspaceFile {
+
+}
+
+export class TargetWorkspaceFile extends AbstractWorkspaceFile {
+
 }
 
 export class SourceNode extends TraceNode {
@@ -418,5 +463,15 @@ export class TranspilationTraceLoader {
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
             () => new TranspilationTrace(loadEObject(text, resource, THE_TRANSPILATION_TRACE_ECLASS))));
+    }
+
+    loadWorkspaceTranspilationTrace(text: string, sourceLang?: string, targetLang?: string,
+                           uri = 'transpiler-trace.json'): WorkspaceTranspilationTrace {
+        const resource = this.resourceSet.create({uri: uri});
+        return withLanguageMetamodel(
+            this.languages, sourceLang,  this.resourceSet, resource,
+            () => withLanguageMetamodel(
+                this.languages, targetLang,  this.resourceSet, resource,
+                () => new TranspilationTrace(loadEObject(text, resource, THE_TRANSPILATION_TRACE_ECLASS))));
     }
 }
