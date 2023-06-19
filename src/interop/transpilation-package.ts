@@ -2,9 +2,9 @@ import * as Ecore from "ecore/dist/ecore";
 import {getEPackage} from "./ecore-basic";
 import {THE_ISSUE_ECLASS, THE_RESULT_ECLASS} from "./starlasu-v2-metamodel";
 
-export const STARLASU_TRANSPILATION_URI_V1 = "https://strumenta.com/starlasu/transpilation/v2";
-export const TRANSPILATION_RESOURCE = Ecore.ResourceSet.create().create({ uri: STARLASU_TRANSPILATION_URI_V1 });
-export const TRANSPILATION_EPACKAGE = getEPackage("StrumentaLanguageSupportTranspilation", { nsURI: STARLASU_TRANSPILATION_URI_V1 });
+export const STARLASU_TRANSPILATION_URI_V2 = "https://strumenta.com/starlasu/transpilation/v2";
+export const TRANSPILATION_RESOURCE = Ecore.ResourceSet.create().create({ uri: STARLASU_TRANSPILATION_URI_V2 });
+export const TRANSPILATION_EPACKAGE = getEPackage("StrumentaLanguageSupportTranspilation", { nsURI: STARLASU_TRANSPILATION_URI_V2 });
 TRANSPILATION_RESOURCE.get("contents").add(TRANSPILATION_EPACKAGE);
 
 ///

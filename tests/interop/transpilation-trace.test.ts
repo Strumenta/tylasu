@@ -7,6 +7,7 @@ import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
 import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
 import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
+import {TRANSPILATION_EPACKAGE_V1} from "../../src/interop/transpilation-package-v1";
 
 ensureEcoreContainsAllDataTypes();
 
@@ -66,6 +67,7 @@ describe('Transpilation traces', function() {
             const resourceSet = Ecore.ResourceSet.create();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE_V1);
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
                  rpgMetamodelsResource);
