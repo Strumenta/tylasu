@@ -312,6 +312,12 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
     //     return new SourceNode(this.eo.get("sourceResult").get("root"), this)
     // }
     //
+
+    get originalFiles(): SourceWorkspaceFile[] {
+        const eos = this.eo.get("originalFiles") as EList;
+        return eos.map((eo) => new SourceWorkspaceFile(eo, this));
+    }
+
     get generatedFiles(): TargetWorkspaceFile[] {
         const eos = this.eo.get("generatedFiles") as EList;
         return eos.map((eo) => new TargetWorkspaceFile(eo, this));
@@ -321,25 +327,49 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
         return this.eo.get("name");
     }
 
+    get transpilationIssues(): Issue[] {
+        return fromEObject(this.eo.get("transpilationIssues")) as Issue[] || []
+    }
+
 }
 
-abstract class AbstractWorkspaceFile {
+abstract class AbstractWorkspaceFile<N> {
     constructor(protected eo: EObject, protected trace: WorkspaceTranspilationTrace) {
 
     }
 
+    get path(): string {
+        return this.eo.get("path") as string
+    }
+
+    get code(): string {
+        return this.eo.get("code") as string
+    }
+
+    get issues(): Issue[] {
+        return fromEObject(this.eo.get("issues")) as Issue[] || []
+    }
+
+    abstract get node() : N
 }
 
-export class SourceWorkspaceFile extends AbstractWorkspaceFile {
+export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
     constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
         super(eo, trace);
     }
 
+    get node(): SourceNode {
+        return new SourceNode(this.eo.get("result").get("root"), this.trace);
+    }
 }
 
-export class TargetWorkspaceFile extends AbstractWorkspaceFile {
+export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
     constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
         super(eo, trace);
+    }
+
+    get node(): TargetNode {
+        return new TargetNode(this.eo.get("result").get("root"), this.trace);
     }
 }
 
