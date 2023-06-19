@@ -142,6 +142,16 @@ export abstract class TraceNode extends Node {
         return result;
     }
 
+    getAttribute(attrName: string): any {
+        for (const attr of this.eo.eClass.get("eAllAttributes")) {
+            const name = attr.get("name");
+            if (name == attrName) {
+                return this.eo.get(name);
+            }
+        }
+        throw new Error(`Unknown attribute ${attrName}`)
+    }
+
     getPathFromRoot(): (string | number)[] {
         if (this.parent) {
             const ft = this.eo.eContainingFeature;
