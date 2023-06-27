@@ -79,6 +79,15 @@ export abstract class Origin {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Destination {}
 
+
+export class CompositeDestination implements Destination {
+    constructor(public readonly elements: Destination[]) {}
+}
+
+export class TextFileDestination implements Destination {
+    constructor(public readonly position?: Position) {}
+}
+
 /**
  * The Abstract Syntax Tree will be constituted by instances of Node.
  *
@@ -88,6 +97,7 @@ export interface Destination {}
 export abstract class Node extends Origin implements Destination {
     parent?: Node;
     origin?: Origin;
+    destination?: Destination;
 
     constructor(protected positionOverride?: Position) {
         super();

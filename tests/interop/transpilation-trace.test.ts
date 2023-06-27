@@ -114,8 +114,8 @@ describe('Transpilation traces', function() {
             expect(rootSourceNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootSourceNode.getSimpleType()).to.eql("CompilationUnit");
             expect(rootSourceNode.getPosition()).to.eql(pos(1, 0,36, 30));
-            expect(rootSourceNode.getDestinationNode()!.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
-            expect(rootSourceNode.getDestinationNode()!.getDestination()).to.eql(
+            expect(rootSourceNode.getDestinationNodes()[0].getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
+            expect(rootSourceNode.getDestinationNodes()[0].getDestination()).to.eql(
                 new Position(new Point(1, 0), new Point(37, 0)));
             expect(rootSourceNode.children.length).to.eql(11);
             expect(rootSourceNode.getChildren("mainStatements").length).to.eql(5);
@@ -127,7 +127,9 @@ describe('Transpilation traces', function() {
             expect(descNode.getPathFromRoot()).to.eql(["dataDefinitions", 3, "type"]);
             foundSourceNode = findByPosition(descNode, descNode.position!) as SourceNode;
             expect(foundSourceNode.eo == descNode.eo).to.be.true;
-            const destNode = descNode!.parent!.getDestinationNode();
+            const destinationNodes = descNode!.parent!.getDestinationNodes();
+            expect(destinationNodes.length).to.eql(1);
+            const destNode = destinationNodes[0];
             expect(destNode).not.to.be.undefined;
             expect(destNode!.getType()).to.equal("com.strumenta.javalangmodule.ast.JFieldDecl");
             expect(destNode!.getDestination()).to.eql(pos(5, 0, 5, 15));
@@ -135,10 +137,10 @@ describe('Transpilation traces', function() {
 
             const stmt0 = rootSourceNode.getChildren("subroutines")[0].getChildren("statements")[0];
             expect(stmt0).not.to.be.undefined;
-            expect(stmt0.getDestinationNode()).not.to.be.undefined;
-            expect(stmt0.getDestinationNode()!.getType()).to.equal(
+            expect(stmt0.getDestinationNodes()).not.to.be.empty;
+            expect(stmt0.getDestinationNodes()[0].getType()).to.equal(
                 "com.strumenta.javalangmodule.ast.JExpressionStatement");
-            expect(stmt0.getDestinationNode()!.getDestination()).to.eql(pos(14, 0, 14, 17));
+            expect(stmt0.getDestinationNodes()[0].getDestination()).to.eql(pos(14, 0, 14, 17));
 
             const rootTargetNode = trace.rootTargetNode;
             expect(rootTargetNode.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");

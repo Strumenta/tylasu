@@ -250,12 +250,10 @@ export class ParserTraceLoader {
 }
 
 abstract class AbstractTranspilationTrace {
-    protected sourceToTarget = new Map<string, EObject>();
+    protected sourceToTarget = new Map<string, EObject[]>();
     public issues: Issue[] = [];
 
-    constructor(protected eo: EObject) {
-
-    }
+    constructor(protected eo: EObject) {}
 
     protected examineTargetNode(tn: EObject) {
         let origin = tn.get("origin");
@@ -264,7 +262,12 @@ abstract class AbstractTranspilationTrace {
         }
         if (origin) {
             const sourceID = this.getEObjectID(origin);
-            this.sourceToTarget.set(sourceID, tn);
+            let list = this.sourceToTarget.get(sourceID);
+            if (list === undefined) {
+                list = [];
+                this.sourceToTarget.set(sourceID, list);
+            }
+            list.push(tn);
         }
         tn.eContents().forEach((c) => this.examineTargetNode(c));
     }
@@ -273,12 +276,9 @@ abstract class AbstractTranspilationTrace {
         return eObject.fragment();
     }
 
-    getDestinationNode(sourceNode: SourceNode): TargetNode | undefined {
-        const targetEO = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
-        if (!targetEO) {
-            return undefined;
-        }
-        return new TargetNode(targetEO, this);
+    getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
+        const targetEOs = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
+        return targetEOs?.map(eo => new TargetNode(eo, this)) || [];
     }
 }
 
@@ -396,8 +396,8 @@ export class SourceNode extends TraceNode {
         }
     }
 
-    getDestinationNode(): TargetNode | undefined {
-        return this.trace.getDestinationNode(this);
+    getDestinationNodes(): TargetNode[] {
+        return this.trace.getDestinationNodes(this);
     }
 
     getChildren(role?: string): SourceNode[] {
