@@ -17,6 +17,7 @@ declare module "../model/position" {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     export namespace Position {
         export function ofParseTree(parseTree: ParseTree): Position | undefined;
+        export function ofToken(token: Token): Position;
         export function ofTokenStart(token: Token): Position;
         export function ofTokenEnd(token: Token): Position;
     }
@@ -27,10 +28,11 @@ export function positionOfParseTree(parseTree: ParseTree): Position | undefined 
         const startToken = parseTree.start;
         const stopToken = parseTree.stop;
 
-        if (stopToken)
+        if (stopToken) {
             return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
-        else
+        } else {
             return Point.ofTokenStart(startToken).asPosition();
+        }
     } else if(parseTree instanceof TerminalNode) {
         return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
     }
@@ -53,6 +55,10 @@ Position.ofTokenStart = function (token: Token): Position {
 
 Position.ofTokenEnd = function (token: Token): Position {
     return new Position(Point.ofTokenEnd(token), Point.ofTokenEnd(token));
+}
+
+Position.ofToken = function (token: Token): Position {
+    return new Position(Point.ofTokenStart(token), Point.ofTokenEnd(token));
 }
 
 export class ParseTreeOrigin extends Origin {

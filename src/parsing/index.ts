@@ -5,3 +5,4 @@
  */
 export * from "./parsing";
 export * from "./parse-tree";
+export {TylasuParser} from "./tylasu-parser";
