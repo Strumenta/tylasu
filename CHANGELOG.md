@@ -2,10 +2,19 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.2.3] – Not yet released
+## [1.3.0] – Not yet released
+
+### Added
+- Support for WorkspaceTranspilationTrace
+
+### Changed
+- Partially separated parsing APIs that don't depend on ANTLR. This is a work in progress.
+- Support multiple destinations
+- Aligned TylasuParser with Kolasu 1.5.24
 
 ### Fixed
-- Correctly import enums from Ecore
+- Importing enums from Ecore
+- `assertASTsAreEqual` recursive call
 
 ## [1.2.2] – 2023-02-02
 
