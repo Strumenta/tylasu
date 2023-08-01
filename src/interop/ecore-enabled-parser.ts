@@ -1,6 +1,6 @@
 import {Node} from "..";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
-import {TylasuParser} from "../parsing";
+import {TylasuParser, TylasuToken} from "../parsing";
 import {Resource} from "ecore";
 import {THE_AST_EPACKAGE} from "./starlasu-v2-metamodel";
 import {EcoreMetamodelSupport} from "./ecore";
@@ -10,8 +10,9 @@ import {EcoreMetamodelSupport} from "./ecore";
  * In particular, this parser can generate the metamodel. We can then use toEObject(node) to translate a tree
  * into its EMF representation.
  */
-export abstract class EcoreEnabledParser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext>
-    extends TylasuParser<R, P, C> implements EcoreMetamodelSupport {
+export abstract class EcoreEnabledParser<
+    R extends Node, P extends ANTLRParser, C extends ParserRuleContext, T extends TylasuToken
+> extends TylasuParser<R, P, C, T> implements EcoreMetamodelSupport {
 
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.

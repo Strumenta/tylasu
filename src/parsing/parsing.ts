@@ -1,4 +1,4 @@
-import {ParserRuleContext, Token} from "antlr4ts";
+import {CharStream, ParserRuleContext, Token} from "antlr4ts";
 import {Issue} from "../validation";
 import {Position} from "../model/position";
 import {Node} from "../model/model";
@@ -63,15 +63,15 @@ export class FirstStageParsingResult<C extends ParserRuleContext> extends CodePr
     }
 }
 
-export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> extends CodeProcessingResult<RootNode> {
+export class ParsingResult<RootNode extends Node> extends CodeProcessingResult<RootNode> {
 
     incompleteNode?: Node;
-    firstStage?: FirstStageParsingResult<C>;
+    firstStage?: FirstStageParsingResult<any>;
     time?: number;
 
     constructor(
         code: string, data: RootNode | undefined, issues: Issue[],
-        incompleteNode?: Node, firstStage?: FirstStageParsingResult<C>, time?: number) {
+        incompleteNode?: Node, firstStage?: FirstStageParsingResult<any>, time?: number) {
         super(code, data, issues);
         this.incompleteNode = incompleteNode;
         this.firstStage = firstStage;
@@ -81,5 +81,13 @@ export class ParsingResult<RootNode extends Node, C extends ParserRuleContext> e
     get root(): RootNode | undefined {
         return this.data;
     }
+}
+
+export interface TylasuLexer<T extends TylasuToken> {
+
+    /**
+     * Performs "lexing" on the given code stream or string, i.e., it breaks it into tokens.
+     */
+    lex(code: string | CharStream, onlyFromDefaultChannel?: boolean): LexingResult<T>;
 }
 

@@ -22,8 +22,9 @@ import {Issue} from "../validation";
 import {THE_TRANSPILATION_TRACE_ECLASS, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
 
 export function saveForStrumentaPlayground<R extends Node>(
-    result: ParsingResult<R, any>, name: string,
-    metamodelSupport: EcoreMetamodelSupport, callback: (data: any, error: any) => void): void {
+    result: ParsingResult<R>, name: string,
+    metamodelSupport: EcoreMetamodelSupport, callback: (data: any, error: any) => void
+): void {
     const resourceSet = Ecore.ResourceSet.create();
     const mmResource = resourceSet.create({ uri: "ast" });
     metamodelSupport.generateMetamodel(mmResource, false);

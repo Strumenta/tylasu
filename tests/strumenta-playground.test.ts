@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Issue} from "../src";
+import {Issue, Source} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
 import {saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
@@ -10,6 +10,7 @@ import * as Ecore from "ecore/dist/ecore";
 import {ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
 import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+import {ANTLRTokenFactory} from "../src/parsing/tylasu-parser";
 
 describe('Strumenta Playground', function() {
     it("Export", function () {
@@ -17,10 +18,10 @@ describe('Strumenta Playground', function() {
         const fakePT = new TerminalNode(new CommonToken(Token.EOF));
         (fakePT.symbol as CommonToken).line = 1;
         (fakePT.symbol as CommonToken).charPositionInLine = 0;
-        const result = new ParsingResult<NodeSubclass, any>(
+        const result = new ParsingResult<NodeSubclass>(
             "some code", new NodeSubclass("root").withParseTreeNode(fakePT),
             [Issue.semantic("Something's wrong")]);
-        const testParser = new TestParser();
+        const testParser = new TestParser(new ANTLRTokenFactory());
         const resourceSet = Ecore.ResourceSet.create();
         const mmResource = resourceSet.create({ uri: "some.package" });
         testParser.generateMetamodel(mmResource, false);
@@ -39,7 +40,7 @@ describe('Strumenta Playground', function() {
     });
 });
 
-class TestParser extends EcoreEnabledParser<NodeSubclass, any, any> {
+class TestParser extends EcoreEnabledParser<NodeSubclass, any, any, any> {
     protected createANTLRLexer(inputStream: CharStream): Lexer | undefined {
         return undefined;
     }
@@ -53,7 +54,7 @@ class TestParser extends EcoreEnabledParser<NodeSubclass, any, any> {
         resource.get("contents").add(registerECoreModel("another.package"));
     }
 
-    protected parseTreeToAst(parseTreeRoot: any, considerPosition: boolean, issues: Issue[]): NodeSubclass | undefined {
+    protected parseTreeToAst(parseTreeRoot: any, considerPosition: boolean, issues: Issue[], source?: Source): NodeSubclass | undefined {
         return undefined;
     }
 

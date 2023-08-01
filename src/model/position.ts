@@ -57,6 +57,46 @@ export class Point {
 
 export const START_POINT = new Point(1, 0);
 
+export abstract class Source {}
+export class SourceSet {
+    constructor(public readonly name: string, public readonly root: string[]) {}
+}
+export class SourceSetElement extends Source {
+    constructor(public readonly sourceSet: SourceSet, public readonly relativePath: string[]) {
+        super();
+    }
+}
+export class FileSource extends Source {
+    constructor(public readonly file: string) {
+        super();
+    }
+}
+
+export class StringSource extends Source {
+    constructor(public readonly code?: string) {
+        super();
+    }
+}
+export class URLSource extends Source {
+    constructor(public readonly url: string) {
+        super();
+    }
+}
+
+/**
+ * This source is intended to be used for nodes that are "calculated".
+ * For example, nodes representing types that are derived by examining the code
+ * but cannot be associated to any specific point in the code.
+ *
+ * @param description this is a description of the source. It is used to describe the process that calculated the node.
+ *                    Examples of values could be "type inference".
+ */
+export class SyntheticSource extends Source {
+    constructor(public readonly description: string) {
+        super();
+    }
+}
+
 /**
  *  An area in a source file, from start to end.
  *  The start point is the point right before the starting character.
@@ -67,7 +107,11 @@ export const START_POINT = new Point(1, 0);
  *  The Position of such text will be Position(Point(1, 0), Point(1, 5)).
  */
 export class Position {
-    constructor(public readonly start: Point, public readonly end: Point) {}
+    constructor(
+        public readonly start: Point,
+        public readonly end: Point,
+        public source?: Source
+    ) {}
 
     static ofPoint(point: Point): Position {
         return new Position(point, point);

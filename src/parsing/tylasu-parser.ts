@@ -10,13 +10,23 @@ import {
     Token,
     TokenStream
 } from "antlr4ts";
-import {Issue, IssueSeverity} from "../validation";
-import {Point, Position} from "../model/position";
-import {assignParents} from "../model/processing";
 import {Interval} from "antlr4ts/misc";
-import {walk} from "../traversing/structurally";
 import {ErrorNode} from "antlr4ts/tree";
-import {FirstStageParsingResult, LexingResult, ParsingResult} from "./parsing";
+import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+import {Issue, IssueSeverity} from "../validation";
+import {Point, Position, Source, StringSource} from "../model/position";
+import {assignParents} from "../model/processing";
+import {walk} from "../traversing/structurally";
+import {
+    FirstStageParsingResult,
+    LexingResult,
+    ParsingResult,
+    TokenCategory,
+    TylasuANTLRToken, TylasuLexer,
+    TylasuToken
+} from "./parsing";
+import {ASTParser} from "./ast-parser";
+import {ParseTree} from "antlr4ts/tree/ParseTree";
 
 let now: () => number;
 try {
@@ -35,12 +45,103 @@ try {
     }
 }
 
-export abstract class TylasuParser<R extends Node, P extends ANTLRParser, C extends ParserRuleContext> {
+export abstract class TokenFactory<T extends TylasuToken> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    categoryOf(t: Token): TokenCategory {
+        return TokenCategory.PLAIN_TEXT;
+    }
+
+    abstract convertToken(t: Token): T;
+
+    private convertTerminal(terminalNode: TerminalNode): T {
+        return this.convertToken(terminalNode.symbol);
+    }
+
+    extractTokens(result: ParsingResult<any>): LexingResult<T> | undefined {
+        const antlrTerminals: TerminalNode[] = [];
+        function extractTokensFromParseTree(pt?: ParseTree) {
+            if (pt instanceof TerminalNode) {
+                antlrTerminals.push(pt);
+            } else if (pt != null) {
+                for (let i = 0; i < pt.childCount; i++) {
+                    extractTokensFromParseTree(pt.getChild(i))
+                }
+            }
+        }
+
+        const ptRoot = result.firstStage?.root;
+        if (ptRoot != null) {
+            extractTokensFromParseTree(ptRoot);
+            antlrTerminals.sort((a, b) => a.symbol.tokenIndex - b.symbol.tokenIndex);
+            const tokens = antlrTerminals.map(t => this.convertTerminal(t));
+            return new LexingResult(result.code, tokens, result.issues, result.firstStage?.lexingTime);
+        }
+    }
+}
+
+export class ANTLRTokenFactory extends TokenFactory<TylasuANTLRToken> {
+    convertToken(t: Token): TylasuANTLRToken {
+        return new TylasuANTLRToken(this.categoryOf(t), t);
+    }
+}
+
+export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuLexer<T> {
+
+    constructor(public readonly tokenFactory: TokenFactory<T>) {}
 
     /**
      * Creates the lexer.
      */
     protected abstract createANTLRLexer(inputStream: CharStream): Lexer | undefined;
+
+    /**
+     * Performs "lexing" on the given code stream, i.e., it breaks it into tokens.
+     */
+    lex(inputStream: CharStream, onlyFromDefaultChannel = true): LexingResult<T> {
+        const issues: Issue[] = [];
+        const tokens: T[] = [];
+        const time = now();
+        const lexer = this.createANTLRLexer(inputStream)!;
+        this.injectErrorCollectorInLexer(lexer, issues);
+        let t: Token;
+        do {
+            t = lexer.nextToken();
+            if (!t) {
+                break;
+            } else {
+                if (!onlyFromDefaultChannel || t.channel == Token.DEFAULT_CHANNEL) {
+                    tokens.push(this.tokenFactory.convertToken(t));
+                }
+            }
+        } while (t.type != Token.EOF);
+
+        if (t && (t.type != Token.EOF)) {
+            const message = "The lexer didn't consume the entire input";
+            issues.push(Issue.syntactic(message, IssueSeverity.WARNING, Position.ofTokenEnd(t)))
+        }
+
+        const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
+        return new LexingResult(code, tokens, issues, now() - time);
+    }
+
+    protected injectErrorCollectorInLexer(lexer: Lexer, issues: Issue[]): void {
+        lexer.removeErrorListeners();
+        lexer.addErrorListener({
+            syntaxError(recognizer: Recognizer<number, any>, offendingSymbol: number | undefined, line: number, charPositionInLine: number, msg: string) {
+                issues.push(
+                    Issue.lexical(
+                        msg || "unspecified",
+                        IssueSeverity.ERROR,
+                        Position.ofPoint(new Point(line, charPositionInLine))));
+            }
+        });
+    }
+
+}
+
+export abstract class TylasuParser<
+    R extends Node, P extends ANTLRParser, C extends ParserRuleContext, T extends TylasuToken
+> extends TylasuANTLRLexer<T> implements ASTParser<R> {
 
     /**
      * Creates the first-stage parser.
@@ -62,7 +163,7 @@ export abstract class TylasuParser<R extends Node, P extends ANTLRParser, C exte
     /**
      * Transforms a parse tree into an AST (second parsing stage).
      */
-    protected abstract parseTreeToAst(parseTreeRoot: C, considerPosition: boolean, issues: Issue[]): R | undefined;
+    protected abstract parseTreeToAst(parseTreeRoot: C, considerPosition: boolean, issues: Issue[], source?: Source): R | undefined;
 
     /**
      * Creates the first-stage lexer and parser.
@@ -139,17 +240,24 @@ export abstract class TylasuParser<R extends Node, P extends ANTLRParser, C exte
         return ast;
     }
 
-    parse(code: string | CharStream, considerPosition = true, measureLexingTime = true): ParsingResult<R, C> {
+    parse(
+        code: string | CharStream, considerPosition = true,
+        measureLexingTime = true, source?: Source
+    ): ParsingResult<R> {
         if (typeof code === "string") {
+            if (!source) {
+                source = new StringSource(code);
+            }
             code = CharStreams.fromString(code);
         }
         const start = now()
         const firstStage = this.parseFirstStage(code, measureLexingTime);
         const issues = firstStage.issues;
-        let ast = this.parseTreeToAst(firstStage.root!, considerPosition, issues)
+        let ast = this.parseTreeToAst(firstStage.root!, considerPosition, issues, source);
 
-        if (ast)
+        if (ast) {
             this.assignParents(ast);
+        }
 
         ast = ast ? this.postProcessAst(ast, issues) : ast;
         if (ast != null && !considerPosition) {
@@ -169,50 +277,6 @@ export abstract class TylasuParser<R extends Node, P extends ANTLRParser, C exte
      */
     protected assignParents(ast: R): void {
         assignParents(ast);
-    }
-
-    /**
-     * Performs "lexing" on the given code stream, i.e., it breaks it into tokens.
-     */
-    lex(inputStream: CharStream, onlyFromDefaultChannel = true): LexingResult {
-        const issues: Issue[] = [];
-        const tokens: Token[] = [];
-        const time = now();
-        const lexer = this.createANTLRLexer(inputStream)!;
-        this.injectErrorCollectorInLexer(lexer, issues);
-        let t: Token;
-        do {
-            t = lexer.nextToken();
-            if (!t) {
-                break;
-            } else {
-                if (!onlyFromDefaultChannel || t.channel == Token.DEFAULT_CHANNEL) {
-                    tokens.push(t);
-                }
-            }
-        } while (t.type != Token.EOF);
-
-        const lastToken = tokens[tokens.length - 1];
-        if (lastToken.type != Token.EOF) {
-            const message = "The parser didn't consume the entire input";
-            issues.push(Issue.syntactic(message, IssueSeverity.WARNING, Position.ofTokenEnd(lastToken)))
-        }
-
-        const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
-        return new LexingResult(code, tokens, issues, now() - time);
-    }
-
-    protected injectErrorCollectorInLexer(lexer: Lexer, issues: Issue[]): void {
-        lexer.removeErrorListeners();
-        lexer.addErrorListener({
-            syntaxError(recognizer: Recognizer<number, any>, offendingSymbol: number | undefined, line: number, charPositionInLine: number, msg: string) {
-                issues.push(
-                    Issue.lexical(
-                        msg || "unspecified",
-                        IssueSeverity.ERROR,
-                        Position.ofPoint(new Point(line, charPositionInLine))));
-            }
-        });
     }
 
     protected injectErrorCollectorInParser(parser: ANTLRParser, issues: Issue[]): void {
