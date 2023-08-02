@@ -3,6 +3,7 @@
  * a required dependency if you use this module.
  * @module
  */
-export * from "./parsing";
+export * from "./ast-parser";
 export * from "./parse-tree";
-export {TylasuParser} from "./tylasu-parser";
+export * from "./parsing";
+export * from "./tylasu-parser";
