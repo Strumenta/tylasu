@@ -269,6 +269,20 @@ THE_TEXT_FILE_DESTINATION_ECLASS.get("eStructuralFeatures").add(Ecore.EReference
     containment: true
 }));
 
+// Marker interfaces
+export const THE_ENTITY_DECLARATION_INTERFACE = Ecore.EClass.create({
+    name: "EntityDeclaration",
+    interface: true
+});
+export const THE_EXPRESSION_INTERFACE = Ecore.EClass.create({
+    name: "Expression",
+    interface: true
+});
+export const THE_STATEMENT_INTERFACE = Ecore.EClass.create({
+    name: "Statement",
+    interface: true
+});
+
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_DESTINATION_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
@@ -288,3 +302,6 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ISSUE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_RESULT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_PLACEHOLDER_ELEMENT_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_TEXT_FILE_DESTINATION_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_ENTITY_DECLARATION_INTERFACE);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_EXPRESSION_INTERFACE);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_STATEMENT_INTERFACE);

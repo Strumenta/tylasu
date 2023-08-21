@@ -15,7 +15,7 @@ import {PARSER_TRACE_ECLASS} from "./parser-package";
 import {
     THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
     THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
-    THE_NODE_ORIGIN_ECLASS
+    THE_NODE_ORIGIN_ECLASS, THE_STATEMENT_INTERFACE, THE_ENTITY_DECLARATION_INTERFACE, THE_EXPRESSION_INTERFACE
 } from "./starlasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
@@ -166,6 +166,18 @@ export abstract class TraceNode extends Node {
         } else {
             return [];
         }
+    }
+
+    isDeclaration(): boolean {
+        return this.eo.isKindOf(THE_ENTITY_DECLARATION_INTERFACE);
+    }
+
+    isExpression(): boolean {
+        return this.eo.isKindOf(THE_EXPRESSION_INTERFACE);
+    }
+
+    isStatement(): boolean {
+        return this.eo.isKindOf(THE_STATEMENT_INTERFACE);
     }
 }
 

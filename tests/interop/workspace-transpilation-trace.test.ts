@@ -68,6 +68,13 @@ describe('Workspace Transpilation traces', function() {
             expect(deordFile.node.getChildren("dataDescriptions")[1].getAttribute("name")).to.eql("FDETO")
 
             const customerFile = trace.originalFiles[1];
-            expect(customerFile.path).to.eql("qddssrc/CUSTOMER.dds")
+            expect(customerFile.path).to.eql("qddssrc/CUSTOMER.dds");
+
+            const cus200File = trace.originalFiles.find(
+                f => f.path == "qrpglesrc/CUS200.rpgle"
+            )!;
+            expect(cus200File.node.getChildren("mainStatements")[0].isDeclaration()).to.be.false;
+            expect(cus200File.node.getChildren("mainStatements")[0].isExpression()).to.be.false;
+            expect(cus200File.node.getChildren("mainStatements")[0].isStatement()).to.be.true;
         });
 });

@@ -4796,7 +4796,10 @@
     "eSuperTypes" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
       "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
-    } ],
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Statement"
+    }  ],
     "eStructuralFeatures" : [ {
       "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
       "name" : "conditionalIndicator",
