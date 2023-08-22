@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Support for node marker interfaces in EMF models
 
+### Changed
+- Updated TypeScript to 4.0.x and updated related dev dependencies
+
 ## [1.3.1] – 2023-08-02
 
 ### Added

@@ -19,7 +19,7 @@ export class Item extends Node {
 
 export enum Fibo {
     A = 1,
-    B = 1,
+    B = 2,
     C = A + B,
     D = B + C
 }

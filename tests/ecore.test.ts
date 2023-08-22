@@ -124,7 +124,7 @@ describe('Model', function() {
             const eObject = toEObject(node);
             expect(eObject).not.to.be.undefined;
             expect(eObject.get("a")).to.equal("A");
-            expect(eObject.get("fib")).to.equal(3);
+            expect(eObject.get("fib")).to.equal(5);
             node = fromEObject(eObject) as SomeNode;
             expect(node instanceof SomeNode).to.be.true;
             expect(node.a).to.equal("A");

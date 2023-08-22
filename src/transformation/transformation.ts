@@ -19,7 +19,7 @@ export class NodeFactory<Source, Output extends Node> {
     ) {}
 
     // TODO: port other overrides of the withChild method?
-    withChild<Target extends any, Child extends any>(
+    withChild<Target, Child>(
         get: (s: Source) => any | undefined,
         set: (t: Target, c?: Child) => void,
         name: string,
@@ -225,7 +225,7 @@ export class ASTTransformer {
         return source;
     }
 
-    makeNode<S extends any, T extends Node>(
+    makeNode<S, T extends Node>(
         factory: NodeFactory<S, T>,
         source: S,
         allowGenericNode = true
@@ -248,21 +248,22 @@ export class ASTTransformer {
         return node;
     }
 
-    getNodeFactory<S extends any, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
+    getNodeFactory<S, T extends Node>(type: any) : NodeFactory<S, T> | undefined {
 
         let nodeClass = type.constructor;
 
         while (nodeClass) {
             const factory : NodeFactory<S, T> | undefined = this.factories.get(nodeClass);
-            if (factory)
+            if (factory) {
                 return factory as NodeFactory<S, T>;
+            }
             nodeClass = Object.getPrototypeOf(nodeClass);
         }
 
         return undefined;
     }
 
-    public registerNodeFactory<S extends any, T extends Node>(
+    public registerNodeFactory<S, T extends Node>(
         nodeClass: any,
         factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
     ) : NodeFactory<S, T> {

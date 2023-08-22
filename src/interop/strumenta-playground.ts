@@ -397,15 +397,12 @@ export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
 }
 
 export class SourceNode extends TraceNode {
+    parent?: SourceNode;
+
     constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
         super(eo);
-    }
-
-    get parent(): SourceNode | undefined {
-        if (super.parent) {
-            return super.parent as SourceNode;
-        } else if (this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
-            return super.parent = new SourceNode(this.eo.eContainer, this.trace);
+        if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
+            this.parent = new SourceNode(this.eo.eContainer, this.trace);
         }
     }
 
@@ -437,16 +434,12 @@ export class SourceNode extends TraceNode {
 }
 
 export class TargetNode extends TraceNode {
+    parent?: TargetNode;
 
     constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
         super(eo);
-    }
-
-    get parent(): TargetNode | undefined {
-        if (super.parent) {
-            return super.parent as TargetNode;
-        } else if (this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || this.eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
-            return super.parent = new TargetNode(this.eo.eContainer, this.trace);
+        if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
+            this.parent = new TargetNode(this.eo.eContainer, this.trace);
         }
     }
 
