@@ -14,9 +14,18 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 export type NodeDefinition = {
     package?: string,
     name?: string,
-    properties: any, //{ [name: string | symbol]: { type?: any, arrayType?: any, child?: any } },
+    properties: { [name: string | symbol]: PropertyDefinition },
     resolved?: boolean;
 };
+
+export type PropertyDefinition = {
+    name: string | symbol,
+    child?: boolean,
+    multiple?: boolean,
+    inherited?: boolean,
+    type?: any,
+    arrayType?: any
+}
 
 export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
     const target = typeof node === "function" ? node : node.constructor;
@@ -30,19 +39,17 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
                 } catch (_) {
                     metadataHolder = node;
                 }
-                let noTypesToFind = true;
-                let atLeastOneFound = false;
                 for(const p in definition.properties) {
-                    noTypesToFind = false;
-                    const type = Reflect.getMetadata("design:type", metadataHolder, p);
-                    atLeastOneFound = atLeastOneFound || !!type;
-                    definition.properties[p].type = type;
-                    if(type === Array) {
-                        definition.properties[p].arrayType =
-                            Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
+                    if (!definition.properties[p].type) {
+                        const type = Reflect.getMetadata("design:type", metadataHolder, p);
+                        definition.properties[p].type = type;
+                        if(type === Array) {
+                            definition.properties[p].arrayType =
+                                Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
+                        }
                     }
                 }
-                definition.resolved = noTypesToFind || atLeastOneFound;
+                definition.resolved = true;
             } catch (e) {
                 //Ignore
             }
@@ -271,7 +278,7 @@ export function registerNodeDefinition<T extends Node>(
         };
         if(existingDef) {
             for(const prop in existingDef.properties) {
-                def.properties[prop] = {inherited: true, ...existingDef.properties[prop]};
+                def.properties[prop] = { inherited: true, ...existingDef.properties[prop]};
             }
         }
     }
@@ -296,21 +303,26 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     return definition;
 }
 
-export function registerNodeProperty<T extends Node>(type: { new(...args: any[]): T }, methodName: string | symbol): any {
+export function registerNodeProperty<T extends Node>(
+    type: { new(...args: any[]): T }, methodName: string | symbol
+): PropertyDefinition {
     if (methodName == "parent" || methodName == "children" || methodName == "origin") {
         methodName = Symbol(methodName);
     }
     const definition = ensureNodeDefinition(type);
     if (!definition.properties[methodName]) {
-        definition.properties[methodName] = {};
+        definition.properties[methodName] = {
+            name: methodName
+        };
     }
     return definition.properties[methodName];
 }
 
 export function registerNodeChild<T extends Node>(
-    type: new (...args: any[]) => T, methodName: string): any {
+    type: new (...args: any[]) => T, methodName: string, multiple: boolean = false): PropertyDefinition {
     const propInfo = registerNodeProperty(type, methodName);
     propInfo.child = true;
+    propInfo.multiple = multiple;
     return propInfo;
 }
 
@@ -338,8 +350,7 @@ export function Child(): (target, methodName: string) => void {
  */
 export function Children(): (target, methodName: string) => void {
     return function (target, methodName: string) {
-        const props = registerNodeChild(target, methodName);
-        props.multiple = true;
+        registerNodeChild(target, methodName, true);
     };
 }
 

@@ -23,7 +23,7 @@ describe('Meta model', function() {
             expect(def!.name).to.equal("SomeNodeInPackage");
             expect(def!.properties["nonExistent"]).to.be.undefined;
             expect(def!.properties["someNode"]).not.to.be.undefined;
-            expect(def!.properties["someNode"].multiple).to.be.undefined;
+            expect(def!.properties["someNode"].multiple).to.be.false;
             expect(def!.properties["multi"]).not.to.be.undefined;
             expect(def!.properties["multi"].multiple).to.be.true;
         });

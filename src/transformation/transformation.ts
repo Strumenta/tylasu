@@ -304,7 +304,7 @@ export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory:
  */
 export function registerPropertyMapping<T extends Node>(
     type: new (...args: any[]) => T, propertyName: string, path: string = propertyName): any {
-    const propInfo = registerNodeProperty(type, propertyName);
+    const propInfo: any = registerNodeProperty(type, propertyName);
     propInfo.path = path || propertyName;
     return propInfo;
 }
@@ -357,7 +357,7 @@ export function Init(target, methodName: string): void {
 
 export function fillChildAST<FROM, TO extends Node>(
     node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
-    const propDef = ensureNodeDefinition(node).properties[property];
+    const propDef: any = ensureNodeDefinition(node).properties[property];
     const propertyPath = propDef.path || property;
     if (propertyPath && propertyPath.length > 0) {
         const path = propertyPath.split(".");
