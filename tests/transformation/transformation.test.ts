@@ -4,14 +4,12 @@ import {
     ASTNode,
     ASTTransformer,
     Child,
-    ErrorNode,
+    ErrorNode, GenericErrorNode,
     Init,
     IssueSeverity,
     Mapped,
-    Node, NodeFactory,
-    NodeTransform,
-    PartiallyInitializedNode, pos, Position,
-    Property,
+    Node, NodeTransform,
+    PartiallyInitializedNode, pos, Property,
     transform
 } from "../../src";
 import exp = require("constants");
@@ -88,8 +86,8 @@ describe('AST transformations', function() {
             expect(nodeB.method).to.equal("method");
             expect(nodeB.nested).to.equal("innerValue");
             expect(nodeB.aChild instanceof B).to.be.true;
-            expect(nodeB.error instanceof ErrorNode).to.be.true;
-            expect(nodeB.error.error.message).to.equal("I don't like this");
+            expect(nodeB.error instanceof GenericErrorNode).to.be.true;
+            expect(nodeB.error.message).to.equal("Exception Error: I don't like this");
             expect(nodeB.source).to.equal(nodeA);
         });
     it("handles exceptions on init",
