@@ -179,19 +179,19 @@ describe('Transpilation traces', function() {
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const sasMetamodel =
-                JSON.parse(fs.readFileSync("tests/data/playground/pylasu-examples/sas-metamodel.json").toString());
+                JSON.parse(fs.readFileSync("tests/data/playground/pylasu/sas-metamodel.json").toString());
             const pyMetamodel =
-                JSON.parse(fs.readFileSync("tests/data/playground/pylasu-examples/pyspark-metamodel.json").toString());
+                JSON.parse(fs.readFileSync("tests/data/playground/pylasu/pyspark-metamodel.json").toString());
             const loader = new TranspilationTraceLoader({
                 name: "sas",
-                uri: "file://tests/data/playground/pylasu-examples/sas-metamodel.json",
+                uri: "file://tests/data/playground/pylasu/sas-metamodel.json",
                 metamodel: sasMetamodel
             }, {
                 name: "python",
-                uri: "file://tests/data/playground/pylasu-examples/pyspark-metamodel.json",
+                uri: "file://tests/data/playground/pylasu/pyspark-metamodel.json",
                 metamodel: pyMetamodel
             });
-            const example = fs.readFileSync("tests/data/playground/pylasu-examples/array_test_0.json").toString();
+            const example = fs.readFileSync("tests/data/playground/pylasu/array_test_0.json").toString();
             const trace = loader.loadTranspilationTrace(example);
 
             expect(trace.rootSourceNode.getType()).to.eql("com.strumenta.sas.Program");

@@ -10,6 +10,7 @@ import {
 } from "../model/model";
 import {Issue, IssueSeverity} from "../validation";
 import {Position} from "../model/position";
+import {ErrorNode, GenericErrorNode} from "../model/errors";
 
 export class NodeFactory<Source, Output extends Node> {
     constructor(
@@ -237,7 +238,7 @@ export class ASTTransformer {
             node = factory.constructorFunction(source, this, factory);
         } catch (e) {
             if (allowGenericNode)
-                node = new ErrorNode(e);
+                node = new GenericErrorNode(e);
             else
                 throw e;
         }
@@ -378,7 +379,7 @@ export function fillChildAST<FROM, TO extends Node>(
             }
         }
         if(error) {
-            node[property] = new ErrorNode(error);
+            node[property] = new GenericErrorNode(error);
         } else if (tree) {
             if(propDef.child) {
                 if (Array.isArray(tree)) {
@@ -403,7 +404,7 @@ function makeNode(factory, tree: unknown) {
     try {
         return factory(tree) as Node;
     } catch (e) {
-        return new ErrorNode(e);
+        return new GenericErrorNode(e);
     }
 }
 
@@ -443,15 +444,15 @@ export class GenericNode extends Node {
     }
 }
 
-@ASTNode("", "ErrorNode")
-export class ErrorNode extends Node {
-    constructor(readonly error: Error) {
-        super();
-    }
-}
+export class PartiallyInitializedNode extends Node implements ErrorNode {
+    message: string;
 
-export class PartiallyInitializedNode extends ErrorNode {
+    get position(): Position | undefined {
+        return this.node.position;
+    }
+
     constructor(readonly node: Node, error: Error) {
-        super(error);
+        super();
+        this.message = `Could not initialize node: ${error}`;
     }
 }

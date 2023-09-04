@@ -31,20 +31,19 @@ export function saveForStrumentaPlayground<R extends Node>(
     mmResource.set("uri", "");
     const resource = resourceSet.create({ uri: 'file:' + name + ".json" });
     const simplifiedResult: Result = { root: result.root, issues: result.issues };
-    const ast = toEObject(simplifiedResult);
-    resource.get("contents").add(ast);
+    resource.get("contents").add(toEObject(simplifiedResult));
     resource.save((data, e) => {
         if (e == null) {
-            const parserBenchData: any = {
+            const playgroundData: any = {
                 ast: data,
                 code: result.code,
                 name,
                 astBuildingTime: result.time
             };
             if (result.firstStage) {
-                parserBenchData.parsingTime = result.firstStage.time;
+                playgroundData.parsingTime = result.firstStage.time;
             }
-            callback(parserBenchData, e);
+            callback(playgroundData, e);
         } else {
             callback(undefined, e);
         }
@@ -223,7 +222,7 @@ function withLanguageMetamodel<T>(
         // The trace DOES NOT contain a reference to the language URI
         const theLanguage = languages[language];
         if (!theLanguage) {
-            throw "Unknown language: " + language
+            throw new Error(`Unknown language: ${language}`);
         }
         const metaResource = resourceSet.get('resources').find(e => e.get('uri') === theLanguage.uri);
         try {

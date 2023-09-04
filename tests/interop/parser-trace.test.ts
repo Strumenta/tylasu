@@ -9,10 +9,10 @@ ensureEcoreContainsAllDataTypes();
 describe('Parser traces – Kolasu metamodel V1', function() {
 
     const rpgMetamodel =
-        JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/metamodel.json").toString());
+        JSON.parse(fs.readFileSync("tests/data/playground/rpg/metamodel.json").toString());
     const rpgLoader = new ParserTraceLoader({
         name: "rpg",
-        uri: "file://tests/data/playground/rpgexamples/metamodel.json",
+        uri: "file://tests/data/playground/rpg/metamodel.json",
         metamodel: rpgMetamodel
     });
 
@@ -21,7 +21,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             this.timeout(0);
 
 
-            const code = fs.readFileSync("tests/data/playground/rpgexamples/BBSAACCLVR.json").toString();
+            const code = fs.readFileSync("tests/data/playground/rpg/BBSAACCLVR.json").toString();
             const trace = rpgLoader.loadParserTrace(code, "rpg");
 
             expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
@@ -44,7 +44,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             this.timeout(0);
 
 
-            const code = fs.readFileSync("tests/data/playground/rpgexamples/open-weather.json").toString();
+            const code = fs.readFileSync("tests/data/playground/rpg/open-weather.json").toString();
             const trace = rpgLoader.loadParserTrace(code, "rpg");
             const rootNode = trace.rootNode;
             expect(rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
@@ -61,7 +61,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
         it(`Can load RPG parser trace: ${example}`,
             function () {
                 this.timeout(0);
-                const code = fs.readFileSync(`tests/data/playground/rpgexamples/${example}.json`).toString();
+                const code = fs.readFileSync(`tests/data/playground/rpg/${example}.json`).toString();
                 const trace = rpgLoader.loadParserTrace(code, "rpg");
                 expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit", example);
             });
@@ -74,14 +74,14 @@ describe('Parser traces – Starlasu metamodel V2', function() {
             this.timeout(0);
 
             const metamodel =
-                JSON.parse(fs.readFileSync("tests/data/playground/sas-examples/metamodel.json").toString());
+                JSON.parse(fs.readFileSync("tests/data/playground/sas/metamodel.json").toString());
             const loader = new ParserTraceLoader({
                 name: "sas",
-                uri: "file://tests/data/playground/sas-examples/metamodel.json",
+                uri: "file://tests/data/playground/sas/metamodel.json",
                 metamodel: metamodel
             });
             let code = fs.readFileSync(
-                "tests/data/playground/sas-examples/open-source_covid-19-sas_data_import-data-jhu.sas.json").toString();
+                "tests/data/playground/sas/open-source_covid-19-sas_data_import-data-jhu.sas.json").toString();
             let trace = loader.loadParserTrace(code, "sas");
 
             const rootNode = trace.rootNode;
@@ -107,7 +107,7 @@ describe('Parser traces – Starlasu metamodel V2', function() {
             expect(trace.issues[0].position).to.eql(pos(43, 8,43, 17));
 
             code = fs.readFileSync(
-                "tests/data/playground/sas-examples/open-source_sas-cert-prep-data_professional-prep-guide_cre8permdata.sas.json").toString();
+                "tests/data/playground/sas/open-source_sas-cert-prep-data_professional-prep-guide_cre8permdata.sas.json").toString();
             trace = loader.loadParserTrace(code, "sas");
             expect(trace).not.to.be.undefined;
             expect(trace.rootNode).not.to.be.undefined;

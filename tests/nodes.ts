@@ -1,4 +1,4 @@
-import {ASTNode, Child, Children, Node, Position, Property} from "../src";
+import {ASTNode, Child, Children, ErrorNode, Node, Position, Property} from "../src";
 
 export class Box extends Node {
     @Children()
@@ -60,6 +60,12 @@ export class NodeSubclass extends SomeNodeInPackage {
     b: string;
     @Child()
     anotherChild: SomeNodeInPackage;
+}
+
+@ASTNode("some.package", "NodeWithError")
+export class NodeWithError extends SomeNodeInPackage {
+    @Child()
+    errorNode: ErrorNode;
 }
 
 @ASTNode("another.package", "SomeNodeInPackage")

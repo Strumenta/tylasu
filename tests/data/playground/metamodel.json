@@ -197,7 +197,7 @@
       },
       {
         "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "NodeSubclass",
+        "name": "NodeWithError",
         "abstract": false,
         "interface": false,
         "eSuperTypes": [
@@ -208,103 +208,8 @@
         ],
         "eStructuralFeatures": [
           {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "b",
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": 1
-          },
-          {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "anotherChild",
-            "eType": {
-              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
-            },
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": 1,
-            "containment": true
-          }
-        ]
-      },
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "SomeNodeInPackage",
-        "abstract": false,
-        "interface": false,
-        "eSuperTypes": [
-          {
-            "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "a",
-            "eType": {
-              "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
-            },
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": 1
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "someNode",
-            "eType": {
-              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
-            },
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": 1,
-            "containment": true
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "multi",
-            "eType": {
-              "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
-              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
-            },
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": -1,
-            "containment": true
-          }
-        ]
-      },
-      {
-        "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass",
-        "name": "NodeSubclass",
-        "abstract": false,
-        "interface": false,
-        "eSuperTypes": [
-          {
-            "$ref": "/0/SomeNodeInPackage",
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"
-          }
-        ],
-        "eStructuralFeatures": [
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
-            "name": "b",
-            "ordered": true,
-            "unique": true,
-            "lowerBound": 0,
-            "upperBound": 1
-          },
-          {
-            "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EReference",
-            "name": "anotherChild",
+            "name": "errorNode",
             "eType": {
               "$ref": "https://strumenta.com/starlasu/v2#//ASTNode",
               "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EClass"

@@ -24,11 +24,11 @@ describe('Workspace Transpilation traces', function() {
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const rpg2pyMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg2py-metamodels.json'})
-            const rpg2pyPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/rpg2py-metamodels.json").toString()),
+            const rpg2pyPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg/rpg2py-metamodels.json").toString()),
                 rpg2pyMetamodelsResource);
 
             const resource = resourceSet.create({ uri: 'rpg2py-workspace-example1.json' });
-            const text = fs.readFileSync('tests/data/playground/rpgexamples/rpg2py-workspace-example1.json', 'utf8')
+            const text = fs.readFileSync('tests/data/playground/rpg/rpg2py-workspace-example1.json', 'utf8')
             const workspaceTrace = loadEObject(text, resource, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS)
 
             expect(workspaceTrace.eClass.get("name")).to.eql("WorkspaceTranspilationTrace");
@@ -45,10 +45,10 @@ describe('Workspace Transpilation traces', function() {
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
                 name: "rpg2py",
-                uri: "file://tests/data/playground/rpgexamples/rpg2py-metamodels.json",
-                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/rpgexamples/rpg2py-metamodels.json").toString())
+                uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/rpg/rpg2py-metamodels.json").toString())
             });
-            const example = fs.readFileSync("tests/data/playground/rpgexamples/rpg2py-workspace-example1.json").toString();
+            const example = fs.readFileSync("tests/data/playground/rpg/rpg2py-workspace-example1.json").toString();
             const trace = loader.loadWorkspaceTranspilationTrace(example);
 
             expect(trace.originalFiles.length).to.eql(6);
