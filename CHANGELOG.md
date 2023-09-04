@@ -2,7 +2,16 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.3.2] – 2023-08-22
+## [1.4.1] – 2023-09-04
+
+### Added
+- More convenient plain JS API for defining nodes
+
+### Changed
+- Removed ErrorNode class that differed from Kolasu (StarLasu reference implementation)
+- Updated TypeScript to 4.0.x line because 3.x doesn't support newer Lodash versions
+
+## [1.4.0] – 2023-08-22
 
 ### Added
 - Support for node marker interfaces in EMF models
