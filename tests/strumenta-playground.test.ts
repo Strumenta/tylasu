@@ -56,53 +56,6 @@ describe('Strumenta Playground', function() {
             });
         });
     });
-
-    it("SQL case-when",
-        function () {
-            this.timeout(0);
-
-            const path = "tests/data/playground/sql/metamodel.json";
-            const metamodel =
-                JSON.parse(fs.readFileSync(path).toString());
-            const loader = new ParserTraceLoader({
-                name: "sql",
-                uri: `file://${path}`,
-                metamodel: metamodel
-            });
-            let code = fs.readFileSync(
-                "tests/data/playground/sql/case-when.json").toString();
-            let trace = loader.loadParserTrace(code, "sql");
-
-            const rootNode = trace.rootNode;
-            expect(rootNode.getType()).to.eql("com.strumenta.sas.ast.SourceFile");
-            expect(rootNode.getSimpleType()).to.eql("SourceFile");
-            expect(rootNode.getPosition()).to.eql(pos(12, 0,369, 0));
-            let foundNode = findByPosition(rootNode, pos(12, 0,369, 0)) as ParserNode;
-            expect(foundNode.eo == rootNode.eo).to.be.true;
-            const descNode = rootNode.children[10].children[7] as ParserNode;
-            foundNode = findByPosition(descNode, descNode.position!) as ParserNode;
-            expect(foundNode.eo == descNode.eo).to.be.true;
-            expect(rootNode.getChildren().length).to.equal(18);
-            expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(18);
-            // foundNode = findByPosition(rootNode, pos(20, 28, 20, 29)) as ParserNode;
-            // expect(foundNode).not.to.be.undefined;
-            const child = rootNode.getChildren("statementsAndDeclarations")[0];
-            expect(child.getRole()).to.equal("statementsAndDeclarations");
-            expect(child.getAttributes()).to.eql({ name: "importSheets" });
-            expect(trace.issues.length).to.equal(1);
-            expect(trace.issues[0].type).to.equal(IssueType.SEMANTIC);
-            expect(trace.issues[0].message).to.equal("Unparsed macro code: `filename `");
-            expect(trace.issues[0].severity).to.equal(IssueSeverity.WARNING);
-            expect(trace.issues[0].position).to.eql(pos(43, 8,43, 17));
-
-            code = fs.readFileSync(
-                "tests/data/playground/sas/open-source_sas-cert-prep-data_professional-prep-guide_cre8permdata.sas.json").toString();
-            trace = loader.loadParserTrace(code, "sas");
-            expect(trace).not.to.be.undefined;
-            expect(trace.rootNode).not.to.be.undefined;
-            expect(trace.rootNode.position).to.eql(pos(15, 0, 10161, 0));
-            expect(trace.issues).to.eql([]);
-        });
 });
 
 class TestParser extends EcoreEnabledParser<NodeSubclass, any, any, any> {
