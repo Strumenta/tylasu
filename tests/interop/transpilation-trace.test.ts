@@ -3,11 +3,8 @@ import * as fs from "fs";
 import {findByPosition, Point, pos, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import { SourceNode, TargetNode, TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
-import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
-import {TRANSPILATION_EPACKAGE} from "../../src/interop/transpilation-package";
 import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
-import {TRANSPILATION_EPACKAGE_V1} from "../../src/interop/transpilation-package-v1";
 
 ensureEcoreContainsAllDataTypes();
 
@@ -41,8 +38,6 @@ describe('Transpilation traces', function() {
             function () {
                     this.timeout(0);
                     const resourceSet = Ecore.ResourceSet.create();
-                    Ecore.EPackage.Registry.register(THE_AST_EPACKAGE)
-                    Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE)
                     const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
                     const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString()),
                         rpgMetamodelsResource);
@@ -65,9 +60,6 @@ describe('Transpilation traces', function() {
             this.timeout(0);
 
             const resourceSet = Ecore.ResourceSet.create();
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE_V1);
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
                  rpgMetamodelsResource);
@@ -96,8 +88,6 @@ describe('Transpilation traces', function() {
     it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
         function () {
             this.timeout(0);
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
                 name: "rpg",
                 uri: "file://tests/data/playground/rpg-metamodels.json",

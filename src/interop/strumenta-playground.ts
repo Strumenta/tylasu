@@ -11,15 +11,25 @@ import {Node, NodeDefinition} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EList, EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
-import {PARSER_TRACE_ECLASS} from "./parser-package";
+import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {
     THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
     THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
-    THE_NODE_ORIGIN_ECLASS, THE_STATEMENT_INTERFACE, THE_ENTITY_DECLARATION_INTERFACE, THE_EXPRESSION_INTERFACE
+    THE_NODE_ORIGIN_ECLASS,
+    THE_STATEMENT_INTERFACE,
+    THE_ENTITY_DECLARATION_INTERFACE,
+    THE_EXPRESSION_INTERFACE,
+    THE_AST_EPACKAGE
 } from "./starlasu-v2-metamodel";
 import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
-import {THE_TRANSPILATION_TRACE_ECLASS, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS} from "./transpilation-package";
+import {
+    THE_TRANSPILATION_TRACE_ECLASS,
+    THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
+    TRANSPILATION_EPACKAGE
+} from "./transpilation-package";
+import {TRANSPILATION_EPACKAGE_V1} from "./transpilation-package-v1";
+import {ensureEcoreContainsAllDataTypes} from "./ecore-patching";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R>, name: string,
@@ -240,6 +250,12 @@ function withLanguageMetamodel<T>(
 export class ParserTraceLoader {
     private readonly resourceSet: ResourceSet;
     private readonly languages: { [name: string]: Language } = {};
+
+    static {
+        ensureEcoreContainsAllDataTypes();
+        Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+        Ecore.EPackage.Registry.register(PARSER_EPACKAGE);
+    }
 
     constructor(...languages: Language[]) {
         this.resourceSet = ResourceSet.create();
@@ -498,6 +514,12 @@ export class TranspilationTraceLoader {
     private readonly resourceSet: ResourceSet;
     private readonly languages: { [name: string]: Language } = {};
 
+    static {
+        Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+        Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+        Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE_V1);
+    }
+
     constructor(...languages: Language[]) {
         this.resourceSet = ResourceSet.create();
         languages.map(this.registerLanguage.bind(this));
@@ -510,23 +532,23 @@ export class TranspilationTraceLoader {
         return ePackages;
     }
 
-    loadTranspilationTrace(text: string, sourceLang?: string, targetLang?: string,
+    loadTranspilationTrace(trace: string | any, sourceLang?: string, targetLang?: string,
                            uri = 'transpiler-trace.json'): TranspilationTrace {
         const resource = this.resourceSet.create({uri: uri});
         return withLanguageMetamodel(
             this.languages, sourceLang,  this.resourceSet, resource,
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
-            () => new TranspilationTrace(loadEObject(text, resource, THE_TRANSPILATION_TRACE_ECLASS))));
+            () => new TranspilationTrace(loadEObject(trace, resource, THE_TRANSPILATION_TRACE_ECLASS))));
     }
 
-    loadWorkspaceTranspilationTrace(text: string, sourceLang?: string, targetLang?: string,
-                           uri = 'transpiler-trace.json'): WorkspaceTranspilationTrace {
+    loadWorkspaceTranspilationTrace(trace: string | any, sourceLang?: string, targetLang?: string,
+                                    uri = 'transpiler-trace.json'): WorkspaceTranspilationTrace {
         const resource = this.resourceSet.create({uri: uri});
         return withLanguageMetamodel(
             this.languages, sourceLang,  this.resourceSet, resource,
             () => withLanguageMetamodel(
                 this.languages, targetLang,  this.resourceSet, resource,
-                () => new WorkspaceTranspilationTrace(loadEObject(text, resource, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS))));
+                () => new WorkspaceTranspilationTrace(loadEObject(trace, resource, THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS))));
     }
 }

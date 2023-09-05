@@ -584,7 +584,7 @@ class ReferencesTracker {
  * @param resource where to look for to resolve references to types.
  * @param eClass the class of the object, if not specified in the `data`.
  */
-export function loadEObject(data: unknown, resource: Resource, eClass?: EClass): EObject {
+export function loadEObject(data: string | any, resource: Resource, eClass?: EClass): EObject {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }

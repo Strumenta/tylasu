@@ -2,9 +2,6 @@ import {expect} from "chai";
 import * as fs from "fs";
 import {findByPosition, IssueSeverity, IssueType, Point, pos, Position} from "../../src";
 import {ParserNode, ParserTraceLoader} from "../../src/interop/strumenta-playground";
-import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
-
-ensureEcoreContainsAllDataTypes();
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
@@ -19,7 +16,6 @@ describe('Parser traces – Kolasu metamodel V1', function() {
     it("Can load reference RPG parser trace: BBSAACCLVR",
         function () {
             this.timeout(0);
-
 
             const code = fs.readFileSync("tests/data/playground/rpg/BBSAACCLVR.json").toString();
             const trace = rpgLoader.loadParserTrace(code, "rpg");
