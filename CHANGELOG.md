@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.2] – 2023-09-05
+
+### Added
+- Parser and transpilation trace loaders register the needed Ecore packages and data types automatically 
+
 ## [1.4.1] – 2023-09-04
 
 ### Added
