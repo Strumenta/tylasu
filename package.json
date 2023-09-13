@@ -20,7 +20,8 @@
 	"files": [
 		"dist",
 		"src",
-		"package.json"
+		"package.json",
+		"tsconfig.base.json"
 	],
 	"exports": {
 		".": {
@@ -113,7 +114,7 @@
 		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
 	},
 	"devDependencies": {
-		"@tsconfig/recommended": "^1.0.1",
+		"@tsconfig/recommended": "^1.0.2",
 		"@types/chai": "^4.2.11",
 		"@types/ecore": "^0.12.3",
 		"@types/mocha": "^5.2.7",

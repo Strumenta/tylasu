@@ -1,8 +1,6 @@
 {
-	"extends": "@tsconfig/recommended/tsconfig.json",
+	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-        "experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
 		"moduleResolution": "Node",
 		"declaration": true,
 		"sourceMap": true,
