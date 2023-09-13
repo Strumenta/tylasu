@@ -1,19 +1,15 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {findByPosition, Point, pos, Position} from "../../src";
+import {Point, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
-import { SourceNode, TargetNode, TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
+import { TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
 import * as Ecore from "ecore/dist/ecore";
 import {
-        THE_WORKSPACE_FILE_ECLASS,
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
 } from "../../src/interop/transpilation-package";
-import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
-import {EList, EObject} from "ecore";
-
-ensureEcoreContainsAllDataTypes();
+import {EList} from "ecore";
 
 describe('Workspace Transpilation traces', function() {
     it("Can load workspace transpilation trace produced by Kolasu as EObject",
@@ -69,12 +65,22 @@ describe('Workspace Transpilation traces', function() {
 
             const customerFile = trace.originalFiles[1];
             expect(customerFile.path).to.eql("qddssrc/CUSTOMER.dds");
+            const field = customerFile.node.getChildren("dataDescriptions")[1].getChildren("fields")[2];
+            let destinationNodes = field.getDestinationNodes();
+            expect(destinationNodes.length).to.equal(1);
+            expect(destinationNodes[0].file?.path).to.equal("output/schema.sql");
 
             const cus200File = trace.originalFiles.find(
                 f => f.path == "qrpglesrc/CUS200.rpgle"
             )!;
-            expect(cus200File.node.getChildren("mainStatements")[0].isDeclaration()).to.be.false;
-            expect(cus200File.node.getChildren("mainStatements")[0].isExpression()).to.be.false;
-            expect(cus200File.node.getChildren("mainStatements")[0].isStatement()).to.be.true;
+            const firstStatement = cus200File.node.getChildren("mainStatements")[0];
+            expect(firstStatement.isDeclaration()).to.be.false;
+            expect(firstStatement.isExpression()).to.be.false;
+            expect(firstStatement.isStatement()).to.be.true;
+            destinationNodes = firstStatement.getDestinationNodes();
+            expect(destinationNodes.length).to.equal(1);
+            expect(destinationNodes[0].file?.path).to.equal(
+                "/Users/ftomassetti/repos/rpg-to-python-transpiler/output/CUS200.py"
+            );
         });
 });

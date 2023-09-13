@@ -1,27 +1,20 @@
 import {ParsingResult} from "../parsing/parsing";
-import {
-    EcoreMetamodelSupport,
-    fromEObject,
-    loadEObject,
-    loadEPackages,
-    Result,
-    toEObject
-} from "./ecore";
+import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
 import {Node, NodeDefinition} from "../model/model";
 import * as Ecore from "ecore/dist/ecore";
 import {EList, EObject, EPackage, Resource, ResourceSet} from "ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {
-    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
-    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
-    THE_NODE_ORIGIN_ECLASS,
-    THE_STATEMENT_INTERFACE,
+    THE_AST_EPACKAGE,
     THE_ENTITY_DECLARATION_INTERFACE,
     THE_EXPRESSION_INTERFACE,
-    THE_AST_EPACKAGE
+    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
+    THE_NODE_ORIGIN_ECLASS,
+    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
+    THE_STATEMENT_INTERFACE
 } from "./starlasu-v2-metamodel";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
+import {THE_NODE_ECLASS as THE_NODE_ECLASS_V1, THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {
     THE_TRANSPILATION_TRACE_ECLASS,
@@ -278,16 +271,28 @@ export class ParserTraceLoader {
 }
 
 abstract class AbstractTranspilationTrace {
-    protected sourceToTarget = new Map<string, EObject[]>();
+    protected sourceToTarget = new Map<string, TargetNode[]>();
     public issues: Issue[] = [];
 
-    constructor(protected eo: EObject) {}
+    protected constructor(protected eo: EObject) {}
 
-    protected examineTargetNode(tn: EObject) {
+    getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
+        return this.sourceToTarget.get(this.getEObjectID(sourceNode.eo)) || [];
+    }
+
+    protected getEObjectID(eObject: EObject): string {
+        return eObject.fragment();
+    }
+
+    protected examineTargetNode(
+        tn: EObject, parent?: TargetNode,
+        customize: (targetNode: TargetNode) => TargetNode = x => x
+    ) {
         let origin = tn.get("origin");
         if (origin?.eClass == THE_NODE_ORIGIN_ECLASS) {
             origin = origin.get("node");
         }
+        const targetNode = customize(new TargetNode(tn, this).withParent(parent));
         if (origin) {
             const sourceID = this.getEObjectID(origin);
             let list = this.sourceToTarget.get(sourceID);
@@ -295,22 +300,15 @@ abstract class AbstractTranspilationTrace {
                 list = [];
                 this.sourceToTarget.set(sourceID, list);
             }
-            list.push(tn);
+            list.push(targetNode);
         }
-        tn.eContents().forEach((c) => this.examineTargetNode(c));
-    }
-
-    protected getEObjectID(eObject: EObject): string {
-        return eObject.fragment();
-    }
-
-    getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
-        const targetEOs = this.sourceToTarget.get(this.getEObjectID(sourceNode.eo));
-        return targetEOs?.map(eo => new TargetNode(eo, this)) || [];
+        tn.eContents().forEach((c) => this.examineTargetNode(c, parent, customize));
+        return targetNode;
     }
 }
 
 export class TranspilationTrace extends AbstractTranspilationTrace {
+    readonly rootTargetNode: TargetNode;
 
     constructor(eo: EObject) {
         super(eo)
@@ -318,47 +316,40 @@ export class TranspilationTrace extends AbstractTranspilationTrace {
             throw new Error("Not a transpilation trace: " + eo.eClass);
         }
         this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
-        this.examineTargetNode(this.rootTargetNode.eo);
+        this.rootTargetNode = this.examineTargetNode(this.eo.get("targetResult").get("root"));
     }
 
     get rootSourceNode(): SourceNode {
-        return new SourceNode(this.eo.get("sourceResult").get("root"), this)
-    }
-
-    get rootTargetNode(): TargetNode {
-        return new TargetNode(this.eo.get("targetResult").get("root"), this)
+        return new SourceNode(this.eo.get("sourceResult").get("root"), this);
     }
 
     get name(): string | undefined {
         return this.eo.get("name");
     }
-
 }
 
 export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
+    originalFiles: SourceWorkspaceFile[];
+    generatedFiles: TargetWorkspaceFile[];
+    targetFileMap = new Map<string, TargetWorkspaceFile>();
 
     constructor(eo: EObject) {
         super(eo)
         if (!eo.eClass == THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS) {
             throw new Error("Not a workspace transpilation trace: " + eo.eClass);
         }
+        const originalFiles = this.eo.get("originalFiles") as EList;
+        this.originalFiles = originalFiles.map((eo) => new SourceWorkspaceFile(eo, this));
+        const generatedFiles = this.eo.get("generatedFiles") as EList;
+        this.generatedFiles = generatedFiles.map((eo) => {
+            const targetWorkspaceFile = new TargetWorkspaceFile(eo, this);
+            targetWorkspaceFile.node = this.examineTargetNode(eo.get("result").get("root"), undefined, n => {
+                n.file = targetWorkspaceFile;
+                return n;
+            });
+            return targetWorkspaceFile;
+        });
         this.issues = fromEObject(eo.get("issues")) as Issue[] || [];
-        //this.examineTargetNode(this.rootTargetNode.eo);
-    }
-
-    // get rootSourceNode(): SourceNode {
-    //     return new SourceNode(this.eo.get("sourceResult").get("root"), this)
-    // }
-    //
-
-    get originalFiles(): SourceWorkspaceFile[] {
-        const eos = this.eo.get("originalFiles") as EList;
-        return eos.map((eo) => new SourceWorkspaceFile(eo, this));
-    }
-
-    get generatedFiles(): TargetWorkspaceFile[] {
-        const eos = this.eo.get("generatedFiles") as EList;
-        return eos.map((eo) => new TargetWorkspaceFile(eo, this));
     }
 
     get name(): string | undefined {
@@ -397,24 +388,23 @@ export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
     }
 
     get node(): SourceNode {
-        return new SourceNode(this.eo.get("result").get("root"), this.trace);
+        return new SourceNode(this.eo.get("result").get("root"), this.trace, this);
     }
 }
 
 export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
+    node: TargetNode;
+
     constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
         super(eo, trace);
-    }
-
-    get node(): TargetNode {
-        return new TargetNode(this.eo.get("result").get("root"), this.trace);
     }
 }
 
 export class SourceNode extends TraceNode {
     parent?: SourceNode;
+    protected _destinations?: TargetNode[];
 
-    constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
+    constructor(eo: EObject, protected trace: AbstractTranspilationTrace, public readonly file?: SourceWorkspaceFile) {
         super(eo);
         if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
             this.parent = new SourceNode(this.eo.eContainer, this.trace);
@@ -422,7 +412,10 @@ export class SourceNode extends TraceNode {
     }
 
     getDestinationNodes(): TargetNode[] {
-        return this.trace.getDestinationNodes(this);
+        if (this._destinations === undefined) {
+            this._destinations = this.trace.getDestinationNodes(this);
+        }
+        return this._destinations;
     }
 
     getChildren(role?: string): SourceNode[] {
@@ -451,10 +444,10 @@ export class SourceNode extends TraceNode {
 export class TargetNode extends TraceNode {
     parent?: TargetNode;
 
-    constructor(eo: EObject, protected trace: AbstractTranspilationTrace) {
+    constructor(eo: EObject, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
         super(eo);
         if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
-            this.parent = new TargetNode(this.eo.eContainer, this.trace);
+            this.parent = new TargetNode(this.eo.eContainer, this.trace, this.file);
         }
     }
 
@@ -475,14 +468,17 @@ export class TargetNode extends TraceNode {
     }
 
     getSourceNode(): SourceNode | undefined {
-        let rawOrigin = this.eo.get("origin");
-        if (rawOrigin?.eClass == THE_NODE_ORIGIN_ECLASS) {
-            rawOrigin = rawOrigin.get("node");
+        if (!this.origin) {
+            let rawOrigin = this.eo.get("origin");
+            if (rawOrigin?.eClass == THE_NODE_ORIGIN_ECLASS) {
+                rawOrigin = rawOrigin.get("node");
+            }
+            if (!rawOrigin) {
+                return undefined;
+            }
+            this.origin = new SourceNode(rawOrigin, this.trace);
         }
-        if (!rawOrigin) {
-            return undefined;
-        }
-        return new SourceNode(rawOrigin, this.trace);
+        return this.origin as SourceNode;
     }
 
     getChildren(role?: string): TargetNode[] {
@@ -491,7 +487,7 @@ export class TargetNode extends TraceNode {
             .filter((c) => c.eContainingFeature.get("name") != "origin")
             .filter((c) => c.eContainingFeature.get("name") != "destination")
             .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new TargetNode(c, this.trace));
+            .map((c) => new TargetNode(c, this.trace, this.file));
     }
 
     get children(): Node[] {
