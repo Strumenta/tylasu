@@ -302,7 +302,7 @@ abstract class AbstractTranspilationTrace {
             }
             list.push(targetNode);
         }
-        tn.eContents().forEach((c) => this.examineTargetNode(c, parent, customize));
+        tn.eContents().forEach((c) => this.examineTargetNode(c, targetNode, customize));
         return targetNode;
     }
 }
