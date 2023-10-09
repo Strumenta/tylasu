@@ -17,7 +17,7 @@ import {
 import {THE_NODE_ECLASS as THE_NODE_ECLASS_V1, THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {
-    THE_TRANSPILATION_TRACE_ECLASS,
+    THE_TRANSPILATION_TRACE_ECLASS, THE_WORKSPACE_FILE_ECLASS,
     THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
     TRANSPILATION_EPACKAGE
 } from "./transpilation-package";
@@ -363,7 +363,7 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
 }
 
 abstract class AbstractWorkspaceFile<N> {
-    constructor(protected eo: EObject, protected trace: WorkspaceTranspilationTrace) {
+    protected constructor(protected eo: EObject, protected trace: AbstractTranspilationTrace) {
 
     }
 
@@ -383,7 +383,7 @@ abstract class AbstractWorkspaceFile<N> {
 }
 
 export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
-    constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
+    constructor(eo: EObject, trace: AbstractTranspilationTrace) {
         super(eo, trace);
     }
 
@@ -395,7 +395,7 @@ export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
 export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
     node: TargetNode;
 
-    constructor(eo: EObject, trace: WorkspaceTranspilationTrace) {
+    constructor(eo: EObject, trace: AbstractTranspilationTrace) {
         super(eo, trace);
     }
 }
@@ -407,7 +407,7 @@ export class SourceNode extends TraceNode {
     constructor(eo: EObject, protected trace: AbstractTranspilationTrace, public readonly file?: SourceWorkspaceFile) {
         super(eo);
         if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
-            this.parent = new SourceNode(this.eo.eContainer, this.trace);
+            this.parent = new SourceNode(this.eo.eContainer, this.trace, file);
         }
     }
 
@@ -422,7 +422,7 @@ export class SourceNode extends TraceNode {
         return this.eo.eContents()
             .filter((c) => c.eContainingFeature.get("name") != "position")
             .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new SourceNode(c, this.trace));
+            .map((c) => new SourceNode(c, this.trace, this.file));
     }
 
     get children(): Node[] {
@@ -476,7 +476,17 @@ export class TargetNode extends TraceNode {
             if (!rawOrigin) {
                 return undefined;
             }
-            this.origin = new SourceNode(rawOrigin, this.trace);
+            let file: SourceWorkspaceFile | undefined = undefined;
+            let parent = rawOrigin.eContainer;
+            while (parent) {
+                if (parent.isKindOf(THE_WORKSPACE_FILE_ECLASS)) {
+                    file = new SourceWorkspaceFile(parent, this.trace);
+                    break;
+                } else {
+                    parent = parent.eContainer;
+                }
+            }
+            this.origin = new SourceNode(rawOrigin, this.trace, file);
         }
         return this.origin as SourceNode;
     }

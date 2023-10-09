@@ -72,7 +72,9 @@ describe('Workspace Transpilation traces', function() {
             expect(destinationNodes[0].file?.path).to.equal("output/schema.sql");
             expect(destinationNodes[0].parent).not.to.be.undefined;
             expect(destinationNodes[0].getPathFromRoot()).to.eql(['body', 3, 'columns', 3]);
-            expect(destinationNodes[0].getSourceNode()?.getPathFromRoot()).to.eql(['dataDescriptions', 1, 'fields', 2]);
+            const sourceNode = destinationNodes[0].getSourceNode();
+            expect(sourceNode?.getPathFromRoot()).to.eql(['dataDescriptions', 1, 'fields', 2]);
+            expect(sourceNode?.file?.path).to.equal("qddssrc/CUSTOMER.dds");
 
             const cus200File = trace.originalFiles.find(
                 f => f.path == "qrpglesrc/CUS200.rpgle"
