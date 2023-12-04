@@ -3,7 +3,7 @@
 	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.4.6",
+	"version": "1.5.0",
 	"license": "Apache-2.0",
 	"keywords": [
 		"antlr",
@@ -86,12 +86,12 @@
 		"reflect-metadata": "^0.1.13"
 	},
 	"peerDependencies": {
-		"antlr4ts": "^0.5.0-alpha.4",
+		"antlr4ng": "^2.0.2",
 		"cmd-ts": "^0.11.0",
 		"ecore": "^0.12.0"
 	},
 	"peerDependenciesMeta": {
-		"antlr4ts": {
+		"antlr4ng": {
 			"optional": true
 		},
 		"cmd-ts": {
@@ -108,26 +108,26 @@
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
 		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts",
 		"lint": "eslint src tests",
-		"build-test-parser": "antlr4ts -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
-		"test": "yarn run build-test-parser && cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha -r ts-node/register \"tests/**/*.test.ts\"",
+		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
+		"test": "yarn run build-test-parser && cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha",
 		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn run extract-docs && yarn pack",
 		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
 	},
 	"devDependencies": {
-		"@tsconfig/recommended": "^1.0.2",
-		"@types/chai": "^4.2.11",
+		"@tsconfig/recommended": "^1.0.3",
+		"@types/chai": "^4.3.11",
 		"@types/ecore": "^0.12.3",
-		"@types/mocha": "^5.2.7",
-		"@types/node": "^13.9.8",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "^18.19.2",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"@typescript-eslint/parser": "^6.4.1",
-		"antlr4ts": "^0.5.0-alpha.4",
-		"antlr4ts-cli": "^0.5.0-alpha.4",
-		"chai": "^4.3.4",
+		"antlr4ng": "^2.0.2",
+		"antlr4ng-cli": "^1.0.4",
+		"chai": "^4.3.10",
 		"cmd-ts": "^0.11.0",
 		"cross-env": "^7.0.3",
 		"ecore": "^0.12.0",
-		"eslint": "^7.16.0",
+		"eslint": "^8.55.0",
 		"merge-options": "^2.0.0",
 		"mocha": "^10.2.0",
 		"rimraf": "^3.0.0",

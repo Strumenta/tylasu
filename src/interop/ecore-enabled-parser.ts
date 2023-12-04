@@ -1,5 +1,5 @@
 import {Node} from "..";
-import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ts";
+import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ng";
 import {TylasuParser, TylasuToken} from "../parsing";
 import {Resource} from "ecore";
 import {THE_AST_EPACKAGE} from "./starlasu-v2-metamodel";

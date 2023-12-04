@@ -1,9 +1,6 @@
-import {ParseTree} from "antlr4ts/tree/ParseTree";
-import {ParserRuleContext} from "antlr4ts";
-import {Child, Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
-import {TerminalNode} from "antlr4ts/tree/TerminalNode";
-import {RuleNode} from "antlr4ts/tree/RuleNode";
-import {ASTTransformer, GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
+import {ParserRuleContext, ParseTree, TerminalNode} from "antlr4ng";
+import {Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
+import {ASTTransformer, registerNodeFactory} from "./transformation/transformation";
 import {ParseTreeOrigin} from "./parsing";
 
 /**
@@ -20,29 +17,6 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
         registerNodeFactory(type, () => new target());
     };
 }
-
-//-------//
-// toAST //
-//-------//
-
-export function toAST(tree?: ParseTree | null, parent?: Node): Node | undefined {
-    if (tree == null)
-        tree = undefined;
-
-    const node = transform(tree, parent, toAST);
-    if(node && !node.origin) { //Give a chance to custom factories to set a different node
-        node.origin = new ParseTreeOrigin(tree);
-    }
-    return node;
-}
-
-export class GenericParseTreeNode extends GenericNode {
-    @Child()
-    @Mapped("children")
-    childNodes: GenericParseTreeNode[] = [];
-}
-
-registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
 
 /**
  * Implements a transformation from an ANTLR parse tree (the output of the parser) to an AST (a higher-level
@@ -78,23 +52,3 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
             return undefined;
     }
 }
-
-//Augment the ParseTree class with a toAST method
-declare module 'antlr4ts/tree' {
-    export interface ParseTree {
-        toAST(parent?: Node): Node;
-    }
-    export interface RuleNode {
-        toAST(parent?: Node): Node;
-    }
-    export interface TerminalNode {
-        toAST(parent?: Node): Node;
-    }
-}
-
-RuleNode.prototype.toAST = function(parent?: Node): Node {
-    return toAST(this, parent)!;
-};
-TerminalNode.prototype.toAST = function(parent?: Node): Node {
-    return toAST(this, parent)!;
-};

@@ -1,4 +1,4 @@
-import {CharStream} from "antlr4ts/CharStream";
+import {CharStream} from "antlr4ng";
 import {ParsingResult} from "./parsing";
 import {Node} from "../model/model";
 import {Source} from "../model/position";

@@ -299,6 +299,7 @@ export function registerNodeFactory<T>(type: new (...args: any[]) => T, factory:
 
 /**
  * Marks a property of a node as mapped from a property of another node of a different name.
+ * @deprecated to be removed, use ParseTreeToASTTranformer
  * @param type the source node's type.
  * @param propertyName the name of the target property.
  * @param path the path in the source node that will be mapped to the target property.
@@ -329,8 +330,7 @@ export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
 
 /**
  * Marks a property of a node as mapped from a property of another node of a different name.
- *
- * Note: this will eventually be integrated with Kolasu-style transformers.
+ * @deprecated to be removed, use ASTTranformer.withChild
  * @param path the path in the source node that will be mapped to the target property.
  */
 export function Mapped(path?: string): (target, methodName: string) => void {

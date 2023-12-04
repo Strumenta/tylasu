@@ -1,15 +1,12 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericNode, Mapped, Node} from "../src";
+import {ASTTransformer, Child, GenericNode, GenericErrorNode, Mapped, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
-import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {ParseTreeOrigin} from "../src/parsing/parse-tree";
-import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer, toAST} from "../src/mapping";
-import {Position} from "../src/model/position";
+import {ParseTreeOrigin} from "../src/parsing";
+import {ASTNodeFor, ParseTreeToASTTransformer} from "../src/mapping";
 import {assertASTsAreEqual} from "../src/testing/testing";
-import {GenericErrorNode} from "../src/model/errors";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
@@ -60,12 +57,14 @@ class SetStatement extends Node {
 describe('Mapping of Parse Trees to ASTs', function() {
     it("Mapping of null/undefined",
         function () {
-            expect(toAST(undefined)).to.be.undefined;
-            expect(toAST(null)).to.be.undefined;
+            const transformer = new ParseTreeToASTTransformer();
+            expect(transformer.transform(undefined)).to.be.undefined;
+            expect(transformer.transform(null)).to.be.undefined;
         });
     it("Generic node",
         function () {
-            const node = new ParserRuleContext().toAST();
+            const transformer = new ParseTreeToASTTransformer();
+            const node = transformer.transform(new ParserRuleContext());
             expect(node).not.to.be.undefined;
             expect(node instanceof GenericNode).to.be.true;
         });
@@ -76,7 +75,9 @@ describe('Mapping of Parse Trees to ASTs', function() {
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;
-            const mySetStatement = setStmt.toAST() as MySetStatement;
+            const transformer = new ParseTreeToASTTransformer();
+            transformer.registerNodeFactory(SetStmtContext, () => new MySetStatement())
+            const mySetStatement = transformer.transform(setStmt) as MySetStatement;
             expect(mySetStatement instanceof MySetStatement).to.be.true;
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;
             const origin = mySetStatement.origin as ParseTreeOrigin;
@@ -87,9 +88,8 @@ describe('Mapping of Parse Trees to ASTs', function() {
             expect(mySetStatement.expression).not.to.be.undefined;
             expect(mySetStatement.nonExistent).to.be.undefined;
 
-            const expression = mySetStatement.expression as GenericParseTreeNode;
-            expect(expression instanceof GenericParseTreeNode).to.be.true;
-            expect(expression.childNodes.length).to.equal(3);
+            const expression = mySetStatement.expression as GenericNode;
+            expect(expression instanceof GenericNode).to.be.true;
         });
 });
 
@@ -183,7 +183,7 @@ const configure = function(transformer: ASTTransformer) : void {
                 // We throw a custom error so that we can check that it's recorded in the AST
                 throw new Error("Parse error");
             }
-            const displayIntStatement = new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.text));
+            const displayIntStatement = new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.getText()));
             return displayIntStatement;
         });
 
@@ -195,8 +195,8 @@ const configure = function(transformer: ASTTransformer) : void {
                 throw new Error("Parse error");
             }
             const setStatement = new SetStatement();
-            setStatement.variable = source.ID().text;
-            setStatement.value = parseInt(source.expression().INT_LIT()!.text);
+            setStatement.variable = source.ID().getText();
+            setStatement.value = parseInt(source.expression().INT_LIT()!.getText());
             return setStatement;
         }
     );

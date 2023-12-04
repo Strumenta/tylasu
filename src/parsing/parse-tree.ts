@@ -1,9 +1,5 @@
 import {Node, Origin, Point, Position} from "../";
-import {Token} from "antlr4ts";
-import {ParseTree} from "antlr4ts/tree";
-import {Interval} from "antlr4ts/misc";
-import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+import {Interval, ParserRuleContext, ParseTree, TerminalNode, Token} from "antlr4ng";
 
 // Note: we cannot provide Kolasu-style extension methods on ParseTree because it's an interface.
 // Also, Kolasu-style extension methods on Token are problematic because we use Token.EOF below.
@@ -28,10 +24,12 @@ export function positionOfParseTree(parseTree: ParseTree): Position | undefined 
         const startToken = parseTree.start;
         const stopToken = parseTree.stop;
 
-        if (stopToken) {
-            return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
-        } else {
-            return Point.ofTokenStart(startToken).asPosition();
+        if (startToken) {
+            if (stopToken) {
+                return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
+            } else {
+                return Point.ofTokenStart(startToken).asPosition();
+            }
         }
     } else if(parseTree instanceof TerminalNode) {
         return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
@@ -39,12 +37,12 @@ export function positionOfParseTree(parseTree: ParseTree): Position | undefined 
 }
 
 Point.ofTokenStart = function (token: Token): Point {
-    return new Point(token.line, token.charPositionInLine)
+    return new Point(token.line, token.column)
 }
 
 Point.ofTokenEnd = function (token: Token): Point {
     const length = (token.type == Token.EOF) ? 0 : token.text?.length ?? 0;
-    return new Point(token.line, token.charPositionInLine + length)
+    return new Point(token.line, token.column + length)
 }
 
 Position.ofParseTree = positionOfParseTree;
@@ -74,7 +72,7 @@ export class ParseTreeOrigin extends Origin {
         if (this.parseTree instanceof ParserRuleContext) {
             return this.parseTree.getOriginalText();
         } else if (this.parseTree instanceof TerminalNode) {
-            return this.parseTree.text;
+            return this.parseTree.getText();
         } else {
             return undefined;
         }
@@ -84,17 +82,17 @@ export class ParseTreeOrigin extends Origin {
 declare module '../model/model' {
     export interface Node {
         parseTree?: ParseTree;
-        withParseTreeNode(parseTree?: ParseTree): this;
+        withParseTreeNode(parseTree?: ParseTree | null): this;
     }
 }
 
-declare module 'antlr4ts/ParserRuleContext' {
+declare module 'antlr4ng' {
     export interface ParserRuleContext {
         getOriginalText(): string;
     }
 }
 
-export function withParseTreeNode(node: Node, parseTree?: ParseTree): Node {
+export function withParseTreeNode(node: Node, parseTree?: ParseTree | null): Node {
     if (parseTree) {
         node.origin = new ParseTreeOrigin(parseTree);
     }

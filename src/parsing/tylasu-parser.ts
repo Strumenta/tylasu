@@ -1,18 +1,20 @@
 import {Node} from "../model/model";
 import {
+    ATNSimulator,
     CharStream,
     CharStreams,
     CommonTokenStream,
+    ErrorNode,
+    Interval,
     Lexer,
     Parser as ANTLRParser,
     ParserRuleContext,
+    ParseTree,
     Recognizer,
+    TerminalNode,
     Token,
     TokenStream
-} from "antlr4ts";
-import {Interval} from "antlr4ts/misc";
-import {ErrorNode} from "antlr4ts/tree";
-import {TerminalNode} from "antlr4ts/tree/TerminalNode";
+} from "antlr4ng";
 import {Issue, IssueSeverity} from "../validation";
 import {Point, Position, Source, StringSource} from "../model/position";
 import {assignParents} from "../model/processing";
@@ -26,7 +28,6 @@ import {
     TylasuToken
 } from "./parsing";
 import {ASTParser} from "./ast-parser";
-import {ParseTree} from "antlr4ts/tree/ParseTree";
 
 let now: () => number;
 try {
@@ -59,11 +60,11 @@ export abstract class TokenFactory<T extends TylasuToken> {
 
     extractTokens(result: ParsingResult<any>): LexingResult<T> | undefined {
         const antlrTerminals: TerminalNode[] = [];
-        function extractTokensFromParseTree(pt?: ParseTree) {
+        function extractTokensFromParseTree(pt?: ParseTree | null) {
             if (pt instanceof TerminalNode) {
                 antlrTerminals.push(pt);
             } else if (pt != null) {
-                for (let i = 0; i < pt.childCount; i++) {
+                for (let i = 0; i < pt.getChildCount(); i++) {
                     extractTokensFromParseTree(pt.getChild(i))
                 }
             }
@@ -127,7 +128,10 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
     protected injectErrorCollectorInLexer(lexer: Lexer, issues: Issue[]): void {
         lexer.removeErrorListeners();
         lexer.addErrorListener({
-            syntaxError(recognizer: Recognizer<number, any>, offendingSymbol: number | undefined, line: number, charPositionInLine: number, msg: string) {
+            reportAmbiguity() {},
+            reportAttemptingFullContext() {},
+            reportContextSensitivity() {},
+            syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
                 issues.push(
                     Issue.lexical(
                         msg || "unspecified",
@@ -282,7 +286,10 @@ export abstract class TylasuParser<
     protected injectErrorCollectorInParser(parser: ANTLRParser, issues: Issue[]): void {
         parser.removeErrorListeners();
         parser.addErrorListener({
-            syntaxError(recognizer: Recognizer<Token, any>, offendingSymbol: Token | undefined, line: number, charPositionInLine: number, msg: string) {
+            reportAmbiguity() {},
+            reportAttemptingFullContext() {},
+            reportContextSensitivity() {},
+            syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
                 issues.push(
                     Issue.syntactic(
                         msg || "unspecified",

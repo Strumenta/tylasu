@@ -1,4 +1,4 @@
-import {CharStream, ParserRuleContext, Token} from "antlr4ts";
+import {CharStream, ParserRuleContext, Token} from "antlr4ng";
 import {Issue} from "../validation";
 import {Position} from "../model/position";
 import {Node} from "../model/model";
@@ -20,7 +20,7 @@ export class TylasuToken {
     constructor(
         public readonly category: TokenCategory,
         public readonly position: Position,
-        public readonly text: string | undefined
+        public readonly text: string | undefined | null
     ) {}
 }
 
