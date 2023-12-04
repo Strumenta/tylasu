@@ -23,7 +23,7 @@ import {
     THE_LOCAL_TIME_ECLASS,
     THE_NODE_ECLASS, THE_NODE_ORIGIN_ECLASS,
     THE_POINT_ECLASS,
-    THE_POSITION_ECLASS,
+    THE_POSITION_ECLASS, THE_REFERENCE_BY_NAME_ECLASS,
     THE_RESULT_ECLASS, THE_TEXT_FILE_DESTINATION_ECLASS
 } from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
@@ -669,6 +669,36 @@ function ensureEClass(obj: any, eClass: EClass | undefined, resource: Resource):
     return eClass;
 }
 
+function featureError(message: string, key: string, eClass: EObject, resource: Resource) {
+    return new Error(message + ": " + key + " of " + eClass.fragment() + " in " + resource.eURI());
+}
+
+function setChild(feature, obj: any, key: string, eObject: EObject, resource: Resource, eType, strict: boolean,
+                  referencesTracker: ReferencesTracker, eClass: EObject) {
+    if (feature.get("many")) {
+        if (obj[key]) {
+            obj[key].forEach((v: any) => {
+                eObject.get(key).add(
+                    importJsonObject(v, resource, eType, strict, referencesTracker));
+            });
+        }
+    } else {
+        let value: any;
+        if (Array.isArray(obj[key])) {
+            if (obj[key].length == 1) {
+                value = obj[key][0];
+            } else if (obj[key].length > 1) {
+                throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
+            }
+        } else {
+            value = obj[key];
+        }
+        if (value) {
+            eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
+        }
+    }
+}
+
 /**
  * Interprets a JSON object as an EObject.
  * @param obj the input object.
@@ -717,40 +747,29 @@ function importJsonObject(
                         const eGenericType = feature.get("eGenericType");
                         if (eGenericType) {
                             eType = eGenericType.get("eClassifier");
+                            if (eType == THE_REFERENCE_BY_NAME_ECLASS) {
+                                //eType = eGenericType.get("eTypeArguments").at(0).get("eClassifier");
+                                const refValue = obj[key].referenced;
+                                if (refValue) {
+                                    referencesTracker.trackReference(eObject, feature, refValue);
+                                }
+                                continue;
+                            }
                         }
                     }
                     if (feature.get("containment") === true) {
-                        if (feature.get("many")) {
-                            if (obj[key]) {
-                                obj[key].forEach((v: any) => eObject.get(key).add(
-                                    importJsonObject(v, resource, eType, strict, referencesTracker)));
-                            }
-                        } else {
-                            let value;
-                            if (Array.isArray(obj[key])) {
-                                if (obj[key].length == 1) {
-                                    value = obj[key][0];
-                                } else if (obj[key].length > 1) {
-                                    throw new Error("Unexpected array: " + key + " of " + eClass.fragment);
-                                }
-                            } else {
-                                value = obj[key];
-                            }
-                            if (value) {
-                                eObject.set(key, importJsonObject(value, resource, eType, strict, referencesTracker));
-                            }
-                        }
+                        setChild(feature, obj, key, eObject, resource, eType, strict, referencesTracker, eClass);
                     } else if (feature.isKindOf(EReference)) {
                         const refValue = obj[key];
                         referencesTracker.trackReference(eObject, feature, refValue);
                     } else {
-                        throw new Error("The feature is neither a containment or a reference");
+                        throw featureError("The feature is neither a containment nor a reference", key, eClass, resource);
                     }
                 } else if (strict) {
-                    throw new Error("Not a feature: " + key + " of " + eClass.fragment());
+                    throw featureError("Not a feature", key, eClass, resource);
                 }
             } else if (strict) {
-                throw new Error("Not a feature: " + key + " of " + eClass.fragment());
+                throw featureError("Not a feature", key, eClass, resource);
             }
         }
     }

@@ -109,12 +109,9 @@ describe("Transformers", function () {
        transformer.addIssue("warning", IssueSeverity.WARNING);
        transformer.addIssue("info", IssueSeverity.INFO, pos(1, 0, 1, 2));
 
-       expect(transformer.issues[0].message
-       ).to.be.equal("error");
-       expect(transformer.issues[1].message
-       ).to.be.equal("warning");
-       expect(transformer.issues[2].message
-       ).to.be.equal("info");
+       expect(transformer.issues[0].message).to.be.equal("error");
+       expect(transformer.issues[1].message).to.be.equal("warning");
+       expect(transformer.issues[2].message).to.be.equal("info");
    });
    it("Transform function does not accept collections as source", function () {
        const transformer = new ASTTransformer();

@@ -1,4 +1,4 @@
-import {assert, expect} from "chai";
+import {expect} from "chai";
 
 import {ASTTransformer, Child, GenericNode, Mapped, Node} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
@@ -173,7 +173,7 @@ const configure = function(transformer: ASTTransformer) : void {
             (source: CompilationUnitContext) => source.statement(),
             (target: CU, child?: Node[]) => target.statements = child!,
             "statements",
-            CompilationUnitContext
+            CU
         );
 
     transformer.registerNodeFactory<DisplayStmtContext, DisplayIntStatement>(
