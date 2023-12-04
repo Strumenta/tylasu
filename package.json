@@ -109,7 +109,7 @@
 		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
-		"test": "yarn run build-test-parser && cross-env TS_NODE_PROJECT=tests/tsconfig.json mocha",
+		"test": "yarn run build-test-parser && jest",
 		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn run extract-docs && yarn pack",
 		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
 	},
@@ -117,7 +117,7 @@
 		"@tsconfig/recommended": "^1.0.3",
 		"@types/chai": "^4.3.11",
 		"@types/ecore": "^0.12.3",
-		"@types/mocha": "^10.0.6",
+		"@types/jest": "^29.5.10",
 		"@types/node": "^18.19.2",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"@typescript-eslint/parser": "^6.4.1",
@@ -128,12 +128,11 @@
 		"cross-env": "^7.0.3",
 		"ecore": "^0.12.0",
 		"eslint": "^8.55.0",
+		"jest": "^29.7.0",
 		"merge-options": "^2.0.0",
-		"mocha": "^10.2.0",
 		"rimraf": "^3.0.0",
-		"ts-loader": "^6.2.2",
-		"ts-node": "^8.8.2",
-      	"typedoc": "^0.22.18",
-		"typescript": "^4.0.8"
+		"ts-jest": "^29.1.1",
+		"typedoc": "^0.25.4",
+		"typescript": "^5.3.2"
 	}
 }

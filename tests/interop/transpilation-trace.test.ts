@@ -36,7 +36,6 @@ describe('Transpilation traces', function() {
         })
         it("Can load eType for all references in Java metamodel",
             function () {
-                    this.timeout(0);
                     const resourceSet = Ecore.ResourceSet.create();
                     const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
                     const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString()),
@@ -57,8 +56,6 @@ describe('Transpilation traces', function() {
         );
     it("Can load transpilation trace produced by Kolasu as EObject",
         function () {
-            this.timeout(0);
-
             const resourceSet = Ecore.ResourceSet.create();
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
@@ -87,7 +84,6 @@ describe('Transpilation traces', function() {
         });
     it("Can load transpilation trace produced by Kolasu as TranspilationTrace instance",
         function () {
-            this.timeout(0);
             const loader = new TranspilationTraceLoader({
                 name: "rpg",
                 uri: "file://tests/data/playground/rpg-metamodels.json",

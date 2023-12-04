@@ -1,7 +1,7 @@
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {CharStreams, CommonTokenStream} from "antlr4ng";
 import {SimpleLangParser} from "../parser/SimpleLangParser";
-import {ParseTreeOrigin} from "../../src/interop/antlr4";
+import {ParseTreeOrigin} from "../../src/parsing";
 import {expect} from "chai";
 import {Point, Position} from "../../src";
 
@@ -20,7 +20,7 @@ display 2 * 3`;
                 new Position(new Point(1, 0), new Point(3, 13)))
             ).to.equal(0);
 
-            const inputStatement = new ParseTreeOrigin(parseTreeRoot.statement(1));
+            const inputStatement = new ParseTreeOrigin(parseTreeRoot.statement(1)!);
             expect(inputStatement.position!.compareTo(
                 new Position(new Point(2, 0), new Point(2, 17)))
             ).to.equal(0);
@@ -38,7 +38,7 @@ display 2 * 3`;
             const rootOrigin = new ParseTreeOrigin(parseTreeRoot);
             expect(rootOrigin.sourceText).to.equal(code);
 
-            const inputStatement = new ParseTreeOrigin(parseTreeRoot.statement(1));
+            const inputStatement = new ParseTreeOrigin(parseTreeRoot.statement(1)!);
             expect(inputStatement.sourceText).to.equal("input c is string");
         });
 });

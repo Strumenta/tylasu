@@ -1,23 +1,21 @@
 import {expect} from "chai";
 
-import {findByPosition, Issue, IssueSeverity, IssueType, pos, Source} from "../src";
+import {Issue, Source} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
-import {ParserNode, ParserTraceLoader, saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
+import {ParserTraceLoader, saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
-import {CharStream, CommonToken, Lexer, Token, TokenStream} from "antlr4ts";
+import {CharStream, CommonToken, Lexer, TerminalNode, Token, TokenStream} from "antlr4ng";
 import * as fs from "fs";
 import * as Ecore from "ecore/dist/ecore";
-import {ParsingResult} from "../src/parsing";
+import {ANTLRTokenFactory, ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
-import {TerminalNode} from "antlr4ts/tree/TerminalNode";
-import {ANTLRTokenFactory} from "../src/parsing";
 
 describe('Strumenta Playground', function() {
     it("Export round-trip", function () {
         // We assign a fake parse tree, to ensure that we don't attempt to serialize ANTLR parse trees into the model.
-        const fakePT = new TerminalNode(new CommonToken(Token.EOF));
+        const fakePT = new TerminalNode(new CommonToken([null, null], Token.EOF, Token.DEFAULT_CHANNEL, 0, 0));
         (fakePT.symbol as CommonToken).line = 1;
-        (fakePT.symbol as CommonToken).charPositionInLine = 0;
+        (fakePT.symbol as CommonToken).column = 0;
         /* TODO not supported yet
         const nodeWithError = new NodeWithError("root");
         nodeWithError.errorNode = new GenericErrorNode(new Error("Something bad happened"));

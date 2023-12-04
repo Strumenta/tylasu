@@ -2,10 +2,9 @@ import {expect} from "chai";
 
 import {Issue, Node} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
-import {CharStream, Lexer, TokenStream} from "antlr4ts";
+import {CharStream, Lexer, TokenStream} from "antlr4ng";
 import {CompilationUnitContext, SimpleLangParser} from "./parser/SimpleLangParser";
-import {ParseTreeOrigin, TylasuANTLRToken, TylasuParser} from "../src/parsing";
-import {ANTLRTokenFactory} from "../src/parsing/tylasu-parser";
+import {ANTLRTokenFactory, ParseTreeOrigin, TylasuANTLRToken, TylasuParser} from "../src/parsing";
 
 class CompilationUnit extends Node {}
 

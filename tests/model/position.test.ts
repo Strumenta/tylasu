@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {Point, START_POINT, Node, Position} from "../../src";
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
+import {CharStreams, CommonTokenStream} from "antlr4ng";
 import {SetStmtContext, SimpleLangParser} from "../parser/SimpleLangParser";
 
 class MySetStatement extends Node {}

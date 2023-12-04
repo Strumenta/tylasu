@@ -14,8 +14,6 @@ import {EList} from "ecore";
 describe('Workspace Transpilation traces', function() {
     it("Can load workspace transpilation trace produced by Kolasu as EObject",
         function () {
-            this.timeout(0);
-
             const resourceSet = Ecore.ResourceSet.create();
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
@@ -36,7 +34,6 @@ describe('Workspace Transpilation traces', function() {
         });
     it("Can load workspace transpilation trace produced by Kolasu as WorkspaceTranspilationTrace instance",
         function () {
-            this.timeout(0);
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
@@ -91,7 +88,6 @@ describe('Workspace Transpilation traces', function() {
         });
         it("Can load workspace transpilation trace produced by Kolasu with ReferenceByName instances",
             function () {
-                    this.timeout(0);
                     Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
                     Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
                     const loader = new TranspilationTraceLoader({

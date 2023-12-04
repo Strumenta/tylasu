@@ -15,8 +15,6 @@ describe('Parser traces – Kolasu metamodel V1', function() {
 
     it("Can load reference RPG parser trace: BBSAACCLVR",
         function () {
-            this.timeout(0);
-
             const code = fs.readFileSync("tests/data/playground/rpg/BBSAACCLVR.json").toString();
             const trace = rpgLoader.loadParserTrace(code, "rpg");
 
@@ -37,9 +35,6 @@ describe('Parser traces – Kolasu metamodel V1', function() {
 
     it("Can load reference RPG parser trace: open-weather",
         function () {
-            this.timeout(0);
-
-
             const code = fs.readFileSync("tests/data/playground/rpg/open-weather.json").toString();
             const trace = rpgLoader.loadParserTrace(code, "rpg");
             const rootNode = trace.rootNode;
@@ -56,7 +51,6 @@ describe('Parser traces – Kolasu metamodel V1', function() {
     for (const example of ["JD_001", "moulinette", "plugconv"]) {
         it(`Can load RPG parser trace: ${example}`,
             function () {
-                this.timeout(0);
                 const code = fs.readFileSync(`tests/data/playground/rpg/${example}.json`).toString();
                 const trace = rpgLoader.loadParserTrace(code, "rpg");
                 expect(trace.rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit", example);
@@ -67,8 +61,6 @@ describe('Parser traces – Kolasu metamodel V1', function() {
 describe('Parser traces – Starlasu metamodel V2', function() {
     it("Can load SAS parser traces",
         function () {
-            this.timeout(0);
-
             const metamodel =
                 JSON.parse(fs.readFileSync("tests/data/playground/sas/metamodel.json").toString());
             const loader = new ParserTraceLoader({
