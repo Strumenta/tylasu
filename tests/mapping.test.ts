@@ -12,7 +12,6 @@ import {assertASTsAreEqual} from "../src/testing/testing";
 class MySetStatement extends Node {
     //Explicit mapping
     @Child()
-    @Mapped("ID")
     id: Node;
     //Implicit mapping (same name)
     @Child()
@@ -77,6 +76,7 @@ describe('Mapping of Parse Trees to ASTs', function() {
             const setStmt = cu.statement(0) as SetStmtContext;
             const transformer = new ParseTreeToASTTransformer();
             transformer.registerNodeFactory(SetStmtContext, () => new MySetStatement())
+                .withChild((s: SetStmtContext) => s.ID(), (s: MySetStatement, id: Node) => s.id = id, "id", SetStmtContext);
             const mySetStatement = transformer.transform(setStmt) as MySetStatement;
             expect(mySetStatement instanceof MySetStatement).to.be.true;
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;

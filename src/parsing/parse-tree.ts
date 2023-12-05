@@ -114,8 +114,8 @@ Object.defineProperty(Node.prototype, "parseTree", {
 });
 
 ParserRuleContext.prototype.getOriginalText = function () {
-    const a = this.start.startIndex;
-    const b = this.stop.stopIndex;
+    const a = this.start.start;
+    const b = this.stop.stop;
     const interval = new Interval(a, b);
     return this.start.inputStream.getText(interval);
 }

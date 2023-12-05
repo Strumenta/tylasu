@@ -1,8 +1,7 @@
 import {ParsingResult} from "../parsing/parsing";
 import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
 import {Node, NodeDefinition} from "../model/model";
-import * as Ecore from "ecore/dist/ecore";
-import {EList, EObject, EPackage, Resource, ResourceSet} from "ecore";
+import * as ECore from "ecore/dist/ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {
@@ -28,7 +27,7 @@ export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R>, name: string,
     metamodelSupport: EcoreMetamodelSupport, callback: (data: any, error: any) => void
 ): void {
-    const resourceSet = Ecore.ResourceSet.create();
+    const resourceSet = ECore.ResourceSet.create();
     const mmResource = resourceSet.create({ uri: "ast" });
     metamodelSupport.generateMetamodel(mmResource, false);
     mmResource.set("uri", "");
@@ -54,7 +53,7 @@ export function saveForStrumentaPlayground<R extends Node>(
 }
 
 export class ParserTrace {
-    constructor(private eo: EObject) {
+    constructor(private eo: ECore.EObject) {
         if (!eo.eClass == PARSER_TRACE_ECLASS) {
             throw new Error("Not a parser trace: " + eo.eClass);
         }
@@ -84,13 +83,13 @@ export class ParserTrace {
         return this.eo.get("name");
     }
 
-    private getEObjectID(eObject: EObject): string {
+    private getEObjectID(eObject: ECore.EObject): string {
         return eObject.fragment();
     }
 }
 
 export abstract class TraceNode extends Node {
-    protected constructor(public eo: EObject) {
+    protected constructor(public eo: ECore.EObject) {
         super();
     }
 
@@ -185,7 +184,7 @@ export abstract class TraceNode extends Node {
 
 export class ParserNode extends TraceNode {
 
-    constructor(eo: EObject, parent: ParserNode | undefined, protected trace: ParserTrace) {
+    constructor(eo: ECore.EObject, parent: ParserNode | undefined, protected trace: ParserTrace) {
         super(eo);
         this.parent = parent;
     }
@@ -219,8 +218,8 @@ export interface Language {
 }
 
 function withLanguageMetamodel<T>(
-    languages: { [p: string]: Language }, language: string | undefined, resourceSet: ResourceSet, resource: Resource,
-    fn: () => T): T {
+    languages: { [p: string]: Language }, language: string | undefined,
+    resourceSet: ECore.ResourceSet, resource: ECore.Resource, fn: () => T): T {
     if (language) {
         // The trace DOES NOT contain a reference to the language URI
         const theLanguage = languages[language];
@@ -241,21 +240,21 @@ function withLanguageMetamodel<T>(
 }
 
 export class ParserTraceLoader {
-    private readonly resourceSet: ResourceSet;
+    private readonly resourceSet: ECore.ResourceSet;
     private readonly languages: { [name: string]: Language } = {};
 
     static {
         ensureEcoreContainsAllDataTypes();
-        Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-        Ecore.EPackage.Registry.register(PARSER_EPACKAGE);
+        ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+        ECore.EPackage.Registry.register(PARSER_EPACKAGE);
     }
 
     constructor(...languages: Language[]) {
-        this.resourceSet = ResourceSet.create();
+        this.resourceSet = ECore.ResourceSet.create();
         languages.map(this.registerLanguage.bind(this));
     }
 
-    registerLanguage(lang: Language): EPackage[] {
+    registerLanguage(lang: Language): ECore.EPackage[] {
         const languageResource = this.resourceSet.create({uri: lang.uri});
         const ePackages = loadEPackages(lang.metamodel, languageResource);
         this.languages[lang.name] = lang;
@@ -274,18 +273,18 @@ abstract class AbstractTranspilationTrace {
     protected sourceToTarget = new Map<string, TargetNode[]>();
     public issues: Issue[] = [];
 
-    protected constructor(protected eo: EObject) {}
+    protected constructor(protected eo: ECore.EObject) {}
 
     getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
         return this.sourceToTarget.get(this.getEObjectID(sourceNode.eo)) || [];
     }
 
-    protected getEObjectID(eObject: EObject): string {
+    protected getEObjectID(eObject: ECore.EObject): string {
         return eObject.fragment();
     }
 
     protected examineTargetNode(
-        tn: EObject, parent?: TargetNode,
+        tn: ECore.EObject, parent?: TargetNode,
         customize: (targetNode: TargetNode) => TargetNode = x => x
     ) {
         let origin = tn.get("origin");
@@ -310,7 +309,7 @@ abstract class AbstractTranspilationTrace {
 export class TranspilationTrace extends AbstractTranspilationTrace {
     readonly rootTargetNode: TargetNode;
 
-    constructor(eo: EObject) {
+    constructor(eo: ECore.EObject) {
         super(eo)
         if (!eo.eClass == THE_TRANSPILATION_TRACE_ECLASS) {
             throw new Error("Not a transpilation trace: " + eo.eClass);
@@ -333,14 +332,14 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
     generatedFiles: TargetWorkspaceFile[];
     targetFileMap = new Map<string, TargetWorkspaceFile>();
 
-    constructor(eo: EObject) {
+    constructor(eo: ECore.EObject) {
         super(eo)
         if (!eo.eClass == THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS) {
             throw new Error("Not a workspace transpilation trace: " + eo.eClass);
         }
-        const originalFiles = this.eo.get("originalFiles") as EList;
+        const originalFiles = this.eo.get("originalFiles") as ECore.EList;
         this.originalFiles = originalFiles.map((eo) => new SourceWorkspaceFile(eo, this));
-        const generatedFiles = this.eo.get("generatedFiles") as EList;
+        const generatedFiles = this.eo.get("generatedFiles") as ECore.EList;
         this.generatedFiles = generatedFiles.map((eo) => {
             const targetWorkspaceFile = new TargetWorkspaceFile(eo, this);
             targetWorkspaceFile.node = this.examineTargetNode(eo.get("result").get("root"), undefined, n => {
@@ -363,7 +362,7 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
 }
 
 abstract class AbstractWorkspaceFile<N> {
-    protected constructor(protected eo: EObject, protected trace: AbstractTranspilationTrace) {
+    protected constructor(protected eo: ECore.EObject, protected trace: AbstractTranspilationTrace) {
 
     }
 
@@ -383,7 +382,7 @@ abstract class AbstractWorkspaceFile<N> {
 }
 
 export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
-    constructor(eo: EObject, trace: AbstractTranspilationTrace) {
+    constructor(eo: ECore.EObject, trace: AbstractTranspilationTrace) {
         super(eo, trace);
     }
 
@@ -395,7 +394,7 @@ export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
 export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
     node: TargetNode;
 
-    constructor(eo: EObject, trace: AbstractTranspilationTrace) {
+    constructor(eo: ECore.EObject, trace: AbstractTranspilationTrace) {
         super(eo, trace);
     }
 }
@@ -404,7 +403,7 @@ export class SourceNode extends TraceNode {
     parent?: SourceNode;
     protected _destinations?: TargetNode[];
 
-    constructor(eo: EObject, protected trace: AbstractTranspilationTrace, public readonly file?: SourceWorkspaceFile) {
+    constructor(eo: ECore.EObject, protected trace: AbstractTranspilationTrace, public readonly file?: SourceWorkspaceFile) {
         super(eo);
         if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
             this.parent = new SourceNode(this.eo.eContainer, this.trace, file);
@@ -444,7 +443,7 @@ export class SourceNode extends TraceNode {
 export class TargetNode extends TraceNode {
     parent?: TargetNode;
 
-    constructor(eo: EObject, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
+    constructor(eo: ECore.EObject, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
         super(eo);
         if (eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V2) || eo?.eContainer?.isKindOf(THE_NODE_ECLASS_V1)) {
             this.parent = new TargetNode(this.eo.eContainer, this.trace, this.file);
@@ -517,21 +516,21 @@ export class TargetNode extends TraceNode {
 }
 
 export class TranspilationTraceLoader {
-    private readonly resourceSet: ResourceSet;
+    private readonly resourceSet: ECore.ResourceSet;
     private readonly languages: { [name: string]: Language } = {};
 
     static {
-        Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-        Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
-        Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE_V1);
+        ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+        ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+        ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE_V1);
     }
 
     constructor(...languages: Language[]) {
-        this.resourceSet = ResourceSet.create();
+        this.resourceSet = ECore.ResourceSet.create();
         languages.map(this.registerLanguage.bind(this));
     }
 
-    registerLanguage(lang: Language): EPackage[] {
+    registerLanguage(lang: Language): ECore.EPackage[] {
         const languageResource = this.resourceSet.create({uri: lang.uri});
         const ePackages = loadEPackages(lang.metamodel, languageResource);
         this.languages[lang.name] = lang;

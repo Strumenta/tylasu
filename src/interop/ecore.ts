@@ -8,7 +8,7 @@ import {
     registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
-import * as Ecore from "ecore/dist/ecore";
+import * as ECore from "ecore/dist/ecore";
 import {EClass, EClassifier, EList, EObject, EPackage, EReference, Resource} from "ecore";
 import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
@@ -37,7 +37,7 @@ export const EPACKAGE_SYMBOL = Symbol("EPackage");
 export const SYMBOL_NODE_NAME = Symbol("name");
 
 const THE_ECORE_URI = "http://www.eclipse.org/emf/2002/Ecore";
-const THE_ECORE_EPACKAGE = Ecore.EPackage.Registry.getEPackage(THE_ECORE_URI);
+const THE_ECORE_EPACKAGE = ECore.EPackage.Registry.getEPackage(THE_ECORE_URI);
 const THE_ENUM_ECLASS = THE_ECORE_EPACKAGE.get("eClassifiers").find((c: EClassifier) => c.get("name") == "EEnum");
 
 function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
@@ -52,9 +52,9 @@ function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?
 
 function translateType(type) {
     if (type === Number) {
-        return Ecore.EDouble;
+        return ECore.EDouble;
     } else if (type === String) {
-        return Ecore.EString;
+        return ECore.EString;
     } else if(type.name) {
         //TODO
         return undefined
@@ -80,7 +80,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
         ePackage.get('eClassifiers').add(eClass);
         return eClass;
     }
-    const eClass = Ecore.EClass.create({
+    const eClass = ECore.EClass.create({
         name: nodeType
     });
     constructor[ECLASS_SYMBOL] = eClass;
@@ -101,7 +101,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
                 continue;
             }
             if (property.child) {
-                const eRef = Ecore.EReference.create({
+                const eRef = ECore.EReference.create({
                     name: prop,
                     eType: THE_NODE_ECLASS,
                     containment: true
@@ -111,7 +111,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
                 }
                 eClass.get("eStructuralFeatures").add(eRef);
             } else {
-                const eAttr = Ecore.EAttribute.create({
+                const eAttr = ECore.EAttribute.create({
                     name: prop
                 });
                 if(property.type) {
@@ -166,7 +166,7 @@ function samePropertiesAs(propertyNames: string[], eClass: EClass) {
  */
 export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObject): EObject | any {
     if(Array.isArray(obj)) {
-        const eList = new Ecore.EList(owner!, feature!);
+        const eList = new ECore.EList(owner!, feature!);
         obj.forEach(o => {
             eList.add(toEObject(o));
         });
@@ -260,7 +260,7 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
     if(!obj) {
         return undefined;
     }
-    if(Object.getPrototypeOf(obj) == Ecore.EList.prototype) {
+    if(Object.getPrototypeOf(obj) == ECore.EList.prototype) {
         return (obj as EList).map(o => fromEObject(o, parent));
     }
     const eClass = obj.eClass;
@@ -550,7 +550,7 @@ class ReferencesTracker {
                 throw new Error(`Unexpected URI: ${uri}. It was expected to have a single # symbol`);
             }
             const packageURI = parts[0];
-            const ePackage = Ecore.EPackage.Registry.getEPackage(packageURI);
+            const ePackage = ECore.EPackage.Registry.getEPackage(packageURI);
             if (ePackage == null) {
                 throw new Error(`Could not find EPackage with URI ${packageURI}`)
             }
@@ -611,11 +611,11 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
             } else if (className == "BigInteger") {
                 return EBigInteger;
             } else if (className == "boolean") {
-                return Ecore.EBoolean;
+                return ECore.EBoolean;
             } else if (className == "int") {
-                return Ecore.EInt;
+                return ECore.EInt;
             } else if (className == "string") {
-                return Ecore.EString;
+                return ECore.EString;
             }
         }
         return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == className);
@@ -722,7 +722,7 @@ function importJsonObject(
                 undefined
         });
     } else if (eClass == THE_ENUM_ECLASS) {
-        const theEnum = Ecore.EEnum.create({
+        const theEnum = ECore.EEnum.create({
             name: obj.name
         });
         obj.eLiterals?.forEach((name: string | any, index: number) => {

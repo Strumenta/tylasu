@@ -10,7 +10,7 @@ import {
     toEObject, loadEPackages, loadEObject, generateASTModel, Result
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
-import * as Ecore from "ecore/dist/ecore";
+import * as ECore from "ecore/dist/ecore";
 import * as fs from "fs";
 import {KOLASU_URI_V1} from "../src/interop/kolasu-v1-metamodel";
 import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../src/interop/kolasu-v1-metamodel";
@@ -141,7 +141,7 @@ describe("Import/export", function () {
         });
     });
     it("importing using API", function () {
-        const resourceSet = Ecore.ResourceSet.create();
+        const resourceSet = ECore.ResourceSet.create();
         const resource = resourceSet.create({ uri: 'file:data/sas.metamodel.json' });
         const mmBuffer = fs.readFileSync("tests/data/sas.metamodel.json");
         const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
@@ -162,7 +162,7 @@ describe("Import/export", function () {
     });
     it("importing using raw Ecore.js",
         function () {
-            const resourceSet = Ecore.ResourceSet.create();
+            const resourceSet = ECore.ResourceSet.create();
             const resource = resourceSet.create({ uri: 'file:data/simplemm.json' });
             const buffer = fs.readFileSync("tests/data/simplemm.json");
             resource.load(buffer.toString(), (r, e) => {
@@ -172,7 +172,7 @@ describe("Import/export", function () {
                 if(!ePackage.get("nsURI")) {
                     ePackage.set("nsURI", "");
                 }
-                Ecore.EPackage.Registry.register(ePackage);
+                ECore.EPackage.Registry.register(ePackage);
                 const pkg = generateASTClasses(ePackage);
                 expect(Object.keys(pkg.nodes).length).to.equal(5);
                 expect(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).not.to.be.undefined;
@@ -205,7 +205,7 @@ export class StringLiteral extends Expression {
                 expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;
 
                 const buffer = fs.readFileSync("tests/data/simplem.json");
-                Ecore.JSON.parse(r, buffer.toString());
+                ECore.JSON.parse(r, buffer.toString());
                 const cu = r.get("contents").at(1);
                 expect(cu).not.to.be.null;
                 expect(cu).not.to.be.undefined;

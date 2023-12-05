@@ -4,6 +4,7 @@ import {Point, START_POINT, Node, Position} from "../../src";
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ng";
 import {SetStmtContext, SimpleLangParser} from "../parser/SimpleLangParser";
+import {positionOfParseTree} from "../../src/parsing";
 
 class MySetStatement extends Node {}
 
@@ -52,7 +53,7 @@ describe('Position', function() {
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;
-            const pos = Position.ofParseTree(setStmt);
+            const pos = positionOfParseTree(setStmt);
             expect(pos).to.deep.equal(new Position(new Point(1, 0), new Point(1, 13)));
         });
 

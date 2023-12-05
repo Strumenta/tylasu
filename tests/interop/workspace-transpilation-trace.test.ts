@@ -9,7 +9,6 @@ import {
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
 } from "../../src/interop/transpilation-package";
-import {EList} from "ecore";
 
 describe('Workspace Transpilation traces', function() {
     it("Can load workspace transpilation trace produced by Kolasu as EObject",
@@ -27,7 +26,7 @@ describe('Workspace Transpilation traces', function() {
 
             expect(workspaceTrace.eClass.get("name")).to.eql("WorkspaceTranspilationTrace");
 
-            const originalFiles = workspaceTrace.get("originalFiles") as EList;
+            const originalFiles = workspaceTrace.get("originalFiles") as Ecore.EList;
             expect(originalFiles.size()).to.eql(6);
 
             expect(originalFiles.at(0).get("path")).to.eql("qddssrc/DEORD.dds");

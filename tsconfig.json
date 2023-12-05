@@ -1,13 +1,14 @@
 {
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"moduleResolution": "Node",
 		"declaration": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
 		"sourceMap": true,
 		"strict": false,
 		"strictNullChecks": true,
 		"outDir": "./dist",
-		"rootDir": "src",
+		"rootDirs": ["src"],
 		"declarationDir": "dist/types"
 	},
 	"include": ["src/index.ts", "src/parsing/index.ts", "src/interop", "src/cli.ts"],

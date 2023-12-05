@@ -109,7 +109,7 @@
 		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
-		"test": "yarn run build-test-parser && jest",
+		"test": "yarn run build-test-parser && node --experimental-vm-modules node_modules/jest/bin/jest.js",
 		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn run extract-docs && yarn pack",
 		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
 	},

@@ -1,7 +1,7 @@
 import {Node} from "..";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ng";
 import {TylasuParser, TylasuToken} from "../parsing";
-import {Resource} from "ecore";
+import * as ECore from "ecore";
 import {THE_AST_EPACKAGE} from "./starlasu-v2-metamodel";
 import {EcoreMetamodelSupport} from "./ecore";
 
@@ -17,7 +17,7 @@ export abstract class EcoreEnabledParser<
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
      */
-    generateMetamodel(resource: Resource, includingKolasuMetamodel = true): void {
+    generateMetamodel(resource: ECore.Resource, includingKolasuMetamodel = true): void {
         if (includingKolasuMetamodel) {
             resource.get("contents").add(THE_AST_EPACKAGE);
         }
@@ -27,5 +27,5 @@ export abstract class EcoreEnabledParser<
     /**
      * Implement this method to tell the parser how to generate the metamodel. See [MetamodelBuilder].
      */
-    protected abstract doGenerateMetamodel(resource: Resource): void;
+    protected abstract doGenerateMetamodel(resource: ECore.Resource): void;
 }

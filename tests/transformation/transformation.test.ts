@@ -12,7 +12,6 @@ import {
     PartiallyInitializedNode, pos, Property,
     transform
 } from "../../src";
-import exp = require("constants");
 
 @ASTNode("", "A")
 class A extends Node {
