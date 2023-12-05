@@ -1,4 +1,5 @@
 .idea/
+/coverage/
 dist/
 gen/
 node_modules/
