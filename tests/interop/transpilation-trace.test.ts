@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {findByPosition, Point, pos, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import { SourceNode, TargetNode, TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
-import * as Ecore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {ensureEcoreContainsAllDataTypes} from "../../src/interop/ecore-patching";
 
 ensureEcoreContainsAllDataTypes();
@@ -12,11 +12,11 @@ describe('Transpilation traces', function() {
     // This test verifies that the EReference class has been loaded correctly.
     // Under certain circumstances this was not the case
     it("Can instantiate EReference correctly", function () {
-            const A_ECLASS = Ecore.EClass.create({
+            const A_ECLASS = ECore.EClass.create({
                     name: "MyClass",
                     abstract: true,
             });
-            const ef = Ecore.EReference.create({
+            const ef = ECore.EReference.create({
                     name: "sourceAST",
                     containment: true,
                     eType: A_ECLASS
@@ -24,7 +24,7 @@ describe('Transpilation traces', function() {
             expect(ef.get("eType").get("name")).to.eql("MyClass")
     })
         it("Can load Java metamodel correctly", function () {
-                const resourceSet = Ecore.ResourceSet.create();
+                const resourceSet = ECore.ResourceSet.create();
                 const resource = resourceSet.create({uri: 'file:/tests/data/playground/java-metamodels.json'})
                 const data = JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString());
                 resource.parse(data);
@@ -36,7 +36,7 @@ describe('Transpilation traces', function() {
         })
         it("Can load eType for all references in Java metamodel",
             function () {
-                    const resourceSet = Ecore.ResourceSet.create();
+                    const resourceSet = ECore.ResourceSet.create();
                     const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
                     const javaPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/java-metamodels.json").toString()),
                         rpgMetamodelsResource);
@@ -56,7 +56,7 @@ describe('Transpilation traces', function() {
         );
     it("Can load transpilation trace produced by Kolasu as EObject",
         function () {
-            const resourceSet = Ecore.ResourceSet.create();
+            const resourceSet = ECore.ResourceSet.create();
             const rpgMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg-metamodels.json'})
             const rpgPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg-metamodels.json").toString()),
                  rpgMetamodelsResource);

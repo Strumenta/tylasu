@@ -1,7 +1,7 @@
 import {ParsingResult} from "../parsing/parsing";
 import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
 import {Node, NodeDefinition} from "../model/model";
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {

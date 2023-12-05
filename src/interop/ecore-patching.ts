@@ -1,4 +1,4 @@
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 
 // Given the Ecore implementation we have from the ecore.js is not 100% complete and it is unmaintained
 // we apply corrections here

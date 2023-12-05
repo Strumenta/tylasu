@@ -4,7 +4,7 @@ import {Point, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import { TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
-import * as Ecore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
@@ -13,9 +13,9 @@ import {
 describe('Workspace Transpilation traces', function() {
     it("Can load workspace transpilation trace produced by Kolasu as EObject",
         function () {
-            const resourceSet = Ecore.ResourceSet.create();
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const resourceSet = ECore.ResourceSet.create();
+            ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const rpg2pyMetamodelsResource = resourceSet.create({uri: 'file:/tests/data/playground/rpg2py-metamodels.json'})
             const rpg2pyPackages = loadEPackages(JSON.parse(fs.readFileSync("tests/data/playground/rpg/rpg2py-metamodels.json").toString()),
                 rpg2pyMetamodelsResource);
@@ -26,15 +26,15 @@ describe('Workspace Transpilation traces', function() {
 
             expect(workspaceTrace.eClass.get("name")).to.eql("WorkspaceTranspilationTrace");
 
-            const originalFiles = workspaceTrace.get("originalFiles") as Ecore.EList;
+            const originalFiles = workspaceTrace.get("originalFiles") as ECore.EList;
             expect(originalFiles.size()).to.eql(6);
 
             expect(originalFiles.at(0).get("path")).to.eql("qddssrc/DEORD.dds");
         });
     it("Can load workspace transpilation trace produced by Kolasu as WorkspaceTranspilationTrace instance",
         function () {
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
                 name: "rpg2py",
                 uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
@@ -87,8 +87,8 @@ describe('Workspace Transpilation traces', function() {
         });
         it("Can load workspace transpilation trace produced by Kolasu with ReferenceByName instances",
             function () {
-                    Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-                    Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+                    ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+                    ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
                     const loader = new TranspilationTraceLoader({
                             name: "rpg2py",
                             uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",

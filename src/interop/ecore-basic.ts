@@ -1,4 +1,4 @@
-import * as ECore from "ecore";
+import ECore from "ecore/dist/ecore";
 
 export function addLiteral(eenum: ECore.EEnum, name: string, value: number): ECore.EEnumLiteral {
     const literal = ECore.EEnumLiteral.create({

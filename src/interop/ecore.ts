@@ -8,8 +8,7 @@ import {
     registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
-import * as ECore from "ecore/dist/ecore";
-import {EClass, EClassifier, EList, EObject, EPackage, EReference, Resource} from "ecore";
+import ECore from "ecore/dist/ecore";
 import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {addLiteral, getEPackage} from "./ecore-basic";
@@ -38,7 +37,7 @@ export const SYMBOL_NODE_NAME = Symbol("name");
 
 const THE_ECORE_URI = "http://www.eclipse.org/emf/2002/Ecore";
 const THE_ECORE_EPACKAGE = ECore.EPackage.Registry.getEPackage(THE_ECORE_URI);
-const THE_ENUM_ECLASS = THE_ECORE_EPACKAGE.get("eClassifiers").find((c: EClassifier) => c.get("name") == "EEnum");
+const THE_ENUM_ECLASS = THE_ECORE_EPACKAGE.get("eClassifiers").find((c: ECore.EClassifier) => c.get("name") == "EEnum");
 
 function registerEPackage(packageName: string, args: { nsPrefix?: string; nsURI?: string }) {
     const packageDef = NODE_TYPES[packageName];
@@ -128,7 +127,9 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     return eClass;
 }
 
-export function registerECoreModel(packageName: string, args: { nsPrefix?: string, nsURI?: string } = {}): EPackage {
+export function registerECoreModel(
+    packageName: string, args: { nsPrefix?: string, nsURI?: string } = {}
+): ECore.EPackage {
     const {packageDef, ePackage} = registerEPackage(packageName, {nsURI: "", ...args});
     for(const nodeType in packageDef.nodes) {
         registerEClass(nodeType, packageDef, ePackage);
@@ -136,7 +137,7 @@ export function registerECoreModel(packageName: string, args: { nsPrefix?: strin
     return ePackage;
 }
 
-export function ensureECoreModel(packageName = ""): EPackage {
+export function ensureECoreModel(packageName = ""): ECore.EPackage {
     ensurePackage(packageName);
     if(!NODE_TYPES[packageName][EPACKAGE_SYMBOL]) {
         return registerECoreModel(packageName);
@@ -145,7 +146,7 @@ export function ensureECoreModel(packageName = ""): EPackage {
     }
 }
 
-function samePropertiesAs(propertyNames: string[], eClass: EClass) {
+function samePropertiesAs(propertyNames: string[], eClass: ECore.EClass) {
     const attributes = eClass.get("eAllStructuralFeatures");
     if(propertyNames.length !== attributes.length) {
         return false;
@@ -164,7 +165,7 @@ function samePropertiesAs(propertyNames: string[], eClass: EClass) {
  * @param owner the EObject which will own the collection (when obj is an array)
  * @param feature the feature that will own the collection (when obj is an array)
  */
-export function toEObject(obj: ASTElement | any, owner?: EObject, feature?: EObject): EObject | any {
+export function toEObject(obj: ASTElement | any, owner?: ECore.EObject, feature?: ECore.EObject): ECore.EObject | any {
     if(Array.isArray(obj)) {
         const eList = new ECore.EList(owner!, feature!);
         obj.forEach(o => {
@@ -256,12 +257,12 @@ function decodeEnumLiteral(eType, literalName: string | number | unknown) {
     }
 }
 
-export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | undefined {
+export function fromEObject(obj: ECore.EObject | any, parent?: Node): ASTElement | undefined {
     if(!obj) {
         return undefined;
     }
     if(Object.getPrototypeOf(obj) == ECore.EList.prototype) {
-        return (obj as EList).map(o => fromEObject(o, parent));
+        return (obj as ECore.EList).map(o => fromEObject(o, parent));
     }
     const eClass = obj.eClass;
     if(!eClass) {
@@ -296,7 +297,7 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
     if(isBuiltInClass(eClass, THE_RESULT_ECLASS)) {
         return {
             root: fromEObject(obj.get("root")) as Node,
-            issues: (obj.get("issues") as EList)?.map(fromEObject) as Issue[] || []
+            issues: (obj.get("issues") as ECore.EList)?.map(fromEObject) as Issue[] || []
         };
     }
     if(isBuiltInClass(eClass, THE_NODE_ORIGIN_ECLASS)) {
@@ -305,7 +306,7 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
     if(isBuiltInClass(eClass, THE_TEXT_FILE_DESTINATION_ECLASS)) {
         return fromEObject(obj.get("position")) as Position;
     }
-    const ePackage = eClass.eContainer as EPackage;
+    const ePackage = eClass.eContainer as ECore.EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
         const node = new constructor();
@@ -339,15 +340,15 @@ export function fromEObject(obj: EObject | any, parent?: Node): ASTElement | und
 }
 
 export class EObjectGenerator {
-    toEObject(node: Node): EObject {
+    toEObject(node: Node): ECore.EObject {
         return toEObject(node);
     }
-    fromEObject(eObject: EObject): ASTElement | undefined {
+    fromEObject(eObject: ECore.EObject): ASTElement | undefined {
         return fromEObject(eObject);
     }
 }
 
-Node.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
+Node.prototype[TO_EOBJECT_SYMBOL] = function(): ECore.EObject {
     const def = ensureNodeDefinition(this);
     const ePackage = ensureECoreModel(def.package);
     const eClass = ePackage.get("eClassifiers").find(c => c.get("name") == def.name);
@@ -383,7 +384,7 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
     return eObject;
 }
 
-Position.prototype[TO_EOBJECT_SYMBOL] = function(): EObject {
+Position.prototype[TO_EOBJECT_SYMBOL] = function(): ECore.EObject {
     const pos = THE_POSITION_ECLASS.create();
     pos.set("start", THE_POINT_ECLASS.create({
         line: this.start.line, column: this.start.column
@@ -409,7 +410,7 @@ function defineProperty(classDef, name) {
     });
 }
 
-function isBuiltInClass(eClass: EClass, refClass: EClass): boolean {
+function isBuiltInClass(eClass: ECore.EClass, refClass: ECore.EClass): boolean {
     const nsURI = eClass?.eContainer?.get("nsURI");
     return (nsURI == KOLASU_URI_V1 || nsURI == STARLASU_URI_V2) && eClass.get("name") == refClass.get("name");
 }
@@ -422,7 +423,7 @@ function generateASTClass(eClass, pkg: PackageDescription) {
     if (pkg.nodes[className]) {
         return pkg.nodes[className];
     }
-    const supertypes: EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
+    const supertypes: ECore.EClass[] = eClass.get("eSuperTypes").filter(t => t.isTypeOf("EClass"));
     const superclasses = supertypes.filter(t => !t.get("interface"));
     let nodeSuperclass;
     if(superclasses.length > 1) {
@@ -466,11 +467,11 @@ export class ${className} extends ${superClassName} {`;
     }
 }
 
-export function generateASTModel(model: EPackage[]): PackageDescription[] {
+export function generateASTModel(model: ECore.EPackage[]): PackageDescription[] {
     return model.map(generateASTClasses);
 }
 
-export function generateASTClasses(model: EPackage): PackageDescription {
+export function generateASTClasses(model: ECore.EPackage): PackageDescription {
     const packageName = model.get("name");
     const pkg = ensurePackage(packageName);
     model.get("eClassifiers").filter(c => c.isTypeOf("EClass") && !c.get("interface")).forEach(
@@ -479,7 +480,7 @@ export function generateASTClasses(model: EPackage): PackageDescription {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function loadEPackages(data: any, resource: Resource): EPackage[] {
+export function loadEPackages(data: any, resource: ECore.Resource): ECore.EPackage[] {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
@@ -498,7 +499,7 @@ export function loadEPackages(data: any, resource: Resource): EPackage[] {
 }
 
 interface PostponedReference {
-    eObject: EObject, feature: any, refValue: any
+    eObject: ECore.EObject, feature: any, refValue: any
 }
 
 /**
@@ -507,10 +508,10 @@ interface PostponedReference {
 class ReferencesTracker {
     private postponedReferences : PostponedReference[] = [];
 
-    constructor(public resource: Resource) {
+    constructor(public resource: ECore.Resource) {
     }
 
-    trackReference(eObject: EObject, feature: any, refValue: any) : void {
+    trackReference(eObject: ECore.EObject, feature: any, refValue: any) : void {
         this.postponedReferences.push({eObject, feature, refValue});
     }
 
@@ -584,7 +585,7 @@ class ReferencesTracker {
  * @param resource where to look for to resolve references to types.
  * @param eClass the class of the object, if not specified in the `data`.
  */
-export function loadEObject(data: string | any, resource: Resource, eClass?: EClass): EObject {
+export function loadEObject(data: string | any, resource: ECore.Resource, eClass?: ECore.EClass): ECore.EObject {
     if(typeof data === "string") {
         data = JSON.parse(data);
     }
@@ -595,11 +596,11 @@ export function loadEObject(data: string | any, resource: Resource, eClass?: ECl
     return result;
 }
 
-export function findEClass(name: string, resource: Resource): EClass | undefined {
+export function findEClass(name: string, resource: ECore.Resource): ECore.EClass | undefined {
     const index = name.lastIndexOf("#");
     if (index > 0) {
         const packageName = name.substring(0, index);
-        const ePackage = EPackage.Registry.getEPackage(packageName);
+        const ePackage = ECore.EPackage.Registry.getEPackage(packageName);
         if(!ePackage) {
             throw new Error("Package not found: " + packageName+ " while loading for class " + name);
         }
@@ -618,7 +619,7 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
                 return ECore.EString;
             }
         }
-        return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == className);
+        return ePackage.get("eClassifiers").find((c: ECore.EClassifier) => c.get("name") == className);
     } else {
         const parts = name.substring(1).split("/").filter(s => s.length > 0);
         const packages = resource.eContents().filter(value => value.isTypeOf("EPackage"));
@@ -627,16 +628,16 @@ export function findEClass(name: string, resource: Resource): EClass | undefined
             if (ePackage == null) {
                 throw new Error("Package not found while looking for EClass " + name)
             }
-            return ePackage.get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[1]);
+            return ePackage.get("eClassifiers").find((c: ECore.EClassifier) => c.get("name") == parts[1]);
         } else if(packages.length == 1) {
-            return packages[0].get("eClassifiers").find((c: EClassifier) => c.get("name") == parts[0]);
+            return packages[0].get("eClassifiers").find((c: ECore.EClassifier) => c.get("name") == parts[0]);
         } else {
             throw new Error("Unsupported class name: " + name);
         }
     }
 }
 
-function ensureEClass(obj: any, eClass: EClass | undefined, resource: Resource): EClass {
+function ensureEClass(obj: any, eClass: ECore.EClass | undefined, resource: ECore.Resource): ECore.EClass {
     if (obj.eClass) {
         eClass = findEClass(obj.eClass, resource);
         if(!eClass) {
@@ -669,12 +670,14 @@ function ensureEClass(obj: any, eClass: EClass | undefined, resource: Resource):
     return eClass;
 }
 
-function featureError(message: string, key: string, eClass: EObject, resource: Resource) {
+function featureError(message: string, key: string, eClass: ECore.EObject, resource: ECore.Resource) {
     return new Error(message + ": " + key + " of " + eClass.fragment() + " in " + resource.eURI());
 }
 
-function setChild(feature, obj: any, key: string, eObject: EObject, resource: Resource, eType, strict: boolean,
-                  referencesTracker: ReferencesTracker, eClass: EObject) {
+function setChild(
+    feature, obj: any, key: string, eObject: ECore.EObject, resource: ECore.Resource, eType, strict: boolean,
+      referencesTracker: ReferencesTracker, eClass: ECore.EObject
+) {
     if (feature.get("many")) {
         if (obj[key]) {
             obj[key].forEach((v: any) => {
@@ -709,8 +712,8 @@ function setChild(feature, obj: any, key: string, eObject: EObject, resource: Re
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function importJsonObject(
-    obj: any, resource: Resource, eClass?: EClass,
-    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): EObject {
+    obj: any, resource: ECore.Resource, eClass?: ECore.EClass,
+    strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): ECore.EObject {
     eClass = ensureEClass(obj, eClass, resource);
     if (eClass == THE_ISSUE_ECLASS) {
         return eClass.create({
@@ -759,7 +762,7 @@ function importJsonObject(
                     }
                     if (feature.get("containment") === true) {
                         setChild(feature, obj, key, eObject, resource, eType, strict, referencesTracker, eClass);
-                    } else if (feature.isKindOf(EReference)) {
+                    } else if (feature.isKindOf(ECore.EReference)) {
                         const refValue = obj[key];
                         referencesTracker.trackReference(eObject, feature, refValue);
                     } else {
@@ -776,13 +779,13 @@ function importJsonObject(
     return eObject;
 }
 
-export function registerPackages(resource: Resource): EPackage[] {
+export function registerPackages(resource: ECore.Resource): ECore.EPackage[] {
     return resource.get("contents")
-        .filter((p: EObject) =>
+        .filter((p: ECore.EObject) =>
             p.isKindOf("EPackage") &&
             p.get("name") != "javax.xml.datatype")
-        .map((p: EPackage) => {
-            EPackage.Registry.register(p);
+        .map((p: ECore.EPackage) => {
+            ECore.EPackage.Registry.register(p);
             return p;
         });
 }
@@ -791,6 +794,6 @@ export interface EcoreMetamodelSupport {
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
      */
-    generateMetamodel(resource: Resource, includingKolasuMetamodel: boolean): void;
+    generateMetamodel(resource: ECore.Resource, includingKolasuMetamodel: boolean): void;
 }
 

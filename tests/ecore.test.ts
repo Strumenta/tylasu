@@ -10,7 +10,7 @@ import {
     toEObject, loadEPackages, loadEObject, generateASTModel, Result
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import * as fs from "fs";
 import {KOLASU_URI_V1} from "../src/interop/kolasu-v1-metamodel";
 import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../src/interop/kolasu-v1-metamodel";

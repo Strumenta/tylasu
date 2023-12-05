@@ -2,7 +2,7 @@
 
 import {command, run, restPositionals} from 'cmd-ts';
 import { File } from 'cmd-ts/dist/cjs/batteries/fs';
-import * as Ecore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import * as fs from "fs";
 import {generateASTClasses, SYMBOL_CLASS_DEFINITION} from "./interop/ecore";
 

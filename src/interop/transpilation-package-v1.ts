@@ -1,4 +1,4 @@
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {getEPackage} from "./ecore-basic";
 import {THE_ISSUE_ECLASS, THE_RESULT_ECLASS} from "./starlasu-v2-metamodel";
 

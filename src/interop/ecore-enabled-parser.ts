@@ -1,7 +1,7 @@
 import {Node} from "..";
 import {Parser as ANTLRParser, ParserRuleContext} from "antlr4ng";
 import {TylasuParser, TylasuToken} from "../parsing";
-import * as ECore from "ecore";
+import ECore from "ecore/dist/ecore";
 import {THE_AST_EPACKAGE} from "./starlasu-v2-metamodel";
 import {EcoreMetamodelSupport} from "./ecore";
 

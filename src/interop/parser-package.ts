@@ -1,4 +1,4 @@
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {
     getEPackage,
 } from "./ecore-basic";

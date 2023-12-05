@@ -1,4 +1,4 @@
-import * as ECore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {IssueSeverity, IssueType} from "../validation";
 import {addLiteral, getEPackage} from "./ecore-basic";
 

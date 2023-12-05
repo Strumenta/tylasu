@@ -6,7 +6,7 @@ import {ParserTraceLoader, saveForStrumentaPlayground} from "../src/interop/stru
 import {NodeSubclass} from "./nodes";
 import {CharStream, CommonToken, Lexer, TerminalNode, Token, TokenStream} from "antlr4ng";
 import * as fs from "fs";
-import * as Ecore from "ecore/dist/ecore";
+import ECore from "ecore/dist/ecore";
 import {ANTLRTokenFactory, ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
 
@@ -24,7 +24,7 @@ describe('Strumenta Playground', function() {
             "some code", new NodeSubclass("root").withParseTreeNode(fakePT),
             [Issue.semantic("Something's wrong")]);
         const testParser = new TestParser(new ANTLRTokenFactory());
-        const resourceSet = Ecore.ResourceSet.create();
+        const resourceSet = ECore.ResourceSet.create();
         const mmResource = resourceSet.create({ uri: "some.package" });
         testParser.generateMetamodel(mmResource, false);
         mmResource.save((metamodel, e) => {
