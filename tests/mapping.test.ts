@@ -1,15 +1,13 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericNode, Mapped, Node} from "../src";
+import {ASTTransformer, Child, GenericErrorNode, GenericNode, Mapped, Node, Position, PropertyRef} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {ParseTreeOrigin} from "../src/parsing/parse-tree";
-import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer, toAST} from "../src/mapping";
-import {Position} from "../src/model/position";
+import {ParseTreeOrigin} from "../src/parsing";
+import {ASTNodeFor, GenericParseTreeNode, ParseTreeToASTTransformer} from "../src/mapping";
 import {assertASTsAreEqual} from "../src/testing/testing";
-import {GenericErrorNode} from "../src/model/errors";
 
 @ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
@@ -60,8 +58,8 @@ class SetStatement extends Node {
 describe('Mapping of Parse Trees to ASTs', function() {
     it("Mapping of null/undefined",
         function () {
-            expect(toAST(undefined)).to.be.undefined;
-            expect(toAST(null)).to.be.undefined;
+            expect(new ASTTransformer().transform(undefined)).to.be.undefined;
+            expect(new ASTTransformer().transform(null)).to.be.undefined;
         });
     it("Generic node",
         function () {
@@ -169,12 +167,10 @@ describe('ParseTreeToASTTransformer', function () {
 const configure = function(transformer: ASTTransformer) : void {
 
     transformer.registerNodeFactory(CompilationUnitContext, source => new CU())
-        .withChild(
-            (source: CompilationUnitContext) => source.statement(),
-            (target: CU, child?: Node[]) => target.statements = child!,
-            "statements",
-            CU
-        );
+        .withChild({
+            source: PropertyRef.get("statement"),
+            target: PropertyRef.get("statements")
+        });
 
     transformer.registerNodeFactory<DisplayStmtContext, DisplayIntStatement>(
         DisplayStmtContext,
@@ -183,8 +179,7 @@ const configure = function(transformer: ASTTransformer) : void {
                 // We throw a custom error so that we can check that it's recorded in the AST
                 throw new Error("Parse error");
             }
-            const displayIntStatement = new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.text));
-            return displayIntStatement;
+            return new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.text));
         });
 
     transformer.registerNodeFactory<SetStmtContext, SetStatement>(

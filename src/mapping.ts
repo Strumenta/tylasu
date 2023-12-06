@@ -11,6 +11,7 @@ import {ParseTreeOrigin} from "./parsing";
  *
  * Note: this will eventually be integrated with Kolasu-style transformers.
  * @param type the type of the source node to map to this node.
+ * @deprecated please use StarLasu AST transformers.
  */
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
@@ -25,6 +26,9 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
 // toAST //
 //-------//
 
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
 export function toAST(tree?: ParseTree | null, parent?: Node): Node | undefined {
     if (tree == null)
         tree = undefined;

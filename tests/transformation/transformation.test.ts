@@ -12,7 +12,6 @@ import {
     PartiallyInitializedNode, pos, Property,
     transform
 } from "../../src";
-import exp = require("constants");
 
 @ASTNode("", "A")
 class A extends Node {
@@ -155,12 +154,7 @@ describe("Transformers", function () {
 
         const transformer = new ASTTransformer(undefined, true);
         transformer.registerIdentityTransformation(A)
-            .withChild(
-                (source: A) => source.child,
-                (target: A, child?: Node) => target.child = child!,
-                "child",
-                A
-            );
+            .withChild({ source: "child", target: "child" });
         transformer.registerNodeFactory(C,(source) => new A());
         const transformedTree = transformer.transform(tree);
 
