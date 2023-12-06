@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericErrorNode, GenericNode, Mapped, Node, Position, PropertyRef} from "../src";
+import {ASTTransformer, Child, GenericErrorNode, GenericNode, Mapped, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -166,11 +166,8 @@ describe('ParseTreeToASTTransformer', function () {
 
 const configure = function(transformer: ASTTransformer) : void {
 
-    transformer.registerNodeFactory(CompilationUnitContext, source => new CU())
-        .withChild({
-            source: PropertyRef.get("statement"),
-            target: PropertyRef.get("statements")
-        });
+    transformer.registerNodeFactory(CompilationUnitContext, () => new CU())
+        .withChild({ source: "statement", target: "statements" });
 
     transformer.registerNodeFactory<DisplayStmtContext, DisplayIntStatement>(
         DisplayStmtContext,

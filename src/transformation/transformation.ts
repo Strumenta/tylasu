@@ -18,7 +18,12 @@ export class PropertyRef<Obj, Value> {
         public readonly get: (o: Obj) => Value | undefined,
         public readonly set: (o: Obj, v: Value) => void) {}
 
-    static get<Obj, Value>(name: string): PropertyRef<Obj, Value> {
+    static get<Obj, Value>(name: string | symbol | number): PropertyRef<Obj, Value> {
+        if (typeof name == "symbol") {
+            name = name.toString();
+        } else if (typeof name == "number") {
+            name = name + "";
+        }
         return new PropertyRef<Obj, Value>(
             name,
             obj => obj[name],
@@ -28,8 +33,8 @@ export class PropertyRef<Obj, Value> {
 }
 
 export type ChildDef<Source, Target, Child> = {
-    source: string | PropertyRef<Source, any> | ((s: Source) => any | undefined),
-    target?: string | PropertyRef<Target, Child> | ((t: Target, c?: Child) => void),
+    source: keyof Source | PropertyRef<Source, any> | ((s: Source) => any | undefined),
+    target?: keyof Target | PropertyRef<Target, Child> | ((t: Target, c?: Child) => void),
     name?: string,
     scopedToType?: any
 };
@@ -77,8 +82,8 @@ export class NodeFactory<Source, Output extends Node> {
             }
         }
         let source = child.source;
-        if (typeof source == "string") {
-            source = PropertyRef.get(source);
+        if (typeof source == "string" || typeof source ==  "symbol" || typeof source ==  "number") {
+            source = PropertyRef.get(source as any);
         }
         if (source instanceof PropertyRef) {
             source = source.get;
@@ -89,7 +94,7 @@ export class NodeFactory<Source, Output extends Node> {
             // given we have no setter we MUST set the children at construction
             this.childrenSetAtConstruction = true;
         }
-        if (typeof target == "string") {
+        if (typeof target == "string" || typeof target ==  "symbol" || typeof target ==  "number") {
             target = PropertyRef.get(target);
         }
         if (target instanceof PropertyRef) {
@@ -345,7 +350,7 @@ export class ASTTransformer {
     }
 
     public registerNodeFactory<S, T extends Node>(
-        nodeClass: any,
+        nodeClass: new(...args: any) => S,
         factory: (type: S, transformer: ASTTransformer, factory: NodeFactory<S, T>) => T | undefined
     ) : NodeFactory<S, T> {
 
@@ -363,7 +368,7 @@ export class ASTTransformer {
         return nodeFactory;
     }
 
-    public registerIdentityTransformation<T extends Node>(nodeClass: any) : NodeFactory<T, T> {
+    public registerIdentityTransformation<T extends Node>(nodeClass: new(...args: any[]) => T) : NodeFactory<T, T> {
         return this.registerNodeFactory(nodeClass, (node: T) => node);
     }
 }
