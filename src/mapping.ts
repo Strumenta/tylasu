@@ -8,6 +8,7 @@ import {ParseTreeOrigin} from "./parsing";
  *
  * Note: this will eventually be integrated with Kolasu-style transformers.
  * @param type the type of the source node to map to this node.
+ * @deprecated please use StarLasu AST transformers.
  */
 export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
@@ -17,6 +18,32 @@ export function ASTNodeFor<T extends ParseTree>(type: new (...args: any[]) => T)
         registerNodeFactory(type, () => new target());
     };
 }
+
+//-------//
+// toAST //
+//-------//
+
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
+export function toAST(tree?: ParseTree | null, parent?: Node): Node | undefined {
+    if (tree == null)
+        tree = undefined;
+
+    const node = transform(tree, parent, toAST);
+    if(node && !node.origin) { //Give a chance to custom factories to set a different node
+        node.origin = new ParseTreeOrigin(tree);
+    }
+    return node;
+}
+
+export class GenericParseTreeNode extends GenericNode {
+    @Child()
+    @Mapped("children")
+    childNodes: GenericParseTreeNode[] = [];
+}
+
+registerNodeFactory(ParserRuleContext, () => new GenericParseTreeNode());
 
 /**
  * Implements a transformation from an ANTLR parse tree (the output of the parser) to an AST (a higher-level

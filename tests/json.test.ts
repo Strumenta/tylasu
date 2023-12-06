@@ -1,7 +1,7 @@
 import {expect} from "chai";
 
 import {ASTNode, Child, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
-import {JSONGenerator} from "../src/interop/json";
+import {JSONGenerator} from "../src";
 import {Indexer} from "../src/interop/indexing";
 
 describe('JSON generator', function() {

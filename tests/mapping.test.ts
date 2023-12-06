@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericNode, GenericErrorNode, Mapped, Node, Position} from "../src";
+import {ASTTransformer, Child, GenericErrorNode, GenericNode, GenericErrorNode, Mapped, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -169,13 +169,8 @@ describe('ParseTreeToASTTransformer', function () {
 
 const configure = function(transformer: ASTTransformer) : void {
 
-    transformer.registerNodeFactory(CompilationUnitContext, source => new CU())
-        .withChild(
-            (source: CompilationUnitContext) => source.statement(),
-            (target: CU, child?: Node[]) => target.statements = child!,
-            "statements",
-            CU
-        );
+    transformer.registerNodeFactory(CompilationUnitContext, () => new CU())
+        .withChild({ source: "statement", target: "statements" });
 
     transformer.registerNodeFactory<DisplayStmtContext, DisplayIntStatement>(
         DisplayStmtContext,
@@ -184,8 +179,7 @@ const configure = function(transformer: ASTTransformer) : void {
                 // We throw a custom error so that we can check that it's recorded in the AST
                 throw new Error("Parse error");
             }
-            const displayIntStatement = new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.getText()));
-            return displayIntStatement;
+            return new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.getText()));
         });
 
     transformer.registerNodeFactory<SetStmtContext, SetStatement>(
