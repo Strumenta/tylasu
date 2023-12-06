@@ -3,7 +3,7 @@ import {
     ensureNodeDefinition,
     getNodeDefinition,
     Node,
-    NODE_DEFINITION_SYMBOL,
+    NODE_DEFINITION_SYMBOL, NodeDefinition,
     Origin,
     registerNodeDefinition,
     registerNodeProperty
@@ -18,15 +18,32 @@ export class PropertyRef<Obj, Value> {
         public readonly get: (o: Obj) => Value | undefined,
         public readonly set: (o: Obj, v: Value) => void) {}
 
-    static get<Obj, Value>(name: string | symbol | number): PropertyRef<Obj, Value> {
+    static get<Obj, Value>(name: string | symbol | number, nodeDefinition?: NodeDefinition): PropertyRef<Obj, Value> {
         if (typeof name == "symbol") {
             name = name.toString();
         } else if (typeof name == "number") {
             name = name + "";
         }
+
+        if (nodeDefinition) {
+            const property = Object.keys(nodeDefinition.properties).find(p => p == name);
+            if (!property) {
+                throw new Error(`${name} is not a feature of ${nodeDefinition}`)
+            }
+        }
+
+        function getter(obj: Obj): Value {
+            const value = obj[name];
+            if (typeof value === "function") { // ANTLR defines accessor functions in some cases
+                return value.call(obj);
+            } else {
+                return value;
+            }
+        }
+
         return new PropertyRef<Obj, Value>(
             name,
-            obj => obj[name],
+            getter,
             (obj, value) => obj[name] = value
         );
     }
@@ -73,13 +90,10 @@ export class NodeFactory<Source, Output extends Node> {
      * the parent has been instantiated.
      */
     withChild<Target, Child>(child: ChildDef<Source, Target, Child>) : NodeFactory<Source, Output> {
-        let prefix = "";
-        if (child.scopedToType) {
-            const nodeDefinition = getNodeDefinition(child.scopedToType);
-            prefix = nodeDefinition?.name ? nodeDefinition.name : (child.scopedToType?.name || "");
-            if (prefix) {
-                prefix += "#";
-            }
+        const nodeDefinition = child.scopedToType ? getNodeDefinition(child.scopedToType) : undefined;
+        let prefix = nodeDefinition?.name ? nodeDefinition.name : (child.scopedToType?.name || "");
+        if (prefix) {
+            prefix += "#";
         }
         let source = child.source;
         if (typeof source == "string" || typeof source ==  "symbol" || typeof source ==  "number") {
@@ -95,7 +109,7 @@ export class NodeFactory<Source, Output extends Node> {
             this.childrenSetAtConstruction = true;
         }
         if (typeof target == "string" || typeof target ==  "symbol" || typeof target ==  "number") {
-            target = PropertyRef.get(target);
+            target = PropertyRef.get(target, nodeDefinition);
         }
         if (target instanceof PropertyRef) {
             if (name && name != target.name) {
@@ -274,7 +288,8 @@ export class ASTTransformer {
         if (prefix) {
             prefix += "#";
         }
-        Object.keys(node).forEach(propertyName => {
+        const properties = nodeDefinition ? Object.keys(nodeDefinition.properties) : Object.keys(node);
+        properties.forEach(propertyName => {
             const childNodeFactory = factory.getChildNodeFactory(prefix, propertyName);
             if (childNodeFactory) {
                 if (childNodeFactory !== NO_CHILD_NODE) {
@@ -458,6 +473,9 @@ export function Init(target, methodName: string): void {
 // Transformations //
 //-----------------//
 
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
 export function fillChildAST<FROM, TO extends Node>(
     node: TO, property: string, tree: FROM | undefined, transformer: (node: FROM) => TO | undefined): TO[] {
     const propDef: any = ensureNodeDefinition(node).properties[property];

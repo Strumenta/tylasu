@@ -15,6 +15,7 @@ import {
 
 @ASTNode("", "A")
 class A extends Node {
+    @Child()
     child: Node;
     property: number;
     other: string;
@@ -155,7 +156,7 @@ describe("Transformers", function () {
         const transformer = new ASTTransformer(undefined, true);
         transformer.registerIdentityTransformation(A)
             .withChild({ source: "child", target: "child" });
-        transformer.registerNodeFactory(C,(source) => new A());
+        transformer.registerNodeFactory(C, () => new A());
         const transformedTree = transformer.transform(tree);
 
         expect(transformedTree).to.be.instanceof(A);

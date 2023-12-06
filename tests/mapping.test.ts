@@ -13,14 +13,9 @@ class MySetStatement extends Node {
     //Explicit mapping
     @Child()
     id: Node;
-    //Implicit mapping (same name)
-    @Child()
-    EQUAL: Node;
     //No mapping (name doesn't match)
     @Child()
     set: Node;
-    @Child()
-    expression: any;
     //Erroneous mapping
     @Child()
     @Mapped("nonExistent")
@@ -80,21 +75,16 @@ describe('Mapping of Parse Trees to ASTs', function() {
                     source: "ID",
                     target: (s: MySetStatement, id: Node) => s.id = id,
                     name: "id",
-                    scopedToType: SetStmtContext
+                    scopedToType: MySetStatement
                 });
             const mySetStatement = transformer.transform(setStmt) as MySetStatement;
             expect(mySetStatement).to.be.instanceof(MySetStatement);
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;
             const origin = mySetStatement.origin as ParseTreeOrigin;
             expect(origin.parseTree).to.equal(setStmt);
-            expect(mySetStatement.id).not.to.be.undefined;
-            expect(mySetStatement.EQUAL).not.to.be.undefined;
+            expect(mySetStatement.id).to.be.instanceof(GenericNode);
             expect(mySetStatement.set).to.be.undefined;
-            expect(mySetStatement.expression).not.to.be.undefined;
             expect(mySetStatement.nonExistent).to.be.undefined;
-
-            const expression = mySetStatement.expression;
-            expect(expression).to.be.instanceof(GenericNode);
         });
 });
 
