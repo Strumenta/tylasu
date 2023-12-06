@@ -17,7 +17,7 @@ const cmd = command({
             description: "the path to the metamodel file in emfjson format" }),
     },
     handler: args => {
-        const resourceSet = Ecore.ResourceSet.create();
+        const resourceSet = ECore.ResourceSet.create();
         let output = "import {ASTNode, Child, Children, Node, Property} from '@strumenta/tylasu';\n";
         let error = undefined;
         args.metamodel.forEach(mm => {
@@ -34,7 +34,7 @@ const cmd = command({
                     if(!ePackage.get("nsURI")) {
                         ePackage.set("nsURI", "");
                     }
-                    Ecore.EPackage.Registry.register(ePackage);
+                    ECore.EPackage.Registry.register(ePackage);
                     const pkg = generateASTClasses(ePackage);
                     for (const k in pkg.nodes) {
                         output += "\n" + pkg.nodes[k][SYMBOL_CLASS_DEFINITION] + "\n";

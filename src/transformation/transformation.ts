@@ -98,6 +98,9 @@ export class NodeFactory<Source, Output extends Node> {
             target = PropertyRef.get(target);
         }
         if (target instanceof PropertyRef) {
+            if (name && name != target.name) {
+                throw new Error(`Name mismatch: ${name} != ${target.name}`)
+            }
             name = target.name;
             target = target.set;
         }
@@ -226,8 +229,9 @@ export class ASTTransformer {
         if (!source) {
             return [];
         }
-        if (Array.isArray(source))
+        if (Array.isArray(source)) {
             throw Error("Mapping error: received collection when value was expected");
+        }
 
         const factory: NodeFactory<any, any> | undefined = this.getNodeFactory(source);
         let nodes: Node[];

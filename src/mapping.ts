@@ -1,6 +1,6 @@
 import {ParserRuleContext, ParseTree, TerminalNode} from "antlr4ng";
-import {Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
-import {ASTTransformer, registerNodeFactory} from "./transformation/transformation";
+import {Child, Node, NODE_DEFINITION_SYMBOL, Origin, registerNodeDefinition} from "./model/model";
+import {ASTTransformer, GenericNode, Mapped, registerNodeFactory, transform} from "./transformation/transformation";
 import {ParseTreeOrigin} from "./parsing";
 
 /**

@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericErrorNode, GenericNode, GenericErrorNode, Mapped, Node, Position} from "../src";
+import {ASTTransformer, Child, GenericErrorNode, GenericNode, Mapped, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -76,21 +76,25 @@ describe('Mapping of Parse Trees to ASTs', function() {
             const setStmt = cu.statement(0) as SetStmtContext;
             const transformer = new ParseTreeToASTTransformer();
             transformer.registerNodeFactory(SetStmtContext, () => new MySetStatement())
-                .withChild((s: SetStmtContext) => s.ID(), (s: MySetStatement, id: Node) => s.id = id, "id", SetStmtContext);
+                .withChild({
+                    source: "ID",
+                    target: (s: MySetStatement, id: Node) => s.id = id,
+                    name: "id",
+                    scopedToType: SetStmtContext
+                });
             const mySetStatement = transformer.transform(setStmt) as MySetStatement;
-            expect(mySetStatement instanceof MySetStatement).to.be.true;
+            expect(mySetStatement).to.be.instanceof(MySetStatement);
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;
             const origin = mySetStatement.origin as ParseTreeOrigin;
             expect(origin.parseTree).to.equal(setStmt);
-            //TODO transformers not working
-            /* expect(mySetStatement.id).not.to.be.undefined;
+            expect(mySetStatement.id).not.to.be.undefined;
             expect(mySetStatement.EQUAL).not.to.be.undefined;
             expect(mySetStatement.set).to.be.undefined;
             expect(mySetStatement.expression).not.to.be.undefined;
             expect(mySetStatement.nonExistent).to.be.undefined;
 
-            const expression = mySetStatement.expression as GenericNode;
-            expect(expression instanceof GenericNode).to.be.true;*/
+            const expression = mySetStatement.expression;
+            expect(expression).to.be.instanceof(GenericNode);
         });
 });
 

@@ -1,55 +1,31 @@
-/*
- * This file is released under the MIT license.
- * Copyright (c) 2023 Mike Lischke
- *
- * See LICENSE file for more info.
- */
-
 import type { Config } from "jest";
 
 const config: Config = {
-  // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
-
-  // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
     "src/**/*.ts",
+    "!src/cli.ts",
     "!tests/**",
     "!**/node_modules/**",
   ],
-
-  // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
-
-  // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
-
-  // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
     "json",
     "text",
     "clover",
     "html",
   ],
-
-  // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      statements: 65,
-      branches: 70,
-      functions: 50,
-      lines: 65,
+      statements: 89,
+      branches: 80,
+      functions: 79,
+      lines: 89,
     },
   },
-
-  // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: [
-    "node_modules"
-  ],
-
+  moduleDirectories: ["node_modules"],
   workerIdleMemoryLimit: "500MB",
-
-  // An array of file extensions your modules use
   moduleFileExtensions: [
     "ts",
     "js",
@@ -57,7 +33,6 @@ const config: Config = {
     "cjs",
     "json",
   ],
-
   extensionsToTreatAsEsm: [".ts"],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources
