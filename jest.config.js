@@ -1,6 +1,5 @@
-import type { Config } from "jest";
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.ts",
@@ -85,7 +84,7 @@ const config: Config = {
   // transformation
   transformIgnorePatterns: [
     "node_modules/",
-  ],
+  ]
 };
 
-export default config;
+module.exports = config
