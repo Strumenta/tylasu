@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.3] – 2023-12-07
+
+### Fixed
+- Don't use antlr4ng's `CharStreams` class because it depends on Node classes and doesn't work in the browser.
+
 ## [1.5.2] – 2023-12-07
 
 ### Fixed

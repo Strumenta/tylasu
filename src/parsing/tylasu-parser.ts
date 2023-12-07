@@ -2,7 +2,6 @@ import {Node} from "../model/model";
 import {
     ATNSimulator,
     CharStream,
-    CharStreams,
     CommonTokenStream,
     ErrorNode,
     Interval,
@@ -252,7 +251,7 @@ export abstract class TylasuParser<
             if (!source) {
                 source = new StringSource(code);
             }
-            code = CharStreams.fromString(code);
+            code = new CharStream(code);
         }
         const start = now()
         const firstStage = this.parseFirstStage(code, measureLexingTime);
