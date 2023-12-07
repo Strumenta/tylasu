@@ -2,6 +2,23 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.2] – 2023-12-07
+
+### Fixed
+- `tsconfig.base.json` referring to a local directory that doesn't exist in the released package
+
+## [1.5.1] – 2023-12-07
+
+### Changed
+- Moved from antlr4ts to antlr4ng
+- Aligned AST Transformers with Kolasu as much as possible
+- Moved to Jest for testing
+
+### Fixed
+- Several issues with AST Transformers that made them awkward to use
+
+## [1.5.0] – Not released
+
 ## [1.4.6] – 2023-12-04
 
 ### Changed
