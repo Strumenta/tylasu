@@ -3,7 +3,7 @@
 	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.5.3",
+	"version": "1.5.4",
 	"license": "Apache-2.0",
 	"keywords": [
 		"antlr",
@@ -74,7 +74,7 @@
 			]
 		}
 	},
-	"browser": "dist/cjs/index.js",
+	"browser": "dist/esm/index.js",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
@@ -124,7 +124,6 @@
 		"antlr4ng": "^2.0.2",
 		"antlr4ng-cli": "^1.0.4",
 		"chai": "^4.3.10",
-		"cjstoesm": "^2.1.2",
 		"cmd-ts": "^0.11.0",
 		"cross-env": "^7.0.3",
 		"ecore": "^0.12.0",
