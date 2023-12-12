@@ -137,7 +137,7 @@ describe("Import/export", function () {
         THE_AST_RESOURCE.save((data, e) => {
             expect(e).to.be.null;
             const string = JSON.stringify(data, null, 2);
-            console.log(string);
+            // console.log(string);
         });
     });
     it("importing using API", function () {

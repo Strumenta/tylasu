@@ -5,12 +5,10 @@ import {
     ASTTransformer,
     Child,
     ErrorNode, GenericErrorNode,
-    Init,
     IssueSeverity,
-    Mapped,
-    Node, NodeTransform,
-    PartiallyInitializedNode, pos, Property,
-    transform
+    Node,
+    pos,
+    Property,
 } from "../../src";
 
 @ASTNode("", "A")
@@ -30,55 +28,50 @@ class A extends Node {
     }
 }
 
-@NodeTransform(A)
 class B extends Node {
     @Child()
-    @Mapped("child")
     aChild: Node;
     @Property()
     property: number;
-    @Mapped("other")
     other2: string;
-    @Mapped("undefined")
     notThere: any;
-    @Mapped("method")
     method: string;
-    @Mapped("outer.inner")
     nested: string;
-    @Mapped("error")
+    @Child()
     error: ErrorNode;
-    source: A;
-    @Init
-    fillSource(a: A) {
-        this.source = a;
-    }
 }
 
 class C extends Node {}
-@NodeTransform(C)
+
 class D extends Node {
     a;
     b;
-    @Init
-    brokenInit() {
-        this.a = "OK";
-        throw new Error("Broken");
-    }
 }
 
 class AA extends A {}
 class AAA extends AA {}
 
-describe('AST transformations', function() {
+describe("AST Transformers", function () {
     it("A => B, model to model",
         function () {
             const nodeA = new A();
             nodeA.child = new A();
             nodeA.property = 42;
             nodeA.other = "other";
-            const nodeB = transform(nodeA) as B;
-            expect(nodeB instanceof B).to.be.true;
-            expect(nodeB.origin).to.be.undefined;
+            const transformer = new ASTTransformer();
+            transformer.registerNodeFactory(A, (a) => {
+                const b = new B();
+                b.property = a.property;
+                b.other2 = a.other;
+                b.method = a.method();
+                b.nested = a.outer().inner;
+                return b;
+            })
+                .withChild({ source: "child", target: "aChild" })
+                // TODO Not even Kolasu handles this:
+                //  .withChild({ source: "error", target: "error" });
+            const nodeB = transformer.transform(nodeA) as B;
+            expect(nodeB.origin).to.equal(nodeA);
             expect(nodeB.property).to.equal(42);
             expect(nodeB.other2).to.equal("other");
             expect(nodeB.aChild).not.to.be.undefined;
@@ -86,24 +79,24 @@ describe('AST transformations', function() {
             expect(nodeB.method).to.equal("method");
             expect(nodeB.nested).to.equal("innerValue");
             expect(nodeB.aChild instanceof B).to.be.true;
-            expect(nodeB.error instanceof GenericErrorNode).to.be.true;
-            expect(nodeB.error.message).to.equal("Exception Error: I don't like this");
-            expect(nodeB.source).to.equal(nodeA);
+            // TODO see above expect(nodeB.error).to.be.instanceof(GenericErrorNode);
+            // expect(nodeB.error.message).to.equal("Exception Error: I don't like this");
         });
-    it("handles exceptions on init",
+    it("handles exceptions",
         function () {
             const node1 = new C();
-            const node2 = transform(node1) as PartiallyInitializedNode;
-            expect(node2 instanceof PartiallyInitializedNode).to.be.true;
-            const node = node2.node as D;
-            expect(node instanceof D).to.be.true;
-            expect(node.a).to.equal("OK");
-            expect(node.b).to.be.undefined;
-        });
-});
 
-describe("Transformers", function () {
-    it("Correctly collecting issues", function () {
+            const transformer = new ASTTransformer();
+            transformer.registerNodeFactory(C, () => {
+                const d = new D();
+                d.a = "OK";
+                throw new Error("Broken");
+            });
+
+            const node2 = transformer.transform(node1) as Node;
+            expect(node2 instanceof GenericErrorNode).to.be.true;
+        });
+    it("collects issues", function () {
        const transformer = new ASTTransformer();
        transformer.addIssue("error", IssueSeverity.ERROR);
        transformer.addIssue("warning", IssueSeverity.WARNING);
@@ -113,19 +106,19 @@ describe("Transformers", function () {
        expect(transformer.issues[1].message).to.be.equal("warning");
        expect(transformer.issues[2].message).to.be.equal("info");
    });
-   it("Transform function does not accept collections as source", function () {
+   it("transform function does not accept collections as source", function () {
        const transformer = new ASTTransformer();
        expect(() =>
            transformer.transform([])
        ).to.throw();
    });
-   it("No node factories defined, with allowGenericNode=false", function () {
+   it("no node factories defined, with allowGenericNode=false, throws", function () {
        const transformer = new ASTTransformer(undefined, false);
        expect(() =>
            transformer.transform(new A())
        ).to.throw();
     });
-   it("No node factories defined, with allowGenericNode=true", function () {
+   it("no node factories defined, with allowGenericNode=true, returns", function () {
        const transformer = new ASTTransformer(undefined, true);
        transformer.transform(new A());
        expect(transformer.issues.length).to.equal(1);

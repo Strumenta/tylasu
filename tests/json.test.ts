@@ -9,7 +9,7 @@ describe('JSON generator', function() {
         function () {
             const json = new JSONGenerator().toJSON(new GenericNode());
             expect(json).to.deep.equal({
-                type: "GenericNode"
+                type: "com.strumenta.tylasu.transformation.GenericNode"
             });
         });
     it("Empty AST with potential children",

@@ -5,10 +5,9 @@ import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParseTreeOrigin} from "../src/parsing";
-import {ASTNodeFor, ParseTreeToASTTransformer} from "../src/mapping";
+import {ParseTreeToASTTransformer} from "../src/mapping";
 import {assertASTsAreEqual} from "../src/testing/testing";
 
-@ASTNodeFor(SetStmtContext)
 class MySetStatement extends Node {
     //Explicit mapping
     @Child()
@@ -18,7 +17,6 @@ class MySetStatement extends Node {
     set: Node;
     //Erroneous mapping
     @Child()
-    @Mapped("nonExistent")
     nonExistent: Node;
 }
 
@@ -71,12 +69,7 @@ describe('Mapping of Parse Trees to ASTs', function() {
             const setStmt = cu.statement(0) as SetStmtContext;
             const transformer = new ParseTreeToASTTransformer();
             transformer.registerNodeFactory(SetStmtContext, () => new MySetStatement())
-                .withChild({
-                    source: "ID",
-                    target: (s: MySetStatement, id: Node) => s.id = id,
-                    name: "id",
-                    scopedToType: MySetStatement
-                });
+                .withChild({ source: "ID", scopedToType: MySetStatement, target: "id" });
             const mySetStatement = transformer.transform(setStmt) as MySetStatement;
             expect(mySetStatement).to.be.instanceof(MySetStatement);
             expect(mySetStatement.origin instanceof ParseTreeOrigin).to.be.true;

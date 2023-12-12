@@ -8,7 +8,7 @@ Tylasu is part of the [StarLasu](https://github.com/Strumenta/StarLasu) family o
 similar support in other languages.
 
 Tylasu come with optional facilities for integration with ANTLR, specifically the 
-[antlr4ts](https://github.com/tunnelvisionlabs/antlr4ts) implementation.
+[antlr4ng](https://github.com/mike-lischke/antlr4ng) implementation.
 
 ## Documentation and Examples
 

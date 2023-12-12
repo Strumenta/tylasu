@@ -53,7 +53,7 @@ export type ChildDef<Source, Target, Child> = {
     source: keyof Source | PropertyRef<Source, any> | ((s: Source) => any | undefined),
     target?: keyof Target | PropertyRef<Target, Child> | ((t: Target, c?: Child) => void),
     name?: string,
-    scopedToType?: any
+    scopedToType?: new (...args: any[]) => Target
 };
 
 export class NodeFactory<Source, Output extends Node> {
@@ -90,7 +90,8 @@ export class NodeFactory<Source, Output extends Node> {
      * the parent has been instantiated.
      */
     withChild<Target, Child>(child: ChildDef<Source, Target, Child>) : NodeFactory<Source, Output> {
-        const nodeDefinition = child.scopedToType ? getNodeDefinition(child.scopedToType) : undefined;
+        const nodeDefinition =
+            child.scopedToType ? getNodeDefinition(child.scopedToType as any) : undefined;
         let prefix = nodeDefinition?.name ? nodeDefinition.name : (child.scopedToType?.name || "");
         if (prefix) {
             prefix += "#";
@@ -392,12 +393,13 @@ export class ASTTransformer {
     }
 }
 
-
-
 //-----------------------------------//
 // Factory and metadata registration //
 //-----------------------------------//
 
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
 export const NODE_FACTORY_SYMBOL = Symbol("nodeFactory");
 /**
  * @deprecated please use StarLasu AST transformers.
@@ -436,6 +438,9 @@ export function registerInitializer<T extends Node>(type: new (...args: any[]) =
 // Decorators //
 //------------//
 
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
 export function NodeTransform<T extends Node>(type: new (...args: any[]) => T) {
     return function (target: new () => Node): void {
         if(!target[NODE_DEFINITION_SYMBOL]) {
@@ -559,7 +564,7 @@ export function transform(tree: unknown, parent?: Node, transformer: typeof tran
     return node.withParent(parent);
 }
 
-@ASTNode("", "GenericNode")
+@ASTNode("com.strumenta.tylasu.transformation", "GenericNode")
 export class GenericNode extends Node {
     constructor(parent?: Node) {
         super();
@@ -567,6 +572,9 @@ export class GenericNode extends Node {
     }
 }
 
+/**
+ * @deprecated please use StarLasu AST transformers.
+ */
 export class PartiallyInitializedNode extends Node implements ErrorNode {
     message: string;
 
