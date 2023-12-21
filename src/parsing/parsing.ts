@@ -1,4 +1,4 @@
-import {CharStream, ParserRuleContext, Token} from "antlr4ng";
+import {CharStream, Parser, ParserRuleContext, Token} from "antlr4ng";
 import {Issue} from "../validation";
 import {Position} from "../model/position";
 import {Node} from "../model/model";
@@ -20,7 +20,7 @@ export class TylasuToken {
     constructor(
         public readonly category: TokenCategory,
         public readonly position: Position,
-        public readonly text: string | undefined | null
+        public readonly text?: string | undefined | null
     ) {}
 }
 
@@ -47,15 +47,13 @@ export class LexingResult<T extends TylasuToken> extends CodeProcessingResult<T[
 }
 
 export class FirstStageParsingResult<C extends ParserRuleContext> extends CodeProcessingResult<C> {
-    incompleteNode?: Node;
-    time?: number;
-    lexingTime?: number;
-
-    constructor(code: string, data: C, issues: Issue[], time?: number, lexingTime?: number, incompleteNode?: Node) {
+    constructor(
+        code: string, data: C, issues: Issue[],
+        public readonly parser: Parser,
+        public readonly time?: number,
+        public readonly lexingTime?: number,
+        public readonly incompleteNode?: Node) {
         super(code, data, issues);
-        this.time = time;
-        this.lexingTime = lexingTime;
-        this.incompleteNode = incompleteNode;
     }
 
     get root(): C | undefined {

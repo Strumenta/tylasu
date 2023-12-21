@@ -73,15 +73,8 @@ Node.prototype.invalidPositions = function() {
 }
 
 export class CodeProcessingResult<D> {
-    code: string;
-    data: D | undefined;
-    issues: Issue[];
 
-    constructor(code: string, data: D | undefined, issues: Issue[]) {
-        this.issues = issues;
-        this.data = data;
-        this.code = code;
-    }
+    constructor(public readonly code: string, public readonly data: D | undefined, public readonly issues: Issue[]) {}
 
     get correct(): boolean {
         return !this.issues.find(i => i.severity != IssueSeverity.INFO);

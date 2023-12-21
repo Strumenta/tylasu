@@ -36,9 +36,10 @@ try {
 } catch (e) {
     try {
         // Node.js
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { performance } = require('perf_hooks');
-        now = () => performance.now();
+        if (global) {
+            const { performance } = global['require']('perf_hooks');
+            now = () => performance.now();
+        }
     } catch (e) {
         // Fallback
         now = () => new Date().getTime();
@@ -235,7 +236,7 @@ export abstract class TylasuParser<
             this.verifyParseTree(parser, issues, root);
         }
         const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
-        return new FirstStageParsingResult(code, root, issues, now() - time, lexingTime);
+        return new FirstStageParsingResult(code, root, issues, parser, now() - time, lexingTime);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
