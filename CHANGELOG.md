@@ -40,6 +40,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.5.0] – Not released
 
+## [1.4.7] – Not yet released
+
+### Added
+- Traversal functions `walkAncestors` and `findAncestorOfType` from Kolasu
+
+### Changed
+- Aligned AST Transformers with Kolasu, and solved several issues in the previous implementation
+
+### Fixed
+- `assignParents` didn't assign the right parent
+
 ## [1.4.6] – 2023-12-04
 
 ### Changed

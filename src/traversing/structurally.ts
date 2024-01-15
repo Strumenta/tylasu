@@ -6,6 +6,13 @@ declare module '../model/model' {
          * A generator that walks over the whole AST starting from this node, depth-first.
          */
         walk(): Generator<Node>;
+
+        /**
+         * @return nodes the sequence of nodes from the parent all the way up to the root node.
+         * For this to work, the nodes' parents must have been set.
+         */
+        walkAncestors(): Generator<Node>;
+
         /**
          * A generator that walks over the whole AST starting from the children of this node.
          * @param walker a function that generates a sequence of nodes. By default, this is the depth-first
@@ -18,6 +25,15 @@ declare module '../model/model' {
          * A generator that walks over the direct children of this node.
          */
         walkChildren(): Generator<Node>;
+
+        /**
+         * Note that the type is not strictly forced to be a subclass of Node. This is intended to support
+         * interfaces like `Statement` or `Expression`. However, being an ancestor the returned
+         * value is guaranteed to be a Node, as only Node instances can be part of the hierarchy.
+         *
+         * @return ancestor the nearest ancestor of this node that is of type `type`.
+         */
+        findAncestorOfType(type: any): Node | undefined;
     }
 }
 
@@ -41,6 +57,21 @@ Node.prototype.walk = function() {
 };
 
 /**
+ * @return nodes the sequence of nodes from the parent all the way up to the root node.
+ * For this to work, the nodes' parents must have been set.
+ */
+export function* walkAncestors(node?: Node): Generator<Node> {
+    if (node?.parent) {
+        yield node.parent;
+        yield* walkAncestors(node.parent);
+    }
+}
+
+Node.prototype.walkAncestors = function() {
+    return walkAncestors(this);
+};
+
+/**
  * A generator that walks the whole AST starting from the children of the given node.
  * @param node the starting node (excluded from the walk).
  * @param walker a function that generates a sequence of nodes. By default this is the depth-first "walk" function.
@@ -57,7 +88,6 @@ export function* walkDescendants(node: Node, walker: typeof walk = walk): Genera
 Node.prototype.walkDescendants = function(walker: typeof walk = walk) {
     return walkDescendants(this, walker)
 };
-
 
 /**
  * @return all direct children of this node.
@@ -79,5 +109,25 @@ export function* walkChildren(node: Node): Generator<Node> {
 }
 
 Node.prototype.walkChildren = function() {
-    return walkDescendants(this);
+    return walkChildren(this);
+};
+
+/**
+ * Note that the type is not strictly forced to be a subclass of Node. This is intended to support
+ * interfaces like `Statement` or `Expression`. However, being an ancestor the returned
+ * value is guaranteed to be a Node, as only Node instances can be part of the hierarchy.
+ *
+ * @return ancestor the nearest ancestor of this node that is of type `type`.
+ */
+export function findAncestorOfType(node: Node | undefined, type: any): Node | undefined {
+    for (const ancestor of walkAncestors(node)) {
+        if (ancestor instanceof type) {
+            return ancestor;
+        }
+    }
+    return undefined;
+}
+
+Node.prototype.findAncestorOfType = function(type) {
+    return findAncestorOfType(this, type);
 };

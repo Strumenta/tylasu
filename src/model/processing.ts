@@ -44,7 +44,7 @@ Node.prototype.find = function(predicate: (n: Node, index: number) => boolean, w
  */
 export function assignParents(node: Node): void {
     for(const c of node.walkChildren()) {
-        c.parent = this;
+        c.parent = node;
         assignParents(c);
     }
 }
@@ -52,8 +52,8 @@ export function assignParents(node: Node): void {
 Node.prototype.hasValidParents = function(parent?: Node) : boolean {
     return this.parent == parent &&
         this.children
-            .map(c => c.hasValidParents(this))
-            .reduce((res, val) => res && val, true);
+            .map((c: Node) => c.hasValidParents(this))
+            .reduce((res: boolean, val: boolean) => res && val, true);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
