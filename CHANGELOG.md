@@ -2,6 +2,17 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.7] – 2024-01-15
+
+### Added
+- Traversal functions `walkAncestors` and `findAncestorOfType` from Kolasu
+
+### Changed
+- Aligned AST Transformers with Kolasu, and solved several issues in the previous implementation
+
+### Fixed
+- `assignParents` didn't assign the right parent
+
 ## [1.5.6] – 2023-12-12
 
 ### Changed
