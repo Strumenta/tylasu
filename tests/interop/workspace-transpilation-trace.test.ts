@@ -122,4 +122,30 @@ describe('Workspace Transpilation traces', function() {
                     expect(destinationNodes.length).to.equal(1);
                     expect(destinationNodes[0].file?.path).to.equal("Cus300.java");
             });
+    it("Can load workspace transpilation trace produced by Kolasu with SimpleOrigin instances",
+        function () {
+            this.timeout(0);
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const loader = new TranspilationTraceLoader({
+                name: "rpg2py",
+                uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
+            });
+            const example = fs.readFileSync("tests/data/playground/java/trace-with-simple-origins.json").toString();
+            const trace = loader.loadWorkspaceTranspilationTrace(example);
+
+            expect(trace.originalFiles.length).to.eql(1);
+            expect(trace.generatedFiles.length).to.eql(0);
+            expect(trace.transpilationIssues.length).to.eql(0);
+
+            const cus300File = trace.originalFiles[0];
+            expect(cus300File.path).to.eql("CUS300.rpgle")
+            expect(cus300File.issues.length).to.eql(0)
+            expect(cus300File.node.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit")
+            expect(cus300File.node.getSimpleType()).to.eql("CompilationUnit")
+            // The origin is ignored. The position loaded is the explicit position
+            // The sourceText is not accessible anywhere, as it is irrelevant for the TranspilationTrace
+            expect(cus300File.node.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)))
+        });
 });
