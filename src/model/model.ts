@@ -83,6 +83,20 @@ export abstract class Origin {
 
 }
 
+export class SimpleOrigin extends Origin {
+    constructor(public myPosition?: Position, public mySourceText?: string) {
+        super();
+    }
+
+    get position(): Position | undefined {
+        return this.myPosition
+    }
+
+    get sourceText(): string | undefined {
+        return this.mySourceText
+    }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Destination {}
 
