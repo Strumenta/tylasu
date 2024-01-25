@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {Point, Position} from "../../src";
+import {Point, pos, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
-import { TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
+import {TraceNode, TranspilationTraceLoader} from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
 import * as Ecore from "ecore";
 import {
@@ -128,8 +128,8 @@ describe('Workspace Transpilation traces', function() {
             Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
             Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
-                name: "rpg2py",
-                uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
+                name: "rpg2java",
+                uri: "file://tests/data/playground/rpg/rpg2java-metamodels.json",
                 metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
             });
             const example = fs.readFileSync("tests/data/playground/java/trace-with-simple-origins.json").toString();
@@ -146,6 +146,9 @@ describe('Workspace Transpilation traces', function() {
             expect(cus300File.node.getSimpleType()).to.eql("CompilationUnit")
             // The origin is ignored. The position loaded is the explicit position
             // The sourceText is not accessible anywhere, as it is irrelevant for the TranspilationTrace
-            expect(cus300File.node.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)))
+            expect(cus300File.node.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)));
+
+            const byPosition = cus300File.node.findByPosition(pos(1, 21, 1, 21)) as TraceNode;
+            expect(byPosition.getType()).not.to.contain("SimpleOrigin");
         });
 });
