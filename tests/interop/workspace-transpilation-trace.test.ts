@@ -4,7 +4,7 @@ import {Point, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import { TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
-import * as Ecore from "ecore/dist/ecore";
+import * as Ecore from "ecore";
 import {
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
@@ -95,8 +95,8 @@ describe('Workspace Transpilation traces', function() {
                     Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
                     Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
                     const loader = new TranspilationTraceLoader({
-                            name: "rpg2py",
-                            uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
+                            name: "rpg2java",
+                            uri: "file://tests/data/playground/java/rpg2java-metamodels.json",
                             metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
                     });
                     const example = fs.readFileSync("tests/data/playground/java/trace.json").toString();
