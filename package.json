@@ -116,7 +116,7 @@
 	"devDependencies": {
 		"@tsconfig/recommended": "^1.0.2",
 		"@types/chai": "^4.2.11",
-		"@types/ecore": "^0.12.3",
+		"@types/ecore": "^0.12.5",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^13.9.8",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
