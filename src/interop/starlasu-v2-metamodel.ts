@@ -67,6 +67,21 @@ THE_ORIGIN_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
+export const THE_SIMPLE_ORIGIN_ECLASS = Ecore.EClass.create({
+    name: "SimpleOrigin"
+});
+THE_SIMPLE_ORIGIN_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
+THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+    name: "sourceText",
+    eType: Ecore.EString,
+    lowerBound: 0
+}));
+THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+    name: "position",
+    eType: THE_POSITION_ECLASS,
+    lowerBound: 0,
+    containment: true
+}));
 THE_NODE_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     name: "destination",
     eType: THE_DESTINATION_INTERFACE,
@@ -286,6 +301,7 @@ THE_AST_EPACKAGE.get('eClassifiers').add(THE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_DESTINATION_INTERFACE);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_NODE_ORIGIN_ECLASS);
+THE_AST_EPACKAGE.get('eClassifiers').add(THE_SIMPLE_ORIGIN_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POINT_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSITION_ECLASS);
 THE_AST_EPACKAGE.get('eClassifiers').add(THE_POSSIBLY_NAMED_INTERFACE);

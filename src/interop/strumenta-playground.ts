@@ -1,4 +1,4 @@
-import {ParsingResult} from "../parsing/parsing";
+import {ParsingResult} from "../parsing";
 import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
 import {Node, NodeDefinition} from "../model/model";
 import ECore from "ecore/dist/ecore";
@@ -7,8 +7,7 @@ import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {
     THE_AST_EPACKAGE,
     THE_ENTITY_DECLARATION_INTERFACE,
-    THE_EXPRESSION_INTERFACE,
-    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
+    THE_EXPRESSION_INTERFACE, THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
     THE_NODE_ORIGIN_ECLASS,
     THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
     THE_STATEMENT_INTERFACE
@@ -180,6 +179,14 @@ export abstract class TraceNode extends Node {
     isStatement(): boolean {
         return this.eo.isKindOf(THE_STATEMENT_INTERFACE);
     }
+
+    protected getChildrenEObjects(role: string | undefined) {
+        return this.eo.eContents()
+            .filter((c) => c.isKindOf(THE_NODE_ECLASS_V2) || c.isKindOf(THE_NODE_ECLASS_V1))
+            .filter((c) => c.eContainingFeature.get("name") != "origin")
+            .filter((c) => c.eContainingFeature.get("name") != "destination")
+            .filter((c) => role == null || role == c.eContainingFeature.get("name"));
+    }
 }
 
 export class ParserNode extends TraceNode {
@@ -190,10 +197,7 @@ export class ParserNode extends TraceNode {
     }
 
     getChildren(role?: string): ParserNode[] {
-        return this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new ParserNode(c, this, this.trace));
+        return this.getChildrenEObjects(role).map((c) => new ParserNode(c, this, this.trace));
     }
 
     get children(): Node[] {
@@ -418,10 +422,7 @@ export class SourceNode extends TraceNode {
     }
 
     getChildren(role?: string): SourceNode[] {
-        return this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new SourceNode(c, this.trace, this.file));
+        return this.getChildrenEObjects(role).map((c) => new SourceNode(c, this.trace, this.file));
     }
 
     get children(): Node[] {
@@ -491,12 +492,7 @@ export class TargetNode extends TraceNode {
     }
 
     getChildren(role?: string): TargetNode[] {
-        return this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .filter((c) => c.eContainingFeature.get("name") != "origin")
-            .filter((c) => c.eContainingFeature.get("name") != "destination")
-            .filter((c) => role == null || role == c.eContainingFeature.get("name"))
-            .map((c) => new TargetNode(c, this.trace, this.file));
+        return this.getChildrenEObjects(role).map((c) => new TargetNode(c, this.trace, this.file));
     }
 
     get children(): Node[] {

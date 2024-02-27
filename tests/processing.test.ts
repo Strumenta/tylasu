@@ -13,8 +13,8 @@ const testCase = new Box(
         new Item("6")
     ]);
 
-const rootP = n => n instanceof Box && n.name == "root";
-const item1P = n => n instanceof Item && n.name == "1";
+const rootP = (n: any) => n instanceof Box && n.name == "root";
+const item1P = (n: any) => n instanceof Item && n.name == "1";
 
 describe('Tree processing', function() {
     it("find a node, depth-first",

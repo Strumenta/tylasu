@@ -1,0 +1,43 @@
+{
+  "eClass" : "https://strumenta.com/starlasu/transpilation/v2#//WorkspaceTranspilationTrace",
+  "originalFiles" : [ {
+    "path" : "CUS300.rpgle",
+    "code" : "     F**********************************************************************\n     F*                                                                    *\n     F* PROGRAM ID  : CUS200                                               *\n     F* PROGRAM NAME: SAMPLE PROGRAM                                       *\n     F*                                                                    *\n     F**********************************************************************\n     D DSP             S             50    INZ('CUSTOMER')\n     D TOTAL           S              9P 2 INZ(0)\n     D NUM             S              9P 2 INZ(1)\n     D CNT             S              9P 2 INZ(0)\n     FCUSTOMER  UF   E           K Disk\n     FORDERS    IF   E           K Disk\n     FORDSUM    IF   E           K Disk\n     C     *INZSR        BEGSR\n     C                   EVAL      DSP='CUSTOMER REPORT'\n     C                   DSPLY     DSP\n     C                   ENDSR\n      /free\n            CNT = 0;\n            TOTAL = 0;\n            EXSR $clrsum;\n            DSPLY '------  Forward  ------';\n            Setll *Loval CUSTOMER;\n            Dou NOT %EOF(CUSTOMER);\n                Read CUSTOMER;\n                If NOT %EOF(CUSTOMER);\n                   EXSR $calctotal;\n                   EXSR $DSPCUS;\n                   If TOTAL > 0;\n                       OSCUID = CUID;\n                       TOTAL *=  (TOTAL / CNT +1) * 0.1;\n                       OSTOT = TOTAL;\n                       OSCUNM = CUSTNM;\n                       Write  ORDSUM;\n                    EndIf;\n                EndIf;\n            EndDO;\n            DSPLY '------  Reverse  ------';\n            Setll *Hival ORDSUM;\n            Dou NOT %EOF(ORDSUM);\n                Readp ORDSUM;\n                If NOT %EOF(ORDSUM);\n                    DSPLY 'CUSTOMER: ' + OSCUNM + ' $' + OSTOT;\n\n                EndIf;\n            EndDO;\n\n            Begsr  $calctotal;\n                CNT = 0;\n                TOTAL = 0;\n                Setll *Loval ORDERS;\n                Dou NOT %EOF(ORDERS);\n                    Read ORDERS;\n                    If NOT %EOF(ORDERS);\n                        If CUID = ORCUID;\n                            TOTAL += ORTOT;\n                            CNT += 1;\n                        EndIf;\n                    EndIf;\n                EndDo;\n            EndSr;\n\n            Begsr  $dspcus;\n                If TOTAL > 0;\n                    eval DSP='CUSTOMER: ' + CUSTNM + ' $' + TOTAL;\n                    DSPLY     DSP;\n                EndIf;\n            EndSr;\n\n            Begsr  $clrsum;\n                CNT = 0;\n                DSPLY '------  Delete  ------';\n                Setll *Loval ORDSUM;\n                Dou NOT %EOF(ORDSUM);\n                    Read ORDSUM;\n                    If NOT %EOF(ORDSUM);\n                        delete ORDSUM;\n                        CNT+=1;\n                    EndIf;\n                EndDO;\n                DSPLY 'DELETED: ' + CNT +  ' RECORDS';\n            EndSr;",
+    "result" : {
+      "root" : {
+        "eClass" : "https://strumenta.com/rpg/model#//CompilationUnit",
+        "position" : {
+          "start" : {
+            "line" : 1
+          },
+          "end" : {
+            "line" : 82,
+            "column" : 18
+          }
+        },
+        "comments" : [],
+        "dataDefinitions" : [],
+        "externalDefinitions" : [],
+        "fileDescriptions" : [],
+        "mainStatements" : [],
+        "subroutines" : [],
+        "origin" : {
+          "eClass" : "https://strumenta.com/starlasu/v2#//SimpleOrigin",
+          "sourceText" : "Footext",
+          "position" : {
+            "start" : {
+              "line" : 1,
+              "column" : 20
+            },
+            "end" : {
+              "line" : 1,
+              "column" : 34
+            }
+          }
+        }
+      }
+    }
+  } ],
+  "generatedFiles" : [
+   ]
+}

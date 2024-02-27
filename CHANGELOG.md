@@ -51,10 +51,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.5.0] – Not released
 
-## [1.4.7] – Not yet released
+## [1.4.8] – 2024-01-29
+
+### Fixed
+- When importing from Ecore, don't treat origins and destinations as children, as well as everything that's not a Node. 
+
+## [1.4.7] – 2024-01-18
 
 ### Added
 - Traversal functions `walkAncestors` and `findAncestorOfType` from Kolasu
+- Support for Ecore models with Kolasu's `SimpleOrigin` instances
 
 ### Changed
 - Aligned AST Transformers with Kolasu, and solved several issues in the previous implementation

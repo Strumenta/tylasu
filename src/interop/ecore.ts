@@ -23,7 +23,7 @@ import {
     THE_NODE_ECLASS, THE_NODE_ORIGIN_ECLASS,
     THE_POINT_ECLASS,
     THE_POSITION_ECLASS, THE_REFERENCE_BY_NAME_ECLASS,
-    THE_RESULT_ECLASS, THE_TEXT_FILE_DESTINATION_ECLASS
+    THE_RESULT_ECLASS, THE_SIMPLE_ORIGIN_ECLASS, THE_TEXT_FILE_DESTINATION_ECLASS
 } from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
@@ -302,6 +302,9 @@ export function fromEObject(obj: ECore.EObject | any, parent?: Node): ASTElement
     }
     if(isBuiltInClass(eClass, THE_NODE_ORIGIN_ECLASS)) {
         return fromEObject(obj.get("node")) as Node;
+    }
+    if(isBuiltInClass(eClass, THE_SIMPLE_ORIGIN_ECLASS)) {
+        return undefined;
     }
     if(isBuiltInClass(eClass, THE_TEXT_FILE_DESTINATION_ECLASS)) {
         return fromEObject(obj.get("position")) as Position;

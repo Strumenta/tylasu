@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import * as fs from "fs";
 import {findByPosition, IssueSeverity, IssueType, Point, pos, Position} from "../../src";
-import {ParserNode, ParserTraceLoader} from "../../src/interop/strumenta-playground";
+import {ParserNode, ParserTraceLoader, TraceNode} from "../../src/interop/strumenta-playground";
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
@@ -31,6 +31,10 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.issues[0].message).to.eql("Physical line of type FileDescription are currently ignored");
             expect(trace.issues[0].severity).to.eql(IssueSeverity.WARNING);
             expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
+
+            const updateStmt = trace.rootNode.findByPosition(pos(258, 30, 258, 30));
+            expect(updateStmt).not.to.be.undefined;
+            expect((updateStmt as TraceNode).getType()).to.eql("com.strumenta.rpgparser.model.UpdateRecordStatement");
         });
 
     it("Can load reference RPG parser trace: open-weather",

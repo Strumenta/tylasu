@@ -1,10 +1,10 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {Point, Position} from "../../src";
+import {Point, pos, Position} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
-import { TranspilationTraceLoader } from "../../src/interop/strumenta-playground"
+import {TraceNode, TranspilationTraceLoader} from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
-import ECore from "ecore/dist/ecore";
+import ECore from "ecore";
 import {
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
@@ -90,8 +90,8 @@ describe('Workspace Transpilation traces', function() {
                     ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
                     ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
                     const loader = new TranspilationTraceLoader({
-                            name: "rpg2py",
-                            uri: "file://tests/data/playground/rpg/rpg2py-metamodels.json",
+                            name: "rpg2java",
+                            uri: "file://tests/data/playground/java/rpg2java-metamodels.json",
                             metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
                     });
                     const example = fs.readFileSync("tests/data/playground/java/trace.json").toString();
@@ -117,4 +117,33 @@ describe('Workspace Transpilation traces', function() {
                     expect(destinationNodes.length).to.equal(1);
                     expect(destinationNodes[0].file?.path).to.equal("Cus300.java");
             });
+    it("Can load workspace transpilation trace produced by Kolasu with SimpleOrigin instances",
+        function () {
+            this.timeout(0);
+            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const loader = new TranspilationTraceLoader({
+                name: "rpg2java",
+                uri: "file://tests/data/playground/rpg/rpg2java-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
+            });
+            const example = fs.readFileSync("tests/data/playground/java/trace-with-simple-origins.json").toString();
+            const trace = loader.loadWorkspaceTranspilationTrace(example);
+
+            expect(trace.originalFiles.length).to.eql(1);
+            expect(trace.generatedFiles.length).to.eql(0);
+            expect(trace.transpilationIssues.length).to.eql(0);
+
+            const cus300File = trace.originalFiles[0];
+            expect(cus300File.path).to.eql("CUS300.rpgle")
+            expect(cus300File.issues.length).to.eql(0)
+            expect(cus300File.node.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit")
+            expect(cus300File.node.getSimpleType()).to.eql("CompilationUnit")
+            // The origin is ignored. The position loaded is the explicit position
+            // The sourceText is not accessible anywhere, as it is irrelevant for the TranspilationTrace
+            expect(cus300File.node.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)));
+
+            const byPosition = cus300File.node.findByPosition(pos(1, 21, 1, 21)) as TraceNode;
+            expect(byPosition.getType()).not.to.contain("SimpleOrigin");
+        });
 });
