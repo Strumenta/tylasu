@@ -1,0 +1,762 @@
+{
+  "serializationFormatVersion": "2023.1",
+  "languages": [
+    {
+      "key": "com-strumenta-codeinsightstudio-model-filesystem",
+      "version": "1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "UNKNOWN_SOURCE_root",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "resources.zip"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
+          },
+          "children": [
+            "UNKNOWN_SOURCE_root_files_0"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": null
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "resources"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
+          },
+          "children": [
+            "UNKNOWN_SOURCE_root_files_0_files_0",
+            "UNKNOWN_SOURCE_root_files_0_files_1",
+            "UNKNOWN_SOURCE_root_files_0_files_2",
+            "UNKNOWN_SOURCE_root_files_0_files_3",
+            "UNKNOWN_SOURCE_root_files_0_files_4",
+            "UNKNOWN_SOURCE_root_files_0_files_5",
+            "UNKNOWN_SOURCE_root_files_0_files_6",
+            "UNKNOWN_SOURCE_root_files_0_files_7",
+            "UNKNOWN_SOURCE_root_files_0_files_8",
+            "UNKNOWN_SOURCE_root_files_0_files_9",
+            "UNKNOWN_SOURCE_root_files_0_files_10",
+            "UNKNOWN_SOURCE_root_files_0_files_11",
+            "UNKNOWN_SOURCE_root_files_0_files_12",
+            "UNKNOWN_SOURCE_root_files_0_files_13",
+            "UNKNOWN_SOURCE_root_files_0_files_14"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_0",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Delegate FunctionInvoker\n  (displayStr STRING)\nend\n\nProgram greetings\n// declare delegate variable\ninvoker FunctionInvoker;\n\n  Function main()\n    // writeToScreen() must match Delegate parameters\n    invoker \u003d writeToScreen;\n\n    invoker(\"Hello world\");\n  end\n\n  Function writeToScreen(myMsg STRING)\n    sysLib.WriteStdOut (myMsg);\n  end\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "delegate.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_1",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.eglexamples.client;\n\nlibrary ProxyFunctions\n\n    function listTasks(continueLocation String in) returns (RosettaCodeJSON) {\n\t    @Rest{method \u003d _GET, uriTemplate \u003d \"\u0026cmcontinue\u003d{continueLocation}\",\n\t    requestFormat \u003d None, responseFormat \u003d JSON}\n    }\n    end\t\n\n    function fetchPageDetail(title String in) returns (String) {\n\t    @Rest{method \u003d _GET, uriTemplate \u003d \"?title\u003d{title}\u0026action\u003draw\",\n\t    requestFormat \u003d None, responseFormat \u003d None}\n    }\n    end\t\n\nend\n\nrecord RosettaCodeJSON\n    query Query;\n    queryContinue QueryContinue{JSONName \u003d \"query-continue\"};\nend\n\nrecord Query\n    categorymembers Categorymembers[];\nend\n\nrecord Categorymembers\n    cmcontinue string?;\n    pageid int?;\n    ns int?;\n    title string?;\nend\n\nrecord QueryContinue\n    categorymembers Categorymembers;\nend\n"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "rosetta-code-count-examples-2.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_2",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.eglexamples.client;\n\nimport org.eclipse.edt.rui.widgets.*;\n\nhandler RosettaCodeHandler type RUIhandler{initialUI \u003d[ui], title \u003d \"Rosetta Code Tasks and Counts\"}\n\n    ui GridLayout{columns \u003d 3, rows \u003d 4, cellPadding \u003d 4, children \u003d [ b1, dg1, l1, l2, l3, l4 ]};\n\n    b1 Button{ layoutData \u003d new GridLayoutData{ row \u003d 1, column \u003d 1 }, text \u003d \"Go!\", onClick \u003d b1_onClick };\n    l1 TextLabel{ layoutData \u003d new GridLayoutData{ row \u003d 1, column \u003d 2 }, text \u003d \"Total Tasks:\" };\n    l2 TextLabel{ layoutData \u003d new GridLayoutData{ row \u003d 1, column \u003d 3 }, text \u003d \"0\" };\n\n    l3 TextLabel{ layoutData \u003d new GridLayoutData{ row \u003d 2, column \u003d 2 }, text \u003d \"Total Implementations:\" };\n    l4 TextLabel{ layoutData \u003d new GridLayoutData{ row \u003d 2, column \u003d 3 }, text \u003d \"0\" };\n\n    dg1 DataGrid{ layoutData \u003d new GridLayoutData{ row \u003d 3, column \u003d 1, horizontalSpan \u003d 3 },\n    \tpageSize \u003d 10, showScrollbar \u003d true,\n\tcolumns \u003d [ new DataGridColumn{name \u003d \"title\", displayName \u003d \"Task\", width\u003d220},\n\t\t    new DataGridColumn{name \u003d \"count\", displayName \u003d \"Count\", width\u003d100} ] };\n\n    cmcontinue string?;\n    title string?;\n    allTasks Task[];\n\t\n    restBindingTasks IHttp? \u003d new HttpRest{\n        restType \u003d eglx.rest.ServiceType.TrueRest,\n   \trequest.uri \u003d \"http://rosettacode.org/mw/api.php?action\u003dquery\u0026list\u003dcategorymembers\u0026cmtitle\u003dCategory:Programming_Tasks\u0026cmlimit\u003d1\u0026format\u003djson\"};\n\n    restBindingPageDetail IHttp? \u003d new HttpRest{\n        restType \u003d eglx.rest.ServiceType.TrueRest,\n   \trequest.uri \u003d \"http://rosettacode.org/mw/index.php\"};\n\t\n    function b1_onClick(event Event in)\n\tcall ProxyFunctions.listTasks(\"\") using restBindingTasks\n    \t    returning to listTasksCallBack onException exceptionHandler;\n    end\n\n    function listTasksCallBack(retResult RosettaCodeJSON in)\n\ttitle \u003d retResult.query.categorymembers[1].title;\n\tcmcontinue \u003d retResult.queryContinue.categorymembers.cmcontinue;\n\n\tcall ProxyFunctions.fetchPageDetail(title) using restBindingPageDetail\n \t    returning to pageDetailCallBack onException exceptionHandler;\n    end\n\n    function pageDetailCallBack(pageResults string in)\n   \tcount int \u003d countSubstring(\"\u003d\u003d{{header\", pageResults);\n   \tallTasks.appendElement(new Task { title \u003d title, count \u003d count });\n\tl2.text \u003d l2.text as int + 1;\n\tl4.text \u003d l4.text as int + count;\n   \t\n   \tif(cmcontinue !\u003d null)\n\t    call ProxyFunctions.listTasks(cmcontinue) using restBindingTasks\n\t\treturning to listTasksCallBack onException exceptionHandler;\n\telse\n\t    dg1.data \u003d allTasks as any[];\n\tend\n    end\n\n    function countSubstring(substr string in, str string in) returns(int)\n\tif(str.length() \u003e 0 and substr.length() \u003e 0)\n\t    return (str.length() - str.replaceStr(subStr, \"\").length()) / subStr.length();\n\telse\n\t    return 0;\n\tend\n    end\n\t\n   function exceptionHandler(exp AnyException in)\n   end\n\nend\n\nrecord Task\n\ttitle string;\n\tcount int;\nend\n"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "rosetta-code-count-examples-1.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "sub1"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
+          },
+          "children": [
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_0",
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_1",
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_2",
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_3"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_0",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "sub2"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
+          },
+          "children": [
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_0",
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_1",
+            "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_2"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_0",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "function example()\nvgVar.handleHardIOErrors  \u003d 1;\n\ntry\n  open myResults for myCustomer\n    with #sql{\n      SELECT customer_number, customer_name\n      FROM Customer\n      WHERE customer_number \u003e\u003d :myCustomer.customerNumber\n      FOR UPDATE OF customer_name\n    }\n    into myCustomer.customerNumber, myCustomer.customerName;\nonException(sqlEx SQLException)\n  myErrorHandler(6);    // exits program\nend\n\ntry\n  forEach (from myResults)\n    // make last name first\n    reverseName(myCustomer.customerName);\n\n    try\n      execute\n        #sql{\n          UPDATE Customer\n          SET customer_name \u003d :myCustomer.customerName\n          WHERE CURRENT OF myResults\n        };\n    onException(sqlEx SQLException)\n      myErrorHandler(10); // exits program\n    end\n  end\n\nonException(sqlEx SQLException)\n  myErrorHandler(8);  // exits program\nend\n\nsysLib.commit();\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "foreach.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_1",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLDropTable type basicProgram\n\n  variation string;\n\n  function main()\n    try\n      execute #sql{ drop table \"DEPARTMENT_TABLE\" };\n    onException  (ex sqlException)\n    end\n    if ( sysVar.sqlData.sqlState \u003d\u003d \"00000\"  // success\n      ||   sysVar.sqlData.sqlState \u003d\u003d \"42704\" ) // table didn\u0027t exist\n      writeStdOut( \"DEPARTMENT_TABLE dropped\");\n    else\n      writeStdOut ( \"Drop DEPARTMENT_TABLE failed\"\n       + \", Unexpected SQL Exception, SQL code \u003d  \" + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n    end\n  end\n\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLDropTable.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_0_files_2",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Program calc3\n  function main()\n    for (i from 1 to 100 by 1)\n      printReport(myArray[i]);\n      if ((i % 10) !\u003d 0)\n        continue;\n      end // if\n      printReport(blankLine);\n    end // for\n  end\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "for.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_1",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLBatch type basicProgram\n\n  dept Department;\n\n  function main()\n    try\n      clearTable();\n      loadTable();\n      getRow();\n      updateRow();\n      getAllRows();\n      forceRecordNotFound();\n      forceSQLException();\n    onException (ex SQLException)\n      sqlFailure();\n    onException (ex AnyException)\n      anyFailure( ex );\n    end\n  end\n\n  function getRow( )\n      setVariation ( \"Get row from department table\" );\n    getDept(\"D100\");\n  end\n\n  function updateRow()\n    set dept empty;\n      setVariation ( \"Update department table\" );\n    dept.id \u003d \"T100\";\n    get dept forUpdate;\n    if ( dept is noRecordFound )\n      sqlFailure();\n    else\n      dept.description \u003d \"Test Engineers\";\n      replace dept;\n      commit();\n    end\n    getDept( \"T100\" );\n  end\n\n  function getAllRows()\n    setVariation ( \"Get all departments\" );\n    dept.id \u003d \" \";\n    open deptSet for dept;\n    foreach ( dept )\n      showDept();\n    end\n    end\n\n  function clearTable()\n      setVariation ( \"Clear all rows from department table\" );\n      dept.id \u003d \" \";\n      execute delete\n        #sql{\n          delete from DEPARTMENT_TABLE\n          where\n            id \u003e\u003d :dept.id\n        }  for dept;\n    commit();\n  end\n\n  function forceRecordNotFound()\n    setVariation( \"Try to get a department that is not in the table\");\n    getDept(\"B100\");\n  end\n\n  function forceSQLException()\n    setVariation(\"Force an sql exception by dropping a non-existent table\");\n    prepare dropStmt from \"DROP TABLE NOT_A_TABLE\";\n    execute dropStmt;\n  end\n\n  function loadTable()\n    setVariation ( \"Load department table\" );\n    addDept(\"A100\",\"Architects\",\"AM0001\");\n    addDept(\"D100\",\"Developers\",\"DM0001\");\n    addDept(\"T100\",\"Testers\",\"TM0001\");\n    addDept(\"M100\",\"Managers\",\"MM0001\");\n    commit();\n  end\n\n  function addDept( deptNo string, desc String, manager string )\n    dept.id \u003d deptNo;\n    dept.description \u003d desc;\n    dept.manager \u003d manager;\n    add dept;\n  end\n\n  function getDept( id string )\n    set dept empty;\n    dept.id \u003d id;\n    get dept;\n    showDept();\n  end\n\n  function showDept()\n    if ( dept is noRecordFound )\n      writeStdOut ( \"Department \" + dept.id + \" not found.\" );\n    else\n        writeStdOut( \"Department \" + dept.id +\n           \" description:  \" + dept.description );\n    end\n  end\n\n  function setVariation ( desc string )\n    writeStdOut ( \"Variation \u003d \" + desc );\n  end\n\n  function sqlFailure()\n     writeStdOut ( \"SQL Exception, SQL code \u003d\n        \" + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n     rollback();\n  end\n\n  function anyFailure( ex AnyException )\n     writeStdOut ( \"Unexpected Exception, Error code \u003d  \" + ex.messageID );\n     writeStdOut ( ex.message );\n     rollback();\n  end\n\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLBatch.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_2",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLCreateTable type basicProgram\n\n  dept Department;\n\n  function main()\n    try\n      execute #sql{\n        create table \"DEPARTMENT_TABLE\" (\n        id char(4) not null,\n        description varchar(30),\n        manager char(6) not null,\n        primary key(id))\n        };\n      writeStdOut( \"DEPARTMENT_TABLE created\");\n    onException (ex SQLException)\n      writeStdOut ( \"Create DEPARTMENT_TABLE failed\"\n       + \", Unexpected SQL Exception, SQL code \u003d  \"\n       + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n    end\n  end\n\nend\n\nRecord Department type SQLRecord {\n  tableNames \u003d [[\"DEPARTMENT_TABLE\"]] ,\n  keyItems \u003d [id]\n  }\n  id string { maxLen \u003d 4 };\n  description string { isSQLNullable \u003d YES };\n  manager string ;\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLCreateTable.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_3_files_3",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLDropTable type basicProgram\n\n  variation string;\n\n  function main()\n    try\n      execute #sql{ drop table \"DEPARTMENT_TABLE\" };\n    onException  (ex sqlException)\n    end\n    if ( sysVar.sqlData.sqlState \u003d\u003d \"00000\"  // success\n      ||   sysVar.sqlData.sqlState \u003d\u003d \"42704\" ) // table didn\u0027t exist\n      writeStdOut( \"DEPARTMENT_TABLE dropped\");\n    else\n      writeStdOut ( \"Drop DEPARTMENT_TABLE failed\"\n       + \", Unexpected SQL Exception, SQL code \u003d  \" + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n    end\n  end\n\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLDropTable.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0_files_3"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_4",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package hello;\n\nprogram helloMain type BasicProgram\n     function main()\n        SysLib.writeStdOut(\"Hello, Cleveland!\");\n     end\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "hello.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_5",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "function example()\nvgVar.handleHardIOErrors  \u003d 1;\n\ntry\n  open myResults for myCustomer\n    with #sql{\n      SELECT customer_number, customer_name\n      FROM Customer\n      WHERE customer_number \u003e\u003d :myCustomer.customerNumber\n      FOR UPDATE OF customer_name\n    }\n    into myCustomer.customerNumber, myCustomer.customerName;\nonException(sqlEx SQLException)\n  myErrorHandler(6);    // exits program\nend\n\ntry\n  forEach (from myResults)\n    // make last name first\n    reverseName(myCustomer.customerName);\n\n    try\n      execute\n        #sql{\n          UPDATE Customer\n          SET customer_name \u003d :myCustomer.customerName\n          WHERE CURRENT OF myResults\n        };\n    onException(sqlEx SQLException)\n      myErrorHandler(10); // exits program\n    end\n  end\n\nonException(sqlEx SQLException)\n  myErrorHandler(8);  // exits program\nend\n\nsysLib.commit();\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "foreach.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_6",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Program calc3\n  x INT \u003d 3;\n  y INT \u003d 5;\n  z INT \u003d 7;\n  function main()\n    case\n      when (x \u003d\u003d 3)\n        writeStdOut(\"x passes\");\n      when (y \u003d\u003d 5)\n        writeStdOut(\"y passes\");\n      when (z \u003d\u003d 7)\n        writeStdOut(\"z passes\");\n      otherwise\n        writeStdErr(\"You should not see this msg\");\n    end\n  end\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "Calc.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_7",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLBatch type basicProgram\n\n  dept Department;\n\n  function main()\n    try\n      clearTable();\n      loadTable();\n      getRow();\n      updateRow();\n      getAllRows();\n      forceRecordNotFound();\n      forceSQLException();\n    onException (ex SQLException)\n      sqlFailure();\n    onException (ex AnyException)\n      anyFailure( ex );\n    end\n  end\n\n  function getRow( )\n      setVariation ( \"Get row from department table\" );\n    getDept(\"D100\");\n  end\n\n  function updateRow()\n    set dept empty;\n      setVariation ( \"Update department table\" );\n    dept.id \u003d \"T100\";\n    get dept forUpdate;\n    if ( dept is noRecordFound )\n      sqlFailure();\n    else\n      dept.description \u003d \"Test Engineers\";\n      replace dept;\n      commit();\n    end\n    getDept( \"T100\" );\n  end\n\n  function getAllRows()\n    setVariation ( \"Get all departments\" );\n    dept.id \u003d \" \";\n    open deptSet for dept;\n    foreach ( dept )\n      showDept();\n    end\n    end\n\n  function clearTable()\n      setVariation ( \"Clear all rows from department table\" );\n      dept.id \u003d \" \";\n      execute delete\n        #sql{\n          delete from DEPARTMENT_TABLE\n          where\n            id \u003e\u003d :dept.id\n        }  for dept;\n    commit();\n  end\n\n  function forceRecordNotFound()\n    setVariation( \"Try to get a department that is not in the table\");\n    getDept(\"B100\");\n  end\n\n  function forceSQLException()\n    setVariation(\"Force an sql exception by dropping a non-existent table\");\n    prepare dropStmt from \"DROP TABLE NOT_A_TABLE\";\n    execute dropStmt;\n  end\n\n  function loadTable()\n    setVariation ( \"Load department table\" );\n    addDept(\"A100\",\"Architects\",\"AM0001\");\n    addDept(\"D100\",\"Developers\",\"DM0001\");\n    addDept(\"T100\",\"Testers\",\"TM0001\");\n    addDept(\"M100\",\"Managers\",\"MM0001\");\n    commit();\n  end\n\n  function addDept( deptNo string, desc String, manager string )\n    dept.id \u003d deptNo;\n    dept.description \u003d desc;\n    dept.manager \u003d manager;\n    add dept;\n  end\n\n  function getDept( id string )\n    set dept empty;\n    dept.id \u003d id;\n    get dept;\n    showDept();\n  end\n\n  function showDept()\n    if ( dept is noRecordFound )\n      writeStdOut ( \"Department \" + dept.id + \" not found.\" );\n    else\n        writeStdOut( \"Department \" + dept.id +\n           \" description:  \" + dept.description );\n    end\n  end\n\n  function setVariation ( desc string )\n    writeStdOut ( \"Variation \u003d \" + desc );\n  end\n\n  function sqlFailure()\n     writeStdOut ( \"SQL Exception, SQL code \u003d\n        \" + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n     rollback();\n  end\n\n  function anyFailure( ex AnyException )\n     writeStdOut ( \"Unexpected Exception, Error code \u003d  \" + ex.messageID );\n     writeStdOut ( ex.message );\n     rollback();\n  end\n\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLBatch.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_8",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Program calc3\n  x INT \u003d 3;\n  y INT \u003d 5;\n  z INT \u003d 7;\n  function main()\n    case (myRecord.requestID)\n        when (1)\n          myFirstFunction();\n        when (2, 3, 4)\n          try\n            call myProgram;\n          onException(iex InvocationException)\n            myCallFunction(fileEx);\n          end\n        otherwise\n          myDefaultFunction();\n      end\n  end\nend\n"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "multipleWhenCondition.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_9",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package jsfhandlers;\n\nimport eglderbydb.access.CustomerLib;\nimport eglderbydb.data.*;\nimport com.ibm.egl.jsf.*;\nimport eglderbydb.StatusRec;\n\nhandler updatecustomer type JSFHandler\n\t{onConstructionFunction \u003d onConstruction,\n\t onPrerenderFunction \u003d onPrerender,\n \t view \u003d \"updatecustomer.jsp\",\n \t viewRootVar \u003d viewRoot}\n\n\tviewRoot UIViewRoot;\n\tcustomer Customer;\n\tstatus StatusRec;\n\n\t// Function Declarations\n\tfunction onConstruction()\n\tend\n\n\tfunction onPrerender(CID INT)\n\t\tcustomer.customerId \u003d CID;\n\t\tCustomerLib.GetCustomer(customer, status);\n\tend\n\n\tfunction updateRecord()\n\t\tCustomerLib.UpdateCustomer(customer, status);\n\t\tforward to \"allcustomers\";\n\tend\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "handler.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_10",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLCreateTable type basicProgram\n\n  dept Department;\n\n  function main()\n    try\n      execute #sql{\n        create table \"DEPARTMENT_TABLE\" (\n        id char(4) not null,\n        description varchar(30),\n        manager char(6) not null,\n        primary key(id))\n        };\n      writeStdOut( \"DEPARTMENT_TABLE created\");\n    onException (ex SQLException)\n      writeStdOut ( \"Create DEPARTMENT_TABLE failed\"\n       + \", Unexpected SQL Exception, SQL code \u003d  \"\n       + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n    end\n  end\n\nend\n\nRecord Department type SQLRecord {\n  tableNames \u003d [[\"DEPARTMENT_TABLE\"]] ,\n  keyItems \u003d [id]\n  }\n  id string { maxLen \u003d 4 };\n  description string { isSQLNullable \u003d YES };\n  manager string ;\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLCreateTable.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_11",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "record CustomerArray\n\tmyCustomers CustomerRec[] \u003d\n    [ new CustomerRec { idNum \u003d 101 },\n      new CustomerRec { idNum \u003d 102 } ];\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "newExample.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_12",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "package com.CompanyB.CustomerPackage;\nprogram SQLDropTable type basicProgram\n\n  variation string;\n\n  function main()\n    try\n      execute #sql{ drop table \"DEPARTMENT_TABLE\" };\n    onException  (ex sqlException)\n    end\n    if ( sysVar.sqlData.sqlState \u003d\u003d \"00000\"  // success\n      ||   sysVar.sqlData.sqlState \u003d\u003d \"42704\" ) // table didn\u0027t exist\n      writeStdOut( \"DEPARTMENT_TABLE dropped\");\n    else\n      writeStdOut ( \"Drop DEPARTMENT_TABLE failed\"\n       + \", Unexpected SQL Exception, SQL code \u003d  \" + sysVar.sqlData.sqlCode\n       + \", SQL  state:  \" + sysVar.sqlData.sqlstate );\n    end\n  end\n\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SQLDropTable.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_13",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Program calc3\n  function main()\n    chasIndigestion boolean \u003d false;\n     while(moreFood() \u0026\u0026 !hasIndigestion)\n     \tmeal string \u003d getMeal();\n     \twhile(meal !\u003d \"\")\n     \t\tcourse string \u003d nextCourse(meal);\n     \t\teatCourse(course);\n     \t\tif(indigestion())\n     \t\t\thasIndigestion \u003d true;\n     \t\t\texit while; // This exits only the nearest while loop\n     \t\tend\n     \t\tmeal \u003d remainingCourses(meal);\n     \tend\n     end\n  end\nend\n\n"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "nestedLoop.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    },
+    {
+      "id": "UNKNOWN_SOURCE_root_files_0_files_14",
+      "classifier": {
+        "language": "com-strumenta-codeinsightstudio-model-filesystem",
+        "version": "1",
+        "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-codeinsightstudio-model-filesystem",
+            "version": "1",
+            "key": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          },
+          "value": "Program calc3\n  function main()\n    for (i from 1 to 100 by 1)\n      printReport(myArray[i]);\n      if ((i % 10) !\u003d 0)\n        continue;\n      end // if\n      printReport(blankLine);\n    end // for\n  end\nend"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "for.egl"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "UNKNOWN_SOURCE_root_files_0"
+    }
+  ]
+}

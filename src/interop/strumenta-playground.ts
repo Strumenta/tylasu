@@ -88,6 +88,9 @@ export class ParserTrace {
 }
 
 export abstract class TraceNode extends Node {
+
+    abstract parent?: TraceNode;
+
     protected constructor(public eo: ECore.EObject) {
         super();
     }
@@ -190,6 +193,8 @@ export abstract class TraceNode extends Node {
 }
 
 export class ParserNode extends TraceNode {
+
+    parent?: ParserNode;
 
     constructor(eo: ECore.EObject, parent: ParserNode | undefined, protected trace: ParserTrace) {
         super(eo);

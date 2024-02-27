@@ -55,8 +55,6 @@ export class SomeNodeInPackage extends Node {
 @ASTNode("some.package", "NodeSubclass")
 export class NodeSubclass extends SomeNodeInPackage {
     @Property()
-    a: string;
-    @Property()
     b: string;
     @Child()
     anotherChild: SomeNodeInPackage;

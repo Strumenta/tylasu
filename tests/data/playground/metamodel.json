@@ -123,6 +123,10 @@
           {
             "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
             "name": "b",
+            "eType": {
+              "$ref": "http://www.eclipse.org/emf/2002/Ecore#//EString",
+              "eClass": "http://www.eclipse.org/emf/2002/Ecore#//EDataType"
+            },
             "ordered": true,
             "unique": true,
             "lowerBound": 0,

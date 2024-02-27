@@ -19,8 +19,8 @@ const config = {
     // Note: we have several deprecated functions that reduce coverage
     global: {
       statements: 88,
-      branches: 81,
-      functions: 76,
+      branches: 84,
+      functions: 79,
       lines: 88,
     },
   },
@@ -85,7 +85,12 @@ const config = {
   // transformation
   transformIgnorePatterns: [
     "node_modules/",
-  ]
+  ],
+  globals: {
+    "ts-jest": {
+      tsConfig: `tests/tsconfig.json`
+    }
+  }
 };
 
 module.exports = config

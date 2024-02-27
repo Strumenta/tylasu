@@ -36,6 +36,7 @@ describe('Strumenta Playground', function() {
                 expect(data.name).to.equal("test-1");
                 expect(data.code).to.equal("some code");
                 expect(data.ast).not.to.be.undefined;
+                expect(data.ast.root.a).to.equal("root");
                 const json = JSON.stringify(data, null, 2);
                 fs.writeFileSync("tests/data/playground/example1.json", json);
 

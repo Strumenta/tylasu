@@ -80,7 +80,6 @@ export abstract class Origin {
     overlaps(position?: Position): boolean {
         return this.position?.overlaps(position) || false
     }
-
 }
 
 export class SimpleOrigin extends Origin {
