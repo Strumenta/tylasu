@@ -3,9 +3,9 @@
  * may require additional dependencies.
  * @module core
  */
-export * from './model/position';
-export * from './model/model';
-export * from './model/errors';
+export * from "./model/position";
+export * from "./model/model";
+export * from "./model/errors";
 export * from "./model/naming";
 export * from "./model/processing";
 export * from "./traversing/structurally";

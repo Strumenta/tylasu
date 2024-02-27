@@ -388,7 +388,7 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function(): ECore.EObject {
 }
 
 Position.prototype[TO_EOBJECT_SYMBOL] = function(): ECore.EObject {
-    const pos = THE_POSITION_ECLASS.create();
+    const pos = THE_POSITION_ECLASS.create({});
     pos.set("start", THE_POINT_ECLASS.create({
         line: this.start.line, column: this.start.column
     }));

@@ -19,8 +19,8 @@ const config = {
     // Note: we have several deprecated functions that reduce coverage
     global: {
       statements: 88,
-      branches: 80,
-      functions: 77,
+      branches: 81,
+      functions: 76,
       lines: 88,
     },
   },

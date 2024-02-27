@@ -2,6 +2,10 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.8] – 2024-03-27
+
+Included all the changes in the 1.4.x branch (versions 1.4.7 and 1.4.8).
+
 ## [1.5.7] – 2024-01-15
 
 ### Added

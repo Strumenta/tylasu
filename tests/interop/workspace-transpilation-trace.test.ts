@@ -119,9 +119,8 @@ describe('Workspace Transpilation traces', function() {
             });
     it("Can load workspace transpilation trace produced by Kolasu with SimpleOrigin instances",
         function () {
-            this.timeout(0);
-            Ecore.EPackage.Registry.register(THE_AST_EPACKAGE);
-            Ecore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
             const loader = new TranspilationTraceLoader({
                 name: "rpg2java",
                 uri: "file://tests/data/playground/rpg/rpg2java-metamodels.json",

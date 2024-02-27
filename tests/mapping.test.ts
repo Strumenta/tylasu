@@ -106,6 +106,7 @@ describe('ParseTreeToASTTransformer', function () {
         const code = "set foo = \ndisplay @@@";
         const lexer = new SimpleLangLexer(CharStreams.fromString(code));
         const parser = new SimpleLangParser(new CommonTokenStream(lexer));
+        parser.removeErrorListeners();
         const pt = parser.compilationUnit();
         expect(parser.numberOfSyntaxErrors).to.equal(2);
 

@@ -1,4 +1,4 @@
-import ECore from "ecore/dist/ecore";
+import ECore from "ecore";
 import {IssueSeverity, IssueType} from "../validation";
 import {addLiteral, getEPackage} from "./ecore-basic";
 
@@ -67,16 +67,16 @@ THE_ORIGIN_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
-export const THE_SIMPLE_ORIGIN_ECLASS = Ecore.EClass.create({
+export const THE_SIMPLE_ORIGIN_ECLASS = ECore.EClass.create({
     name: "SimpleOrigin"
 });
 THE_SIMPLE_ORIGIN_ECLASS.get("eSuperTypes").add(THE_ORIGIN_ECLASS);
-THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EAttribute.create({
+THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(ECore.EAttribute.create({
     name: "sourceText",
-    eType: Ecore.EString,
+    eType: ECore.EString,
     lowerBound: 0
 }));
-THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(Ecore.EReference.create({
+THE_SIMPLE_ORIGIN_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     name: "position",
     eType: THE_POSITION_ECLASS,
     lowerBound: 0,
