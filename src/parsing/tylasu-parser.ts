@@ -28,24 +28,6 @@ import {
 } from "./parsing";
 import {ASTParser} from "./ast-parser";
 
-let now: () => number;
-try {
-    // Web
-    performance.now();
-    now = () => performance.now();
-} catch (e) {
-    try {
-        // Node.js
-        if (global) {
-            const { performance } = global['require']('perf_hooks');
-            now = () => performance.now();
-        }
-    } catch (e) {
-        // Fallback
-        now = () => new Date().getTime();
-    }
-}
-
 export abstract class TokenFactory<T extends TylasuToken> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     categoryOf(t: Token): TokenCategory {
@@ -101,7 +83,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
     lex(inputStream: CharStream, onlyFromDefaultChannel = true): LexingResult<T> {
         const issues: Issue[] = [];
         const tokens: T[] = [];
-        const time = now();
+        const time = performance.now();
         const lexer = this.createANTLRLexer(inputStream)!;
         this.injectErrorCollectorInLexer(lexer, issues);
         let t: Token;
@@ -122,7 +104,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
         }
 
         const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
-        return new LexingResult(code, tokens, issues, now() - time);
+        return new LexingResult(code, tokens, issues, performance.now() - time);
     }
 
     protected injectErrorCollectorInLexer(lexer: Lexer, issues: Issue[]): void {
@@ -220,15 +202,15 @@ export abstract class TylasuParser<
     parseFirstStage(inputStream: CharStream, measureLexingTime = false): FirstStageParsingResult<C> {
         const issues: Issue[] = [];
         let lexingTime: number | undefined = undefined;
-        const time = now();
+        const time = performance.now();
         const parser = this.createParser(inputStream, issues);
         if (measureLexingTime) {
             const tokenStream = parser.inputStream;
             if (tokenStream instanceof CommonTokenStream) {
-                lexingTime = now();
+                lexingTime = performance.now();
                 tokenStream.fill();
                 tokenStream.seek(0);
-                lexingTime = lexingTime - now();
+                lexingTime = lexingTime - performance.now();
             }
         }
         const root = this.invokeRootRule(parser);
@@ -236,7 +218,7 @@ export abstract class TylasuParser<
             this.verifyParseTree(parser, issues, root);
         }
         const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
-        return new FirstStageParsingResult(code, root, issues, parser, now() - time, lexingTime);
+        return new FirstStageParsingResult(code, root, issues, parser, performance.now() - time, lexingTime);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -254,7 +236,7 @@ export abstract class TylasuParser<
             }
             code = new CharStream(code);
         }
-        const start = now()
+        const start = performance.now();
         const firstStage = this.parseFirstStage(code, measureLexingTime);
         const issues = firstStage.issues;
         let ast = this.parseTreeToAst(firstStage.root!, considerPosition, issues, source);
@@ -270,7 +252,7 @@ export abstract class TylasuParser<
             }
         }
         const text = code.getText(Interval.of(0, code.size - 1));
-        return new ParsingResult(text, ast, issues, undefined, firstStage, now() - start);
+        return new ParsingResult(text, ast, issues, undefined, firstStage, performance.now() - start);
     }
 
     /**
@@ -302,8 +284,8 @@ export abstract class TylasuParser<
 
 function processDescendantsAndErrors(
     self: ParserRuleContext,
-    operationOnParserRuleContext: (ParserRuleContext) => void,
-    operationOnError: (ErrorNode) => void,
+    operationOnParserRuleContext: (c: ParserRuleContext) => void,
+    operationOnError: (e: ErrorNode) => void,
     includingMe = true
 ) {
     if (includingMe) {
