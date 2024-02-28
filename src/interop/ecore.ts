@@ -1,3 +1,7 @@
+/**
+ * ECore interoperability module with ecore.js.
+ * @module interop/ecore
+ */
 import {
     ensureNodeDefinition,
     ensurePackage,

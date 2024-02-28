@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTTransformer, Child, GenericErrorNode, GenericNode, Mapped, Node, Position} from "../src";
+import {ASTTransformer, Child, GenericErrorNode, GenericNode, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";

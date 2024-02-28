@@ -3,7 +3,7 @@
 	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.6.0",
+	"version": "1.6.1",
 	"license": "Apache-2.0",
 	"keywords": [
 		"antlr",
@@ -49,6 +49,11 @@
 			"require": "./dist/cjs/interop/ecore-enabled-parser.js",
 			"types": "./dist/types/interop/ecore-enabled-parser.d.ts"
 		},
+		"./interop/lionweb": {
+			"import": "./dist/esm/interop/lionweb.js",
+			"require": "./dist/cjs/interop/lionweb.js",
+			"types": "./dist/types/interop/lionweb.d.ts"
+		},
 		"./interop/strumenta-playground": {
 			"import": "./dist/esm/interop/strumenta-playground.js",
 			"require": "./dist/cjs/interop/strumenta-playground.js",
@@ -57,21 +62,12 @@
 	},
 	"typesVersions": {
 		"*": {
-			"parsing": [
-				"dist/types/parsing/index.d.ts"
-			],
-			"mapping": [
-				"dist/types/mapping.d.ts"
-			],
-			"interop/ecore": [
-				"dist/types/interop/ecore.d.ts"
-			],
-			"interop/ecore-enabled-parser": [
-				"dist/types/interop/ecore-enabled-parser.d.ts"
-			],
-			"interop/strumenta-playground": [
-				"dist/types/interop/strumenta-playground.d.ts"
-			]
+			"parsing": ["dist/types/parsing/index.d.ts"],
+			"mapping": ["dist/types/mapping.d.ts"],
+			"interop/ecore": ["dist/types/interop/ecore.d.ts"],
+			"interop/lionweb": ["dist/types/interop/lionweb.d.ts"],
+			"interop/ecore-enabled-parser": ["dist/types/interop/ecore-enabled-parser.d.ts"],
+			"interop/strumenta-playground": ["dist/types/interop/strumenta-playground.d.ts"]
 		}
 	},
 	"browser": "dist/esm/index.js",
@@ -107,7 +103,7 @@
 		"build": "yarn run build:esm && yarn run build:cjs",
 		"build:esm": "tsc --module es6 --outDir dist/esm",
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
-		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts",
+		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts src/interop/lionweb.ts",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
 		"test": "yarn run build-test-parser && node --experimental-vm-modules node_modules/jest/bin/jest.js",

@@ -1,3 +1,7 @@
+/**
+ * Lionweb interoperability module.
+ * @module interop/lionweb
+ */
 import {
     Classifier,
     Containment, deserializeLanguages,

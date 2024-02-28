@@ -18,10 +18,10 @@ const config = {
   coverageThreshold: {
     // Note: we have several deprecated functions that reduce coverage
     global: {
-      statements: 88,
+      statements: 90,
       branches: 84,
-      functions: 76, // Note: our CI on Node 16 computes a lower number for functions, for some reason
-      lines: 88,
+      functions: 80,
+      lines: 90,
     },
   },
   moduleDirectories: ["node_modules"],

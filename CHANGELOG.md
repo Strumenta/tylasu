@@ -2,6 +2,15 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.1] – 2024-02-28
+
+### Added
+- Proper export of the Lionweb interop module
+- Module documentation for all optional interop modules
+
+### Removed
+- Deprecated AST transformation functions and decorators, that had been superseded by StarLasu AST Transformers.
+
 ## [1.6.0] – 2024-02-28
 
 ## Added
