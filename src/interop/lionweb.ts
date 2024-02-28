@@ -8,7 +8,7 @@ import {
 } from "@lionweb/core";
 import {Node} from "..";
 
-export class TylasuNode implements LionwebNode {
+export class TylasuNodeWrapper implements LionwebNode {
     id: Id;
     node: Node;
     parent?: LionwebNode;
@@ -34,16 +34,16 @@ export class LanguageMapping {
     }
 }
 
-export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode> {
+export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNodeWrapper> {
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
 
     encodingOf(): unknown {
         return undefined;
     }
-    nodeFor(parent: TylasuNode | undefined, classifier: Classifier, id: string, propertySettings: {
+    nodeFor(parent: TylasuNodeWrapper | undefined, classifier: Classifier, id: string, propertySettings: {
         [p: string]: unknown
-    }): TylasuNode {
+    }): TylasuNodeWrapper {
         let node: Node | undefined;
         for (const language of this.languageMappings) {
             const nodeType = language.classifiers.get(classifier);
@@ -63,12 +63,12 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
             throw new Error("Unknown classifier: " + classifier.id);
         }
     }
-    setFeatureValue(node: TylasuNode, feature: Feature, value: unknown): void {
+    setFeatureValue(node: TylasuNodeWrapper, feature: Feature, value: unknown): void {
         if (feature instanceof Containment) {
             if (feature.multiple) {
-                node.node.addChild(feature.name, (value as TylasuNode)?.node);
+                node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
             } else {
-                node.node.setChild(feature.name, (value as TylasuNode)?.node);
+                node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
             }
         } else {
             node.node[feature.name] = value;
