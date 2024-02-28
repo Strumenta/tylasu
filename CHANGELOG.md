@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Added
 - Lionweb deserialization into Tylasu nodes
 
+## Changed
+- `addChild` and `setChild` now correctly check for the feature's multiplicity.
+
 ## [1.5.8] – 2024-02-27
 
 Included all the changes in the 1.4.x branch (versions 1.4.7 and 1.4.8).
