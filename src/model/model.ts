@@ -157,15 +157,20 @@ export abstract class Node extends Origin implements Destination {
         });
     }
 
-    isChild(name: string): boolean {
-        return this.getChildNames().indexOf(name) >= 0;
+    containment(name: string): { multiple: boolean } | undefined {
+        const props = this.nodeDefinition?.properties || {};
+        if (name in props) {
+            return props[name].child ? { multiple: !!props[name].multiple } : undefined;
+        } else {
+            return undefined;
+        }
     }
 
     setChild(name: string, child: Node): void {
-        if(!this.isChild(name)) {
-            throw new Error("Not a child: " + name);
-        }
-        if(Array.isArray(this[name])) {
+        const containment = this.containment(name);
+        if(!containment) {
+            throw new Error("Not a containment: " + name);
+        } else if (containment.multiple) {
             throw new Error(name + " is a collection, use addChild");
         }
         if(child.parent && child.parent != this) {
@@ -178,10 +183,10 @@ export abstract class Node extends Origin implements Destination {
     }
 
     addChild(name: string, child: Node): void {
-        if(!this.isChild(name)) {
-            throw new Error("Not a child: " + name);
-        }
-        if(this[name] && !Array.isArray(this[name])) {
+        const containment = this.containment(name);
+        if(!containment) {
+            throw new Error("Not a containment: " + name);
+        } else if (!containment.multiple) {
             throw new Error(name + " is not a collection, use setChild");
         }
         if(child.parent && child.parent != this) {

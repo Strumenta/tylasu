@@ -33,11 +33,12 @@ Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
         }
         const element = node[p];
         if(element !== undefined && element !== null) {
-            if(node.isChild(p)) {
-                if(element instanceof Node) {
-                    result[p] = toJSON(element, withIds);
-                } else if(Array.isArray(element)) {
+            const containment = node.containment(p);
+            if(containment) {
+                if(containment.multiple) {
                     result[p] = element.map(e => toJSON(e));
+                } else {
+                    result[p] = toJSON(element, withIds);
                 }
             }
             else if (element instanceof ReferenceByName) {

@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
+import {ASTNode, Child, Children, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
 import {JSONGenerator} from "../src";
 import {Indexer} from "../src/interop/indexing";
 
@@ -183,18 +183,16 @@ describe('JSON generator', function() {
 
 @ASTNode("", "NodeWithChildren")
 class NodeWithChildren extends Node {
-    payload: number
+    payload: number;
     @Child()
-    singleChild: NodeWithChildren
-    @Child()
-    childrenCollection: NodeWithChildren[]
+    singleChild: NodeWithChildren;
+    @Children()
+    childrenCollection: NodeWithChildren[];
 }
 
 @ASTNode("", "DummyNamedNode")
 class DummyNamedNode extends Node implements PossiblyNamed {
-    constructor(
-        public name?: string
-    ) {
+    constructor(public name?: string) {
         super();
     }
 }

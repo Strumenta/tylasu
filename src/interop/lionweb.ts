@@ -1,7 +1,6 @@
 import {
     Classifier,
     Containment, deserializeLanguages,
-    EnumerationLiteral,
     Feature,
     Id,
     InstantiationFacade, Language,
@@ -27,7 +26,7 @@ export class LanguageMapping {
 
     extend(languageMapping: LanguageMapping): this {
         const entries = languageMapping.nodeTypes.entries();
-        for (let entry of entries) {
+        for (const entry of entries) {
             this.nodeTypes.set(entry[0], entry[1]);
             this.classifiers.set(entry[1], entry[0]);
         }
@@ -39,14 +38,14 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
 
-    encodingOf(literal: EnumerationLiteral): unknown {
+    encodingOf(): unknown {
         return undefined;
     }
     nodeFor(parent: TylasuNode | undefined, classifier: Classifier, id: string, propertySettings: {
         [p: string]: unknown
     }): TylasuNode {
         let node: Node | undefined;
-        for (let language of this.languageMappings) {
+        for (const language of this.languageMappings) {
             const nodeType = language.classifiers.get(classifier);
             if (nodeType) {
                 node = this.makeNode(nodeType, parent?.node, propertySettings);
@@ -66,7 +65,11 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
     }
     setFeatureValue(node: TylasuNode, feature: Feature, value: unknown): void {
         if (feature instanceof Containment) {
-            node.node.setChild(feature.name, (value as TylasuNode)?.node);
+            if (feature.multiple) {
+                node.node.addChild(feature.name, (value as TylasuNode)?.node);
+            } else {
+                node.node.setChild(feature.name, (value as TylasuNode)?.node);
+            }
         } else {
             node.node[feature.name] = value;
         }
