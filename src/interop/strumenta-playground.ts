@@ -1,6 +1,6 @@
 import {ParsingResult} from "../parsing";
 import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
-import {Node, NodeDefinition} from "../model/model";
+import {Node, NodeDefinition, PropertyDefinition} from "../model/model";
 import ECore from "ecore/dist/ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
@@ -128,12 +128,18 @@ export abstract class TraceNode extends Node {
         };
     }
 
-    getProperties(): any {
-        const result: any = {};
+    getProperties(): { [name: string | symbol]: PropertyDefinition } {
+        const result: { [name: string | symbol]: PropertyDefinition } = {};
         for (const attr of this.eo.eClass.get("eAllAttributes")) {
             const name = attr.get("name");
-            result[name] = { child: false };
+            result[name] = { name: name, child: false };
         }
+        this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .forEach((c) => {
+                const name = c.eContainingFeature.get("name");
+                result[name] = { name, child: true, multiple: c.eContainingFeature.get("many") };
+            });
         return result;
     }
 
@@ -207,16 +213,6 @@ export class ParserNode extends TraceNode {
 
     get children(): Node[] {
         return this.getChildren();
-    }
-
-    getProperties(): any {
-        const def = super.getProperties();
-        this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .forEach((c) => {
-                def[c.eContainingFeature.get("name")] = { child: true };
-            });
-        return def;
     }
 }
 
@@ -433,17 +429,6 @@ export class SourceNode extends TraceNode {
     get children(): Node[] {
         return this.getChildren();
     }
-
-    getProperties(): any {
-        const def = super.getProperties();
-        this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .forEach((c) => {
-                def[c.eContainingFeature.get("name")] = { child: true };
-            });
-        return def;
-    }
-
 }
 
 export class TargetNode extends TraceNode {
@@ -504,14 +489,9 @@ export class TargetNode extends TraceNode {
         return this.getChildren();
     }
 
-    getProperties(): any {
+    getProperties() {
         const def = super.getProperties();
-        this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .filter((c) => c.eContainingFeature.get("name") != "destination")
-            .forEach((c) => {
-                def[c.eContainingFeature.get("name")] = { child: true };
-            });
+        delete def["destination"];
         return def;
     }
 }
