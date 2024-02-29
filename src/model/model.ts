@@ -146,7 +146,7 @@ export abstract class Node extends Origin implements Destination {
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
-    protected get nodeDefinition(): NodeDefinition | undefined {
+    get nodeDefinition(): NodeDefinition | undefined {
         return getNodeDefinition(this);
     }
 

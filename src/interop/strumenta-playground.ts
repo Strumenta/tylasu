@@ -120,7 +120,7 @@ export abstract class TraceNode extends Node {
         return this.getPosition();
     }
 
-    protected get nodeDefinition(): NodeDefinition {
+    get nodeDefinition(): NodeDefinition {
         return {
             package: this.eo.eClass.eContainer.get("name") as string,
             name: this.eo.eClass.get("name") as string,

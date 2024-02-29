@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.2] – 2024-02-29
+
+### Added
+- Deserialization of Lionweb nodes to dynamic nodes
+
 ## [1.6.1] – 2024-02-28
 
 ### Added

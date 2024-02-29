@@ -10,7 +10,7 @@ import {
     InstantiationFacade, Language,
     Node as LionwebNode
 } from "@lionweb/core";
-import {Node} from "..";
+import {Node, NodeDefinition, PropertyDefinition} from "..";
 
 export class TylasuNodeWrapper implements LionwebNode {
     id: Id;
@@ -38,6 +38,37 @@ export class LanguageMapping {
     }
 }
 
+function featureToProperty(feature: Feature): PropertyDefinition {
+    const def: PropertyDefinition = { name: feature.name };
+    if (feature instanceof Containment) {
+        def.child = true;
+        def.multiple = feature.multiple;
+    }
+    return def
+}
+
+export class DynamicNode extends Node {
+
+    protected readonly _nodeDefinition: NodeDefinition;
+
+    constructor(public readonly classifier: Classifier) {
+        super();
+        const properties = {};
+        classifier.features.forEach(f => {
+            properties[f.name] = featureToProperty(f);
+        });
+        this._nodeDefinition = {
+            name: classifier.name,
+            properties: properties,
+            resolved: true
+        };
+    }
+
+    public get nodeDefinition(): NodeDefinition {
+        return this._nodeDefinition;
+    }
+}
+
 export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNodeWrapper> {
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
@@ -52,20 +83,18 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
         for (const language of this.languageMappings) {
             const nodeType = language.classifiers.get(classifier);
             if (nodeType) {
-                node = this.makeNode(nodeType, parent?.node, propertySettings);
-                break;
+                node = new nodeType() as Node;
             }
         }
-        if (node) {
-            return {
-                id,
-                parent,
-                node,
-                annotations: []
-            };
-        } else {
-            throw new Error("Unknown classifier: " + classifier.id);
+        if (!node) {
+            node = new DynamicNode(classifier);
         }
+        return {
+            id,
+            parent,
+            node: this.setupNode(node, parent?.node, propertySettings),
+            annotations: []
+        };
     }
     setFeatureValue(node: TylasuNodeWrapper, feature: Feature, value: unknown): void {
         if (feature instanceof Containment) {
@@ -79,10 +108,9 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
         }
     }
 
-    protected makeNode(nodeType: any, parent: Node | undefined, propertySettings: {
+    protected setupNode(node: Node, parent: Node | undefined, propertySettings: {
         [p: string]: unknown
     }): Node {
-        const node = new nodeType() as Node;
         Object.keys(propertySettings).forEach(k => {
             node[k] = propertySettings[k]; //TODO protect parent, origin etc.
         })
