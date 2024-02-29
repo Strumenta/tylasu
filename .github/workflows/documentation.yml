@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Generate documentation
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - run: yarn
       - run: yarn extract-docs
       - name: Upload artifact
