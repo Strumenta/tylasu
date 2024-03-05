@@ -27,37 +27,41 @@ export type PropertyDefinition = {
     arrayType?: any
 }
 
-export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition | undefined {
+export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition {
     const target = typeof node === "function" ? node : node.constructor;
+    let definition: NodeDefinition;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        const definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
-        if(definition && definition.properties && !definition.resolved) {
+        definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
+    } else {
+        target[NODE_DEFINITION_SYMBOL] = definition = {
+            properties: {},
+            resolved: false
+        };
+    }
+    if(definition && definition.properties && !definition.resolved) {
+        try {
+            let metadataHolder;
             try {
-                let metadataHolder;
-                try {
-                    metadataHolder = new (node as any)();
-                } catch (_) {
-                    metadataHolder = node;
-                }
-                for(const p in definition.properties) {
-                    if (!definition.properties[p].type) {
-                        const type = Reflect.getMetadata("design:type", metadataHolder, p);
-                        definition.properties[p].type = type;
-                        if(type === Array) {
-                            definition.properties[p].arrayType =
-                                Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
-                        }
+                metadataHolder = new (node as any)();
+            } catch (_) {
+                metadataHolder = node;
+            }
+            for(const p in definition.properties) {
+                if (!definition.properties[p].type) {
+                    const type = Reflect.getMetadata("design:type", metadataHolder, p);
+                    definition.properties[p].type = type;
+                    if(type === Array) {
+                        definition.properties[p].arrayType =
+                            Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
                     }
                 }
-                definition.resolved = true;
-            } catch (e) {
-                //Ignore
             }
+            definition.resolved = true;
+        } catch (e) {
+            //Ignore
         }
-        return definition;
-    } else {
-        return undefined;
     }
+    return definition;
 }
 
 export abstract class Origin {
@@ -146,7 +150,7 @@ export abstract class Node extends Origin implements Destination {
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
-    get nodeDefinition(): NodeDefinition | undefined {
+    get nodeDefinition(): NodeDefinition {
         return getNodeDefinition(this);
     }
 
@@ -262,21 +266,39 @@ export abstract class Node extends Origin implements Destination {
         }
     }
 
-    getAttribute(name: string): any {
+    getAttribute(name: string | symbol): any {
         const props = this.nodeDefinition?.properties || {};
         const prop = props[name];
         if(prop) {
             if (prop.child) {
-                throw new Error(name + " is a containment, please use getChild");
+                throw new Error(name.toString() + " is a containment, please use getChild");
             } else {
                 return this.doGetAttribute(name);
             }
         } else {
-            throw new Error(name + " is not a feature.");
+            throw new Error(name.toString() + " is not a feature.");
         }
     }
 
-    protected doGetAttribute(name: string) {
+    setAttribute(name: string | symbol, value: any) {
+        const props = this.nodeDefinition?.properties || {};
+        const prop = props[name];
+        if(prop) {
+            if (prop.child) {
+                throw new Error(name.toString() + " is a containment, please use setChild/addChild");
+            } else {
+                this.doSetAttribute(name, value);
+            }
+        } else {
+            throw new Error(name.toString() + " is not a feature.");
+        }
+    }
+
+    protected doSetAttribute(name: string | symbol, value: any) {
+        this[name] = value;
+    }
+
+    protected doGetAttribute(name: string | symbol) {
         return this[name];
     }
 

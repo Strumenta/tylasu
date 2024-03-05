@@ -1,19 +1,15 @@
 import {ParsingResult} from "../parsing";
-import {EcoreMetamodelSupport, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
-import {Node, PropertyDefinition} from "../model/model";
+import {EcoreMetamodelSupport, ECoreNode, fromEObject, loadEObject, loadEPackages, Result, toEObject} from "./ecore";
+import {Node} from "../model/model";
 import ECore from "ecore/dist/ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
 import {
     THE_AST_EPACKAGE,
-    THE_ENTITY_DECLARATION_INTERFACE,
-    THE_EXPRESSION_INTERFACE,
-    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
     THE_NODE_ORIGIN_ECLASS,
-    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2,
-    THE_STATEMENT_INTERFACE
+    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2
 } from "./starlasu-v2-metamodel";
-import {THE_NODE_ECLASS as THE_NODE_ECLASS_V1, THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
+import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {Issue} from "../validation";
 import {
     THE_TRANSPILATION_TRACE_ECLASS,
@@ -83,119 +79,6 @@ export class ParserTrace {
 
     get name(): string | undefined {
         return this.eo.get("name");
-    }
-}
-
-export class ECoreNode extends ExternalNode {
-    constructor(public eo: ECore.EObject) {
-        super();
-    }
-
-    get definition() {
-        return {
-            package: this.eo.eClass.eContainer.get("name") as string,
-            name: this.eo.eClass.get("name") as string,
-            properties: this.getProperties()
-        };
-    }
-
-    get parent() {
-        const container = this.eo.eContainer;
-        if (container?.isKindOf(THE_NODE_ECLASS_V2) || container?.isKindOf(THE_NODE_ECLASS_V1)) {
-            return new ECoreNode(container);
-        }
-    }
-
-    get(...path: string[]): ExternalNode | undefined {
-        let eo: ECore.EObject = this.eo;
-        for (const component of path) {
-            eo = eo?.get(component);
-        }
-        if (eo) {
-            return new ECoreNode(eo);
-        } else {
-            return undefined;
-        }
-    }
-
-    getAttribute(name: string): any {
-        return this.eo.get(name);
-    }
-
-    getAttributes(): { [p: string]: any } {
-        const result: any = {};
-        for (const attr of this.eo.eClass.get("eAllAttributes")) {
-            const name = attr.get("name");
-            result[name] = this.eo.get(name);
-        }
-        return result;
-    }
-
-    getChildren(role?: string): ExternalNode[] {
-        return this.getChildrenEObjects(role).map(c => new ECoreNode(c));
-    }
-
-    getId(): string {
-        return this.eo.fragment();
-    }
-
-    getIssues(property = "issues"): Issue[] | undefined {
-        const raw = this.eo.get(property);
-        if (raw) {
-            return fromEObject(raw) as Issue[];
-        } else {
-            return undefined;
-        }
-    }
-
-    getPosition(property = "position"): Position | undefined {
-        const raw = this.eo.get(property);
-        if (raw) {
-            return fromEObject(raw) as Position;
-        } else {
-            return undefined;
-        }
-    }
-
-    getRole(): string | undefined {
-        return this.eo.eContainingFeature?.get("name");
-    }
-
-    getProperties(): { [name: string | symbol]: PropertyDefinition } {
-        const result: { [name: string | symbol]: PropertyDefinition } = {};
-        for (const attr of this.eo.eClass.get("eAllAttributes")) {
-            const name = attr.get("name");
-            result[name] = { name: name, child: false };
-        }
-        this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .forEach((c) => {
-                const name = c.eContainingFeature.get("name");
-                result[name] = { name, child: true, multiple: c.eContainingFeature.get("many") };
-            });
-        return result;
-    }
-
-    protected getChildrenEObjects(role: string | undefined) {
-        return this.eo.eContents()
-            .filter((c) => c.isKindOf(THE_NODE_ECLASS_V2) || c.isKindOf(THE_NODE_ECLASS_V1))
-            .filter((c) => c.eContainingFeature.get("name") != "origin")
-            .filter((c) => c.eContainingFeature.get("name") != "destination")
-            .filter((c) => role == null || role == c.eContainingFeature.get("name"));
-    }
-
-    isDeclaration(): boolean {
-        return this.eo.isKindOf(THE_ENTITY_DECLARATION_INTERFACE);
-    }
-    isExpression(): boolean {
-        return this.eo.isKindOf(THE_EXPRESSION_INTERFACE);
-    }
-    isStatement(): boolean {
-        return this.eo.isKindOf(THE_STATEMENT_INTERFACE);
-    }
-
-    equals(other: ExternalNode): boolean {
-        return super.equals(other) || (other instanceof ECoreNode && other.eo == this.eo);
     }
 }
 
@@ -411,7 +294,7 @@ export class SourceNode extends TraceNode {
     }
 
     getChildren(role?: string): SourceNode[] {
-        return this.wrappedNode.getChildren(role).map((c) => new SourceNode(c, this.trace, this.file));
+        return this.wrappedNode.getChildren(role).map((c) => new SourceNode(c, this.trace, this.file).withParent(this));
     }
 
     get children(): Node[] {

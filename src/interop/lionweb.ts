@@ -8,15 +8,15 @@ import {
     Feature,
     Id,
     InstantiationFacade, Language,
-    Node as LionwebNode
+    Node as LionwebNodeInterface
 } from "@lionweb/core";
-import {Node, NodeDefinition, PropertyDefinition} from "..";
+import {ExternalNode, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
 
-export class TylasuNodeWrapper implements LionwebNode {
+export class TylasuNodeWrapper implements LionwebNodeInterface {
     id: Id;
     node: Node;
-    parent?: LionwebNode;
-    annotations: LionwebNode[];
+    parent?: LionwebNodeInterface;
+    annotations: LionwebNodeInterface[];
 }
 
 export class LanguageMapping {
@@ -47,28 +47,6 @@ function featureToProperty(feature: Feature): PropertyDefinition {
     return def
 }
 
-export class DynamicNode extends Node {
-
-    protected readonly _nodeDefinition: NodeDefinition;
-
-    constructor(public readonly classifier: Classifier) {
-        super();
-        const properties = {};
-        classifier.features.forEach(f => {
-            properties[f.name] = featureToProperty(f);
-        });
-        this._nodeDefinition = {
-            name: classifier.name,
-            properties: properties,
-            resolved: true
-        };
-    }
-
-    public get nodeDefinition(): NodeDefinition {
-        return this._nodeDefinition;
-    }
-}
-
 export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNodeWrapper> {
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
@@ -87,12 +65,16 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
             }
         }
         if (!node) {
-            node = new DynamicNode(classifier);
+            node = new LionwebNode(classifier, {
+                id,
+                parent,
+                annotations: []
+            });
         }
         return {
             id,
             parent,
-            node: this.setupNode(node, parent?.node, propertySettings),
+            node: node.withParent(parent?.node),
             annotations: []
         };
     }
@@ -104,7 +86,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
                 node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
             }
         } else {
-            node.node[feature.name] = value;
+            node.node.setAttribute(feature.name, value);
         }
     }
 
@@ -304,3 +286,64 @@ export function findClassifier(language: Language, id: string) {
 
 export const AST_NODE_CLASSIFIER = findClassifier(STARLASU_LANGUAGE, "com_strumenta_starlasu_ASTNode");
 STARLASU_LANGUAGE_MAPPING.register(Node, AST_NODE_CLASSIFIER)
+
+export class LionwebNode extends ExternalNode {
+
+    parent: LionwebNode;
+    public readonly nodeDefinition: NodeDefinition;
+
+    constructor(
+        public readonly classifier: Classifier,
+        protected lwnode: LionwebNodeInterface
+    ) {
+        super();
+        const properties = {};
+        classifier.features.forEach(f => {
+            properties[f.name] = featureToProperty(f);
+        });
+        this.nodeDefinition = {
+            name: classifier.name,
+            properties: properties,
+            resolved: true
+        };
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    get(...path: string[]): ExternalNode | undefined {
+        return undefined; // TODO
+    }
+
+    getAttributes(): { [p: string]: any } {
+        return {}; // TODO
+    }
+
+    getId(): string {
+        return "";
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    getIssues(property?: string): Issue[] | undefined {
+        return undefined;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    getPosition(property?: string): Position | undefined {
+        return undefined;
+    }
+
+    getRole(): string | undefined {
+        return undefined;
+    }
+
+    isDeclaration(): boolean {
+        return false;
+    }
+
+    isExpression(): boolean {
+        return false;
+    }
+
+    isStatement(): boolean {
+        return false;
+    }
+}

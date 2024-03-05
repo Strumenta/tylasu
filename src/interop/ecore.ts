@@ -9,6 +9,7 @@ import {
     Node,
     NODE_TYPES,
     PackageDescription,
+    PropertyDefinition,
     registerNodeDefinition,
     registerNodeProperty
 } from "../model/model";
@@ -18,19 +19,29 @@ import {Issue, IssueSeverity, IssueType} from "../validation";
 import {addLiteral, getEPackage} from "./ecore-basic";
 import {
     STARLASU_URI_V2,
+    THE_ENTITY_DECLARATION_INTERFACE,
+    THE_EXPRESSION_INTERFACE,
     THE_ISSUE_ECLASS,
     THE_ISSUE_SEVERITY_EENUM,
     THE_ISSUE_TYPE_EENUM,
     THE_LOCAL_DATE_ECLASS,
     THE_LOCAL_DATE_TIME_ECLASS,
     THE_LOCAL_TIME_ECLASS,
-    THE_NODE_ECLASS, THE_NODE_ORIGIN_ECLASS,
+    THE_NODE_ECLASS as THE_NODE_ECLASS_V2,
+    THE_NODE_ECLASS,
+    THE_NODE_ORIGIN_ECLASS,
     THE_POINT_ECLASS,
-    THE_POSITION_ECLASS, THE_REFERENCE_BY_NAME_ECLASS,
-    THE_RESULT_ECLASS, THE_SIMPLE_ORIGIN_ECLASS, THE_TEXT_FILE_DESTINATION_ECLASS
+    THE_POSITION_ECLASS,
+    THE_REFERENCE_BY_NAME_ECLASS,
+    THE_RESULT_ECLASS,
+    THE_SIMPLE_ORIGIN_ECLASS,
+    THE_STATEMENT_INTERFACE,
+    THE_TEXT_FILE_DESTINATION_ECLASS
 } from "./starlasu-v2-metamodel";
-import {KOLASU_URI_V1} from "./kolasu-v1-metamodel";
+import {KOLASU_URI_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
+import {ExternalNode} from "../trace/trace-node";
+
 export * as starlasu_v2 from "./starlasu-v2-metamodel";
 export * as kolasu_v1 from "./kolasu-v1-metamodel";
 
@@ -316,7 +327,7 @@ export function fromEObject(obj: ECore.EObject | any, parent?: Node): ASTElement
     const ePackage = eClass.eContainer as ECore.EPackage;
     const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
     if(constructor) {
-        const node = new constructor();
+        const node = new constructor().withParent(parent);
         node.parent = parent;
         eClass.get("eAllStructuralFeatures").forEach(ft => {
             const name = ft.get("name");
@@ -804,3 +815,117 @@ export interface EcoreMetamodelSupport {
     generateMetamodel(resource: ECore.Resource, includingKolasuMetamodel: boolean): void;
 }
 
+export class ECoreNode extends ExternalNode {
+
+    parent?: ECoreNode;
+
+    constructor(public eo: ECore.EObject) {
+        super();
+        const container = this.eo.eContainer;
+        if (container?.isKindOf(THE_NODE_ECLASS_V2) || container?.isKindOf(THE_NODE_ECLASS_V1)) {
+            this.parent = new ECoreNode(container);
+        }
+    }
+
+    get nodeDefinition() {
+        return {
+            package: this.eo.eClass.eContainer.get("name") as string,
+            name: this.eo.eClass.get("name") as string,
+            properties: this.getProperties()
+        };
+    }
+
+    get(...path: string[]): ExternalNode | undefined {
+        let eo: ECore.EObject = this.eo;
+        for (const component of path) {
+            eo = eo?.get(component);
+        }
+        if (eo) {
+            return new ECoreNode(eo);
+        } else {
+            return undefined;
+        }
+    }
+
+    getAttribute(name: string): any {
+        return this.eo.get(name);
+    }
+
+    getAttributes(): { [p: string]: any } {
+        const result: any = {};
+        for (const attr of this.eo.eClass.get("eAllAttributes")) {
+            const name = attr.get("name");
+            result[name] = this.eo.get(name);
+        }
+        return result;
+    }
+
+    getChildren(role?: string): ExternalNode[] {
+        return this.getChildrenEObjects(role).map(c => new ECoreNode(c));
+    }
+
+    getId(): string {
+        return this.eo.fragment();
+    }
+
+    getIssues(property = "issues"): Issue[] | undefined {
+        const raw = this.eo.get(property);
+        if (raw) {
+            return fromEObject(raw) as Issue[];
+        } else {
+            return undefined;
+        }
+    }
+
+    getPosition(property = "position"): Position | undefined {
+        const raw = this.eo.get(property);
+        if (raw) {
+            return fromEObject(raw) as Position;
+        } else {
+            return undefined;
+        }
+    }
+
+    getRole(): string | undefined {
+        return this.eo.eContainingFeature?.get("name");
+    }
+
+    getProperties(): { [name: string | symbol]: PropertyDefinition } {
+        const result: { [name: string | symbol]: PropertyDefinition } = {};
+        for (const attr of this.eo.eClass.get("eAllAttributes")) {
+            const name = attr.get("name");
+            result[name] = {name: name, child: false};
+        }
+        this.eo.eContents()
+            .filter((c) => c.eContainingFeature.get("name") != "position")
+            .forEach((c) => {
+                const name = c.eContainingFeature.get("name");
+                result[name] = {name, child: true, multiple: c.eContainingFeature.get("many")};
+            });
+        return result;
+    }
+
+    protected getChildrenEObjects(role: string | undefined) {
+        return this.eo.eContents()
+            .filter((c) => c.isKindOf(THE_NODE_ECLASS_V2) || c.isKindOf(THE_NODE_ECLASS_V1))
+            .filter((c) => c.eContainingFeature.get("name") != "origin")
+            .filter((c) => c.eContainingFeature.get("name") != "destination")
+            .filter((c) => role == null || role == c.eContainingFeature.get("name"));
+    }
+
+    isDeclaration(): boolean {
+        return this.eo.isKindOf(THE_ENTITY_DECLARATION_INTERFACE);
+    }
+
+    isExpression(): boolean {
+        return this.eo.isKindOf(THE_EXPRESSION_INTERFACE);
+    }
+
+    isStatement(): boolean {
+        return this.eo.isKindOf(THE_STATEMENT_INTERFACE);
+    }
+
+    equals(other: ExternalNode): boolean {
+        return super.equals(other) || (other instanceof ECoreNode && other.eo == this.eo);
+    }
+}

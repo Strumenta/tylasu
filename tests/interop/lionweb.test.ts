@@ -2,11 +2,10 @@ import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
 import {deserializeChunk, deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Children, Node, walk} from "../../src";
+import {Children, Node, Property, walk} from "../../src";
 import {
-    DynamicNode,
     findClassifier,
-    LanguageMapping,
+    LanguageMapping, LionwebNode,
     STARLASU_LANGUAGE,
     STARLASU_LANGUAGE_MAPPING,
     TylasuInstantiationFacade
@@ -14,6 +13,7 @@ import {
 import {map, pipe, reduce} from "iter-ops";
 
 abstract class File extends Node {
+    @Property()
     name: string;
 }
 
@@ -23,6 +23,7 @@ class Directory extends File {
 }
 
 class TextFile extends File {
+    @Property()
     contents: string;
 }
 
@@ -70,18 +71,18 @@ describe('Lionweb integration', function() {
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
             const root = nodes[0];
-            expect(root.node).to.be.instanceof(DynamicNode);
-            let dir = root.node as DynamicNode & any;
+            expect(root.node).to.be.instanceof(LionwebNode);
+            let dir = root.node as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.name).to.equal("resources.zip");
+            expect(dir.getAttribute("name")).to.equal("resources.zip");
             expect(dir.files.length).to.equal(1);
-            expect(dir.files[0]).to.be.instanceof(DynamicNode);
-            dir = dir.files[0] as DynamicNode & any;
+            expect(dir.files[0]).to.be.instanceof(LionwebNode);
+            dir = dir.files[0] as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.name).to.equal("resources");
             expect(dir.files.length).to.equal(15);
-            expect(dir.files[0]).to.be.instanceof(DynamicNode);
-            const file = dir.files[0] as DynamicNode & any;
+            expect(dir.files[0]).to.be.instanceof(LionwebNode);
+            const file = dir.files[0] as LionwebNode & any;
             expect(file.nodeDefinition.name).to.equal("TextFile");
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");

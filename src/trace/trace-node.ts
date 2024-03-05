@@ -2,17 +2,17 @@ import {Node, NodeDefinition} from "../model/model";
 import {Position} from "../model/position";
 import {Issue} from "../validation";
 
-export abstract class ExternalNode {
-    abstract definition: NodeDefinition;
+export abstract class ExternalNode extends Node {
     abstract parent?: ExternalNode;
+    abstract get nodeDefinition(): NodeDefinition;
 
     abstract get(...path: string[]): ExternalNode | undefined;
 
-    abstract getAttribute(name: string): any;
-
     abstract getAttributes(): { [name: string]: any };
 
-    abstract getChildren(role?: string): ExternalNode[];
+    getChildren(name?: string | symbol): ExternalNode[] {
+        return super.getChildren(name).map(c => c as ExternalNode);
+    }
 
     abstract getId(): string;
 
@@ -66,7 +66,7 @@ export abstract class TraceNode extends Node {
     }
 
     get nodeDefinition(): NodeDefinition {
-        return this.wrappedNode.definition;
+        return this.wrappedNode.nodeDefinition;
     }
 
     getAttributes(): { [name: string]: any } {
