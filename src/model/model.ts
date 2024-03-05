@@ -153,17 +153,16 @@ export abstract class Node extends Origin implements Destination {
     get properties(): PropertyDescription[] {
         const props = this.nodeDefinition?.properties || {};
         return Object.getOwnPropertyNames(props).map(p => {
-            return { name: p, value: this[p] };
+            const value = props[p].child ?
+                (props[p].multiple ? this.getChildren(p) : this.getChild(p)) :
+                this.getAttribute(p);
+            return { name: p, value };
         });
     }
 
-    containment(name: string): { multiple: boolean } | undefined {
+    containment(name: string | symbol): PropertyDefinition | undefined {
         const props = this.nodeDefinition?.properties || {};
-        if (name in props) {
-            return props[name].child ? { multiple: !!props[name].multiple } : undefined;
-        } else {
-            return undefined;
-        }
+        return props[name]?.child ? props[name] : undefined;
     }
 
     setChild(name: string, child: Node): void {
@@ -196,6 +195,89 @@ export abstract class Node extends Origin implements Destination {
             this[name] = [];
         }
         this[name].push(child.withParent(this));
+    }
+
+    getChild(name: string, index?: number): Node | undefined {
+        const containment = this.containment(name);
+        if(!containment) {
+            throw new Error("Not a containment: " + name);
+        }
+        const raw = this.doGetChildOrChildren(name);
+        if (containment.multiple) {
+            if (index !== undefined) {
+                return (raw as Node[])[index];
+            } else {
+                throw new Error(name + " is a collection, an index is required");
+            }
+        } else {
+            if (index) {
+                throw new Error(name + " is not a collection, index " + index + " is invalid");
+            } else {
+                return raw as Node;
+            }
+        }
+    }
+
+    protected doGetChildOrChildren(name: string | symbol): Node | Node[] | undefined {
+        return this[name];
+    }
+
+    getChildren(name?: string | symbol): Node[] {
+        if (name !== undefined) {
+            return this.getChildrenWithRole(name);
+        } else {
+            return this.getAllChildren();
+        }
+    }
+
+    getAllChildren() {
+        const props = this.nodeDefinition?.properties || {};
+        const result: Node[] = [];
+        for (const p in props) {
+            const prop = props[p];
+            if (prop.child) {
+                if (prop.multiple) {
+                    result.push(...this.getChildren(p));
+                } else {
+                    const child = this.getChild(p);
+                    if (child) {
+                        result.push(child);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    getChildrenWithRole(name: string | symbol) {
+        const containment = this.containment(name);
+        if (!containment) {
+            throw new Error("Not a containment: " + name.toString());
+        }
+        const raw = this.doGetChildOrChildren(name);
+        if (containment.multiple) {
+            return (raw as Node[]) || [];
+        } else {
+            throw new Error(name.toString() + " is not a collection");
+        }
+    }
+
+    getAttribute(name: string): any {
+        const props = this.nodeDefinition?.properties || {};
+        const prop = props[name];
+        if(prop) {
+            if (prop.child) {
+                throw new Error(name + " is a containment, please use getChild");
+            } else {
+                return this.doGetAttribute(name);
+            }
+        } else {
+            throw new Error(name + " is not a feature.");
+        }
+    }
+
+    protected doGetAttribute(name: string) {
+        return this[name];
     }
 
     withParent(parent?: Node): this {

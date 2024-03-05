@@ -13,3 +13,4 @@ export * from "./traversing/by-position";
 export * from "./transformation/transformation";
 export * from "./validation";
 export * from "./interop/json";
+export * from "./trace/trace-node";

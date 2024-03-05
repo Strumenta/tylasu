@@ -108,11 +108,11 @@ describe('Transpilation traces', function() {
             expect(rootSourceNode.getRole()).to.eql("root");
             expect(rootSourceNode.getChildren("mainStatements")[0].getRole()).to.eql("mainStatements");
             let foundSourceNode = findByPosition(rootSourceNode, pos(1, 0,32, 30)) as SourceNode;
-            expect(foundSourceNode.eo == rootSourceNode.eo).to.be.true;
+            expect(foundSourceNode.equals(rootSourceNode)).to.be.true;
             const descNode = rootSourceNode.children[3].children[1] as SourceNode;
             expect(descNode.getPathFromRoot()).to.eql(["dataDefinitions", 3, "type"]);
             foundSourceNode = findByPosition(descNode, descNode.position!) as SourceNode;
-            expect(foundSourceNode.eo == descNode.eo).to.be.true;
+            expect(foundSourceNode.equals(descNode)).to.be.true;
             const destinationNodes = descNode!.parent!.getDestinationNodes();
             expect(destinationNodes.length).to.eql(1);
             const destNode = destinationNodes[0];
@@ -143,11 +143,11 @@ describe('Transpilation traces', function() {
             const declaration = rootTargetNode.getChildren("declarations")[0];
             expect(declaration.getRole()).to.eql("declarations");
             let foundTargetNode = findByPosition(rootTargetNode, pos(1, 0, 29, 0)) as TargetNode;
-            expect(foundTargetNode.parent!.eo == rootTargetNode.eo).to.be.true;
+            expect(foundTargetNode.parent!.equals(rootTargetNode)).to.be.true;
             const descTargetNode = rootTargetNode.children[0].children[5] as TargetNode;
             expect(descTargetNode.getPathFromRoot()).to.eql(['declarations', 0, 'members', 5]);
             foundTargetNode = findByPosition(descTargetNode, descTargetNode.position!) as TargetNode;
-            expect(foundTargetNode.eo == descTargetNode.eo).to.be.true;
+            expect(foundTargetNode.equals(descTargetNode)).to.be.true;
 
             const secondField = declaration.getChildren("members")[1];
             expect(secondField.getRole()).to.eql("members");

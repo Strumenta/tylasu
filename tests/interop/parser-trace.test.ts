@@ -1,7 +1,8 @@
 import {expect} from "chai";
 import * as fs from "fs";
 import {findByPosition, IssueSeverity, IssueType, Point, pos, Position} from "../../src";
-import {ParserNode, ParserTraceLoader, TraceNode} from "../../src/interop/strumenta-playground";
+import {ParserNode, ParserTraceLoader} from "../../src/interop/strumenta-playground";
+import {TraceNode} from "../../src/trace/trace-node";
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
@@ -45,7 +46,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootNode.getSimpleType()).to.eql("CompilationUnit");
             const child = rootNode.getChildren("dataDefinitions")[3];
-            expect(child.getProperties()).to.eql({
+            expect(child.nodeDefinition.properties).to.eql({
                 name: { name: "name", child: false },
                 keywords: { name: "keywords", child: true, multiple: true }
             });
@@ -81,10 +82,10 @@ describe('Parser traces – Starlasu metamodel V2', function() {
             expect(rootNode.getSimpleType()).to.eql("SourceFile");
             expect(rootNode.getPosition()).to.eql(pos(12, 0,369, 0));
             let foundNode = findByPosition(rootNode, pos(12, 0,369, 0)) as ParserNode;
-            expect(foundNode.eo == rootNode.eo).to.be.true;
+            expect(foundNode.equals(rootNode)).to.be.true;
             const descNode = rootNode.children[10].children[7] as ParserNode;
             foundNode = findByPosition(descNode, descNode.position!) as ParserNode;
-            expect(foundNode.eo == descNode.eo).to.be.true;
+            expect(foundNode.equals(descNode)).to.be.true;
             expect(rootNode.getChildren().length).to.equal(18);
             expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(18);
             // foundNode = findByPosition(rootNode, pos(20, 28, 20, 29)) as ParserNode;
