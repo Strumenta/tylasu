@@ -6,11 +6,11 @@ import {Children, Node, Property, walk} from "../../src";
 import {
     findClassifier,
     LanguageMapping, LionwebNode,
-    STARLASU_LANGUAGE,
     STARLASU_LANGUAGE_MAPPING,
     TylasuInstantiationFacade
 } from "../../src/interop/lionweb";
 import {map, pipe, reduce} from "iter-ops";
+import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
 
 abstract class File extends Node {
     @Property()

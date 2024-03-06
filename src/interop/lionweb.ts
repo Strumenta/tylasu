@@ -4,13 +4,17 @@
  */
 import {
     Classifier,
-    Containment, deserializeLanguages,
+    Concept,
+    Containment,
     Feature,
     Id,
-    InstantiationFacade, Language,
+    InstantiationFacade,
+    Interface,
+    Language,
     Node as LionwebNodeInterface
 } from "@lionweb/core";
 import {ExternalNode, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
+import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
 export class TylasuNodeWrapper implements LionwebNodeInterface {
     id: Id;
@@ -54,9 +58,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
     encodingOf(): unknown {
         return undefined;
     }
-    nodeFor(parent: TylasuNodeWrapper | undefined, classifier: Classifier, id: string, propertySettings: {
-        [p: string]: unknown
-    }): TylasuNodeWrapper {
+    nodeFor(parent: TylasuNodeWrapper | undefined, classifier: Classifier, id: string): TylasuNodeWrapper {
         let node: Node | undefined;
         for (const language of this.languageMappings) {
             const nodeType = language.classifiers.get(classifier);
@@ -103,189 +105,31 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
 
 export const STARLASU_LANGUAGE_MAPPING = new LanguageMapping();
 
-export const STARLASU_LANGUAGE = deserializeLanguages({
-    "serializationFormatVersion": "2023.1",
-    "languages": [
-        {
-            "key": "LionCore-M3",
-            "version": "2023.1"
-        },
-        {
-            "key": "LionCore-builtins",
-            "version": "2023.1"
-        }
-    ],
-    "nodes": [
-        {
-            "id": "com_strumenta_starlasu",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Language"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Language-version"
-                    },
-                    "value": "1"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "com.strumenta.StarLasu"
-                }
-            ],
-            "containments": [
-                {
-                    "containment": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Language-entities"
-                    },
-                    "children": [
-                        "com_strumenta_starlasu_ASTNode",
-                        "com_strumenta_starlasu_Char"
-                    ]
-                }
-            ],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Language-dependsOn"
-                    },
-                    "targets": []
-                }
-            ],
-            "annotations": [],
-            "parent": null
-        },
-        {
-            "id": "com_strumenta_starlasu_ASTNode",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Concept"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-abstract"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-partition"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu_ASTNode"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "ASTNode"
-                }
-            ],
-            "containments": [
-                {
-                    "containment": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Classifier-features"
-                    },
-                    "children": []
-                }
-            ],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-extends"
-                    },
-                    "targets": []
-                },
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-implements"
-                    },
-                    "targets": []
-                }
-            ],
-            "annotations": [],
-            "parent": "com_strumenta_starlasu"
-        },
-        {
-            "id": "com_strumenta_starlasu_Char",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "PrimitiveType"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu_Char"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "Char"
-                }
-            ],
-            "containments": [],
-            "references": [],
-            "annotations": [],
-            "parent": "com_strumenta_starlasu"
-        }
-    ]
-})[0];
-
 export function findClassifier(language: Language, id: string) {
     return language.entities.find(e => e.id == id) as Classifier;
 }
 
 export const AST_NODE_CLASSIFIER = findClassifier(STARLASU_LANGUAGE, "com_strumenta_starlasu_ASTNode");
 STARLASU_LANGUAGE_MAPPING.register(Node, AST_NODE_CLASSIFIER)
+
+function allFeatures(classifier: Classifier) {
+    const features = [...classifier.features];
+    if (classifier instanceof Concept) {
+        const superConcept = classifier.extends;
+        if (superConcept) {
+            features.push(...allFeatures(superConcept));
+        }
+        classifier.implements?.forEach(i => {
+           features.push(...allFeatures(i));
+        });
+    } else if (classifier instanceof Interface) {
+        classifier.extends?.forEach(i => {
+            features.push(...allFeatures(i));
+        });
+    }
+    // TODO remove duplicates, sorting?
+    return features;
+}
 
 export class LionwebNode extends ExternalNode {
 
@@ -298,7 +142,7 @@ export class LionwebNode extends ExternalNode {
     ) {
         super();
         const properties = {};
-        classifier.features.forEach(f => {
+        allFeatures(classifier).forEach(f => {
             properties[f.name] = featureToProperty(f);
         });
         this.nodeDefinition = {
@@ -318,7 +162,7 @@ export class LionwebNode extends ExternalNode {
     }
 
     getId(): string {
-        return "";
+        return this.lwnode.id;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

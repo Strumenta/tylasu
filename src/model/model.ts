@@ -33,8 +33,12 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
         definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     } else {
+        const inheritedProperties = {...(target[NODE_DEFINITION_SYMBOL]?.properties || {})};
+        for (const p in inheritedProperties) {
+            inheritedProperties[p] = { inherited: true, ...inheritedProperties[p] };
+        }
         target[NODE_DEFINITION_SYMBOL] = definition = {
-            properties: {},
+            properties: inheritedProperties,
             resolved: false
         };
     }
