@@ -19,7 +19,7 @@ import {
 } from "./transpilation-package";
 import {TRANSPILATION_EPACKAGE_V1} from "./transpilation-package-v1";
 import {ensureEcoreContainsAllDataTypes} from "./ecore-patching";
-import {ExternalNode, TraceNode} from "../trace/trace-node";
+import {NodeAdapter, TraceNode} from "../trace/trace-node";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R>, name: string,
@@ -162,7 +162,7 @@ abstract class AbstractTranspilationTrace {
     protected sourceToTarget = new Map<string, TargetNode[]>();
     public issues: Issue[] = [];
 
-    protected constructor(protected wrappedNode: ExternalNode) {}
+    protected constructor(protected wrappedNode: NodeAdapter) {}
 
     getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
         return this.sourceToTarget.get(sourceNode.wrappedNode.getId()) || [];
@@ -239,7 +239,7 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
 }
 
 abstract class AbstractWorkspaceFile<N> {
-    protected constructor(protected wrappedNode: ExternalNode, protected trace: AbstractTranspilationTrace) {}
+    protected constructor(protected wrappedNode: NodeAdapter, protected trace: AbstractTranspilationTrace) {}
 
     get path(): string {
         return this.wrappedNode.getAttribute("path");
@@ -257,7 +257,7 @@ abstract class AbstractWorkspaceFile<N> {
 }
 
 export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
-    constructor(wrapped: ExternalNode, trace: AbstractTranspilationTrace) {
+    constructor(wrapped: NodeAdapter, trace: AbstractTranspilationTrace) {
         super(wrapped, trace);
     }
 
@@ -269,7 +269,7 @@ export class SourceWorkspaceFile extends AbstractWorkspaceFile<SourceNode> {
 export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
     node: TargetNode;
 
-    constructor(wrapped: ExternalNode, trace: AbstractTranspilationTrace) {
+    constructor(wrapped: NodeAdapter, trace: AbstractTranspilationTrace) {
         super(wrapped, trace);
     }
 }
@@ -278,7 +278,7 @@ export class SourceNode extends TraceNode {
     parent?: SourceNode;
     protected _destinations?: TargetNode[];
 
-    constructor(wrappedNode: ExternalNode, protected trace: AbstractTranspilationTrace,
+    constructor(wrappedNode: NodeAdapter, protected trace: AbstractTranspilationTrace,
                 public readonly file?: SourceWorkspaceFile) {
         super(wrappedNode);
         if (wrappedNode.parent) {
@@ -305,7 +305,7 @@ export class SourceNode extends TraceNode {
 export class TargetNode extends TraceNode {
     parent?: TargetNode;
 
-    constructor(wrapped: ExternalNode, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
+    constructor(wrapped: NodeAdapter, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
         super(wrapped);
         if (wrapped.parent) {
             this.parent = new TargetNode(wrapped.parent, this.trace, this.file);

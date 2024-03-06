@@ -13,7 +13,7 @@ import {
     Language,
     Node as LionwebNodeInterface
 } from "@lionweb/core";
-import {ExternalNode, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
+import {NodeAdapter, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
 export class TylasuNodeWrapper implements LionwebNodeInterface {
@@ -121,7 +121,7 @@ function allFeatures(classifier: Classifier) {
     return features;
 }
 
-export class LionwebNode extends ExternalNode {
+export class LionwebNode extends NodeAdapter {
 
     parent: LionwebNode;
     public readonly nodeDefinition: NodeDefinition;
@@ -143,7 +143,7 @@ export class LionwebNode extends ExternalNode {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    get(...path: string[]): ExternalNode | undefined {
+    get(...path: string[]): NodeAdapter | undefined {
         return undefined; // TODO
     }
 

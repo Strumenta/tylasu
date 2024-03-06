@@ -40,7 +40,7 @@ import {
 } from "./starlasu-v2-metamodel";
 import {KOLASU_URI_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
-import {ExternalNode} from "../trace/trace-node";
+import {NodeAdapter} from "../trace/trace-node";
 
 export * as starlasu_v2 from "./starlasu-v2-metamodel";
 export * as kolasu_v1 from "./kolasu-v1-metamodel";
@@ -815,7 +815,7 @@ export interface EcoreMetamodelSupport {
     generateMetamodel(resource: ECore.Resource, includingKolasuMetamodel: boolean): void;
 }
 
-export class ECoreNode extends ExternalNode {
+export class ECoreNode extends NodeAdapter {
 
     parent?: ECoreNode;
 
@@ -835,7 +835,7 @@ export class ECoreNode extends ExternalNode {
         };
     }
 
-    get(...path: string[]): ExternalNode | undefined {
+    get(...path: string[]): NodeAdapter | undefined {
         let eo: ECore.EObject = this.eo;
         for (const component of path) {
             eo = eo?.get(component);
@@ -860,7 +860,7 @@ export class ECoreNode extends ExternalNode {
         return result;
     }
 
-    getChildren(role?: string): ExternalNode[] {
+    getChildren(role?: string): NodeAdapter[] {
         return this.getChildrenEObjects(role).map(c => new ECoreNode(c));
     }
 
@@ -925,7 +925,7 @@ export class ECoreNode extends ExternalNode {
         return this.eo.isKindOf(THE_STATEMENT_INTERFACE);
     }
 
-    equals(other: ExternalNode): boolean {
+    equals(other: NodeAdapter): boolean {
         return super.equals(other) || (other instanceof ECoreNode && other.eo == this.eo);
     }
 }

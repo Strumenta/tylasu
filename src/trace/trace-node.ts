@@ -2,16 +2,16 @@ import {Node, NodeDefinition} from "../model/model";
 import {Position} from "../model/position";
 import {Issue} from "../validation";
 
-export abstract class ExternalNode extends Node {
-    abstract parent?: ExternalNode;
+export abstract class NodeAdapter extends Node {
+    abstract parent?: NodeAdapter;
     abstract get nodeDefinition(): NodeDefinition;
 
-    abstract get(...path: string[]): ExternalNode | undefined;
+    abstract get(...path: string[]): NodeAdapter | undefined;
 
     abstract getAttributes(): { [name: string]: any };
 
-    getChildren(name?: string | symbol): ExternalNode[] {
-        return super.getChildren(name).map(c => c as ExternalNode);
+    getChildren(name?: string | symbol): NodeAdapter[] {
+        return super.getChildren(name).map(c => c as NodeAdapter);
     }
 
     abstract getId(): string;
@@ -28,12 +28,12 @@ export abstract class ExternalNode extends Node {
 
     abstract isStatement(): boolean;
 
-    equals(other: ExternalNode) {
+    equals(other: NodeAdapter) {
         return other == this;
     }
 }
 
-export class AugmentedNode extends ExternalNode {
+export class AugmentedNode extends NodeAdapter {
     constructor(protected node: Node) {
         super();
     }
@@ -64,7 +64,7 @@ export class AugmentedNode extends ExternalNode {
         return this.node.getAttribute(name);
     }
 
-    get(): ExternalNode | undefined {
+    get(): NodeAdapter | undefined {
         return undefined;
     }
 
@@ -105,7 +105,7 @@ export abstract class TraceNode extends Node {
 
     abstract parent?: TraceNode;
 
-    protected constructor(public wrappedNode: ExternalNode) {
+    protected constructor(public wrappedNode: NodeAdapter) {
         super();
     }
 
