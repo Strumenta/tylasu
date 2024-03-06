@@ -7,7 +7,7 @@ import {
     ensurePackage,
     getNodeDefinition,
     Node,
-    NODE_TYPES,
+    NODE_TYPES, NodeDefinition,
     PackageDescription,
     PropertyDefinition,
     registerNodeDefinition,
@@ -828,20 +828,27 @@ export class ECoreNode extends NodeAdapter {
 
     parent?: ECoreNode;
 
-    constructor(public eo: ECore.EObject) {
+    constructor(public eo: ECore.EObject, parent?: ECoreNode) {
         super();
-        const container = this.eo.eContainer;
-        if (container?.isKindOf(THE_NODE_ECLASS_V2) || container?.isKindOf(THE_NODE_ECLASS_V1)) {
+        const container = eo.eContainer;
+        if (parent) {
+            this.parent = parent;
+        } else if (container?.isKindOf(THE_NODE_ECLASS_V2) || container?.isKindOf(THE_NODE_ECLASS_V1)) {
             this.parent = new ECoreNode(container);
         }
     }
 
+    private __nodeDefinition?: NodeDefinition;
+
     get nodeDefinition() {
-        return {
-            package: this.eo.eClass.eContainer.get("name") as string,
-            name: this.eo.eClass.get("name") as string,
-            properties: this.getProperties()
-        };
+        if (!this.__nodeDefinition) {
+            this.__nodeDefinition = {
+                package: this.eo.eClass.eContainer.get("name") as string,
+                name: this.eo.eClass.get("name") as string,
+                properties: this.getProperties()
+            };
+        }
+        return this.__nodeDefinition;
     }
 
     get(...path: string[]): NodeAdapter | undefined {
@@ -869,8 +876,13 @@ export class ECoreNode extends NodeAdapter {
         return result;
     }
 
-    getChildren(role?: string): NodeAdapter[] {
-        return this.getChildrenEObjects(role).map(c => new ECoreNode(c));
+    private __children?: ECoreNode[] = undefined;
+
+    getChildren(role?: string): ECoreNode[] {
+        if (this.__children === undefined) {
+            this.__children = this.getChildrenEObjects().map(c => new ECoreNode(c, this));
+        }
+        return this.__children!.filter(c => !role || c.getRole() == role);
     }
 
     getId(): string {
@@ -921,12 +933,11 @@ export class ECoreNode extends NodeAdapter {
         return result;
     }
 
-    protected getChildrenEObjects(role: string | undefined) {
+    protected getChildrenEObjects() {
         return this.eo.eContents()
             .filter((c) => c.isKindOf(THE_NODE_ECLASS_V2) || c.isKindOf(THE_NODE_ECLASS_V1))
             .filter((c) => c.eContainingFeature.get("name") != "origin")
-            .filter((c) => c.eContainingFeature.get("name") != "destination")
-            .filter((c) => role == null || role == c.eContainingFeature.get("name"));
+            .filter((c) => c.eContainingFeature.get("name") != "destination");
     }
 
     isDeclaration(): boolean {
