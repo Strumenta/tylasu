@@ -810,8 +810,10 @@ export function registerPackages(resource: ECore.Resource): ECore.EPackage[] {
 }
 
 export function isNodeType(type: EClassifier) {
-    return (type.get("interface") && type != THE_DESTINATION_INTERFACE) ||
-        type.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1);
+    return type && (
+        (type.get("interface") && type != THE_DESTINATION_INTERFACE) ||
+        type.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1) ||
+        type == THE_REFERENCE_BY_NAME_ECLASS);
 }
 
 export interface EcoreMetamodelSupport {
@@ -901,12 +903,14 @@ export class ECoreNode extends NodeAdapter {
         for (const ft of this.eo.eClass.get("eAllStructuralFeatures")) {
             const name = ft.get("name");
             const isReference = ft.isTypeOf('EReference');
-            if (isReference && !isNodeType(ft.get("eType"))) {
+            if (isReference && !isNodeType(ft.get("eType") || ft.get("eGenericType")?.get("eClassifier"))) {
                 // skip
             } else {
                 result[name] = {
                     name,
-                    child: isReference && ft.get('containment'),
+                    child: isReference &&
+                        ft.get('containment') &&
+                        ft.get("eGenericType")?.get("eClassifier") != THE_REFERENCE_BY_NAME_ECLASS,
                     multiple: isReference ? ft.get('many') : undefined,
                 };
             }

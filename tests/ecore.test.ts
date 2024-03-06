@@ -161,20 +161,29 @@ describe("Import/export", function () {
         expect(node instanceof Node).to.be.true;
         expect(node.statementsAndDeclarations.length).to.equal(26);
     });
-    it("containments and inheritance", function () {
+    it("containments and references", function () {
         const resourceSet = ECore.ResourceSet.create();
         const resource = resourceSet.create({ uri: 'file:data/rpg.metamodel.json' });
         const mmBuffer = fs.readFileSync("tests/data/rpg.metamodel.json");
         const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
         expect(ePackages.length).to.equal(2);
+
         const PlistParameter = ePackages[1].eContents().find(x => x.get("name") == "PlistParameter");
-        const eo = PlistParameter.create({});
-        const properties = new ECoreNode(eo).getProperties();
+        let eo = PlistParameter.create({});
+        let properties = new ECoreNode(eo).getProperties();
         expect(properties).to.eql({
             "name": {"child": true, "multiple": false, "name": "name"},
             "sourceField": {"child": true, "multiple": false, "name": "sourceField"},
             "targetField": {"child": true, "multiple": false, "name": "targetField"},
             "type": {"child": true, "multiple": false, "name": "type"}
+        });
+
+        const InvokeSubroutineStatement = ePackages[1].eContents().find(x => x.get("name") == "InvokeSubroutineStatement");
+        eo = InvokeSubroutineStatement.create({});
+        properties = new ECoreNode(eo).getProperties();
+        expect(properties).to.eql({
+            "conditionalIndicator": {"child": true, "multiple": false, "name": "conditionalIndicator"},
+            "subroutine": {"child": false, "multiple": false, "name": "subroutine"}
         });
     });
     it("importing using raw Ecore.js",
