@@ -11,6 +11,8 @@ import {
 } from "../../src/interop/lionweb";
 import {map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
+import {ParserNode, ParserTrace} from "../../src/interop/strumenta-playground";
+import {PARSER_TRACE_ECLASS} from "../../src/interop/parser-package";
 
 abstract class File extends Node {
     @Property()
@@ -86,6 +88,35 @@ describe('Lionweb integration', function() {
             expect(file.nodeDefinition.name).to.equal("TextFile");
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");
+
+            expect(printSequence(walk(root.node))).to.equal(
+                "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
+                "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
+                "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
+                "multipleWhenCondition.egl, handler.egl, SQLCreateTable.egl, newExample.egl, SQLDropTable.egl, " +
+                "nestedLoop.egl, for.egl");
+        });
+
+    it("supports trace nodes",
+        function () {
+            const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade(), [FS_LANGUAGE], []);
+            expect(nodes).not.to.be.empty;
+            expect(nodes.length).to.equal(1);
+            const root = nodes[0];
+            expect(root.node).to.be.instanceof(LionwebNode);
+            let dir = new ParserNode(root.node as LionwebNode, undefined, new ParserTrace(PARSER_TRACE_ECLASS.create({}))); // TODO
+            expect(dir.nodeDefinition.name).to.equal("Directory");
+            expect(dir.getAttribute("name")).to.equal("resources.zip");
+            expect(dir.getChildren("files").length).to.equal(1);
+            dir = dir.getChildren("files")[0];
+            expect(dir.nodeDefinition.name).to.equal("Directory");
+            expect(dir.getAttribute("name")).to.equal("resources");
+            expect(dir.getChildren("files").length).to.equal(15);
+            const file = dir.getChildren("files")[0];
+            expect(file.nodeDefinition.name).to.equal("TextFile");
+            expect(file.getAttribute("name")).to.equal("delegate.egl");
+            expect(file.getAttribute("contents").substring(0, 10)).to.equal("Delegate F");
+            expect(file.getPathFromRoot()).to.equal([]);
 
             expect(printSequence(walk(root.node))).to.equal(
                 "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +

@@ -86,8 +86,8 @@ export class ParserNode extends TraceNode {
 
     parent?: ParserNode;
 
-    constructor(eo: ECore.EObject, parent: ParserNode | undefined, protected trace: ParserTrace) {
-        super(eo);
+    constructor(inner: NodeAdapter, parent: ParserNode | undefined, protected trace: ParserTrace) {
+        super(inner);
         this.parent = parent;
     }
 
