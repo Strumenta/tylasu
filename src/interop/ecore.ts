@@ -892,16 +892,19 @@ export class ECoreNode extends NodeAdapter {
 
     getProperties(): { [name: string | symbol]: PropertyDefinition } {
         const result: { [name: string | symbol]: PropertyDefinition } = {};
-        for (const attr of this.eo.eClass.get("eAllAttributes")) {
-            const name = attr.get("name");
-            result[name] = {name: name, child: false};
+        for (const ft of this.eo.eClass.get("eAllStructuralFeatures")) {
+            const name = ft.get("name");
+            const isReference = ft.isTypeOf('EReference');
+            if (isReference && !ft.get("eType")?.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1)) {
+                // skip
+            } else {
+                result[name] = {
+                    name,
+                    child: isReference && ft.get('containment'),
+                    multiple: (isReference && ft.get('many')) || undefined,
+                };
+            }
         }
-        this.eo.eContents()
-            .filter((c) => c.eContainingFeature.get("name") != "position")
-            .forEach((c) => {
-                const name = c.eContainingFeature.get("name");
-                result[name] = {name, child: true, multiple: c.eContainingFeature.get("many")};
-            });
         return result;
     }
 

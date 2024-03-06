@@ -47,7 +47,7 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(rootNode.getSimpleType()).to.eql("CompilationUnit");
             const child = rootNode.getChildren("dataDefinitions")[3];
             expect(child.nodeDefinition.properties).to.eql({
-                name: { name: "name", child: false },
+                name: { name: "name", child: false, multiple: undefined },
                 keywords: { name: "keywords", child: true, multiple: true }
             });
             expect(child.getAttributes()).to.eql({ name: 'ENDPOINT' });
