@@ -812,6 +812,7 @@ export function registerPackages(resource: ECore.Resource): ECore.EPackage[] {
 export function isNodeType(type: EClassifier) {
     return type && (
         (type.get("interface") && type != THE_DESTINATION_INTERFACE) ||
+        type == THE_NODE_ECLASS_V2 || type == THE_NODE_ECLASS_V1 ||
         type.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1) ||
         type == THE_REFERENCE_BY_NAME_ECLASS);
 }
@@ -900,7 +901,9 @@ export class ECoreNode extends NodeAdapter {
 
     getProperties(): { [name: string | symbol]: PropertyDefinition } {
         const result: { [name: string | symbol]: PropertyDefinition } = {};
-        for (const ft of this.eo.eClass.get("eAllStructuralFeatures")) {
+        const eClass = this.eo.eClass;
+        const features = eClass.get("eAllStructuralFeatures");
+        for (const ft of features) {
             const name = ft.get("name");
             const isReference = ft.isTypeOf('EReference');
             if (isReference && !isNodeType(ft.get("eType") || ft.get("eGenericType")?.get("eClassifier"))) {

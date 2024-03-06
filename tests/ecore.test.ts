@@ -161,7 +161,7 @@ describe("Import/export", function () {
         expect(node instanceof Node).to.be.true;
         expect(node.statementsAndDeclarations.length).to.equal(26);
     });
-    it("containments and references", function () {
+    it("containments and references - RPG", function () {
         const resourceSet = ECore.ResourceSet.create();
         const resource = resourceSet.create({ uri: 'file:data/rpg.metamodel.json' });
         const mmBuffer = fs.readFileSync("tests/data/rpg.metamodel.json");
@@ -185,6 +185,28 @@ describe("Import/export", function () {
             "conditionalIndicator": {"child": true, "multiple": false, "name": "conditionalIndicator"},
             "subroutine": {"child": false, "multiple": false, "name": "subroutine"}
         });
+    });
+    it("containments and references - SAS", function () {
+        const resourceSet = ECore.ResourceSet.create();
+        const resource = resourceSet.create({ uri: 'file:data/sas.metamodel.json' });
+        const mmBuffer = fs.readFileSync("tests/data/sas.metamodel.json");
+        const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
+        expect(ePackages.length).to.equal(5);
+
+        const SourceFile = ePackages[0].eContents().find(x => x.get("name") == "SourceFile");
+        const sf = SourceFile.create({});
+
+        const VariableDeclaration = ePackages[2].eContents().find(x => x.get("name") == "VariableDeclaration");
+        const vd = VariableDeclaration.create({});
+        sf.get("statementsAndDeclarations").add(vd);
+        const eCoreNode = new ECoreNode(vd);
+        const properties = eCoreNode.getProperties();
+        expect(properties).to.eql({
+            "name": {"child": false, "multiple": undefined, "name": "name"},
+            "expression": {"child": true, "multiple": false, "name": "expression"},
+        });
+        expect(eCoreNode.getRole()).to.equal("statementsAndDeclarations");
+        expect(eCoreNode.parent!.containment("statementsAndDeclarations")).to.eql({"child": true, "multiple": true, "name": "statementsAndDeclarations"});
     });
     it("importing using raw Ecore.js",
         function () {
