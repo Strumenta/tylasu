@@ -33,6 +33,74 @@ export abstract class ExternalNode extends Node {
     }
 }
 
+export class AugmentedNode extends ExternalNode {
+    constructor(protected node: Node) {
+        super();
+    }
+
+    get parent() {
+        if (this.node.parent) {
+            return new AugmentedNode(this.node.parent);
+        }
+    }
+
+    get nodeDefinition() {
+        return this.node.nodeDefinition;
+    }
+
+    setChild(name: string, child: Node) {
+        this.node.setChild(name, child);
+    }
+
+    addChild(name: string, child: Node) {
+        this.node.addChild(name, child);
+    }
+
+    setAttribute(name: string | symbol, value: any) {
+        this.node.setAttribute(name, value);
+    }
+
+    getAttribute(name: string | symbol): any {
+        return this.node.getAttribute(name);
+    }
+
+    get(): ExternalNode | undefined {
+        return undefined;
+    }
+
+    getAttributes(): { [p: string]: any } {
+        return {};
+    }
+
+    getId(): string {
+        return "TODO";
+    }
+
+    getIssues(): Issue[] | undefined {
+        return undefined;
+    }
+
+    getPosition(): Position | undefined {
+        return this.node.position;
+    }
+
+    getRole(): string | undefined {
+        return undefined;
+    }
+
+    isDeclaration(): boolean {
+        return false;
+    }
+
+    isExpression(): boolean {
+        return false;
+    }
+
+    isStatement(): boolean {
+        return false;
+    }
+}
+
 export abstract class TraceNode extends Node {
 
     abstract parent?: TraceNode;
