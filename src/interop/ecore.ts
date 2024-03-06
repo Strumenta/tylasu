@@ -18,7 +18,7 @@ import {Point, Position} from "../model/position";
 import {Issue, IssueSeverity, IssueType} from "../validation";
 import {addLiteral, getEPackage} from "./ecore-basic";
 import {
-    STARLASU_URI_V2,
+    STARLASU_URI_V2, THE_DESTINATION_INTERFACE,
     THE_ENTITY_DECLARATION_INTERFACE,
     THE_EXPRESSION_INTERFACE,
     THE_ISSUE_ECLASS,
@@ -41,6 +41,7 @@ import {
 import {KOLASU_URI_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-metamodel";
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
 import {NodeAdapter} from "../trace/trace-node";
+import {EClassifier} from "ecore";
 
 export * as starlasu_v2 from "./starlasu-v2-metamodel";
 export * as kolasu_v1 from "./kolasu-v1-metamodel";
@@ -808,6 +809,11 @@ export function registerPackages(resource: ECore.Resource): ECore.EPackage[] {
         });
 }
 
+export function isNodeType(type: EClassifier) {
+    return (type.get("interface") && type != THE_DESTINATION_INTERFACE) ||
+        type.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1);
+}
+
 export interface EcoreMetamodelSupport {
     /**
      * Generates the metamodel. The standard Kolasu metamodel [EPackage][org.eclipse.emf.ecore.EPackage] is included.
@@ -895,13 +901,13 @@ export class ECoreNode extends NodeAdapter {
         for (const ft of this.eo.eClass.get("eAllStructuralFeatures")) {
             const name = ft.get("name");
             const isReference = ft.isTypeOf('EReference');
-            if (isReference && !ft.get("eType")?.get("eAllSuperTypes")?.find(t => t == THE_NODE_ECLASS_V2 || t == THE_NODE_ECLASS_V1)) {
+            if (isReference && !isNodeType(ft.get("eType"))) {
                 // skip
             } else {
                 result[name] = {
                     name,
                     child: isReference && ft.get('containment'),
-                    multiple: (isReference && ft.get('many')) || undefined,
+                    multiple: isReference ? ft.get('many') : undefined,
                 };
             }
         }

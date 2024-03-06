@@ -7,7 +7,7 @@ import {
     registerECoreModel,
     SYMBOL_CLASS_DEFINITION,
     SYMBOL_NODE_NAME,
-    toEObject, loadEPackages, loadEObject, generateASTModel, Result
+    toEObject, loadEPackages, loadEObject, generateASTModel, Result, ECoreNode
 } from "../src/interop/ecore";
 import {Fibo, SomeNode, SomeNodeInPackage} from "./nodes";
 import ECore from "ecore/dist/ecore";
@@ -160,6 +160,22 @@ describe("Import/export", function () {
         const node = result.root as any;
         expect(node instanceof Node).to.be.true;
         expect(node.statementsAndDeclarations.length).to.equal(26);
+    });
+    it("containments and inheritance", function () {
+        const resourceSet = ECore.ResourceSet.create();
+        const resource = resourceSet.create({ uri: 'file:data/rpg.metamodel.json' });
+        const mmBuffer = fs.readFileSync("tests/data/rpg.metamodel.json");
+        const ePackages = loadEPackages(JSON.parse(mmBuffer.toString()), resource);
+        expect(ePackages.length).to.equal(2);
+        const PlistParameter = ePackages[1].eContents().find(x => x.get("name") == "PlistParameter");
+        const eo = PlistParameter.create({});
+        const properties = new ECoreNode(eo).getProperties();
+        expect(properties).to.eql({
+            "name": {"child": true, "multiple": false, "name": "name"},
+            "sourceField": {"child": true, "multiple": false, "name": "sourceField"},
+            "targetField": {"child": true, "multiple": false, "name": "targetField"},
+            "type": {"child": true, "multiple": false, "name": "type"}
+        });
     });
     it("importing using raw Ecore.js",
         function () {
