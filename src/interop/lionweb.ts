@@ -91,16 +91,6 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
             node.node.setAttribute(feature.name, value);
         }
     }
-
-    protected setupNode(node: Node, parent: Node | undefined, propertySettings: {
-        [p: string]: unknown
-    }): Node {
-        Object.keys(propertySettings).forEach(k => {
-            node[k] = propertySettings[k]; //TODO protect parent, origin etc.
-        })
-        return node.withParent(parent);
-    }
-
 }
 
 export const STARLASU_LANGUAGE_MAPPING = new LanguageMapping();

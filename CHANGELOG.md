@@ -2,10 +2,14 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.6.4] – 2024-03-05
+## [1.6.4] – 2024-03-06
+
+### Added
+- More homogeneous node APIs 
 
 ### Changed
-- Decoupled trace nodes from ECore so it may also possible to use them with Lionweb. 
+- Decoupled trace nodes from ECore, so they may be used with Lionweb.
+- Stricter checking of attributes and children
 
 ## [1.6.3] – 2024-02-29
 
