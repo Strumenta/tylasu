@@ -205,21 +205,21 @@ export abstract class Node extends Origin implements Destination {
         this[name].push(child.withParent(this));
     }
 
-    getChild(name: string, index?: number): Node | undefined {
+    getChild(name: string | symbol, index?: number): Node | undefined {
         const containment = this.containment(name);
         if(!containment) {
-            throw new Error("Not a containment: " + name);
+            throw new Error("Not a containment: " + name.toString());
         }
         const raw = this.doGetChildOrChildren(name);
         if (containment.multiple) {
             if (index !== undefined) {
                 return (raw as Node[])[index];
             } else {
-                throw new Error(name + " is a collection, an index is required");
+                throw new Error(name.toString() + " is a collection, an index is required");
             }
         } else {
             if (index) {
-                throw new Error(name + " is not a collection, index " + index + " is invalid");
+                throw new Error(name.toString() + " is not a collection, index " + index + " is invalid");
             } else {
                 return raw as Node;
             }

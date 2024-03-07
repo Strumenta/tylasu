@@ -552,7 +552,7 @@ class ReferencesTracker {
         }
     }
 
-    getReferredObject(uri: string) {
+    getReferredObject(uri?: string) {
         if (uri === undefined) {
             return undefined;
         }
@@ -621,7 +621,7 @@ export function findEClass(name: string, resource: ECore.Resource): ECore.EClass
         const packageName = name.substring(0, index);
         const ePackage = ECore.EPackage.Registry.getEPackage(packageName);
         if(!ePackage) {
-            throw new Error("Package not found: " + packageName+ " while loading for class " + name);
+            throw new Error("Package not found: " + packageName + " while loading class " + name);
         }
         const className = name.substring(name.lastIndexOf("/") + 1);
         if (ePackage.get("nsURI") == KOLASU_URI_V1) {

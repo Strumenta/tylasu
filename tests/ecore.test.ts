@@ -14,6 +14,7 @@ import ECore from "ecore/dist/ecore";
 import * as fs from "fs";
 import {KOLASU_URI_V1} from "../src/interop/kolasu-v1-metamodel";
 import {THE_POSITION_ECLASS, THE_AST_RESOURCE} from "../src/interop/kolasu-v1-metamodel";
+import {STARLASU_URI_V2} from "../src/interop/starlasu-v2-metamodel";
 
 describe('Metamodel', function() {
     it("Base metamodel", function () {
@@ -140,6 +141,19 @@ describe("Import/export", function () {
             const string = JSON.stringify(data, null, 2);
             // console.log(string);
         });
+    });
+    it("fails on unknown eClass", function () {
+        const resourceSet = ECore.ResourceSet.create();
+        const resource = resourceSet.create({ uri: 'file:dummy.json' });
+        expect(() => loadEObject({ eClass: "DoesNotExist" }, resource)).to.throw(
+            Error, "Unsupported class name: DoesNotExist"
+        );
+        expect(() => loadEObject({ eClass: "unknown.pkg#DoesNotExist" }, resource)).to.throw(
+            Error, "Package not found: unknown.pkg while loading class unknown.pkg#DoesNotExist"
+        );
+        expect(() => loadEObject({ eClass: `${STARLASU_URI_V2}#DoesNotExist` }, resource)).to.throw(
+            Error, "Unknown EClass: https://strumenta.com/starlasu/v2#DoesNotExist"
+        );
     });
     it("importing using API", function () {
         const resourceSet = ECore.ResourceSet.create();

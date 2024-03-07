@@ -165,10 +165,6 @@ export class LionwebNode extends NodeAdapter {
         return undefined;
     }
 
-    getRole(): string | undefined {
-        return undefined;
-    }
-
     isDeclaration(): boolean {
         return false;
     }
@@ -179,5 +175,9 @@ export class LionwebNode extends NodeAdapter {
 
     isStatement(): boolean {
         return false;
+    }
+
+    equals(other: NodeAdapter | undefined): boolean {
+        return other instanceof LionwebNode && other.lwnode == this.lwnode;
     }
 }

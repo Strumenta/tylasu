@@ -20,7 +20,25 @@ export abstract class NodeAdapter extends Node {
 
     abstract getPosition(property?: string): Position | undefined;
 
-    abstract getRole(): string | undefined;
+    getRole(): string | symbol | undefined {
+        if (this.parent) { // Inefficient default implementation, searching in the parent's children
+            const props = this.parent.nodeDefinition?.properties || {};
+            for (const p in props) {
+                const prop = props[p];
+                if (prop.child) {
+                    if (prop.multiple) {
+                        if (this.parent.getChildren(prop.name)?.find(c => c.equals(this))) {
+                            return prop.name;
+                        }
+                    } else if (this.equals(this.parent.getChild(prop.name) as NodeAdapter)) {
+                        return prop.name;
+                    }
+                }
+            }
+        } else {
+            return undefined;
+        }
+    }
 
     abstract isDeclaration(): boolean;
 
@@ -28,7 +46,7 @@ export abstract class NodeAdapter extends Node {
 
     abstract isStatement(): boolean;
 
-    equals(other: NodeAdapter) {
+    equals(other: NodeAdapter | undefined) {
         return other == this;
     }
 }
@@ -84,10 +102,6 @@ export class AugmentedNode extends NodeAdapter {
         return this.node.position;
     }
 
-    getRole(): string | undefined {
-        return undefined;
-    }
-
     isDeclaration(): boolean {
         return false;
     }
@@ -99,13 +113,17 @@ export class AugmentedNode extends NodeAdapter {
     isStatement(): boolean {
         return false;
     }
+
+    equals(other: NodeAdapter | undefined): boolean {
+        return other instanceof AugmentedNode && this.node == other.node;
+    }
 }
 
 export abstract class TraceNode extends Node {
 
     abstract parent?: TraceNode;
 
-    protected constructor(public wrappedNode: NodeAdapter) {
+    protected constructor(public nodeAdapter: NodeAdapter) {
         super();
     }
 
@@ -121,12 +139,12 @@ export abstract class TraceNode extends Node {
         return this.nodeDefinition.name!;
     }
 
-    getRole(): string | undefined {
-        return this.wrappedNode.getRole();
+    getRole(): string | symbol | undefined {
+        return this.nodeAdapter.getRole();
     }
 
     getPosition(): Position | undefined {
-        return this.wrappedNode.getPosition();
+        return this.nodeAdapter.getPosition();
     }
 
     get position(): Position | undefined {
@@ -134,15 +152,15 @@ export abstract class TraceNode extends Node {
     }
 
     get nodeDefinition(): NodeDefinition {
-        return this.wrappedNode.nodeDefinition;
+        return this.nodeAdapter.nodeDefinition;
     }
 
     getAttributes(): { [name: string]: any } {
-        return this.wrappedNode.getAttributes();
+        return this.nodeAdapter.getAttributes();
     }
 
     doGetAttribute(attrName: string): any {
-        return this.wrappedNode.getAttribute(attrName);
+        return this.nodeAdapter.getAttribute(attrName);
     }
 
     getPathFromRoot(): (string | number)[] {
@@ -167,18 +185,18 @@ export abstract class TraceNode extends Node {
     }
 
     equals(node: TraceNode) {
-        return node === this || node.wrappedNode.equals(this.wrappedNode);
+        return node === this || node.nodeAdapter.equals(this.nodeAdapter);
     }
 
     isDeclaration(): boolean {
-        return this.wrappedNode.isDeclaration();
+        return this.nodeAdapter.isDeclaration();
     }
 
     isExpression(): boolean {
-        return this.wrappedNode.isExpression();
+        return this.nodeAdapter.isExpression();
     }
 
     isStatement(): boolean {
-        return this.wrappedNode.isStatement();
+        return this.nodeAdapter.isStatement();
     }
 }

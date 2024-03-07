@@ -25,16 +25,18 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
 
     getSource(node: Node, source: any): any {
         const origin = node.origin;
-        if (origin instanceof ParseTreeOrigin)
+        if (origin instanceof ParseTreeOrigin) {
             return origin.parseTree;
-        else
+        } else {
             return source;
+        }
     }
 
     asOrigin(source: any): Origin | undefined {
-        if (source instanceof ParserRuleContext || source instanceof TerminalNode)
+        if (source instanceof ParserRuleContext || source instanceof TerminalNode) {
             return new ParseTreeOrigin(source);
-        else
+        } else {
             return undefined;
+        }
     }
 }

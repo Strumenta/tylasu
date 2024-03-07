@@ -105,6 +105,7 @@ describe('Lionweb integration', function() {
             const root = nodes[0];
             expect(root.node).to.be.instanceof(LionwebNode);
             let dir = new ParserNode(root.node as LionwebNode, undefined, new ParserTrace(PARSER_TRACE_ECLASS.create({}))); // TODO
+            expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.getAttribute("name")).to.equal("resources.zip");
             expect(dir.getChildren("files").length).to.equal(1);
@@ -112,11 +113,12 @@ describe('Lionweb integration', function() {
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.getAttribute("name")).to.equal("resources");
             expect(dir.getChildren("files").length).to.equal(15);
-            const file = dir.getChildren("files")[0];
+            const file = dir.getChildren("files")[1];
             expect(file.nodeDefinition.name).to.equal("TextFile");
-            expect(file.getAttribute("name")).to.equal("delegate.egl");
-            expect(file.getAttribute("contents").substring(0, 10)).to.equal("Delegate F");
-            expect(file.getPathFromRoot()).to.equal([]);
+            expect(file.getAttribute("name")).to.equal("rosetta-code-count-examples-2.egl");
+            expect(file.getAttribute("contents").substring(0, 10)).to.equal("package co");
+            expect(file.getRole()).to.equal("files");
+            expect(file.getPathFromRoot()).to.eql(["files", 0, "files", 1]);
 
             expect(printSequence(walk(root.node))).to.equal(
                 "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +

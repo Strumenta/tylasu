@@ -92,7 +92,7 @@ export class ParserNode extends TraceNode {
     }
 
     getChildren(role?: string): ParserNode[] {
-        return this.wrappedNode.getChildren(role).map((c) => new ParserNode(c, this, this.trace));
+        return this.nodeAdapter.getChildren(role).map((c) => new ParserNode(c, this, this.trace));
     }
 
     get children(): Node[] {
@@ -165,7 +165,7 @@ abstract class AbstractTranspilationTrace {
     protected constructor(protected wrappedNode: NodeAdapter) {}
 
     getDestinationNodes(sourceNode: SourceNode): TargetNode[] {
-        return this.sourceToTarget.get(sourceNode.wrappedNode.getId()) || [];
+        return this.sourceToTarget.get(sourceNode.nodeAdapter.getId()) || [];
     }
 
     protected examineTargetNode(
@@ -294,7 +294,7 @@ export class SourceNode extends TraceNode {
     }
 
     getChildren(role?: string): SourceNode[] {
-        return this.wrappedNode.getChildren(role).map((c) => new SourceNode(c, this.trace, this.file).withParent(this));
+        return this.nodeAdapter.getChildren(role).map((c) => new SourceNode(c, this.trace, this.file).withParent(this));
     }
 
     get children(): Node[] {
@@ -313,7 +313,7 @@ export class TargetNode extends TraceNode {
     }
 
     getPosition(): Position | undefined {
-        return this.wrappedNode.getPosition("destination");
+        return this.nodeAdapter.getPosition("destination");
     }
 
     getDestination(): Position | undefined {
@@ -327,8 +327,8 @@ export class TargetNode extends TraceNode {
     getSourceNode(): SourceNode | undefined {
         if (!this.origin) {
             // TODO
-            if (this.wrappedNode instanceof ECoreNode) {
-                let rawOrigin = this.wrappedNode.eo.get("origin");
+            if (this.nodeAdapter instanceof ECoreNode) {
+                let rawOrigin = this.nodeAdapter.eo.get("origin");
                 if (rawOrigin?.eClass == THE_NODE_ORIGIN_ECLASS) {
                     rawOrigin = rawOrigin.get("node");
                 }
@@ -352,7 +352,7 @@ export class TargetNode extends TraceNode {
     }
 
     getChildren(role?: string): TargetNode[] {
-        return this.wrappedNode.getChildren(role).map((c) => new TargetNode(c, this.trace, this.file));
+        return this.nodeAdapter.getChildren(role).map((c) => new TargetNode(c, this.trace, this.file));
     }
 
     get children(): Node[] {
