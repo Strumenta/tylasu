@@ -2,6 +2,12 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.5 - 1.6.9] – 2024-03-07
+
+### Added
+- Support for Lionweb nodes as trace nodes
+- Further tests for ECore import
+
 ## [1.6.5 - 1.6.8] – 2024-03-06
 
 ### Fixed
