@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {findByPosition, IssueSeverity, IssueType, Point, pos, Position} from "../../src";
-import {ParserNode, ParserTraceLoader} from "../../src/interop/strumenta-playground";
+import {findByPosition, IssueSeverity, IssueType, ParserNode, Point, pos, Position} from "../../src";
+import {ParserTraceLoader} from "../../src/interop/strumenta-playground";
 import {TraceNode} from "../../src/trace/trace-node";
 
 describe('Parser traces – Kolasu metamodel V1', function() {

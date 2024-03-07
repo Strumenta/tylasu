@@ -200,3 +200,23 @@ export abstract class TraceNode extends Node {
         return this.nodeAdapter.isStatement();
     }
 }
+
+export class ParserNode extends TraceNode {
+
+    parent?: ParserNode;
+
+    constructor(inner: NodeAdapter) {
+        super(inner);
+        if (inner.parent) {
+            this.parent = new ParserNode(inner.parent);
+        }
+    }
+
+    getChildren(role?: string): ParserNode[] {
+        return this.nodeAdapter.getChildren(role).map((c) => new ParserNode(c));
+    }
+
+    get children(): ParserNode[] {
+        return this.getChildren();
+    }
+}

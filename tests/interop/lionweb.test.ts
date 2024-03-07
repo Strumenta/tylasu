@@ -2,7 +2,7 @@ import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
 import {deserializeChunk, deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Children, Node, Property, walk} from "../../src";
+import {Children, Node, ParserNode, Property, walk} from "../../src";
 import {
     findClassifier,
     LanguageMapping, LionwebNode,
@@ -11,7 +11,7 @@ import {
 } from "../../src/interop/lionweb";
 import {map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
-import {ParserNode, ParserTrace} from "../../src/interop/strumenta-playground";
+import {ParserTrace} from "../../src/interop/strumenta-playground";
 import {PARSER_TRACE_ECLASS} from "../../src/interop/parser-package";
 
 abstract class File extends Node {
@@ -104,7 +104,7 @@ describe('Lionweb integration', function() {
             expect(nodes.length).to.equal(1);
             const root = nodes[0];
             expect(root.node).to.be.instanceof(LionwebNode);
-            let dir = new ParserNode(root.node as LionwebNode, undefined, new ParserTrace(PARSER_TRACE_ECLASS.create({}))); // TODO
+            let dir = new ParserNode(root.node as LionwebNode);
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.getAttribute("name")).to.equal("resources.zip");

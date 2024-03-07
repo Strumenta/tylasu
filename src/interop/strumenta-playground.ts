@@ -4,12 +4,7 @@ import {Node} from "../model/model";
 import ECore from "ecore/dist/ecore";
 import {Position} from "../model/position";
 import {PARSER_EPACKAGE, PARSER_TRACE_ECLASS} from "./parser-package";
-import {
-    THE_AST_EPACKAGE,
-    THE_NODE_ORIGIN_ECLASS,
-    THE_RESULT_ECLASS as THE_RESULT_ECLASS_V2
-} from "./starlasu-v2-metamodel";
-import {THE_RESULT_ECLASS as THE_RESULT_ECLASS_V1} from "./kolasu-v1-metamodel";
+import {THE_AST_EPACKAGE, THE_NODE_ORIGIN_ECLASS,} from "./starlasu-v2-metamodel";
 import {Issue} from "../validation";
 import {
     THE_TRANSPILATION_TRACE_ECLASS,
@@ -19,7 +14,7 @@ import {
 } from "./transpilation-package";
 import {TRANSPILATION_EPACKAGE_V1} from "./transpilation-package-v1";
 import {ensureEcoreContainsAllDataTypes} from "./ecore-patching";
-import {NodeAdapter, TraceNode} from "../trace/trace-node";
+import {NodeAdapter, ParserNode, TraceNode} from "../trace/trace-node";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R>, name: string,
@@ -51,52 +46,29 @@ export function saveForStrumentaPlayground<R extends Node>(
 }
 
 export class ParserTrace {
-    constructor(private eo: ECore.EObject) {
-        if (!eo.eClass == PARSER_TRACE_ECLASS) {
-            throw new Error("Not a parser trace: " + eo.eClass);
+    constructor(private node: NodeAdapter) {
+        if (node.nodeDefinition?.package != "StrumentaLanguageSupportParsing" || node.nodeDefinition?.name != "ParserTrace") {
+            throw new Error("Not a parser trace: " + node.nodeDefinition?.package + "." + node.nodeDefinition?.name);
         }
     }
 
     get rootNode(): ParserNode {
         let root;
-        const ast = this.eo.get("ast");
-        if (ast.eClass == THE_RESULT_ECLASS_V2 || ast.eClass == THE_RESULT_ECLASS_V1) {
+        const ast = this.node.get("ast");
+        if (ast?.nodeDefinition?.name == "Result") {
             root = ast.get("root");
         } else {
             root = ast;
         }
-        return new ParserNode(new ECoreNode(root), undefined, this);
+        return new ParserNode(root);
     }
 
     get issues(): Issue[] {
-        const ast = this.eo.get("ast");
-        if (ast.eClass == THE_RESULT_ECLASS_V2 || ast.eClass == THE_RESULT_ECLASS_V1) {
-            return fromEObject(ast.get("issues")) as Issue[] || [];
-        } else {
-            return [];
-        }
+        return this.node.get("ast")?.getIssues() || [];
     }
 
     get name(): string | undefined {
-        return this.eo.get("name");
-    }
-}
-
-export class ParserNode extends TraceNode {
-
-    parent?: ParserNode;
-
-    constructor(inner: NodeAdapter, parent: ParserNode | undefined, protected trace: ParserTrace) {
-        super(inner);
-        this.parent = parent;
-    }
-
-    getChildren(role?: string): ParserNode[] {
-        return this.nodeAdapter.getChildren(role).map((c) => new ParserNode(c, this, this.trace));
-    }
-
-    get children(): Node[] {
-        return this.getChildren();
+        return this.node.getAttribute("name");
     }
 }
 
@@ -154,7 +126,7 @@ export class ParserTraceLoader {
         const resource = this.resourceSet.create({uri: uri});
         return withLanguageMetamodel(
             this.languages, language, this.resourceSet, resource,
-            () => new ParserTrace(loadEObject(trace, resource, PARSER_TRACE_ECLASS)));
+            () => new ParserTrace(new ECoreNode(loadEObject(trace, resource, PARSER_TRACE_ECLASS))));
     }
 }
 
