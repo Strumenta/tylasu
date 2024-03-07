@@ -119,11 +119,11 @@ export class AugmentedNode extends NodeAdapter {
     }
 }
 
-export abstract class TraceNode extends Node {
+export class TraceNode extends Node {
 
-    abstract parent?: TraceNode;
+    parent?: TraceNode = undefined;
 
-    protected constructor(public nodeAdapter: NodeAdapter) {
+    constructor(public nodeAdapter: NodeAdapter) {
         super();
     }
 
@@ -184,6 +184,18 @@ export abstract class TraceNode extends Node {
         }
     }
 
+    protected make(node: NodeAdapter): TraceNode {
+        return new TraceNode(node);
+    }
+
+    getChildren(role?: string | symbol): TraceNode[] {
+        return this.nodeAdapter.getChildren(role).map((c) => this.make(c).withParent(this));
+    }
+
+    get children(): TraceNode[] {
+        return this.getChildren();
+    }
+
     equals(node: TraceNode) {
         return node === this || node.nodeAdapter.equals(this.nodeAdapter);
     }
@@ -198,25 +210,5 @@ export abstract class TraceNode extends Node {
 
     isStatement(): boolean {
         return this.nodeAdapter.isStatement();
-    }
-}
-
-export class ParserNode extends TraceNode {
-
-    parent?: ParserNode;
-
-    constructor(inner: NodeAdapter) {
-        super(inner);
-        if (inner.parent) {
-            this.parent = new ParserNode(inner.parent);
-        }
-    }
-
-    getChildren(role?: string): ParserNode[] {
-        return this.nodeAdapter.getChildren(role).map((c) => new ParserNode(c));
-    }
-
-    get children(): ParserNode[] {
-        return this.getChildren();
     }
 }

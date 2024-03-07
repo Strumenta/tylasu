@@ -14,7 +14,7 @@ import {
 } from "./transpilation-package";
 import {TRANSPILATION_EPACKAGE_V1} from "./transpilation-package-v1";
 import {ensureEcoreContainsAllDataTypes} from "./ecore-patching";
-import {NodeAdapter, ParserNode, TraceNode} from "../trace/trace-node";
+import {NodeAdapter, TraceNode} from "../trace/trace-node";
 
 export function saveForStrumentaPlayground<R extends Node>(
     result: ParsingResult<R>, name: string,
@@ -52,7 +52,7 @@ export class ParserTrace {
         }
     }
 
-    get rootNode(): ParserNode {
+    get rootNode(): TraceNode {
         let root;
         const ast = this.node.get("ast");
         if (ast?.nodeDefinition?.name == "Result") {
@@ -60,7 +60,7 @@ export class ParserTrace {
         } else {
             root = ast;
         }
-        return new ParserNode(root);
+        return new TraceNode(root);
     }
 
     get issues(): Issue[] {
@@ -247,15 +247,17 @@ export class TargetWorkspaceFile extends AbstractWorkspaceFile<TargetNode> {
 }
 
 export class SourceNode extends TraceNode {
-    parent?: SourceNode;
+
+    parent?: SourceNode = undefined;
     protected _destinations?: TargetNode[];
 
     constructor(wrappedNode: NodeAdapter, protected trace: AbstractTranspilationTrace,
                 public readonly file?: SourceWorkspaceFile) {
         super(wrappedNode);
-        if (wrappedNode.parent) {
-            this.parent = new SourceNode(wrappedNode.parent, this.trace, file);
-        }
+    }
+
+    protected make(node: NodeAdapter): SourceNode {
+        return new SourceNode(node, this.trace, this.file);
     }
 
     getDestinationNodes(): TargetNode[] {
@@ -265,23 +267,21 @@ export class SourceNode extends TraceNode {
         return this._destinations;
     }
 
-    getChildren(role?: string): SourceNode[] {
-        return this.nodeAdapter.getChildren(role).map((c) => new SourceNode(c, this.trace, this.file).withParent(this));
-    }
-
-    get children(): Node[] {
-        return this.getChildren();
+    getChildren(role?: string | symbol): SourceNode[] {
+        return super.getChildren(role) as SourceNode[];
     }
 }
 
 export class TargetNode extends TraceNode {
-    parent?: TargetNode;
+
+    parent?: TargetNode = undefined;
 
     constructor(wrapped: NodeAdapter, protected trace: AbstractTranspilationTrace, public file?: TargetWorkspaceFile) {
         super(wrapped);
-        if (wrapped.parent) {
-            this.parent = new TargetNode(wrapped.parent, this.trace, this.file);
-        }
+    }
+
+    protected make(node: NodeAdapter): TargetNode {
+        return new TargetNode(node, this.trace, this.file);
     }
 
     getPosition(): Position | undefined {
@@ -317,18 +317,23 @@ export class TargetNode extends TraceNode {
                         parent = parent.eContainer;
                     }
                 }
-                this.origin = new SourceNode(new ECoreNode(rawOrigin), this.trace, file);
+                const eCoreNode = new ECoreNode(rawOrigin);
+                this.origin = this.makeSourceNode(eCoreNode, file);
             }
         }
         return this.origin as SourceNode;
     }
 
-    getChildren(role?: string): TargetNode[] {
-        return this.nodeAdapter.getChildren(role).map((c) => new TargetNode(c, this.trace, this.file));
+    protected makeSourceNode(eCoreNode: ECoreNode, file: SourceWorkspaceFile | undefined) {
+        const sourceNode = new SourceNode(eCoreNode, this.trace, file);
+        if (eCoreNode.parent) {
+            sourceNode.withParent(this.makeSourceNode(eCoreNode.parent, file));
+        }
+        return sourceNode;
     }
 
-    get children(): Node[] {
-        return this.getChildren();
+    getChildren(role?: string | symbol): TargetNode[] {
+        return super.getChildren(role) as TargetNode[];
     }
 }
 

@@ -1,8 +1,7 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {findByPosition, IssueSeverity, IssueType, ParserNode, Point, pos, Position} from "../../src";
+import {findByPosition, IssueSeverity, IssueType, TraceNode, Point, pos, Position} from "../../src";
 import {ParserTraceLoader} from "../../src/interop/strumenta-playground";
-import {TraceNode} from "../../src/trace/trace-node";
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
@@ -81,10 +80,10 @@ describe('Parser traces – Starlasu metamodel V2', function() {
             expect(rootNode.getType()).to.eql("com.strumenta.sas.ast.SourceFile");
             expect(rootNode.getSimpleType()).to.eql("SourceFile");
             expect(rootNode.getPosition()).to.eql(pos(12, 0,369, 0));
-            let foundNode = findByPosition(rootNode, pos(12, 0,369, 0)) as ParserNode;
+            let foundNode = findByPosition(rootNode, pos(12, 0,369, 0)) as TraceNode;
             expect(foundNode.equals(rootNode)).to.be.true;
-            const descNode = rootNode.children[10].children[7] as ParserNode;
-            foundNode = findByPosition(descNode, descNode.position!) as ParserNode;
+            const descNode = rootNode.children[10].children[7] as TraceNode;
+            foundNode = findByPosition(descNode, descNode.position!) as TraceNode;
             expect(foundNode.equals(descNode)).to.be.true;
             expect(rootNode.getChildren().length).to.equal(18);
             expect(rootNode.getChildren("statementsAndDeclarations").length).to.equal(18);
