@@ -15,6 +15,7 @@ import {
 } from "@lionweb/core";
 import {NodeAdapter, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
+export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
 export class TylasuNodeWrapper implements LionwebNodeInterface {
     id: Id;

@@ -3,7 +3,7 @@
 	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
 	"author": "Strumenta s.r.l.",
 	"publisher": "strumenta",
-	"version": "1.6.9",
+	"version": "1.6.10",
 	"license": "Apache-2.0",
 	"keywords": [
 		"antlr",
@@ -78,16 +78,19 @@
 		"generate-classes": "dist/cjs/cli.js"
 	},
 	"dependencies": {
-		"@lionweb/core": "^0.6.1",
 		"iter-ops": "^1.5.0",
 		"reflect-metadata": "^0.1.13"
 	},
 	"peerDependencies": {
+		"@lionweb/core": "^0.6.1",
 		"antlr4ng": "^2.0.3",
 		"cmd-ts": "^0.11.0",
 		"ecore": "^0.12.0"
 	},
 	"peerDependenciesMeta": {
+		"@lionweb/core": {
+			"optional": true
+		},
 		"antlr4ng": {
 			"optional": true
 		},

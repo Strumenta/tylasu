@@ -2,7 +2,13 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.6.5 - 1.6.9] – 2024-03-07
+## [1.6.10] – 2024-03-07
+
+### Changed
+- Exported the StarLasu Lionweb language from the correct module
+- Made Lionweb an optional dependency
+
+## [1.6.9] – 2024-03-07
 
 ### Added
 - Support for Lionweb nodes as trace nodes
