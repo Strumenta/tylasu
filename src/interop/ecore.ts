@@ -838,17 +838,17 @@ export class ECoreNode extends NodeAdapter {
         }
     }
 
-    private __nodeDefinition?: NodeDefinition;
+    private _nodeDefinition?: NodeDefinition;
 
     get nodeDefinition() {
-        if (!this.__nodeDefinition) {
-            this.__nodeDefinition = {
+        if (!this._nodeDefinition) {
+            this._nodeDefinition = {
                 package: this.eo.eClass.eContainer.get("name") as string,
                 name: this.eo.eClass.get("name") as string,
                 properties: this.getProperties()
             };
         }
-        return this.__nodeDefinition;
+        return this._nodeDefinition;
     }
 
     get(...path: string[]): NodeAdapter | undefined {
@@ -876,13 +876,13 @@ export class ECoreNode extends NodeAdapter {
         return result;
     }
 
-    private __children?: ECoreNode[] = undefined;
+    private _children?: ECoreNode[] = undefined;
 
     getChildren(role?: string): ECoreNode[] {
-        if (this.__children === undefined) {
-            this.__children = this.getChildrenEObjects().map(c => new ECoreNode(c, this));
+        if (this._children === undefined) {
+            this._children = this.getChildrenEObjects().map(c => new ECoreNode(c, this));
         }
-        return this.__children!.filter(c => !role || c.getRole() == role);
+        return this._children!.filter(c => !role || c.getRole() == role);
     }
 
     getId(): string {

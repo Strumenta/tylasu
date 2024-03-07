@@ -125,7 +125,10 @@ function allFeatures(classifier: Classifier) {
 export class LionwebNode extends NodeAdapter {
 
     parent: LionwebNode;
-    public readonly nodeDefinition: NodeDefinition;
+    private _nodeDefinition?: NodeDefinition;
+    public get nodeDefinition(): NodeDefinition {
+        return this._nodeDefinition!;
+    }
 
     constructor(
         public readonly classifier: Classifier,
@@ -136,7 +139,7 @@ export class LionwebNode extends NodeAdapter {
         allFeatures(classifier).forEach(f => {
             properties[f.name] = featureToProperty(f);
         });
-        this.nodeDefinition = {
+        this._nodeDefinition = {
             name: classifier.name,
             properties: properties,
             resolved: true
@@ -144,12 +147,29 @@ export class LionwebNode extends NodeAdapter {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    get(...path: string[]): NodeAdapter | undefined {
-        return undefined; // TODO
+    get(...path: string[]): LionwebNode | undefined {
+        let result: LionwebNode | undefined = undefined;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        let parent: LionwebNode = this;
+        for (const element of path) {
+            result = parent.getChild(element) as LionwebNode;
+            if (result) {
+                parent = result;
+            } else {
+                return undefined;
+            }
+        }
+        return result;
     }
 
     getAttributes(): { [p: string]: any } {
-        return {}; // TODO
+        const attributes = {};
+        for (const p in this.nodeDefinition.properties) {
+            if (!this.nodeDefinition.properties[p].child) {
+                attributes[p] = this.getAttribute(p);
+            }
+        }
+        return attributes;
     }
 
     getId(): string {
