@@ -280,7 +280,7 @@ export abstract class Node extends Origin implements Destination {
                 return this.doGetAttribute(name);
             }
         } else {
-            throw new Error(name.toString() + " is not a feature.");
+            throw new Error(`${name.toString()} is not a feature of ${this} (${this.nodeDefinition}).`);
         }
     }
 
@@ -294,7 +294,7 @@ export abstract class Node extends Origin implements Destination {
                 this.doSetAttribute(name, value);
             }
         } else {
-            throw new Error(name.toString() + " is not a feature.");
+            throw new Error(`${name.toString()} is not a feature of ${this} (${this.nodeDefinition}).`);
         }
     }
 
