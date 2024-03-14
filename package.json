@@ -114,6 +114,7 @@
 		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
 	},
 	"devDependencies": {
+		"@lionweb/core": "^0.6.2",
 		"@tsconfig/recommended": "^1.0.3",
 		"@types/chai": "^4.3.11",
 		"@types/ecore": "^0.12.5",

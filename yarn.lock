@@ -613,10 +613,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lionweb/core@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.1.tgz#afaf7028e379fb46a8dba75dfb6541311f2bb2a7"
-  integrity sha512-ZFwKq+vSgrRKc9INkyaRL8A8cdBWkG0YNzDx4M4MJRgP5iVxbAtIuNwrNx8wuCTg7itxvQoJrG4reYjd2oEzvQ==
+"@lionweb/core@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.2.tgz#9f7f8d8f8e1d7e786b27fe441f9d7f50bd806f63"
+  integrity sha512-fYW8JevvhE18M0h3t/JsKbOVKGaGtB1NRTy+GYJlHMoF5hqyR+JnH0NzhFWTijT0wi5xrHVftZPgyFzk7nXb9g==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
