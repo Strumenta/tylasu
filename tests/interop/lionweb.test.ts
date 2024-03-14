@@ -74,7 +74,7 @@ describe('Lionweb integration', function() {
             expect(root.node).to.be.instanceof(LionwebNode);
             let dir = root.node as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.getAttribute("name")).to.equal("resources.zip");
+            expect(dir.getAttributeValue("name")).to.equal("resources.zip");
             expect(dir.files.length).to.equal(1);
             expect(dir.files[0]).to.be.instanceof(LionwebNode);
             dir = dir.files[0] as LionwebNode & any;
