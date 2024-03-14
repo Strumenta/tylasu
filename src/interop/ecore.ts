@@ -42,6 +42,7 @@ import {KOLASU_URI_V1, THE_NODE_ECLASS as THE_NODE_ECLASS_V1} from "./kolasu-v1-
 import {EBigDecimal, EBigInteger} from "./ecore-patching";
 import {NodeAdapter} from "../trace/trace-node";
 import {EClassifier} from "ecore";
+import {PossiblyNamed, ReferenceByName} from "../model/naming";
 
 export * as starlasu_v2 from "./starlasu-v2-metamodel";
 export * as kolasu_v1 from "./kolasu-v1-metamodel";
@@ -518,7 +519,7 @@ export function loadEPackages(data: any, resource: ECore.Resource): ECore.EPacka
 }
 
 interface PostponedReference {
-    eObject: ECore.EObject, feature: any, refValue: any
+    eObject: ECore.EObject, feature: any, refName: string | undefined, refValue: any
 }
 
 /**
@@ -530,19 +531,24 @@ class ReferencesTracker {
     constructor(public resource: ECore.Resource) {
     }
 
-    trackReference(eObject: ECore.EObject, feature: any, refValue: any) : void {
-        this.postponedReferences.push({eObject, feature, refValue});
+    trackReference(eObject: ECore.EObject, feature: any, refName: string | undefined, refValue: any) : void {
+        this.postponedReferences.push({eObject, feature, refName: refName, refValue});
     }
 
     resolveAllReferences() : void {
-        this.postponedReferences.forEach((pr)=>{
+        this.postponedReferences.forEach((pr)=> {
             this.resolveReference(pr);
         });
         this.postponedReferences = [];
     }
 
     resolveReference(pr: PostponedReference) {
-        if (pr.feature.get('upperBound') !== 1) {
+        if (pr.refName) {
+            pr.eObject.set(pr.feature, THE_REFERENCE_BY_NAME_ECLASS.create({
+                name: pr.refName,
+                referenced: pr.refValue ? this.getReferredObject(pr.refValue["$ref"]) : undefined
+            }));
+        } else if (pr.feature.get('upperBound') !== 1) {
             const list = pr.eObject.get(pr.feature);
             pr.refValue.forEach(ref => {
                 list.add(this.getReferredObject(ref.$ref));
@@ -770,11 +776,7 @@ function importJsonObject(
                         if (eGenericType) {
                             eType = eGenericType.get("eClassifier");
                             if (eType == THE_REFERENCE_BY_NAME_ECLASS) {
-                                //eType = eGenericType.get("eTypeArguments").at(0).get("eClassifier");
-                                const refValue = obj[key].referenced;
-                                if (refValue) {
-                                    referencesTracker.trackReference(eObject, feature, refValue);
-                                }
+                                referencesTracker.trackReference(eObject, feature, obj[key].name, obj[key].referenced);
                                 continue;
                             }
                         }
@@ -782,8 +784,7 @@ function importJsonObject(
                     if (feature.get("containment") === true) {
                         setChild(feature, obj, key, eObject, resource, eType, strict, referencesTracker, eClass);
                     } else if (feature.isKindOf(ECore.EReference)) {
-                        const refValue = obj[key];
-                        referencesTracker.trackReference(eObject, feature, refValue);
+                        referencesTracker.trackReference(eObject, feature, undefined, obj[key]);
                     } else {
                         throw featureError("The feature is neither a containment nor a reference", key, eClass, resource);
                     }
@@ -824,7 +825,7 @@ export interface EcoreMetamodelSupport {
     generateMetamodel(resource: ECore.Resource, includingKolasuMetamodel: boolean): void;
 }
 
-export class ECoreNode extends NodeAdapter {
+export class ECoreNode extends NodeAdapter implements PossiblyNamed {
 
     parent?: ECoreNode;
 
@@ -836,6 +837,10 @@ export class ECoreNode extends NodeAdapter {
         } else if (container?.isKindOf(THE_NODE_ECLASS_V2) || container?.isKindOf(THE_NODE_ECLASS_V1)) {
             this.parent = new ECoreNode(container);
         }
+    }
+
+    get name(): string | undefined {
+        return this.getAttributeValue("name");
     }
 
     private _nodeDefinition?: NodeDefinition;
@@ -863,7 +868,7 @@ export class ECoreNode extends NodeAdapter {
         }
     }
 
-    getAttribute(name: string): any {
+    getAttributeValue(name: string): any {
         return this.eo.get(name);
     }
 
@@ -883,6 +888,36 @@ export class ECoreNode extends NodeAdapter {
             this._children = this.getChildrenEObjects().map(c => new ECoreNode(c, this));
         }
         return this._children!.filter(c => !role || c.getRole() == role);
+    }
+
+    protected doGetChildOrChildren(name: string | symbol): ECoreNode | ECoreNode[] | undefined {
+        const containment = this.containment(name);
+        const children = this.getChildren(name.toString());
+        if (!containment?.multiple) {
+            if (children) {
+                return children[0];
+            } else {
+                return undefined;
+            }
+        } else {
+            return children;
+        }
+    }
+
+    getReference(name: string | symbol): ReferenceByName<ECoreNode> | undefined {
+        const ref = this.eo.get(name.toString());
+        if (ref) {
+            if (ref.isKindOf(THE_REFERENCE_BY_NAME_ECLASS)) {
+                const referred = ref.get("referenced");
+                return new ReferenceByName<any>(ref.get("name"), referred ? new ECoreNode(referred) : undefined);
+            } else {
+                const error = new Error(`Not a reference: ${name.toString()}`) as any;
+                error.object = ref;
+                throw error;
+            }
+        } else {
+            return undefined;
+        }
     }
 
     getId(): string {

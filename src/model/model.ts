@@ -1,5 +1,6 @@
 import {Position} from "./position";
 import "reflect-metadata";
+import {ReferenceByName} from "./naming";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
@@ -163,7 +164,7 @@ export abstract class Node extends Origin implements Destination {
         return Object.getOwnPropertyNames(props).map(p => {
             const value = props[p].child ?
                 (props[p].multiple ? this.getChildren(p) : this.getChild(p)) :
-                this.getAttribute(p);
+                this.getAttributeValue(p);
             return { name: p, value };
         });
     }
@@ -270,40 +271,44 @@ export abstract class Node extends Origin implements Destination {
         }
     }
 
-    getAttribute(name: string | symbol): any {
+    getAttributeValue(name: string | symbol): any {
         const props = this.nodeDefinition?.properties || {};
         const prop = props[name];
         if(prop) {
             if (prop.child) {
                 throw new Error(name.toString() + " is a containment, please use getChild");
             } else {
-                return this.doGetAttribute(name);
+                return this.doGetAttributeValue(name);
             }
         } else {
             throw new Error(`${name.toString()} is not a feature of ${this} (${this.nodeDefinition}).`);
         }
     }
 
-    setAttribute(name: string | symbol, value: any) {
+    setAttributeValue(name: string | symbol, value: any) {
         const props = this.nodeDefinition?.properties || {};
         const prop = props[name];
         if(prop) {
             if (prop.child) {
                 throw new Error(name.toString() + " is a containment, please use setChild/addChild");
             } else {
-                this.doSetAttribute(name, value);
+                this.doSetAttributeValue(name, value);
             }
         } else {
             throw new Error(`${name.toString()} is not a feature of ${this} (${this.nodeDefinition}).`);
         }
     }
 
-    protected doSetAttribute(name: string | symbol, value: any) {
+    protected doSetAttributeValue(name: string | symbol, value: any) {
         this[name] = value;
     }
 
-    protected doGetAttribute(name: string | symbol) {
+    protected doGetAttributeValue(name: string | symbol) {
         return this[name];
+    }
+
+    getReference(name: string | symbol): ReferenceByName<any> | undefined {
+        return this[name] as ReferenceByName<any>;
     }
 
     withParent(parent?: Node): this {

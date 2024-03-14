@@ -47,7 +47,7 @@ describe('Strumenta Playground', function() {
                 });
                 const trace = loader.loadParserTrace(json, "made-up");
                 expect(trace.rootNode.getSimpleType()).to.equal("NodeSubclass");
-                expect(trace.rootNode.getAttribute("a")).to.equal("root");
+                expect(trace.rootNode.getAttributeValue("a")).to.equal("root");
                 /* TODO not supported yet
                 const errorNode = trace.rootNode.getChildren("errorNode")[0];
                 expect(errorNode.getAttribute("message")).to.equal("Something bad happened");

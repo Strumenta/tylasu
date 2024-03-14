@@ -1,6 +1,7 @@
 import {Node, NodeDefinition} from "../model/model";
 import {Position} from "../model/position";
 import {Issue} from "../validation";
+import {PossiblyNamed, ReferenceByName} from "../model/naming";
 
 export abstract class NodeAdapter extends Node {
     abstract parent?: NodeAdapter;
@@ -74,12 +75,12 @@ export class AugmentedNode extends NodeAdapter {
         this.node.addChild(name, child);
     }
 
-    setAttribute(name: string | symbol, value: any) {
-        this.node.setAttribute(name, value);
+    setAttributeValue(name: string | symbol, value: any) {
+        this.node.setAttributeValue(name, value);
     }
 
-    getAttribute(name: string | symbol): any {
-        return this.node.getAttribute(name);
+    getAttributeValue(name: string | symbol): any {
+        return this.node.getAttributeValue(name);
     }
 
     get(): NodeAdapter | undefined {
@@ -119,12 +120,16 @@ export class AugmentedNode extends NodeAdapter {
     }
 }
 
-export class TraceNode extends Node {
+export class TraceNode extends Node implements PossiblyNamed {
 
     parent?: TraceNode = undefined;
 
     constructor(public nodeAdapter: NodeAdapter) {
         super();
+    }
+
+    get name(): string | undefined {
+        return this.getAttributeValue("name");
     }
 
     getType(): string {
@@ -159,8 +164,51 @@ export class TraceNode extends Node {
         return this.nodeAdapter.getAttributes();
     }
 
-    doGetAttribute(attrName: string): any {
-        return this.nodeAdapter.getAttribute(attrName);
+    doGetAttributeValue(attrName: string): any {
+        return this.nodeAdapter.getAttributeValue(attrName);
+    }
+
+    protected doGetChildOrChildren(name: string | symbol): Node | Node[] | undefined {
+        const containment = this.containment(name);
+        if(!containment) {
+            throw new Error("Not a containment: " + name.toString());
+        }
+        if (containment.multiple) {
+            return this.nodeAdapter.getChildren(name)?.map(c => this.makeChild(c, name)!);
+        } else {
+            return this.makeChild(this.nodeAdapter.getChild(name), name);
+        }
+    }
+
+    getReference(name: string | symbol): ReferenceByName<TraceNode> | undefined {
+        const innerRef = this.nodeAdapter.getReference(name);
+        if (innerRef) {
+            const reference = new ReferenceByName<TraceNode>(innerRef.name);
+            if (innerRef?.referred) {
+                reference.referred = this.make(innerRef.referred);
+            }
+            return reference;
+        } else {
+            return undefined;
+        }
+    }
+
+    private makeChild(child: Node | undefined | NodeAdapter, name: string | symbol) {
+        if (child instanceof NodeAdapter) {
+            return this.make(child).withParent(this);
+        } else if (child) {
+            const error = new Error(`Invalid child with role ${name?.toString()}`) as any;
+            error.child = child;
+            throw error;
+        }
+    }
+
+    getRoot(): TraceNode {
+        if (this.parent) {
+            return this.parent.getRoot();
+        } else {
+            return this;
+        }
     }
 
     getPathFromRoot(): (string | number)[] {

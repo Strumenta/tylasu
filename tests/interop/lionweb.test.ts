@@ -105,16 +105,16 @@ describe('Lionweb integration', function() {
             let dir = new TraceNode(root.node as LionwebNode);
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.getAttribute("name")).to.equal("resources.zip");
+            expect(dir.getAttributeValue("name")).to.equal("resources.zip");
             expect(dir.getChildren("files").length).to.equal(1);
             dir = dir.getChildren("files")[0];
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.getAttribute("name")).to.equal("resources");
+            expect(dir.getAttributeValue("name")).to.equal("resources");
             expect(dir.getChildren("files").length).to.equal(15);
             const file = dir.getChildren("files")[1];
             expect(file.nodeDefinition.name).to.equal("TextFile");
-            expect(file.getAttribute("name")).to.equal("rosetta-code-count-examples-2.egl");
-            expect(file.getAttribute("contents").substring(0, 10)).to.equal("package co");
+            expect(file.getAttributeValue("name")).to.equal("rosetta-code-count-examples-2.egl");
+            expect(file.getAttributeValue("contents").substring(0, 10)).to.equal("package co");
             expect(file.getRole()).to.equal("files");
             expect(file.getPathFromRoot()).to.eql(["files", 0, "files", 1]);
 

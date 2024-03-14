@@ -68,7 +68,7 @@ export class ParserTrace {
     }
 
     get name(): string | undefined {
-        return this.node.getAttribute("name");
+        return this.node.getAttributeValue("name");
     }
 }
 
@@ -178,7 +178,7 @@ export class TranspilationTrace extends AbstractTranspilationTrace {
     }
 
     get name(): string | undefined {
-        return this.wrappedNode.getAttribute("name");
+        return this.wrappedNode.getAttributeValue("name");
     }
 }
 
@@ -206,7 +206,7 @@ export class WorkspaceTranspilationTrace extends AbstractTranspilationTrace {
     }
 
     get name(): string | undefined {
-        return this.wrappedNode.getAttribute("name");
+        return this.wrappedNode.getAttributeValue("name");
     }
 }
 
@@ -214,11 +214,11 @@ abstract class AbstractWorkspaceFile<N> {
     protected constructor(protected wrappedNode: NodeAdapter, protected trace: AbstractTranspilationTrace) {}
 
     get path(): string {
-        return this.wrappedNode.getAttribute("path");
+        return this.wrappedNode.getAttributeValue("path");
     }
 
     get code(): string {
-        return this.wrappedNode.getAttribute("code");
+        return this.wrappedNode.getAttributeValue("code");
     }
 
     get issues(): Issue[] {

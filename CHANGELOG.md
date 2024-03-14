@@ -2,6 +2,20 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.13] – 2024-03-14
+
+### Added
+- `Node.getReference` method as in Kolasu
+
+### Changed
+- Renamed `Node.getAttribute` to `getAttributeValue` in accordance with Kolasu
+
+### Fixed
+- Proper handling of references in ECore
+
+### Removed
+- The `ParserNode` class, replaced by its superclass `TraceNode` that's now a concrete class.
+
 ## [1.6.12] – 2024-03-07
 
 ### Added

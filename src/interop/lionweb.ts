@@ -89,7 +89,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
                 node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
             }
         } else {
-            node.node.setAttribute(feature.name, value);
+            node.node.setAttributeValue(feature.name, value);
         }
     }
 }
@@ -166,7 +166,7 @@ export class LionwebNode extends NodeAdapter {
         const attributes = {};
         for (const p in this.nodeDefinition.properties) {
             if (!this.nodeDefinition.properties[p].child) {
-                attributes[p] = this.getAttribute(p);
+                attributes[p] = this.getAttributeValue(p);
             }
         }
         return attributes;

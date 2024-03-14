@@ -2,6 +2,7 @@ import {expect} from "chai";
 import * as fs from "fs";
 import {findByPosition, IssueSeverity, IssueType, TraceNode, Point, pos, Position} from "../../src";
 import {ParserTraceLoader} from "../../src/interop/strumenta-playground";
+import {pipe, filter, first} from "iter-ops";
 
 describe('Parser traces – Kolasu metamodel V1', function() {
 
@@ -35,6 +36,14 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             const updateStmt = trace.rootNode.findByPosition(pos(258, 30, 258, 30));
             expect(updateStmt).not.to.be.undefined;
             expect((updateStmt as TraceNode).getType()).to.eql("com.strumenta.rpgparser.model.UpdateRecordStatement");
+
+            const basedKw = pipe(trace.rootNode.walkDescendants(),
+                filter((node: TraceNode) => node.getType() == "com.strumenta.rpgparser.model.BasedKeyword"),
+                first()).first as TraceNode;
+            expect(basedKw).not.to.be.undefined;
+            expect(basedKw.getType()).to.equal("com.strumenta.rpgparser.model.BasedKeyword");
+            const refExpr = basedKw.getChild("basingPointerName") as TraceNode;
+            expect(refExpr.getAttributes()["name"]).to.equal("wPtr");
         });
 
     it("Can load reference RPG parser trace: open-weather",

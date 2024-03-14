@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import * as fs from "fs";
-import {Point, pos, Position, TraceNode} from "../../src";
+import {Point, pos, Position, ReferenceByName, TraceNode} from "../../src";
 import { loadEObject, loadEPackages } from "../../src/interop/ecore"
 import {TranspilationTraceLoader} from "../../src/interop/strumenta-playground"
 import {THE_AST_EPACKAGE} from "../../src/interop/starlasu-v2-metamodel";
@@ -9,6 +9,7 @@ import {
         THE_WORKSPACE_TRANSPILATION_TRACE_ECLASS,
         TRANSPILATION_EPACKAGE
 } from "../../src/interop/transpilation-package";
+import {pipe, filter, first} from "iter-ops";
 
 describe('Workspace Transpilation traces', function() {
     it("Can load workspace transpilation trace produced by Kolasu as EObject",
@@ -57,7 +58,7 @@ describe('Workspace Transpilation traces', function() {
             expect(deordFile.node.getChildren("dataDescriptions").length).to.eql(2)
             expect(deordFile.node.getChildren("dataDescriptions")[0].getSimpleType()).to.eql("FileEntry")
             expect(deordFile.node.getChildren("dataDescriptions")[1].getSimpleType()).to.eql("RecordFormat")
-            expect(deordFile.node.getChildren("dataDescriptions")[1].getAttribute("name")).to.eql("FDETO")
+            expect(deordFile.node.getChildren("dataDescriptions")[1].getAttributeValue("name")).to.eql("FDETO")
 
             const customerFile = trace.originalFiles[1];
             expect(customerFile.path).to.eql("qddssrc/CUSTOMER.dds");
@@ -85,38 +86,52 @@ describe('Workspace Transpilation traces', function() {
                 "/Users/ftomassetti/repos/rpg-to-python-transpiler/output/CUS200.py"
             );
         });
-        it("Can load workspace transpilation trace produced by Kolasu with ReferenceByName instances",
+    it("Can load workspace transpilation trace produced by Kolasu with ReferenceByName instances",
             function () {
-                    ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
-                    ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
-                    const loader = new TranspilationTraceLoader({
-                            name: "rpg2java",
-                            uri: "file://tests/data/playground/java/rpg2java-metamodels.json",
-                            metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
-                    });
-                    const example = fs.readFileSync("tests/data/playground/java/trace.json").toString();
-                    const trace = loader.loadWorkspaceTranspilationTrace(example);
-
-                    expect(trace.originalFiles.length).to.eql(1);
-                    expect(trace.generatedFiles.length).to.eql(4);
-                    expect(trace.transpilationIssues.length).to.eql(0);
-
-                    const cus300File = trace.originalFiles[0];
-                    expect(cus300File.path).to.eql("CUS300.rpgle")
-                    expect(cus300File.issues.length).to.eql(0)
-                    expect(cus300File.node.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit")
-                    expect(cus300File.node.getSimpleType()).to.eql("CompilationUnit")
-                    expect(cus300File.node.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)))
-                    // TODO broken expect(cus300File.node.getChildren("dataDefinition").length).to.eql(4)
-                    expect(cus300File.node.getChildren("mainStatements").length).to.eql(9)
-                    const firstStatement = cus300File.node.getChildren("mainStatements")[0];
-                    expect(firstStatement.isDeclaration()).to.be.false;
-                    expect(firstStatement.isExpression()).to.be.false;
-                    expect(firstStatement.isStatement()).to.be.true;
-                    const destinationNodes = firstStatement.getDestinationNodes();
-                    expect(destinationNodes.length).to.equal(1);
-                    expect(destinationNodes[0].file?.path).to.equal("Cus300.java");
+            ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
+            ECore.EPackage.Registry.register(TRANSPILATION_EPACKAGE);
+            const loader = new TranspilationTraceLoader({
+                name: "rpg2java",
+                uri: "file://tests/data/playground/java/rpg2java-metamodels.json",
+                metamodel: JSON.parse(fs.readFileSync("tests/data/playground/java/rpg2java-metamodels.json").toString())
             });
+            const example = fs.readFileSync("tests/data/playground/java/trace.json").toString();
+            const trace = loader.loadWorkspaceTranspilationTrace(example);
+
+            expect(trace.originalFiles.length).to.eql(1);
+            expect(trace.generatedFiles.length).to.eql(4);
+            expect(trace.transpilationIssues.length).to.eql(0);
+
+            const cus300File = trace.originalFiles[0];
+            expect(cus300File.path).to.eql("CUS300.rpgle")
+            expect(cus300File.issues.length).to.eql(0)
+
+            const sourceRoot = cus300File.node;
+            expect(sourceRoot.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit")
+            expect(sourceRoot.getSimpleType()).to.eql("CompilationUnit")
+            expect(sourceRoot.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)))
+
+            const refExpr = pipe(sourceRoot.walkDescendants(),
+                filter((node: TraceNode) => node.getType() == "com.strumenta.rpgparser.model.ReferenceExpr"),
+                first()).first as TraceNode;
+            expect(refExpr).not.to.be.undefined;
+            const reference = refExpr.getReference("dataDefinition");
+            expect(reference).to.be.instanceof(ReferenceByName);
+            expect(reference?.name).to.equal("CNT");
+            expect(reference?.referred).to.be.instanceof(TraceNode);
+            expect(reference?.referred?.getType()).to.equal("com.strumenta.rpgparser.model.StandaloneField");
+            expect(reference?.referred?.name).to.equal("CNT");
+
+            // TODO broken expect(cus300File.node.getChildren("dataDefinition").length).to.eql(4)
+            expect(sourceRoot.getChildren("mainStatements").length).to.eql(9)
+            const firstStatement = sourceRoot.getChildren("mainStatements")[0];
+            expect(firstStatement.isDeclaration()).to.be.false;
+            expect(firstStatement.isExpression()).to.be.false;
+            expect(firstStatement.isStatement()).to.be.true;
+            const destinationNodes = firstStatement.getDestinationNodes();
+            expect(destinationNodes.length).to.equal(1);
+            expect(destinationNodes[0].file?.path).to.equal("Cus300.java");
+        });
     it("Can load workspace transpilation trace produced by Kolasu with SimpleOrigin instances",
         function () {
             ECore.EPackage.Registry.register(THE_AST_EPACKAGE);
