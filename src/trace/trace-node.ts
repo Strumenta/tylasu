@@ -184,12 +184,35 @@ export class TraceNode extends Node implements PossiblyNamed {
         const innerRef = this.nodeAdapter.getReference(name);
         if (innerRef) {
             const reference = new ReferenceByName<TraceNode>(innerRef.name);
-            if (innerRef?.referred) {
-                reference.referred = this.make(innerRef.referred);
+            const refTarget = innerRef?.referred;
+            if (refTarget instanceof NodeAdapter) {
+                const referred = this.make(innerRef.referred);
+                reference.referred = referred.withParent(this.computeParentForReference(refTarget));
             }
             return reference;
         } else {
             return undefined;
+        }
+    }
+
+    private computeParentForReference(refTarget: NodeAdapter) {
+        let node: TraceNode | undefined = undefined;
+        let tempParent: TraceNode | undefined = undefined;
+        while (refTarget.parent) {
+            const parent = this.make(refTarget.parent);
+            if (node) {
+                node.parent = parent;
+            } else {
+                tempParent = parent;
+            }
+            node = parent;
+            refTarget = refTarget.parent;
+        }
+        if (tempParent) {
+            const newParent = this.getRoot().get(tempParent.getPathFromRoot());
+            if (newParent instanceof Node) {
+                return newParent;
+            }
         }
     }
 
@@ -258,5 +281,24 @@ export class TraceNode extends Node implements PossiblyNamed {
 
     isStatement(): boolean {
         return this.nodeAdapter.isStatement();
+    }
+
+    get(path: (string | number)[]) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        let node: Node | Node[] | undefined = this;
+        for (const elem of path) {
+            if (typeof elem == "string") {
+                if (node instanceof Node) {
+                    node = node.getChild(elem);
+                } else {
+                    throw new Error("Invalid path at " + elem + ", expected node, got " + node);
+                }
+            } else if (Array.isArray(node)) {
+                node = node[elem];
+            } else {
+                throw new Error("Invalid path at " + elem + ", expected children, got " + node);
+            }
+        }
+        return node;
     }
 }

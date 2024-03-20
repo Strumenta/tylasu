@@ -115,12 +115,17 @@ describe('Workspace Transpilation traces', function() {
                 filter((node: TraceNode) => node.getType() == "com.strumenta.rpgparser.model.ReferenceExpr"),
                 first()).first as TraceNode;
             expect(refExpr).not.to.be.undefined;
+            expect(refExpr.getPathFromRoot()).to.eql(["mainStatements", 0, "expression", "target"]);
             const reference = refExpr.getReference("dataDefinition");
             expect(reference).to.be.instanceof(ReferenceByName);
             expect(reference?.name).to.equal("CNT");
-            expect(reference?.referred).to.be.instanceof(TraceNode);
-            expect(reference?.referred?.getType()).to.equal("com.strumenta.rpgparser.model.StandaloneField");
-            expect(reference?.referred?.name).to.equal("CNT");
+            const refTarget = reference?.referred;
+            expect(refTarget).to.be.instanceof(TraceNode);
+            expect(refTarget?.getType()).to.equal("com.strumenta.rpgparser.model.StandaloneField");
+            expect(refTarget?.name).to.equal("CNT");
+            expect(refTarget?.getRole()).to.equal("dataDefinitions");
+            expect(refTarget?.getPathFromRoot()).to.eql(["dataDefinitions", 3]);
+            expect(refTarget?.getRoot()).to.equal(sourceRoot);
 
             // TODO broken expect(cus300File.node.getChildren("dataDefinition").length).to.eql(4)
             expect(sourceRoot.getChildren("mainStatements").length).to.eql(9)

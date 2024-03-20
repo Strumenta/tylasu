@@ -131,7 +131,7 @@ THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(ECore.EAttribute.cre
 }));
 THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     name: "referenced",
-    containment: true
+    containment: false
 }));
 THE_REFERENCE_BY_NAME_ECLASS.get("eStructuralFeatures").at(1).set("eGenericType", ECore.EGenericType.create({
     eTypeParameter: THE_REFERENCE_BY_NAME_ECLASS.get("eTypeParameters").at(0)
