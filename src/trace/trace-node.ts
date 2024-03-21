@@ -242,11 +242,17 @@ export class TraceNode extends Node implements PossiblyNamed {
             path.push(ft.name.toString());
             if (ft.multiple) {
                 const children = this.parent.getChildren(ft.name);
+                let found = false;
                 for (let index = 0; index < children.length; index++) {
                     const child = children[index];
-                    if (child instanceof TraceNode && child.equals(this)) {
+                    if (child.equals(this)) {
                         path.push(index);
+                        found = true;
+                        break;
                     }
+                }
+                if (!found) {
+                    throw new Error(`Child node ${this} not found in ${ft.name.toString()}`);
                 }
             }
             return path;

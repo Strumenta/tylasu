@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.18] – 2024-03-21
+
+### Fixed
+- Protect `getPathFromRoot` when a child appears multiple times in a collection
+
 ## [1.6.17] – 2024-03-21
 
 ### Changed
