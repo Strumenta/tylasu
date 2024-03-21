@@ -1,6 +1,6 @@
 import {Position} from "./position";
 import "reflect-metadata";
-import {ReferenceByName} from "./naming";
+import {PossiblyNamed, ReferenceByName} from "./naming";
 
 export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
@@ -24,6 +24,7 @@ export type PropertyDefinition = {
     child?: boolean,
     multiple?: boolean,
     inherited?: boolean,
+    reference?: boolean,
     type?: any,
     arrayType?: any
 }
@@ -163,8 +164,8 @@ export abstract class Node extends Origin implements Destination {
         const props = this.nodeDefinition?.properties || {};
         return Object.getOwnPropertyNames(props).map(p => {
             const value = props[p].child ?
-                (props[p].multiple ? this.getChildren(p) : this.getChild(p)) :
-                this.getAttributeValue(p);
+                (props[p].multiple  ? this.getChildren(p)  : this.getChild(p)) :
+                (props[p].reference ? this.getReference(p) : this.getAttributeValue(p));
             return { name: p, value };
         });
     }
@@ -278,7 +279,11 @@ export abstract class Node extends Origin implements Destination {
             if (prop.child) {
                 throw new Error(name.toString() + " is a containment, please use getChild");
             } else {
-                return this.doGetAttributeValue(name);
+                const attributeValue = this.doGetAttributeValue(name);
+                if (attributeValue instanceof ReferenceByName) {
+                    throw new Error(name.toString() + " is a reference, please use getReference");
+                }
+                return attributeValue;
             }
         } else {
             throw new Error(`${name.toString()} is not a feature of ${this} (${this.nodeDefinition}).`);
@@ -308,7 +313,11 @@ export abstract class Node extends Origin implements Destination {
     }
 
     getReference(name: string | symbol): ReferenceByName<any> | undefined {
-        return this[name] as ReferenceByName<any>;
+        return this.doGetReference(name) as ReferenceByName<any>;
+    }
+
+    protected doGetReference(name: string | symbol) {
+        return this[name];
     }
 
     withParent(parent?: Node): this {
@@ -434,7 +443,7 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
     return definition;
 }
 
-export function registerNodeProperty<T extends Node>(
+export function registerNodeAttribute<T extends Node>(
     type: { new(...args: any[]): T }, methodName: string | symbol
 ): PropertyDefinition {
     if (methodName == "parent" || methodName == "children" || methodName == "origin") {
@@ -451,9 +460,16 @@ export function registerNodeProperty<T extends Node>(
 
 export function registerNodeChild<T extends Node>(
     type: new (...args: any[]) => T, methodName: string, multiple: boolean = false): PropertyDefinition {
-    const propInfo = registerNodeProperty(type, methodName);
+    const propInfo = registerNodeAttribute(type, methodName);
     propInfo.child = true;
     propInfo.multiple = multiple;
+    return propInfo;
+}
+
+export function registerNodeReference<T extends Node & PossiblyNamed>(
+    type: new (...args: any[]) => T, methodName: string): PropertyDefinition {
+    const propInfo = registerNodeAttribute(type, methodName);
+    propInfo.reference = true;
     return propInfo;
 }
 
@@ -485,9 +501,30 @@ export function Children(): (target, methodName: string) => void {
     };
 }
 
-
+/**
+ * Declares the decorated property as an attribute.
+ * @deprecated use Attribute instead.
+ */
 export function Property(): (target, methodName: string) => void {
     return function (target, methodName: string) {
-        registerNodeProperty(target, methodName);
+        registerNodeAttribute(target, methodName);
+    };
+}
+
+/**
+ * Declares the decorated property as an attribute.
+ */
+export function Attribute(): (target, methodName: string) => void {
+    return function (target, methodName: string) {
+        registerNodeAttribute(target, methodName);
+    };
+}
+
+/**
+ * Declares the decorated property as a reference.
+ */
+export function Reference(): (target, methodName: string) => void {
+    return function (target, methodName: string) {
+        registerNodeReference(target, methodName);
     };
 }

@@ -1,4 +1,15 @@
-import {ASTNode, Child, Children, ErrorNode, Node, Position, Property} from "../src";
+import {
+    ASTNode,
+    Attribute,
+    Child,
+    Children,
+    ErrorNode,
+    Node,
+    Position,
+    PossiblyNamed,
+    Reference,
+    ReferenceByName
+} from "../src";
 
 export class Box extends Node {
     @Children()
@@ -25,21 +36,25 @@ export enum Fibo {
 }
 
 @ASTNode("", "SomeNode")
-export class SomeNode extends Node {
-    @Property()
+export class SomeNode extends Node implements PossiblyNamed {
+    @Attribute()
     a?: string;
-    @Property()
+    @Attribute()
     fib: Fibo
 
     constructor(a?: string, positionOverride?: Position) {
         super(positionOverride);
         this.a = a;
     }
+
+    get name(): string | undefined {
+        return this.a;
+    }
 }
 
 @ASTNode("some.package", "SomeNodeInPackage")
 export class SomeNodeInPackage extends Node {
-    @Property()
+    @Attribute()
     a?: string;
     @Child()
     someNode: SomeNode;
@@ -54,7 +69,7 @@ export class SomeNodeInPackage extends Node {
 
 @ASTNode("some.package", "NodeSubclass")
 export class NodeSubclass extends SomeNodeInPackage {
-    @Property()
+    @Attribute()
     b: string;
     @Child()
     anotherChild: SomeNodeInPackage;
@@ -68,3 +83,16 @@ export class NodeWithError extends SomeNodeInPackage {
 
 @ASTNode("another.package", "SomeNodeInPackage")
 export class SomeNodeInAnotherPackage extends Node {}
+
+@ASTNode("", "SomeNodeWithReferences")
+export class SomeNodeWithReferences extends Node {
+    @Attribute()
+    a?: string;
+    @Reference()
+    ref: ReferenceByName<SomeNode> = new ReferenceByName<SomeNode>("a")
+
+    constructor(a?: string, positionOverride?: Position) {
+        super(positionOverride);
+        this.a = a;
+    }
+}

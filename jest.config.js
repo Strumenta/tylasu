@@ -88,7 +88,7 @@ const config = {
   ],
   globals: {
     "ts-jest": {
-      tsConfig: `tests/tsconfig.json`
+      tsconfig: `tests/tsconfig.json`
     }
   }
 };

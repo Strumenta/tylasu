@@ -1,8 +1,7 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, Children, GenericNode, Node, PossiblyNamed, Property, ReferenceByName} from "../src";
-import {JSONGenerator} from "../src";
-import {Indexer} from "../src/interop/indexing";
+import {ASTNode, Child, Children, GenericNode, Node, PossiblyNamed, Reference, ReferenceByName} from "../src";
+import {Indexer, JSONGenerator} from "../src";
 
 describe('JSON generator', function() {
     it("Empty AST",
@@ -199,21 +198,18 @@ class DummyNamedNode extends Node implements PossiblyNamed {
 
 @ASTNode("", "NodeWithReference")
 class NodeWithReference extends Node implements PossiblyNamed {
-    constructor(
-        public name?: string,
-        public reference?: ReferenceByName<DummyNamedNode>) {
+    constructor(public name?: string, public reference?: ReferenceByName<DummyNamedNode>) {
         super();
     }
+
     @Child() namedNode?: DummyNamedNode;
 }
 
 @ASTNode("", "NodeWithSelfReference")
 class NodeWithSelfReference extends Node implements PossiblyNamed {
-    @Property() public reference?: ReferenceByName<NodeWithSelfReference>;
+    @Reference() public reference?: ReferenceByName<NodeWithSelfReference>;
 
-    constructor(
-        public name?: string,
-        reference?: ReferenceByName<NodeWithSelfReference>) {
+    constructor(public name?: string, reference?: ReferenceByName<NodeWithSelfReference>) {
         super();
         this.reference = reference;
     }

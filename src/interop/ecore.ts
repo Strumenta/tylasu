@@ -11,7 +11,7 @@ import {
     PackageDescription,
     PropertyDefinition,
     registerNodeDefinition,
-    registerNodeProperty
+    registerNodeAttribute
 } from "../model/model";
 import ECore from "ecore/dist/ecore";
 import {Point, Position} from "../model/position";
@@ -469,7 +469,7 @@ export class ${className} extends ${superClassName} {`;
         eClass.get("eStructuralFeatures").each(a => {
             const name = a.get("name");
             defineProperty(classDef, name);
-            const prop = registerNodeProperty(classDef as any, name);
+            const prop = registerNodeAttribute(classDef as any, name);
             prop.child = a.isTypeOf('EReference');
             const annotation = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
             classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annotation}\n\t${name};`;

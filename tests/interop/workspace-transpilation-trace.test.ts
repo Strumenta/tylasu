@@ -126,6 +126,7 @@ describe('Workspace Transpilation traces', function() {
             expect(refTarget?.getRole()).to.equal("dataDefinitions");
             expect(refTarget?.getPathFromRoot()).to.eql(["dataDefinitions", 3]);
             expect(refTarget?.getRoot()).to.equal(sourceRoot);
+            expect(refExpr.getAttributes()["dataDefinition"]).to.be.undefined;
 
             // TODO broken expect(cus300File.node.getChildren("dataDefinition").length).to.eql(4)
             expect(sourceRoot.getChildren("mainStatements").length).to.eql(9)

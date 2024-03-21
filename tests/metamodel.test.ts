@@ -1,9 +1,9 @@
 import {expect} from "chai";
 
 import {getNodeDefinition, NODE_TYPES} from "../src";
-import {SomeNode, SomeNodeInPackage} from "./nodes";
+import {SomeNode, SomeNodeInPackage, SomeNodeWithReferences} from "./nodes";
 
-describe('Meta model', function() {
+describe('Meta model', function () {
     it("info recorded in the default package",
         function () {
             expect(NODE_TYPES[""]).not.to.be.undefined;
@@ -26,5 +26,12 @@ describe('Meta model', function() {
             expect(def!.properties["someNode"].multiple).to.be.false;
             expect(def!.properties["multi"]).not.to.be.undefined;
             expect(def!.properties["multi"].multiple).to.be.true;
+        });
+    it("records references",
+        function () {
+            const def = getNodeDefinition(SomeNodeWithReferences);
+            expect(def).not.to.be.undefined;
+            expect(def!.properties["a"].reference).to.be.undefined;
+            expect(def!.properties["ref"].reference).to.be.true;
         });
 });
