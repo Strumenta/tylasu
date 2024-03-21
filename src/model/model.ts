@@ -267,8 +267,10 @@ export abstract class Node extends Origin implements Destination {
         const raw = this.doGetChildOrChildren(name);
         if (containment.multiple) {
             return (raw as Node[]) || [];
+        } else if (raw) {
+            return [raw as Node];
         } else {
-            throw new Error(name.toString() + " is not a collection");
+            return [];
         }
     }
 

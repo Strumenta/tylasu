@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {assertASTsAreEqual} from "../../src/testing/testing";
-import {ASTNode, Children, Node, Point, Position, PossiblyNamed, Property} from "../../src";
+import {ASTNode, Attribute, Children, Node, Point, Position, PossiblyNamed} from "../../src";
 
 describe('AssertASTsAreEqual', function() {
     it("the very same node instance compared with itself must pass", function () {
@@ -99,7 +99,7 @@ describe('AssertASTsAreEqual', function() {
 
 @ASTNode("", "SimpleNode")
 class SimpleNode extends Node implements PossiblyNamed {
-    @Property() public name?: string;
+    @Attribute() public name?: string;
     @Children() public subTree: Node[];
     constructor(name?: string, subTree: Node[] = []) {
         super();
@@ -110,7 +110,7 @@ class SimpleNode extends Node implements PossiblyNamed {
 
 @ASTNode("", "AnotherSimpleNode")
 class AnotherSimpleNode extends Node implements PossiblyNamed {
-    @Property() public name?: string;
+    @Attribute() public name?: string;
     @Children() public subTree: Node[];
     constructor(name?: string, subTree: Node[] = []) {
         super();
@@ -121,7 +121,7 @@ class AnotherSimpleNode extends Node implements PossiblyNamed {
 
 @ASTNode("", "NodeWithStringSubTree")
 class NodeWithStringSubTree extends Node implements PossiblyNamed {
-    @Property() public name?: string;
+    @Attribute() public name?: string;
     @Children() public subTree?: string;
     constructor(name?: string, subTree?: string) {
         super();

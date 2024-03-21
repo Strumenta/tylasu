@@ -471,7 +471,7 @@ export class ${className} extends ${superClassName} {`;
             defineProperty(classDef, name);
             const prop = registerNodeAttribute(classDef as any, name);
             prop.child = a.isTypeOf('EReference');
-            const annotation = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Property()"
+            const annotation = prop.child ? (prop.multiple ? "@Children()" : "@Child()") : "@Attribute()"
             classDef[SYMBOL_CLASS_DEFINITION] += `\n\t${annotation}\n\t${name};`;
         });
         classDef[SYMBOL_CLASS_DEFINITION] += "\n}";

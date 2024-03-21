@@ -2,13 +2,12 @@ import {expect} from "chai";
 
 import {
     ASTNode,
-    ASTTransformer,
+    ASTTransformer, Attribute,
     Child,
     ErrorNode, GenericErrorNode,
     IssueSeverity,
     Node,
     pos,
-    Property,
 } from "../../src";
 
 @ASTNode("", "A")
@@ -31,7 +30,7 @@ class A extends Node {
 class B extends Node {
     @Child()
     aChild: Node;
-    @Property()
+    @Attribute()
     property: number;
     other2: string;
     notThere: any;

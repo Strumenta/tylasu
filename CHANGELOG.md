@@ -2,6 +2,14 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.17] – 2024-03-21
+
+### Changed
+- TraceNode.get renamed to getDescendant
+
+### Fixed
+- TraceNode.get to access nodes by path
+
 ## [1.6.16] – 2024-03-21
 
 ### Changed

@@ -111,22 +111,37 @@ describe('Workspace Transpilation traces', function() {
             expect(sourceRoot.getSimpleType()).to.eql("CompilationUnit")
             expect(sourceRoot.getPosition()).to.eql(new Position(new Point(1, 0), new Point(82, 18)))
 
-            const refExpr = pipe(sourceRoot.walkDescendants(),
+            let refExpr = pipe(sourceRoot.walkDescendants(),
                 filter((node: TraceNode) => node.getType() == "com.strumenta.rpgparser.model.ReferenceExpr"),
                 first()).first as TraceNode;
             expect(refExpr).not.to.be.undefined;
             expect(refExpr.getPathFromRoot()).to.eql(["mainStatements", 0, "expression", "target"]);
-            const refDef = refExpr.nodeDefinition.features["dataDefinition"];
+            let refDef = refExpr.nodeDefinition.features["dataDefinition"];
             expect(refDef?.reference).to.be.true;
-            const reference = refExpr.getReference("dataDefinition");
+            let reference = refExpr.getReference("dataDefinition");
             expect(reference).to.be.instanceof(ReferenceByName);
             expect(reference?.name).to.equal("CNT");
-            const refTarget = reference?.referred;
+            let refTarget = reference?.referred;
             expect(refTarget).to.be.instanceof(TraceNode);
             expect(refTarget?.getType()).to.equal("com.strumenta.rpgparser.model.StandaloneField");
             expect(refTarget?.name).to.equal("CNT");
             expect(refTarget?.getRole()).to.equal("dataDefinitions");
             expect(refTarget?.getPathFromRoot()).to.eql(["dataDefinitions", 3]);
+            expect(refTarget?.getRoot()).to.equal(sourceRoot);
+            expect(refExpr.getAttributes()["dataDefinition"]).to.be.undefined;
+
+            refExpr = sourceRoot.getDescendant(["mainStatements", 4, "name"]) as TraceNode;
+            refDef = refExpr.nodeDefinition.features["dataDefinition"];
+            expect(refDef?.reference).to.be.true;
+            reference = refExpr.getReference("dataDefinition");
+            expect(reference).to.be.instanceof(ReferenceByName);
+            expect(reference?.name).to.equal("CUSTOMER");
+            refTarget = reference?.referred;
+            expect(refTarget).to.be.instanceof(TraceNode);
+            expect(refTarget?.getType()).to.equal("com.strumenta.rpgparser.model.ExternalFileDefinition");
+            expect(refTarget?.name).to.equal("CUSTOMER");
+            expect(refTarget?.getRole()).to.equal("file");
+            expect(refTarget?.getPathFromRoot()).to.eql(["externalDefinitions", 17, "record", "file"]);
             expect(refTarget?.getRoot()).to.equal(sourceRoot);
             expect(refExpr.getAttributes()["dataDefinition"]).to.be.undefined;
 

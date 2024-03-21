@@ -209,7 +209,7 @@ export class TraceNode extends Node implements PossiblyNamed {
             refTarget = refTarget.parent;
         }
         if (tempParent) {
-            const newParent = this.getRoot().get(tempParent.getPathFromRoot());
+            const newParent = this.getRoot().getDescendant(tempParent.getPathFromRoot());
             if (newParent instanceof Node) {
                 return newParent;
             }
@@ -283,20 +283,19 @@ export class TraceNode extends Node implements PossiblyNamed {
         return this.nodeAdapter.isStatement();
     }
 
-    get(path: (string | number)[]) {
+    getDescendant(path: (string | number)[]) {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
-        let node: Node | Node[] | undefined = this;
-        for (const elem of path) {
-            if (typeof elem == "string") {
-                if (node instanceof Node) {
-                    node = node.getChild(elem);
-                } else {
-                    throw new Error("Invalid path at " + elem + ", expected node, got " + node);
-                }
-            } else if (Array.isArray(node)) {
-                node = node[elem];
+        let node: Node | undefined = this;
+        for (let i = 0; i < path.length; i++) {
+            const elem = path[i];
+            if (typeof elem !== "string") {
+                throw new Error("Invalid path at " + elem + ", expected node, got " + node);
+            }
+            if (i < path.length - 1 && typeof path[i + 1] === "number") {
+                node = node?.getChild(elem, path[i + 1] as number);
+                i++;
             } else {
-                throw new Error("Invalid path at " + elem + ", expected children, got " + node);
+                node = node?.getChild(elem);
             }
         }
         return node;

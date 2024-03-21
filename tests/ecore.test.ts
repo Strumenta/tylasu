@@ -257,7 +257,7 @@ export class CompilationUnit extends Node {
                 expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
                     `@ASTNode("SimpleMM", "StringLiteral")
 export class StringLiteral extends Expression {
-\t@Property()
+\t@Attribute()
 \tvalue;
 }`);
                 node = new NODE_TYPES["SimpleMM"].nodes["StringLiteral"]() as any;

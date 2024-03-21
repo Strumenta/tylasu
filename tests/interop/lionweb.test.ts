@@ -2,7 +2,7 @@ import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
 import {deserializeChunk, deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Children, Node, Property, TraceNode, walk} from "../../src";
+import {Attribute, Children, Node, TraceNode, walk} from "../../src";
 import {
     findClassifier,
     LanguageMapping, LionwebNode,
@@ -13,7 +13,7 @@ import {map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
 
 abstract class File extends Node {
-    @Property()
+    @Attribute()
     name: string;
 }
 
@@ -23,7 +23,7 @@ class Directory extends File {
 }
 
 class TextFile extends File {
-    @Property()
+    @Attribute()
     contents: string;
 }
 
