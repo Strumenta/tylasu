@@ -12,8 +12,8 @@ export function assertASTsAreEqual(
         if (considerPosition) {
             expect(actual.position, `${context}.position`).to.eql(expected.position);
         }
-        expected.properties.forEach(expectedProperty => {
-            const actualPropValue = actual.properties.find(p => p.name == expectedProperty.name)!.value;
+        expected.features.forEach(expectedProperty => {
+            const actualPropValue = actual.features.find(p => p.name == expectedProperty.name)!.value;
             const expectedPropValue = expectedProperty.value;
 
             if (actualPropValue instanceof Node && expectedPropValue instanceof Node) {

@@ -54,9 +54,9 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(rootNode.getType()).to.eql("com.strumenta.rpgparser.model.CompilationUnit");
             expect(rootNode.getSimpleType()).to.eql("CompilationUnit");
             const child = rootNode.getChildren("dataDefinitions")[3];
-            expect(child.nodeDefinition.properties).to.eql({
-                name: { name: "name", child: false, multiple: undefined },
-                keywords: { name: "keywords", child: true, multiple: true }
+            expect(child.nodeDefinition.features).to.eql({
+                name: { name: "name", child: false, multiple: undefined, reference: false },
+                keywords: { name: "keywords", child: true, multiple: true, reference: false }
             });
             expect(child.getAttributes()).to.eql({ name: 'ENDPOINT' });
         });

@@ -111,8 +111,8 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     }
     const nodeDef = getNodeDefinition(constructor);
     if (nodeDef) {
-        for (const prop in nodeDef.properties) {
-            const property = nodeDef.properties[prop];
+        for (const prop in nodeDef.features) {
+            const property = nodeDef.features[prop];
             if(property.inherited) {
                 continue;
             }
@@ -376,8 +376,8 @@ Node.prototype[TO_EOBJECT_SYMBOL] = function(): ECore.EObject {
         throw new Error("Unknown class " + def.name + " in package " + def.package);
     }
     const eObject = eClass.create();
-    for (const name in def.properties) {
-        const p = def.properties[name];
+    for (const name in def.features) {
+        const p = def.features[name];
         const feature = eClass.get("eAllStructuralFeatures").find(f => f.get("name") == name);
         if (!feature) {
             throw new Error(`Unknown feature: ${name} of ${eClass.get("name")}`);
@@ -850,7 +850,7 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
             this._nodeDefinition = {
                 package: this.eo.eClass.eContainer.get("name") as string,
                 name: this.eo.eClass.get("name") as string,
-                properties: this.getProperties()
+                features: this.getFeatures()
             };
         }
         return this._nodeDefinition;
@@ -946,7 +946,7 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
         return this.eo.eContainingFeature?.get("name");
     }
 
-    getProperties(): { [name: string | symbol]: PropertyDefinition } {
+    getFeatures(): { [name: string | symbol]: PropertyDefinition } {
         const result: { [name: string | symbol]: PropertyDefinition } = {};
         const eClass = this.eo.eClass;
         const features = eClass.get("eAllStructuralFeatures");
@@ -956,11 +956,13 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
             if (isReference && !isNodeType(ft.get("eType") || ft.get("eGenericType")?.get("eClassifier"))) {
                 // skip
             } else {
+                const isChild = isReference &&
+                    ft.get('containment') &&
+                    ft.get("eGenericType")?.get("eClassifier") != THE_REFERENCE_BY_NAME_ECLASS;
                 result[name] = {
                     name,
-                    child: isReference &&
-                        ft.get('containment') &&
-                        ft.get("eGenericType")?.get("eClassifier") != THE_REFERENCE_BY_NAME_ECLASS,
+                    child: isChild,
+                    reference: isReference && !isChild,
                     multiple: isReference ? ft.get('many') : undefined,
                 };
             }

@@ -40,7 +40,7 @@ export class OnlyReferencedIdProvider implements IdProvider {
 
     constructor(private root: Node, private idProvider: IdProvider = new SequentialIdProvider()) {
         for (const node of root.walk()) {
-            node.properties
+            node.features
                 .filter(p => p.value instanceof ReferenceByName)
                 .map(p => (p.value as ReferenceByName<any>).referred as Node)
                 .forEach(node => this.referencedElements.push(node));

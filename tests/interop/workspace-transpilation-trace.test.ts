@@ -116,6 +116,8 @@ describe('Workspace Transpilation traces', function() {
                 first()).first as TraceNode;
             expect(refExpr).not.to.be.undefined;
             expect(refExpr.getPathFromRoot()).to.eql(["mainStatements", 0, "expression", "target"]);
+            const refDef = refExpr.nodeDefinition.features["dataDefinition"];
+            expect(refDef?.reference).to.be.true;
             const reference = refExpr.getReference("dataDefinition");
             expect(reference).to.be.instanceof(ReferenceByName);
             expect(reference?.name).to.equal("CNT");

@@ -23,7 +23,7 @@ export abstract class NodeAdapter extends Node {
 
     getRole(): string | symbol | undefined {
         if (this.parent) { // Inefficient default implementation, searching in the parent's children
-            const props = this.parent.nodeDefinition?.properties || {};
+            const props = this.parent.nodeDefinition?.features || {};
             for (const p in props) {
                 const prop = props[p];
                 if (prop.child) {

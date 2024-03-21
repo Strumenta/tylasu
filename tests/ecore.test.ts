@@ -184,20 +184,20 @@ describe("Import/export", function () {
 
         const PlistParameter = ePackages[1].eContents().find(x => x.get("name") == "PlistParameter");
         let eo = PlistParameter.create({});
-        let properties = new ECoreNode(eo).getProperties();
+        let properties = new ECoreNode(eo).getFeatures();
         expect(properties).to.eql({
-            "name": {"child": true, "multiple": false, "name": "name"},
-            "sourceField": {"child": true, "multiple": false, "name": "sourceField"},
-            "targetField": {"child": true, "multiple": false, "name": "targetField"},
-            "type": {"child": true, "multiple": false, "name": "type"}
+            "name": {"child": true, "multiple": false, "name": "name", "reference": false},
+            "sourceField": {"child": true, "multiple": false, "name": "sourceField", "reference": false},
+            "targetField": {"child": true, "multiple": false, "name": "targetField", "reference": false},
+            "type": {"child": true, "multiple": false, "name": "type", "reference": false}
         });
 
         const InvokeSubroutineStatement = ePackages[1].eContents().find(x => x.get("name") == "InvokeSubroutineStatement");
         eo = InvokeSubroutineStatement.create({});
-        properties = new ECoreNode(eo).getProperties();
+        properties = new ECoreNode(eo).getFeatures();
         expect(properties).to.eql({
-            "conditionalIndicator": {"child": true, "multiple": false, "name": "conditionalIndicator"},
-            "subroutine": {"child": false, "multiple": false, "name": "subroutine"}
+            "conditionalIndicator": {"child": true, "multiple": false, "name": "conditionalIndicator", "reference": false},
+            "subroutine": {"child": false, "multiple": false, "name": "subroutine", "reference": true}
         });
     });
     it("containments and references - SAS", function () {
@@ -214,13 +214,15 @@ describe("Import/export", function () {
         const vd = VariableDeclaration.create({});
         sf.get("statementsAndDeclarations").add(vd);
         const eCoreNode = new ECoreNode(vd);
-        const properties = eCoreNode.getProperties();
+        const properties = eCoreNode.getFeatures();
         expect(properties).to.eql({
-            "name": {"child": false, "multiple": undefined, "name": "name"},
-            "expression": {"child": true, "multiple": false, "name": "expression"},
+            "name": {"child": false, "multiple": undefined, "name": "name", "reference": false},
+            "expression": {"child": true, "multiple": false, "name": "expression", "reference": false},
         });
         expect(eCoreNode.getRole()).to.equal("statementsAndDeclarations");
-        expect(eCoreNode.parent!.containment("statementsAndDeclarations")).to.eql({"child": true, "multiple": true, "name": "statementsAndDeclarations"});
+        expect(eCoreNode.parent!.containment("statementsAndDeclarations")).to.eql({
+            "child": true, "multiple": true, "name": "statementsAndDeclarations", "reference": false
+        });
     });
     it("importing using raw Ecore.js",
         function () {

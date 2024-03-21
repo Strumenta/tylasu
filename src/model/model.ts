@@ -15,7 +15,7 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 export type NodeDefinition = {
     package?: string,
     name?: string,
-    properties: { [name: string | symbol]: PropertyDefinition },
+    features: { [name: string | symbol]: PropertyDefinition },
     resolved?: boolean;
 };
 
@@ -35,16 +35,16 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
         definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
     } else {
-        const inheritedProperties = {...(target[NODE_DEFINITION_SYMBOL]?.properties || {})};
-        for (const p in inheritedProperties) {
-            inheritedProperties[p] = { inherited: true, ...inheritedProperties[p] };
+        const inheritedFeatures = {...(target[NODE_DEFINITION_SYMBOL]?.features || {})};
+        for (const p in inheritedFeatures) {
+            inheritedFeatures[p] = { inherited: true, ...inheritedFeatures[p] };
         }
         target[NODE_DEFINITION_SYMBOL] = definition = {
-            properties: inheritedProperties,
+            features: inheritedFeatures,
             resolved: false
         };
     }
-    if(definition && definition.properties && !definition.resolved) {
+    if(definition && definition.features && !definition.resolved) {
         try {
             let metadataHolder;
             try {
@@ -52,12 +52,12 @@ export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): 
             } catch (_) {
                 metadataHolder = node;
             }
-            for(const p in definition.properties) {
-                if (!definition.properties[p].type) {
+            for(const p in definition.features) {
+                if (!definition.features[p].type) {
                     const type = Reflect.getMetadata("design:type", metadataHolder, p);
-                    definition.properties[p].type = type;
+                    definition.features[p].type = type;
                     if(type === Array) {
-                        definition.properties[p].arrayType =
+                        definition.features[p].arrayType =
                             Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
                     }
                 }
@@ -152,7 +152,7 @@ export abstract class Node extends Origin implements Destination {
     }
 
     getChildNames(): string[] {
-        const props = this.nodeDefinition?.properties || {};
+        const props = this.nodeDefinition?.features || {};
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
@@ -160,8 +160,8 @@ export abstract class Node extends Origin implements Destination {
         return getNodeDefinition(this);
     }
 
-    get properties(): PropertyDescription[] {
-        const props = this.nodeDefinition?.properties || {};
+    get features(): FeatureDescription[] {
+        const props = this.nodeDefinition?.features || {};
         return Object.getOwnPropertyNames(props).map(p => {
             const value = props[p].child ?
                 (props[p].multiple  ? this.getChildren(p)  : this.getChild(p)) :
@@ -171,7 +171,7 @@ export abstract class Node extends Origin implements Destination {
     }
 
     containment(name: string | symbol): PropertyDefinition | undefined {
-        const props = this.nodeDefinition?.properties || {};
+        const props = this.nodeDefinition?.features || {};
         return props[name]?.child ? props[name] : undefined;
     }
 
@@ -241,7 +241,7 @@ export abstract class Node extends Origin implements Destination {
     }
 
     getAllChildren() {
-        const props = this.nodeDefinition?.properties || {};
+        const props = this.nodeDefinition?.features || {};
         const result: Node[] = [];
         for (const p in props) {
             const prop = props[p];
@@ -273,7 +273,7 @@ export abstract class Node extends Origin implements Destination {
     }
 
     getAttributeValue(name: string | symbol): any {
-        const props = this.nodeDefinition?.properties || {};
+        const props = this.nodeDefinition?.features || {};
         const prop = props[name];
         if(prop) {
             if (prop.child) {
@@ -291,7 +291,7 @@ export abstract class Node extends Origin implements Destination {
     }
 
     setAttributeValue(name: string | symbol, value: any) {
-        const props = this.nodeDefinition?.properties || {};
+        const props = this.nodeDefinition?.features || {};
         const prop = props[name];
         if(prop) {
             if (prop.child) {
@@ -339,7 +339,7 @@ export abstract class Node extends Origin implements Destination {
     }
 }
 
-export interface PropertyDescription {
+export interface FeatureDescription {
     name: string;
     value: any;
 }
@@ -414,11 +414,11 @@ export function registerNodeDefinition<T extends Node>(
         def = {
             package: pkg,
             name: name,
-            properties: {}
+            features: {}
         };
         if(existingDef) {
-            for(const prop in existingDef.properties) {
-                def.properties[prop] = { inherited: true, ...existingDef.properties[prop]};
+            for(const prop in existingDef.features) {
+                def.features[prop] = { inherited: true, ...existingDef.features[prop]};
             }
         }
     }
@@ -450,12 +450,12 @@ export function registerNodeAttribute<T extends Node>(
         methodName = Symbol(methodName);
     }
     const definition = ensureNodeDefinition(type);
-    if (!definition.properties[methodName]) {
-        definition.properties[methodName] = {
+    if (!definition.features[methodName]) {
+        definition.features[methodName] = {
             name: methodName
         };
     }
-    return definition.properties[methodName];
+    return definition.features[methodName];
 }
 
 export function registerNodeChild<T extends Node>(

@@ -141,7 +141,7 @@ export class LionwebNode extends NodeAdapter {
         });
         this._nodeDefinition = {
             name: classifier.name,
-            properties: properties,
+            features: properties,
             resolved: true
         };
     }
@@ -164,8 +164,8 @@ export class LionwebNode extends NodeAdapter {
 
     getAttributes(): { [p: string]: any } {
         const attributes = {};
-        for (const p in this.nodeDefinition.properties) {
-            if (!this.nodeDefinition.properties[p].child) {
+        for (const p in this.nodeDefinition.features) {
+            if (!this.nodeDefinition.features[p].child) {
                 attributes[p] = this.getAttributeValue(p);
             }
         }

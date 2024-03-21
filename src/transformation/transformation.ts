@@ -23,7 +23,7 @@ export class PropertyRef<Obj, Value> {
         }
 
         if (nodeDefinition) {
-            const property = Object.keys(nodeDefinition.properties).find(p => p == name);
+            const property = Object.keys(nodeDefinition.features).find(p => p == name);
             if (!property) {
                 throw new Error(`${name} is not a feature of ${nodeDefinition}`)
             }
@@ -286,7 +286,7 @@ export class ASTTransformer {
         if (prefix) {
             prefix += "#";
         }
-        const properties = nodeDefinition ? Object.keys(nodeDefinition.properties) : Object.keys(node);
+        const properties = nodeDefinition ? Object.keys(nodeDefinition.features) : Object.keys(node);
         properties.forEach(propertyName => {
             const childNodeFactory = factory.getChildNodeFactory(prefix, propertyName);
             if (childNodeFactory) {

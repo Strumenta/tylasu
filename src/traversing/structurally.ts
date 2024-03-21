@@ -93,7 +93,7 @@ Node.prototype.walkDescendants = function(walker: typeof walk = walk) {
  * @return all direct children of this node.
  */
 export function* walkChildren(node: Node): Generator<Node> {
-    for (const property of node.properties) {
+    for (const property of node.features) {
         const value = property.value;
         if (value instanceof Node) {
             yield value;

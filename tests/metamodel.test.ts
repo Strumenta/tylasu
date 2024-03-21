@@ -21,17 +21,17 @@ describe('Meta model', function () {
             expect(def).not.to.be.undefined;
             expect(def!.package).to.equal("some.package");
             expect(def!.name).to.equal("SomeNodeInPackage");
-            expect(def!.properties["nonExistent"]).to.be.undefined;
-            expect(def!.properties["someNode"]).not.to.be.undefined;
-            expect(def!.properties["someNode"].multiple).to.be.false;
-            expect(def!.properties["multi"]).not.to.be.undefined;
-            expect(def!.properties["multi"].multiple).to.be.true;
+            expect(def!.features["nonExistent"]).to.be.undefined;
+            expect(def!.features["someNode"]).not.to.be.undefined;
+            expect(def!.features["someNode"].multiple).to.be.false;
+            expect(def!.features["multi"]).not.to.be.undefined;
+            expect(def!.features["multi"].multiple).to.be.true;
         });
     it("records references",
         function () {
             const def = getNodeDefinition(SomeNodeWithReferences);
             expect(def).not.to.be.undefined;
-            expect(def!.properties["a"].reference).to.be.undefined;
-            expect(def!.properties["ref"].reference).to.be.true;
+            expect(def!.features["a"].reference).to.be.undefined;
+            expect(def!.features["ref"].reference).to.be.true;
         });
 });
