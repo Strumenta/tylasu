@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.14] – 2024-03-21
+
+### Fixed
+- A referenced node's parent in trace nodes
+
 ## [1.6.13] – 2024-03-14
 
 ### Added
