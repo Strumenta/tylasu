@@ -4,7 +4,6 @@ import {
     CharStream,
     CommonTokenStream,
     ErrorNode,
-    Interval,
     Lexer,
     Parser as ANTLRParser,
     ParserRuleContext,
@@ -103,7 +102,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
             issues.push(Issue.syntactic(message, IssueSeverity.WARNING, Position.ofTokenEnd(t)))
         }
 
-        const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
+        const code = inputStream.getTextFromRange(0, inputStream.size - 1);
         return new LexingResult(code, tokens, issues, performance.now() - time);
     }
 
@@ -183,12 +182,7 @@ export abstract class TylasuParser<
 
         processDescendantsAndErrors(
             root,
-            it => {
-                if (it.exception != null) {
-                    const message = `Recognition exception: ${it.exception.message}`;
-                    issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it)));
-                }
-            },
+            () => {},
             it => {
                 const message = `Error node found (token: ${it.symbol?.text})`;
                 issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it)));
@@ -217,7 +211,7 @@ export abstract class TylasuParser<
         if (root != null) {
             this.verifyParseTree(parser, issues, root);
         }
-        const code = inputStream.getText(Interval.of(0, inputStream.size - 1));
+        const code = inputStream.getTextFromRange(0, inputStream.size - 1);
         return new FirstStageParsingResult(code, root, issues, parser, performance.now() - time, lexingTime);
     }
 
@@ -234,7 +228,7 @@ export abstract class TylasuParser<
             if (!source) {
                 source = new StringSource(code);
             }
-            code = new CharStream(code);
+            code = CharStream.fromString(code);
         }
         const start = performance.now();
         const firstStage = this.parseFirstStage(code, measureLexingTime);
@@ -251,7 +245,7 @@ export abstract class TylasuParser<
                 delete node.origin;
             }
         }
-        const text = code.getText(Interval.of(0, code.size - 1));
+        const text = code.getTextFromRange(0, code.size - 1);
         return new ParsingResult(text, ast, issues, undefined, firstStage, performance.now() - start);
     }
 

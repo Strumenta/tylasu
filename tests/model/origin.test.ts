@@ -1,5 +1,5 @@
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ng";
+import {CharStream, CommonTokenStream} from "antlr4ng";
 import {SimpleLangParser} from "../parser/SimpleLangParser";
 import {ParseTreeOrigin} from "../../src/parsing";
 import {expect} from "chai";
@@ -11,7 +11,7 @@ describe('Origin', function () {
             const code = `set a = 1 + 2
 input c is string
 display 2 * 3`;
-            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const lexer = new SimpleLangLexer(CharStream.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const parseTreeRoot = parser.compilationUnit();
             expect(parser.numberOfSyntaxErrors).to.equal(0);
@@ -31,7 +31,7 @@ display 2 * 3`;
             const code = `set a = 1 + 2
 input c is string
 display 2 * 3`;
-            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const lexer = new SimpleLangLexer(CharStream.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const parseTreeRoot = parser.compilationUnit();
             expect(parser.numberOfSyntaxErrors).to.equal(0);

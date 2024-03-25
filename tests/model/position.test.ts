@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {Point, START_POINT, Node, Position} from "../../src";
 import {SimpleLangLexer} from "../parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream} from "antlr4ng";
+import {CharStream, CommonTokenStream} from "antlr4ng";
 import {SetStmtContext, SimpleLangParser} from "../parser/SimpleLangParser";
 import {positionOfParseTree} from "../../src/parsing";
 
@@ -49,7 +49,7 @@ describe('Position', function() {
     it("ParserRuleContext position",
         function () {
             const code = "set foo = 123";
-            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const lexer = new SimpleLangLexer(CharStream.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;
@@ -60,7 +60,7 @@ describe('Position', function() {
     it("Position derived from parse tree node",
         function () {
             const code = "set foo = 123";
-            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const lexer = new SimpleLangLexer(CharStream.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;

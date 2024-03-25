@@ -1,5 +1,5 @@
 import {Node, Origin, Point, Position} from "../";
-import {Interval, ParserRuleContext, ParseTree, TerminalNode, Token} from "antlr4ng";
+import {ParserRuleContext, ParseTree, TerminalNode, Token} from "antlr4ng";
 
 // Note: we cannot provide Kolasu-style extension methods on ParseTree because it's an interface.
 // Also, Kolasu-style extension methods on Token are problematic because we use Token.EOF below.
@@ -116,6 +116,5 @@ Object.defineProperty(Node.prototype, "parseTree", {
 ParserRuleContext.prototype.getOriginalText = function () {
     const a = this.start.start;
     const b = this.stop.stop;
-    const interval = new Interval(a, b);
-    return this.start.inputStream.getText(interval);
+    return this.start.inputStream?.getTextFromRange(a, b);
 }

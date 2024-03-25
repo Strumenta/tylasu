@@ -83,7 +83,7 @@
 	},
 	"peerDependencies": {
 		"@lionweb/core": "^0.6.2",
-		"antlr4ng": "^2.0.3",
+		"antlr4ng": "^3.0.4",
 		"cmd-ts": "^0.11.0",
 		"ecore": "^0.12.0"
 	},
@@ -122,8 +122,8 @@
 		"@types/node": "^18.19.2",
 		"@typescript-eslint/eslint-plugin": "^6.13.2",
 		"@typescript-eslint/parser": "^6.13.2",
-		"antlr4ng": "^2.0.3",
-		"antlr4ng-cli": "^1.0.6",
+		"antlr4ng": "^3.0.4",
+		"antlr4ng-cli": "^2.0.0",
 		"chai": "^4.3.10",
 		"cmd-ts": "^0.11.0",
 		"cross-env": "^7.0.3",

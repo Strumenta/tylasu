@@ -973,15 +973,15 @@ ansi-styles@^5.0.0:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
 
-antlr4ng-cli@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/antlr4ng-cli/-/antlr4ng-cli-1.0.6.tgz#db22d74b4a931489ef0c59f146fc90624c6871ae"
-  integrity sha512-9ZeVmXu8v/UO4mLhSTyNSCi2fEEBzya2G04bqigwZVg5YdTlS6HhuAa2ruZy/HdV5erhL12USqPCJPMsq+OeKQ==
+antlr4ng-cli@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/antlr4ng-cli/-/antlr4ng-cli-2.0.0.tgz#4f86f3c3818a2170aa1041d4e1633b489af00131"
+  integrity sha512-oAt5OSSYhRQn1PgahtpAP4Vp3BApCoCqlzX7Q8ZUWWls4hX59ryYuu0t7Hwrnfk796OxP/vgIJaqxdltd/oEvQ==
 
-antlr4ng@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/antlr4ng/-/antlr4ng-2.0.3.tgz#2dde0c90474597395917ed48b9f4394ec5563b3b"
-  integrity sha512-usw0hZsNbTQrJ899P6sHLlQbmKgwQ9UBYq5rh6ZFicPf5qtRJogPVTBj4fSB3OY5ZLP5TSZ7d8tR2p4I5KyiLQ==
+antlr4ng@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/antlr4ng/-/antlr4ng-3.0.4.tgz#71a47e6148ae75f72fa5f27fbed5ef3462815c7c"
+  integrity sha512-u1Ww6wVv9hq70E9AaYe5qW3ba8hvnjJdO3ZsKnb3iJWFV/medLEEhbyWwXCvvD2ef0ptdaiIUgmaazS/WE6uyQ==
 
 anymatch@^3.0.3:
   version "3.1.3"

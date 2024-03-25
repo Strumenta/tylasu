@@ -4,16 +4,33 @@ import {Issue, Source} from "../src";
 import {registerECoreModel} from "../src/interop/ecore";
 import {ParserTraceLoader, saveForStrumentaPlayground} from "../src/interop/strumenta-playground";
 import {NodeSubclass} from "./nodes";
-import {CharStream, CommonToken, Lexer, TerminalNode, Token, TokenStream} from "antlr4ng";
+import {CharStream, CommonToken, Lexer, TerminalNode, Token, TokenSource, TokenStream} from "antlr4ng";
 import * as fs from "fs";
 import ECore from "ecore/dist/ecore";
 import {ANTLRTokenFactory, ParsingResult} from "../src/parsing";
 import {EcoreEnabledParser} from "../src/interop/ecore-enabled-parser";
 
+class SyntheticToken extends CommonToken {
+
+    constructor(details: {
+        source?: [TokenSource | null, CharStream | null];
+        type: number;
+        channel?: number;
+        start?: number;
+        stop?: number;
+        text?: string;
+        line?: number;
+        tokenIndex?: number;
+        column?: number
+    }) {
+        super({...details, source: [null, null]});
+    }
+}
+
 describe('Strumenta Playground', function() {
     it("Export round-trip", function () {
         // We assign a fake parse tree, to ensure that we don't attempt to serialize ANTLR parse trees into the model.
-        const fakePT = new TerminalNode(new CommonToken([null, null], Token.EOF, Token.DEFAULT_CHANNEL, 0, 0));
+        const fakePT = new TerminalNode(new SyntheticToken({ type: Token.EOF }));
         (fakePT.symbol as CommonToken).line = 1;
         (fakePT.symbol as CommonToken).column = 0;
         /* TODO not supported yet

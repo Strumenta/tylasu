@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {ASTTransformer, Child, GenericErrorNode, GenericNode, Node, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
-import {CharStreams, CommonTokenStream, ParserRuleContext} from "antlr4ng";
+import {CharStream, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParseTreeOrigin} from "../src/parsing";
 import {ParseTreeToASTTransformer} from "../src/mapping";
@@ -56,14 +56,14 @@ describe('Mapping of Parse Trees to ASTs', function() {
     it("Generic node",
         function () {
             const transformer = new ParseTreeToASTTransformer();
-            const node = transformer.transform(new ParserRuleContext());
+            const node = transformer.transform(new ParserRuleContext(null));
             expect(node).not.to.be.undefined;
             expect(node instanceof GenericNode).to.be.true;
         });
     it("Node registered declaratively",
         function () {
             const code = "set foo = 123 + 45";
-            const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+            const lexer = new SimpleLangLexer(CharStream.fromString(code));
             const parser = new SimpleLangParser(new CommonTokenStream(lexer));
             const cu = parser.compilationUnit();
             const setStmt = cu.statement(0) as SetStmtContext;
@@ -84,7 +84,7 @@ describe('Mapping of Parse Trees to ASTs', function() {
 describe('ParseTreeToASTTransformer', function () {
     it("Test ParseTree Transformer", function () {
         const code = "set foo = 123\ndisplay 456";
-        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const lexer = new SimpleLangLexer(CharStream.fromString(code));
         const parser = new SimpleLangParser(new CommonTokenStream(lexer));
         const pt = parser.compilationUnit();
 
@@ -104,7 +104,7 @@ describe('ParseTreeToASTTransformer', function () {
     });
     it("Test transformation with errors", function () {
         const code = "set foo = \ndisplay @@@";
-        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const lexer = new SimpleLangLexer(CharStream.fromString(code));
         const parser = new SimpleLangParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
         const pt = parser.compilationUnit();
@@ -127,7 +127,7 @@ describe('ParseTreeToASTTransformer', function () {
     });
     it("Test generic node", function () {
         const code = "set foo = 123\ndisplay 456";
-        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const lexer = new SimpleLangLexer(CharStream.fromString(code));
         const parser = new SimpleLangParser(new CommonTokenStream(lexer));
         const pt = parser.compilationUnit();
 
@@ -136,7 +136,7 @@ describe('ParseTreeToASTTransformer', function () {
     });
     it("test generic AST transformer", function () {
         const code = "set foo = 123\ndisplay 456";
-        const lexer = new SimpleLangLexer(CharStreams.fromString(code));
+        const lexer = new SimpleLangLexer(CharStream.fromString(code));
         const parser = new SimpleLangParser(new CommonTokenStream(lexer));
         const pt = parser.compilationUnit();
 
@@ -163,20 +163,12 @@ const configure = function(transformer: ASTTransformer) : void {
     transformer.registerNodeFactory<DisplayStmtContext, DisplayIntStatement>(
         DisplayStmtContext,
         source => {
-            if (source.exception || source.expression().exception) {
-                // We throw a custom error so that we can check that it's recorded in the AST
-                throw new Error("Parse error");
-            }
             return new DisplayIntStatement(parseInt(source.expression().INT_LIT()!.getText()));
         });
 
     transformer.registerNodeFactory<SetStmtContext, SetStatement>(
         SetStmtContext,
         source => {
-            if (source.exception || source.expression().exception) {
-                // We throw a custom error so that we can check that it's recorded in the AST
-                throw new Error("Parse error");
-            }
             const setStatement = new SetStatement();
             setStatement.variable = source.ID().getText();
             setStatement.value = parseInt(source.expression().INT_LIT()!.getText());
