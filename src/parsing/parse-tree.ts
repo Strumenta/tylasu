@@ -1,4 +1,4 @@
-import {Node, Origin, Point, Position} from "../";
+import {Node, Origin, Point, Position, Source} from "../";
 import {ParserRuleContext, ParseTree, TerminalNode, Token} from "antlr4ng";
 
 // Note: we cannot provide Kolasu-style extension methods on ParseTree because it's an interface.
@@ -12,27 +12,27 @@ declare module "../model/position" {
     }
     // eslint-disable-next-line @typescript-eslint/no-namespace
     export namespace Position {
-        export function ofParseTree(parseTree: ParseTree): Position | undefined;
+        export function ofParseTree(parseTree: ParseTree, source?: Source): Position | undefined;
         export function ofToken(token: Token): Position;
         export function ofTokenStart(token: Token): Position;
         export function ofTokenEnd(token: Token): Position;
     }
 }
 
-export function positionOfParseTree(parseTree: ParseTree): Position | undefined {
+export function positionOfParseTree(parseTree: ParseTree, source?: Source): Position | undefined {
     if(parseTree instanceof ParserRuleContext) {
         const startToken = parseTree.start;
         const stopToken = parseTree.stop;
 
         if (startToken) {
             if (stopToken) {
-                return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken));
+                return new Position(Point.ofTokenStart(startToken), Point.ofTokenEnd(stopToken), source);
             } else {
-                return Point.ofTokenStart(startToken).asPosition();
+                return Point.ofTokenStart(startToken).asPosition(source);
             }
         }
     } else if(parseTree instanceof TerminalNode) {
-        return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol));
+        return new Position(Point.ofTokenStart(parseTree.symbol), Point.ofTokenEnd(parseTree.symbol), source);
     }
 }
 
@@ -60,12 +60,12 @@ Position.ofToken = function (token: Token): Position {
 }
 
 export class ParseTreeOrigin extends Origin {
-    constructor(public parseTree?: ParseTree) {
+    constructor(public parseTree?: ParseTree, protected readonly _source?: Source) {
         super();
     }
 
     get position(): Position | undefined {
-        return this.parseTree ? Position.ofParseTree(this.parseTree) : undefined;
+        return this.parseTree ? Position.ofParseTree(this.parseTree, this._source) : undefined;
     }
 
     get sourceText(): string | undefined {
@@ -77,12 +77,17 @@ export class ParseTreeOrigin extends Origin {
             return undefined;
         }
     }
+
+
+    get source(): Source | undefined {
+        return this._source;
+    }
 }
 
 declare module '../model/model' {
     export interface Node {
         parseTree?: ParseTree;
-        withParseTreeNode(parseTree?: ParseTree | null): this;
+        withParseTreeNode(parseTree?: ParseTree | null, source?: Source): this;
     }
 }
 
@@ -92,15 +97,15 @@ declare module 'antlr4ng' {
     }
 }
 
-export function withParseTreeNode(node: Node, parseTree?: ParseTree | null): Node {
+export function withParseTreeNode(node: Node, parseTree?: ParseTree | null, source?: Source): Node {
     if (parseTree) {
-        node.origin = new ParseTreeOrigin(parseTree);
+        node.origin = new ParseTreeOrigin(parseTree, source);
     }
     return node;
 }
 
-Node.prototype.withParseTreeNode = function (parseTree) {
-    return withParseTreeNode(this, parseTree);
+Node.prototype.withParseTreeNode = function (parseTree, source) {
+    return withParseTreeNode(this, parseTree, source);
 }
 
 Object.defineProperty(Node.prototype, "parseTree", {

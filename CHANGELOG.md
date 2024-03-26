@@ -2,6 +2,14 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.19] – Not yet released
+
+### Added
+- ParseTreeToASTTransformer: propagate the Source as in Kolasu
+
+### Changed
+- Updated to antlr4ng 3
+
 ## [1.6.18] – 2024-03-21
 
 ### Fixed

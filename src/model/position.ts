@@ -50,8 +50,8 @@ export class Point {
         return other && this.compareTo(other) <= 0;
     }
 
-    asPosition(): Position {
-        return new Position(this, this);
+    asPosition(source?: Source): Position {
+        return new Position(this, this, source);
     }
 }
 

@@ -1,4 +1,4 @@
-import {Position} from "./position";
+import {Position, Source} from "./position";
 import "reflect-metadata";
 import {PossiblyNamed, ReferenceByName} from "./naming";
 
@@ -89,6 +89,10 @@ export abstract class Origin {
      */
     overlaps(position?: Position): boolean {
         return this.position?.overlaps(position) || false
+    }
+
+    get source(): Source | undefined {
+        return this.position?.source;
     }
 }
 
