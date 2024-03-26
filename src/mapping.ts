@@ -16,19 +16,6 @@ export class ParseTreeToASTTransformer extends ASTTransformer {
         super(issues, allowGenericNode);
     }
 
-    /**
-     * Performs the transformation of a node and, recursively, its descendants. In addition to the overridden method,
-     * it also assigns the parseTreeNode to the AST node so that it can keep track of its position.
-     * However, a node factory can override the parseTreeNode of the nodes it creates (but not the parent).
-     */
-    transform(source?: any, parent?: Node): Node | undefined {
-        const node = super.transform(source, parent);
-        if (node && node.origin && source instanceof ParserRuleContext) {
-            node.withParseTreeNode(source);
-        }
-        return node;
-    }
-
     getSource(node: Node, source: any): any {
         const origin = node.origin;
         if (origin instanceof ParseTreeOrigin) {
