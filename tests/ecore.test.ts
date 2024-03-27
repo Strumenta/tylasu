@@ -247,11 +247,11 @@ export class CompilationUnit extends Node {
 \t@Child()
 \tstatements;
 }`);
-                let node = new NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]() as any;
-                expect(node instanceof Node).to.be.true;
+                let node = new (NODE_TYPES["SimpleMM"].nodes["CompilationUnit"] as any)();
+                expect(node).to.be.instanceof(Node);
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("CompilationUnit");
-                node = new NODE_TYPES["SimpleMM"].nodes["Statement"]() as any;
-                expect(node instanceof Node).to.be.true;
+                node = new (NODE_TYPES["SimpleMM"].nodes["Statement"] as any)();
+                expect(node).to.be.instanceof(Node);
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("Statement");
                 //Subclassing
                 expect(NODE_TYPES["SimpleMM"].nodes["StringLiteral"][SYMBOL_CLASS_DEFINITION]).to.equal(
@@ -260,10 +260,10 @@ export class StringLiteral extends Expression {
 \t@Attribute()
 \tvalue;
 }`);
-                node = new NODE_TYPES["SimpleMM"].nodes["StringLiteral"]() as any;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["Expression"]).to.be.true;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["StringLiteral"]).to.be.true;
-                expect(node instanceof NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]).to.be.false;
+                node = new (NODE_TYPES["SimpleMM"].nodes["StringLiteral"] as any)();
+                expect(node).to.be.instanceof(NODE_TYPES["SimpleMM"].nodes["Expression"]);
+                expect(node).to.be.instanceof(NODE_TYPES["SimpleMM"].nodes["StringLiteral"]);
+                expect(node).not.to.be.instanceof(NODE_TYPES["SimpleMM"].nodes["CompilationUnit"]);
                 expect(node.constructor[SYMBOL_NODE_NAME]).to.equal("StringLiteral");
 
                 expect(NODE_TYPES[""].nodes["CompilationUnit"]).to.be.undefined;

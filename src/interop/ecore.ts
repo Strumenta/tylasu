@@ -327,7 +327,7 @@ export function fromEObject(obj: ECore.EObject | any, parent?: Node): ASTElement
         return fromEObject(obj.get("position")) as Position;
     }
     const ePackage = eClass.eContainer as ECore.EPackage;
-    const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")];
+    const constructor = NODE_TYPES[ePackage.get("name")]?.nodes[eClass.get("name")] as new (...args: any[]) => Node;
     if(constructor) {
         const node = new constructor().withParent(parent);
         node.parent = parent;

@@ -6,7 +6,7 @@ export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
 
 export type PackageDescription = {
     name: string,
-    nodes: { [name: string]: new (...args: any[]) => Node }
+    nodes: { [name: string]: abstract new (...args: any[]) => Node }
 };
 export const NODE_TYPES: { [name: string]: PackageDescription } = {
     "": { name: "", nodes: {} }
@@ -29,7 +29,7 @@ export type PropertyDefinition = {
     arrayType?: any
 }
 
-export function getNodeDefinition(node: Node | (new (...args: any[]) => Node)): NodeDefinition {
+export function getNodeDefinition(node: Node | (abstract new (...args: any[]) => Node)): NodeDefinition {
     const target = typeof node === "function" ? node : node.constructor;
     let definition: NodeDefinition;
     if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
@@ -378,12 +378,14 @@ export function ensurePackage(packageName: string): PackageDescription {
 }
 
 export function errorOnRedefinition<T>(
-    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    name: string, target: abstract new(...args: any[]) => T, existingTarget: abstract new(...args: any[]) => Node
+): void {
     throw new Error(`${name} (${target}) is already defined as ${existingTarget}`);
 }
 
 export function warnOnRedefinition<T>(
-    name: string, target: { new(...args: any[]): T }, existingTarget: { new(...args: any[]): Node }): void {
+    name: string, target: abstract new(...args: any[]) => T , existingTarget: abstract new(...args: any[]) => Node
+): void {
     console.warn(`Redefining ${name} from`, existingTarget, 'to', target);
 }
 
@@ -394,7 +396,7 @@ export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition
 }
 
 export function registerNodeDefinition<T extends Node>(
-    target: { new(...args: any[]): T }, pkg?: string, name?: string): NodeDefinition {
+    target: abstract new (...args: any[]) => T, pkg?: string, name?: string): NodeDefinition {
     let def: NodeDefinition;
     if(pkg !== undefined) {
         if (!name) {
@@ -484,7 +486,7 @@ export function registerNodeReference<T extends Node & PossiblyNamed>(
 //------------//
 
 export function ASTNode<T extends Node>(pkg: string, name: string) {
-    return function (target: new (...args: any[]) => T): void {
+    return function (target: abstract new (...args: any[]) => T): void {
         registerNodeDefinition(target, pkg, name);
     };
 }
