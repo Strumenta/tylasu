@@ -2,6 +2,14 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.21] – 2024-04-08
+
+### Added
+- Allow abstract classes to be marked as `@ASTNode`
+
+### Changed
+- JSON generator: use node definition metadata
+
 ## [1.6.20] – 2024-03-26
 
 ### Fixed
