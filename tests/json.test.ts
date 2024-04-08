@@ -1,6 +1,16 @@
 import {expect} from "chai";
 
-import {ASTNode, Child, Children, GenericNode, Node, PossiblyNamed, Reference, ReferenceByName} from "../src";
+import {
+    ASTNode,
+    Attribute,
+    Child,
+    Children,
+    GenericNode,
+    Node,
+    PossiblyNamed,
+    Reference,
+    ReferenceByName
+} from "../src";
 import {Indexer, JSONGenerator} from "../src";
 
 describe('JSON generator', function() {
@@ -182,6 +192,7 @@ describe('JSON generator', function() {
 
 @ASTNode("", "NodeWithChildren")
 class NodeWithChildren extends Node {
+    @Attribute()
     payload: number;
     @Child()
     singleChild: NodeWithChildren;
@@ -191,15 +202,26 @@ class NodeWithChildren extends Node {
 
 @ASTNode("", "DummyNamedNode")
 class DummyNamedNode extends Node implements PossiblyNamed {
-    constructor(public name?: string) {
+    @Attribute()
+    public name?: string;
+
+    constructor(name?: string) {
         super();
+        this.name = name;
     }
 }
 
 @ASTNode("", "NodeWithReference")
 class NodeWithReference extends Node implements PossiblyNamed {
-    constructor(public name?: string, public reference?: ReferenceByName<DummyNamedNode>) {
+    @Attribute()
+    public name?: string;
+    @Reference()
+    public reference?: ReferenceByName<DummyNamedNode>;
+
+    constructor(name?: string, reference?: ReferenceByName<DummyNamedNode>) {
         super();
+        this.name = name;
+        this.reference = reference;
     }
 
     @Child() namedNode?: DummyNamedNode;
@@ -207,10 +229,14 @@ class NodeWithReference extends Node implements PossiblyNamed {
 
 @ASTNode("", "NodeWithSelfReference")
 class NodeWithSelfReference extends Node implements PossiblyNamed {
-    @Reference() public reference?: ReferenceByName<NodeWithSelfReference>;
+    @Attribute()
+    public name?: string;
+    @Reference()
+    public reference?: ReferenceByName<NodeWithSelfReference>;
 
-    constructor(public name?: string, reference?: ReferenceByName<NodeWithSelfReference>) {
+    constructor(name?: string, reference?: ReferenceByName<NodeWithSelfReference>) {
         super();
+        this.name = name;
         this.reference = reference;
     }
 }

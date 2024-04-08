@@ -1,5 +1,4 @@
 import {ensureNodeDefinition, Node} from "../model/model";
-import {ReferenceByName} from "../model/naming";
 import {Indexer} from "./indexing";
 
 export const TO_JSON_SYMBOL = Symbol("toJSON");
@@ -14,46 +13,51 @@ export class JSONGenerator {
     }
 }
 
-Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
-    const def = ensureNodeDefinition(this);
+export function defaultToJSON(node: Node, withIds?: Indexer) {
+    const def = ensureNodeDefinition(node);
     const result = {
         type: (def.package ? def.package + "." : "") + def.name
     };
 
     if (withIds) {
-        const id = withIds.getId(this);
-        if (id)
+        const id = withIds.getId(node);
+        if (id) {
             result["id"] = id;
+        }
     }
 
-    const node = this as Node;
-    for(const p in node) {
-        if(p == 'parent' || p == 'parseTreeNode') {
-            continue;
-        }
-        const element = node[p];
-        if(element !== undefined && element !== null) {
-            const containment = node.containment(p);
-            if(containment) {
-                if(containment.multiple) {
-                    result[p] = element.map(e => toJSON(e));
-                } else {
-                    result[p] = toJSON(element, withIds);
+    for(const p in node.nodeDefinition.features) {
+        const feature = node.nodeDefinition.features[p];
+        if(feature.child) {
+            if(feature.multiple) {
+                const children = node.getChildren(p);
+                if (children.length > 0) {
+                    result[p] = children.map(e => toJSON(e, withIds));
+                }
+            } else {
+                const child = node.getChild(p);
+                if (child) {
+                    result[p] = toJSON(child, withIds);
                 }
             }
-            else if (element instanceof ReferenceByName) {
-                const reference = element as ReferenceByName<any>;
+        } else if (feature.reference) {
+            const reference = node.getReference(p);
+            if (reference) {
                 result[p] = {
-                    name: reference.name
-                }
-                if (withIds) {
-                    result[p]["referred"] = reference.resolved ? withIds.getId(reference.referred) : undefined;
+                    name: reference.name,
+                    referred: reference.resolved ? withIds?.getId(reference.referred) : undefined
                 }
             }
-            else if(typeof node[p] !== "function") {
-                result[p] = node[p];
+        } else {
+            const attributeValue = node.getAttributeValue(p);
+            if (attributeValue !== undefined) {
+                result[p] = attributeValue;
             }
         }
     }
     return result;
+}
+
+Node.prototype[TO_JSON_SYMBOL] = function (withIds?: Indexer) {
+    return defaultToJSON(this as Node, withIds);
 }
