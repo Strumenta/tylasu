@@ -103,8 +103,10 @@ describe('Lionweb integration', function() {
             const root = nodes[0];
             expect(root.node).to.be.instanceof(LionwebNode);
             let dir = new TraceNode(root.node as LionwebNode);
+            expect(dir.nodeDefinition).not.to.be.undefined;
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
+            expect(dir.containment("position")).to.be.undefined;
             expect(dir.getAttributeValue("name")).to.equal("resources.zip");
             expect(dir.getChildren("files").length).to.equal(1);
             dir = dir.getChildren("files")[0];

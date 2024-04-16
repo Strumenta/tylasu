@@ -343,6 +343,10 @@ export abstract class Node extends Origin implements Destination {
     set position(newPos: Position | undefined) {
         this.positionOverride = newPos;
     }
+
+    get sourceText(): string | undefined {
+        return this.origin?.sourceText;
+    }
 }
 
 export interface FeatureDescription {
