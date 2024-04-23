@@ -15,11 +15,11 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
 export type NodeDefinition = {
     package?: string,
     name?: string,
-    features: { [name: string | symbol]: PropertyDefinition },
+    features: { [name: string | symbol]: Feature },
     resolved?: boolean;
 };
 
-export type PropertyDefinition = {
+export type Feature = {
     name: string | symbol,
     child?: boolean,
     multiple?: boolean,
@@ -28,6 +28,11 @@ export type PropertyDefinition = {
     type?: any,
     arrayType?: any
 }
+
+/**
+ * @deprecated replaced by Feature
+ */
+export type PropertyDefinition = Feature;
 
 export function getNodeDefinition(node: Node | (abstract new (...args: any[]) => Node)): NodeDefinition {
     const target = typeof node === "function" ? node : node.constructor;
@@ -174,7 +179,7 @@ export abstract class Node extends Origin implements Destination {
         });
     }
 
-    containment(name: string | symbol): PropertyDefinition | undefined {
+    containment(name: string | symbol): Feature | undefined {
         const props = this.nodeDefinition?.features || {};
         return props[name]?.child ? props[name] : undefined;
     }
@@ -457,7 +462,7 @@ export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }
 
 export function registerNodeAttribute<T extends Node>(
     type: { new(...args: any[]): T }, methodName: string | symbol
-): PropertyDefinition {
+): Feature {
     if (methodName == "parent" || methodName == "children" || methodName == "origin") {
         methodName = Symbol(methodName);
     }
@@ -471,7 +476,7 @@ export function registerNodeAttribute<T extends Node>(
 }
 
 export function registerNodeChild<T extends Node>(
-    type: new (...args: any[]) => T, methodName: string, multiple: boolean = false): PropertyDefinition {
+    type: new (...args: any[]) => T, methodName: string, multiple: boolean = false): Feature {
     const propInfo = registerNodeAttribute(type, methodName);
     propInfo.child = true;
     propInfo.multiple = multiple;
@@ -479,7 +484,7 @@ export function registerNodeChild<T extends Node>(
 }
 
 export function registerNodeReference<T extends Node & PossiblyNamed>(
-    type: new (...args: any[]) => T, methodName: string): PropertyDefinition {
+    type: new (...args: any[]) => T, methodName: string): Feature {
     const propInfo = registerNodeAttribute(type, methodName);
     propInfo.reference = true;
     return propInfo;

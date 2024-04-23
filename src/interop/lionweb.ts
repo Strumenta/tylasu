@@ -6,22 +6,24 @@ import {
     Classifier,
     Concept,
     Containment,
-    Feature,
+    Feature as LWFeature,
     Id,
     InstantiationFacade,
     Interface,
     Language,
-    Node as LionwebNodeInterface
+    Node as LWNodeInterface
 } from "@lionweb/core";
-import {NodeAdapter, Issue, Node, NodeDefinition, Position, PropertyDefinition} from "..";
+import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
-export class TylasuNodeWrapper implements LionwebNodeInterface {
+export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")!;
+
+export class TylasuNodeWrapper implements LWNodeInterface {
     id: Id;
     node: Node;
-    parent?: LionwebNodeInterface;
-    annotations: LionwebNodeInterface[];
+    parent?: LWNodeInterface;
+    annotations: LWNodeInterface[];
 }
 
 export class LanguageMapping {
@@ -43,11 +45,23 @@ export class LanguageMapping {
     }
 }
 
-function featureToProperty(feature: Feature): PropertyDefinition {
-    const def: PropertyDefinition = { name: feature.name };
+function isASTNode(classifier: Classifier) {
+    return (classifier instanceof Concept) &&
+        (classifier.key == ASTNode.key || (classifier.extends && isASTNode(classifier.extends)));
+}
+
+function importFeature(feature: LWFeature): Feature | undefined {
+    const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        def.child = true;
-        def.multiple = feature.multiple;
+        if (isASTNode(feature.classifier)) {
+            def.child = true;
+            def.multiple = feature.multiple;
+        } else {
+            // TODO we assume that:
+            //  1) we're importing a StarLasu AST
+            //  2) containments in a StarLasu AST are either AST nodes or internal StarLasu objects like the position
+            return undefined;
+        }
     }
     return def
 }
@@ -81,7 +95,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
             annotations: []
         };
     }
-    setFeatureValue(node: TylasuNodeWrapper, feature: Feature, value: unknown): void {
+    setFeatureValue(node: TylasuNodeWrapper, feature: LWFeature, value: unknown): void {
         if (feature instanceof Containment) {
             if (feature.multiple) {
                 node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
@@ -132,16 +146,19 @@ export class LionwebNode extends NodeAdapter {
 
     constructor(
         public readonly classifier: Classifier,
-        protected lwnode: LionwebNodeInterface
+        protected lwnode: LWNodeInterface
     ) {
         super();
-        const properties = {};
+        const features = {};
         allFeatures(classifier).forEach(f => {
-            properties[f.name] = featureToProperty(f);
+            const feature = importFeature(f);
+            if (feature) {
+                features[f.name] = feature;
+            }
         });
         this._nodeDefinition = {
             name: classifier.name,
-            features: properties,
+            features,
             resolved: true
         };
     }

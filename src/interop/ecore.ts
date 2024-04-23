@@ -9,7 +9,7 @@ import {
     Node,
     NODE_TYPES, NodeDefinition,
     PackageDescription,
-    PropertyDefinition,
+    Feature,
     registerNodeDefinition,
     registerNodeAttribute
 } from "../model/model";
@@ -946,8 +946,8 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
         return this.eo.eContainingFeature?.get("name");
     }
 
-    getFeatures(): { [name: string | symbol]: PropertyDefinition } {
-        const result: { [name: string | symbol]: PropertyDefinition } = {};
+    getFeatures(): { [name: string | symbol]: Feature } {
+        const result: { [name: string | symbol]: Feature } = {};
         const eClass = this.eo.eClass;
         const features = eClass.get("eAllStructuralFeatures");
         for (const ft of features) {
