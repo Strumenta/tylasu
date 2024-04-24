@@ -213,8 +213,12 @@ export class LionwebNode extends NodeAdapter {
 
     parent: LionwebNode;
 
+    get nodeDefinition() {
+        return this._nodeDefinition;
+    }
+
     constructor(
-        public readonly nodeDefinition: NodeDefinition,
+        protected readonly _nodeDefinition: NodeDefinition,
         protected lwnode: LWNodeInterface
     ) {
         super();
