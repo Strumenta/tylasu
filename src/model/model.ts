@@ -523,9 +523,7 @@ export function Children(): (target, methodName: string) => void {
  * @deprecated use Attribute instead.
  */
 export function Property(): (target, methodName: string) => void {
-    return function (target, methodName: string) {
-        registerNodeAttribute(target, methodName);
-    };
+    return Attribute();
 }
 
 /**
