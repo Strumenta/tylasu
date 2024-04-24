@@ -1,0 +1,129 @@
+{
+  "serializationFormatVersion": "2023.1",
+  "languages": [
+    {
+      "key": "com-strumenta-egl",
+      "version": "1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "root",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglCompilationUnit"
+      },
+      "properties": [],
+      "containments": [
+        {
+          "containment": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "children": [
+            "root_position"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": null
+    },
+    {
+      "id": "root_position",
+      "classifier": {
+        "language": "com_strumenta_starlasu",
+        "version": "1",
+        "key": "com_strumenta_starlasu-Position-key"
+      },
+      "properties": [],
+      "containments": [
+        {
+          "containment": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Position-start-key"
+          },
+          "children": [
+            "root_position_start"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Position-end-key"
+          },
+          "children": [
+            "root_position_end"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "tenant-strumenta___egl-example-1_zip___eglzip___Calc_egl_parsingResult_root"
+    },
+    {
+      "id": "root_position_start",
+      "classifier": {
+        "language": "com_strumenta_starlasu",
+        "version": "1",
+        "key": "com_strumenta_starlasu-Point-key"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Point-line-key"
+          },
+          "value": "1"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Point-column-key"
+          },
+          "value": "0"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "tenant-strumenta___egl-example-1_zip___eglzip___Calc_egl_parsingResult_root_position"
+    },
+    {
+      "id": "root_position_end",
+      "classifier": {
+        "language": "com_strumenta_starlasu",
+        "version": "1",
+        "key": "com_strumenta_starlasu-Point-key"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Point-line-key"
+          },
+          "value": "17"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-Point-column-key"
+          },
+          "value": "3"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "tenant-strumenta___egl-example-1_zip___eglzip___Calc_egl_parsingResult_root_position"
+    }
+  ]
+}

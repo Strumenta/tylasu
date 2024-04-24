@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.22] – 2024-04-24
+
+### Fixed
+- Position instances represented as child nodes when importing Lionweb models
+
 ## [1.6.21] – 2024-04-08
 
 ### Added

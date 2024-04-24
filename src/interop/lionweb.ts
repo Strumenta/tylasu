@@ -13,17 +13,49 @@ import {
     Language,
     Node as LWNodeInterface
 } from "@lionweb/core";
-import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature} from "..";
+import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
-export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")!;
+export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as Concept;
+export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Containment;
+export const PositionClassifier = PositionFeature.type!;
+export const PositionStartFeature = PositionClassifier.features.find(f => f.name == "start")! as Containment;
+export const PositionEndFeature = PositionClassifier.features.find(f => f.name == "end")! as Containment;
+export const PointClassifier = PositionStartFeature.type!;
+export const PointLineFeature = PointClassifier.features.find(f => f.name == "line")! as Containment;
+export const PointColumnFeature = PointClassifier.features.find(f => f.name == "column")! as Containment;
 
-export class TylasuNodeWrapper implements LWNodeInterface {
-    id: Id;
-    node: Node;
-    parent?: LWNodeInterface;
-    annotations: LWNodeInterface[];
+export class TylasuWrapper implements LWNodeInterface {
+    constructor(
+        public readonly id: Id,
+        public readonly parent: LWNodeInterface | undefined,
+        public readonly annotations: LWNodeInterface[]) {}
+}
+
+export class TylasuNodeWrapper extends TylasuWrapper {
+
+    constructor(public readonly node: Node, id: Id, parent: LWNodeInterface | undefined, annotations: LWNodeInterface[]) {
+        super(id, parent, annotations);
+        node.withParent((parent instanceof TylasuNodeWrapper) ? parent.node : undefined)
+    }
+}
+
+export class TylasuPointWrapper extends TylasuWrapper {
+
+    point = new Point(1, 0);
+    constructor(id: Id, parent?: LWNodeInterface) {
+        super(id, parent, []);
+    }
+}
+
+export class TylasuPositionWrapper extends TylasuWrapper {
+
+    position = pos(1, 0, 1, 0);
+
+    constructor(id: Id, parent?: LWNodeInterface) {
+        super(id, parent, []);
+    }
 }
 
 export class LanguageMapping {
@@ -53,7 +85,7 @@ function isASTNode(classifier: Classifier) {
 function importFeature(feature: LWFeature): Feature | undefined {
     const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        if (isASTNode(feature.classifier)) {
+        if (feature.type && isASTNode(feature.type)) {
             def.child = true;
             def.multiple = feature.multiple;
         } else {
@@ -66,14 +98,26 @@ function importFeature(feature: LWFeature): Feature | undefined {
     return def
 }
 
-export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNodeWrapper> {
+export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrapper> {
+
+    protected readonly concepts = new Map<Classifier, NodeDefinition>();
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
 
     encodingOf(): unknown {
         return undefined;
     }
-    nodeFor(parent: TylasuNodeWrapper | undefined, classifier: Classifier, id: string): TylasuNodeWrapper {
+    nodeFor(parent: TylasuWrapper | undefined, classifier: Classifier, id: string): TylasuWrapper {
+        if (classifier.key == PositionClassifier.key) {
+            return new TylasuPositionWrapper(id, parent);
+        } else if (classifier.key == PointClassifier.key) {
+            return new TylasuPointWrapper(id, parent);
+        } else {
+            return this.instantiateNode(classifier, id, parent);
+        }
+    }
+
+    private instantiateNode(classifier: Classifier, id: string, parent: TylasuWrapper | undefined | TylasuNodeWrapper) {
         let node: Node | undefined;
         for (const language of this.languageMappings) {
             const nodeType = language.classifiers.get(classifier);
@@ -82,28 +126,57 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuNode
             }
         }
         if (!node) {
-            node = new LionwebNode(classifier, {
+            let concept = this.concepts.get(classifier);
+            if (!concept) {
+                concept = {
+                    name: classifier.name,
+                    features: {},
+                    resolved: true
+                };
+                allFeatures(classifier).forEach(f => {
+                    const feature = importFeature(f);
+                    if (feature) {
+                        concept!.features[f.name] = feature;
+                    }
+                });
+                this.concepts.set(classifier, concept);
+            }
+            node = new LionwebNode(concept, {
                 id,
                 parent,
                 annotations: []
             });
         }
-        return {
-            id,
-            parent,
-            node: node.withParent(parent?.node),
-            annotations: []
-        };
+        return new TylasuNodeWrapper(node, id, parent, []);
     }
-    setFeatureValue(node: TylasuNodeWrapper, feature: LWFeature, value: unknown): void {
-        if (feature instanceof Containment) {
-            if (feature.multiple) {
-                node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
+
+    setFeatureValue(node: TylasuWrapper, feature: LWFeature, value: unknown): void {
+        if (node instanceof TylasuNodeWrapper) {
+            if (feature instanceof Containment) {
+                if (feature.key == PositionFeature.key) {
+                    node.node.position = (value as TylasuPositionWrapper)?.position;
+                } else if (feature.multiple) {
+                    node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
+                } else {
+                    node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
+                }
             } else {
-                node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
+                node.node.setAttributeValue(feature.name, value);
+            }
+        } else if (node instanceof TylasuPositionWrapper) {
+            if (feature.key == PositionStartFeature.key) {
+                node.position = new Position((value as TylasuPointWrapper).point, node.position.end);
+            } else if (feature.key == PositionEndFeature.key) {
+                node.position = new Position(node.position.start, (value as TylasuPointWrapper).point);
+            }
+        }  else if (node instanceof TylasuPointWrapper) {
+            if (feature.key == PointLineFeature.key) {
+                node.point = new Point(value as number, node.point.column);
+            } else if (feature.key == PositionEndFeature.key) {
+                node.point = new Point(node.point.line, value as number);
             }
         } else {
-            node.node.setAttributeValue(feature.name, value);
+            throw new Error("Unsupported node: " + node);
         }
     }
 }
@@ -139,28 +212,12 @@ function allFeatures(classifier: Classifier) {
 export class LionwebNode extends NodeAdapter {
 
     parent: LionwebNode;
-    private _nodeDefinition?: NodeDefinition;
-    public get nodeDefinition(): NodeDefinition {
-        return this._nodeDefinition!;
-    }
 
     constructor(
-        public readonly classifier: Classifier,
+        public readonly nodeDefinition: NodeDefinition,
         protected lwnode: LWNodeInterface
     ) {
         super();
-        const features = {};
-        allFeatures(classifier).forEach(f => {
-            const feature = importFeature(f);
-            if (feature) {
-                features[f.name] = feature;
-            }
-        });
-        this._nodeDefinition = {
-            name: classifier.name,
-            features,
-            resolved: true
-        };
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -198,9 +255,10 @@ export class LionwebNode extends NodeAdapter {
         return undefined;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getPosition(property?: string): Position | undefined {
-        return undefined;
+    getPosition(property = "position"): Position | undefined {
+        if (!property || property == "position") {
+            return super.position;
+        }
     }
 
     isDeclaration(): boolean {

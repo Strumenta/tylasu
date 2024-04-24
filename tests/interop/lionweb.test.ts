@@ -1,3 +1,5 @@
+import EGL_LANGUAGE_JSON from "./egl-language.json";
+import EGL_MODEL from "./egl-model.json";
 import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
@@ -7,7 +9,7 @@ import {
     findClassifier,
     LanguageMapping, LionwebNode,
     STARLASU_LANGUAGE_MAPPING,
-    TylasuInstantiationFacade
+    TylasuInstantiationFacade, TylasuNodeWrapper
 } from "../../src/interop/lionweb";
 import {map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
@@ -32,6 +34,8 @@ function printSequence(sequence: Generator<Node>): string {
 }
 
 describe('Lionweb integration', function() {
+    const EGL_LANGUAGE = deserializeLanguages(EGL_LANGUAGE_JSON as SerializationChunk, STARLASU_LANGUAGE)[0];
+
     const FS_LANGUAGE = deserializeLanguages(FS_LANGUAGE_JSON as SerializationChunk, STARLASU_LANGUAGE)[0];
     const FS_LANGUAGE_MAPPING = new LanguageMapping().extend(STARLASU_LANGUAGE_MAPPING);
     FS_LANGUAGE_MAPPING.register(Directory, findClassifier(FS_LANGUAGE, "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory"));
@@ -43,7 +47,7 @@ describe('Lionweb integration', function() {
             const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade([FS_LANGUAGE_MAPPING]), [FS_LANGUAGE], []);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0];
+            const root = nodes[0] as TylasuNodeWrapper;
             expect(root.node).to.be.instanceof(Directory);
             let dir = root.node as Directory;
             expect(dir.name).to.equal("resources.zip");
@@ -70,7 +74,7 @@ describe('Lionweb integration', function() {
             const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade(), [FS_LANGUAGE], []);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0];
+            const root = nodes[0] as TylasuNodeWrapper;
             expect(root.node).to.be.instanceof(LionwebNode);
             let dir = root.node as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
@@ -100,7 +104,7 @@ describe('Lionweb integration', function() {
             const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade(), [FS_LANGUAGE], []);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0];
+            const root = nodes[0] as TylasuNodeWrapper;
             expect(root.node).to.be.instanceof(LionwebNode);
             let dir = new TraceNode(root.node as LionwebNode);
             expect(dir.nodeDefinition).not.to.be.undefined;
@@ -126,5 +130,19 @@ describe('Lionweb integration', function() {
                 "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
                 "multipleWhenCondition.egl, handler.egl, SQLCreateTable.egl, newExample.egl, SQLDropTable.egl, " +
                 "nestedLoop.egl, for.egl");
+        });
+    it("trace nodes don't include the position as a child",
+        function () {
+            const nodes = deserializeChunk(EGL_MODEL, new TylasuInstantiationFacade(), [EGL_LANGUAGE, STARLASU_LANGUAGE], []);
+            expect(nodes).not.to.be.empty;
+            expect(nodes.length).to.equal(4);
+            const root = nodes[0] as TylasuNodeWrapper;
+            expect(root.node).to.be.instanceof(LionwebNode);
+            const dir = new TraceNode(root.node as LionwebNode);
+            expect(dir.nodeDefinition).not.to.be.undefined;
+            expect(dir.getRole()).to.be.undefined;
+            expect(dir.nodeDefinition.name).to.equal("EglCompilationUnit");
+            expect(dir.containment("position")).to.be.undefined;
+            expect(dir.position).not.to.be.undefined;
         });
 });
