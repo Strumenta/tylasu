@@ -144,5 +144,6 @@ describe('Lionweb integration', function() {
             expect(dir.nodeDefinition.name).to.equal("EglCompilationUnit");
             expect(dir.containment("position")).to.be.undefined;
             expect(dir.position).not.to.be.undefined;
+            expect(dir.children.length).to.equal(0);
         });
 });

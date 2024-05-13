@@ -77,25 +77,37 @@ export class LanguageMapping {
     }
 }
 
-function isASTNode(classifier: Classifier) {
-    return (classifier instanceof Concept) &&
-        (classifier.key == ASTNode.key || (classifier.extends && isASTNode(classifier.extends)));
+function isSpecialConcept(classifier: Classifier) {
+    return classifier.key == PositionClassifier.key;
 }
 
 function importFeature(feature: LWFeature): Feature | undefined {
     const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        if (feature.type && isASTNode(feature.type)) {
+        if (feature.type && feature.type instanceof Concept && !isSpecialConcept(feature.type)) {
             def.child = true;
             def.multiple = feature.multiple;
         } else {
-            // TODO we assume that:
-            //  1) we're importing a StarLasu AST
-            //  2) containments in a StarLasu AST are either AST nodes or internal StarLasu objects like the position
+            // TODO is it possible in Lionweb to have a Containment that's not a concept?
             return undefined;
         }
     }
     return def
+}
+
+function importConcept(concept: NodeDefinition | undefined, classifier: Classifier) {
+    concept = {
+        name: classifier.name,
+        features: {},
+        resolved: true
+    };
+    allFeatures(classifier).forEach(f => {
+        const feature = importFeature(f);
+        if (feature) {
+            concept!.features[f.name] = feature;
+        }
+    });
+    return concept;
 }
 
 export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrapper> {
@@ -128,17 +140,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
         if (!node) {
             let concept = this.concepts.get(classifier);
             if (!concept) {
-                concept = {
-                    name: classifier.name,
-                    features: {},
-                    resolved: true
-                };
-                allFeatures(classifier).forEach(f => {
-                    const feature = importFeature(f);
-                    if (feature) {
-                        concept!.features[f.name] = feature;
-                    }
-                });
+                concept = importConcept(concept, classifier);
                 this.concepts.set(classifier, concept);
             }
             node = new LionwebNode(concept, {
