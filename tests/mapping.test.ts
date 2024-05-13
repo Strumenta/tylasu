@@ -5,7 +5,7 @@ import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStream, CommonTokenStream, ParserRuleContext} from "antlr4ng";
 import {CompilationUnitContext, DisplayStmtContext, SetStmtContext, SimpleLangParser} from "./parser/SimpleLangParser";
 import {ParseTreeOrigin} from "../src/parsing";
-import {ParseTreeToASTTransformer} from "../src/mapping";
+import {ParseTreeToASTTransformer} from "../src/mapping/mapping";
 import {assertASTsAreEqual} from "../src/testing/testing";
 
 class MySetStatement extends Node {

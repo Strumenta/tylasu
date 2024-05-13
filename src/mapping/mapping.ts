@@ -1,9 +1,9 @@
 import {ParserRuleContext, TerminalNode} from "antlr4ng";
-import {Node, Origin} from "./model/model";
-import {ASTTransformer} from "./transformation/transformation";
-import {ParseTreeOrigin} from "./parsing";
-import {Issue} from "./validation";
-import {Source} from "./model/position";
+import {Node, Origin} from "../model/model";
+import {ASTTransformer} from "../transformation/transformation";
+import {ParseTreeOrigin} from "../parsing";
+import {Issue} from "../validation";
+import {Source} from "../model/position";
 
 
 /**

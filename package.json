@@ -35,9 +35,14 @@
 			"types": "./dist/types/parsing/index.d.ts"
 		},
 		"./mapping": {
-			"import": "./dist/esm/mapping.js",
-			"require": "./dist/cjs/mapping.js",
-			"types": "./dist/types/mapping.d.ts"
+			"import": "./dist/esm/mapping/mapping.js",
+			"require": "./dist/cjs/mapping/mapping.js",
+			"types": "./dist/types/mapping/mapping.d.ts"
+		},
+		"./testing": {
+			"import": "./dist/esm/testing/testing.js",
+			"require": "./dist/cjs/testing/testing.js",
+			"types": "./dist/types/testing/testing.d.ts"
 		},
 		"./interop/ecore": {
 			"import": "./dist/esm/interop/ecore.js",
@@ -63,7 +68,8 @@
 	"typesVersions": {
 		"*": {
 			"parsing": ["dist/types/parsing/index.d.ts"],
-			"mapping": ["dist/types/mapping.d.ts"],
+			"mapping": ["dist/types/mapping/mapping.d.ts"],
+			"testing": ["dist/types/testing/testing.d.ts"],
 			"interop/ecore": ["dist/types/interop/ecore.d.ts"],
 			"interop/lionweb": ["dist/types/interop/lionweb.d.ts"],
 			"interop/ecore-enabled-parser": ["dist/types/interop/ecore-enabled-parser.d.ts"],
@@ -106,7 +112,7 @@
 		"build": "yarn run build:esm && yarn run build:cjs",
 		"build:esm": "tsc --module es6 --outDir dist/esm",
 		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
-		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts src/interop/lionweb.ts",
+		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping/mapping.ts src/testing/testing.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts src/interop/lionweb.ts",
 		"lint": "eslint src tests",
 		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
 		"test": "yarn run build-test-parser && node --experimental-vm-modules node_modules/jest/bin/jest.js",
