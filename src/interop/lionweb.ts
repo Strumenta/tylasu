@@ -5,15 +5,16 @@
 import {
     Classifier,
     Concept,
-    Containment,
+    Containment, deserializeChunk,
     Feature as LWFeature,
     Id,
     InstantiationFacade,
     Interface,
     Language,
-    Node as LWNodeInterface
+    Node as LWNodeInterface,
+    SerializationChunk
 } from "@lionweb/core";
-import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos} from "..";
+import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos, TraceNode} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
@@ -77,22 +78,22 @@ export class LanguageMapping {
     }
 }
 
-function isSpecialConcept(classifier: Classifier) {
-    return classifier.key == PositionClassifier.key;
+function isSpecialConcept(classifier: Classifier | null) {
+    return classifier?.key == PositionClassifier.key;
 }
 
 function importFeature(feature: LWFeature): Feature | undefined {
     const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        if (feature.type && feature.type instanceof Concept && !isSpecialConcept(feature.type)) {
+        if (!isSpecialConcept(feature.type)) {
             def.child = true;
             def.multiple = feature.multiple;
         } else {
-            // TODO is it possible in Lionweb to have a Containment that's not a concept?
+            // We don't import the containment because we handle it specially
             return undefined;
         }
     }
-    return def
+    return def;
 }
 
 function importConcept(concept: NodeDefinition | undefined, classifier: Classifier) {
@@ -282,4 +283,26 @@ export class LionwebNode extends NodeAdapter {
     equals(other: NodeAdapter | undefined): boolean {
         return other instanceof LionwebNode && other.lwnode == this.lwnode;
     }
+}
+
+export function deserializeToTylasuNodes(
+    chunk: SerializationChunk,
+    languages: Language[],
+    languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING],
+    dependentNodes: LWNodeInterface[] = []
+): Node[] {
+    return deserializeChunk(
+        chunk, new TylasuInstantiationFacade(languageMappings), [STARLASU_LANGUAGE, ...languages], dependentNodes
+    )
+        .filter(n => n instanceof TylasuNodeWrapper)
+        .map(n => (n as TylasuNodeWrapper).node);
+}
+
+export function deserializeToTraceNodes(
+    chunk: SerializationChunk,
+    languages: Language[],
+    dependentNodes: LWNodeInterface[] = []
+): TraceNode[] {
+    return deserializeToTylasuNodes(chunk, languages, [], dependentNodes).map(
+        n => new TraceNode(n as LionwebNode));
 }
