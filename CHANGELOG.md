@@ -2,7 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.6.24] – Not yet released
+## [1.6.24] – 2024-05-14
+
+### Added
+- Higher-level APIs for Lionweb import
+- Import from Lionweb languages and models not exported from Kolasu (i.e. with nodes not extending StarLasu's ASTNode concept)
 
 ### Fixed
 - `assertASTsAreEqual` is now properly exported
