@@ -5,15 +5,16 @@
 import {
     Classifier,
     Concept,
-    Containment,
+    Containment, deserializeChunk,
     Feature as LWFeature,
     Id,
     InstantiationFacade,
     Interface,
     Language,
-    Node as LWNodeInterface
+    Node as LWNodeInterface,
+    SerializationChunk
 } from "@lionweb/core";
-import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos} from "..";
+import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos, TraceNode} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
@@ -77,25 +78,37 @@ export class LanguageMapping {
     }
 }
 
-function isASTNode(classifier: Classifier) {
-    return (classifier instanceof Concept) &&
-        (classifier.key == ASTNode.key || (classifier.extends && isASTNode(classifier.extends)));
+function isSpecialConcept(classifier: Classifier | null) {
+    return classifier?.key == PositionClassifier.key;
 }
 
 function importFeature(feature: LWFeature): Feature | undefined {
     const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        if (feature.type && isASTNode(feature.type)) {
+        if (!isSpecialConcept(feature.type)) {
             def.child = true;
             def.multiple = feature.multiple;
         } else {
-            // TODO we assume that:
-            //  1) we're importing a StarLasu AST
-            //  2) containments in a StarLasu AST are either AST nodes or internal StarLasu objects like the position
+            // We don't import the containment because we handle it specially
             return undefined;
         }
     }
-    return def
+    return def;
+}
+
+function importConcept(concept: NodeDefinition | undefined, classifier: Classifier) {
+    concept = {
+        name: classifier.name,
+        features: {},
+        resolved: true
+    };
+    allFeatures(classifier).forEach(f => {
+        const feature = importFeature(f);
+        if (feature) {
+            concept!.features[f.name] = feature;
+        }
+    });
+    return concept;
 }
 
 export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrapper> {
@@ -128,17 +141,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
         if (!node) {
             let concept = this.concepts.get(classifier);
             if (!concept) {
-                concept = {
-                    name: classifier.name,
-                    features: {},
-                    resolved: true
-                };
-                allFeatures(classifier).forEach(f => {
-                    const feature = importFeature(f);
-                    if (feature) {
-                        concept!.features[f.name] = feature;
-                    }
-                });
+                concept = importConcept(concept, classifier);
                 this.concepts.set(classifier, concept);
             }
             node = new LionwebNode(concept, {
@@ -280,4 +283,26 @@ export class LionwebNode extends NodeAdapter {
     equals(other: NodeAdapter | undefined): boolean {
         return other instanceof LionwebNode && other.lwnode == this.lwnode;
     }
+}
+
+export function deserializeToTylasuNodes(
+    chunk: SerializationChunk,
+    languages: Language[],
+    languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING],
+    dependentNodes: LWNodeInterface[] = []
+): Node[] {
+    return deserializeChunk(
+        chunk, new TylasuInstantiationFacade(languageMappings), [STARLASU_LANGUAGE, ...languages], dependentNodes
+    )
+        .filter(n => n instanceof TylasuNodeWrapper)
+        .map(n => (n as TylasuNodeWrapper).node);
+}
+
+export function deserializeToTraceNodes(
+    chunk: SerializationChunk,
+    languages: Language[],
+    dependentNodes: LWNodeInterface[] = []
+): TraceNode[] {
+    return deserializeToTylasuNodes(chunk, languages, [], dependentNodes).map(
+        n => new TraceNode(n as LionwebNode));
 }

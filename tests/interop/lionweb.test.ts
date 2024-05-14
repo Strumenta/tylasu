@@ -6,6 +6,8 @@ import {expect} from "chai";
 import {deserializeChunk, deserializeLanguages, SerializationChunk} from "@lionweb/core";
 import {Attribute, Children, Node, TraceNode, walk} from "../../src";
 import {
+    deserializeToTraceNodes,
+    deserializeToTylasuNodes,
     findClassifier,
     LanguageMapping, LionwebNode,
     STARLASU_LANGUAGE_MAPPING,
@@ -44,12 +46,12 @@ describe('Lionweb integration', function() {
 
     it("can deserialize simple model",
         function () {
-            const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade([FS_LANGUAGE_MAPPING]), [FS_LANGUAGE], []);
+            const nodes = deserializeToTylasuNodes(FS_MODEL, [FS_LANGUAGE], [FS_LANGUAGE_MAPPING]);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0] as TylasuNodeWrapper;
-            expect(root.node).to.be.instanceof(Directory);
-            let dir = root.node as Directory;
+            const root = nodes[0];
+            expect(root).to.be.instanceof(Directory);
+            let dir = root as Directory;
             expect(dir.name).to.equal("resources.zip");
             expect(dir.files.length).to.equal(1);
             expect(dir.files[0]).to.be.instanceof(Directory);
@@ -61,7 +63,7 @@ describe('Lionweb integration', function() {
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");
 
-            expect(printSequence(walk(root.node))).to.equal(
+            expect(printSequence(walk(root))).to.equal(
                 "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
                 "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
                 "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
@@ -71,12 +73,12 @@ describe('Lionweb integration', function() {
 
     it("can deserialize simple model to dynamic nodes",
         function () {
-            const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade(), [FS_LANGUAGE], []);
+            const nodes = deserializeToTylasuNodes(FS_MODEL, [FS_LANGUAGE]);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0] as TylasuNodeWrapper;
-            expect(root.node).to.be.instanceof(LionwebNode);
-            let dir = root.node as LionwebNode & any;
+            const root = nodes[0];
+            expect(root).to.be.instanceof(LionwebNode);
+            let dir = root as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.getAttributeValue("name")).to.equal("resources.zip");
             expect(dir.files.length).to.equal(1);
@@ -91,7 +93,7 @@ describe('Lionweb integration', function() {
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");
 
-            expect(printSequence(walk(root.node))).to.equal(
+            expect(printSequence(walk(root))).to.equal(
                 "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
                 "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
                 "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
@@ -101,12 +103,10 @@ describe('Lionweb integration', function() {
 
     it("supports trace nodes",
         function () {
-            const nodes = deserializeChunk(FS_MODEL, new TylasuInstantiationFacade(), [FS_LANGUAGE], []);
+            const nodes = deserializeToTraceNodes(FS_MODEL, [FS_LANGUAGE]);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const root = nodes[0] as TylasuNodeWrapper;
-            expect(root.node).to.be.instanceof(LionwebNode);
-            let dir = new TraceNode(root.node as LionwebNode);
+            let dir = nodes[0];
             expect(dir.nodeDefinition).not.to.be.undefined;
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
@@ -124,7 +124,7 @@ describe('Lionweb integration', function() {
             expect(file.getRole()).to.equal("files");
             expect(file.getPathFromRoot()).to.eql(["files", 0, "files", 1]);
 
-            expect(printSequence(walk(root.node))).to.equal(
+            expect(printSequence(walk(nodes[0]))).to.equal(
                 "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
                 "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
                 "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
@@ -133,16 +133,15 @@ describe('Lionweb integration', function() {
         });
     it("trace nodes don't include the position as a child",
         function () {
-            const nodes = deserializeChunk(EGL_MODEL, new TylasuInstantiationFacade(), [EGL_LANGUAGE, STARLASU_LANGUAGE], []);
+            const nodes = deserializeToTraceNodes(EGL_MODEL, [EGL_LANGUAGE]);
             expect(nodes).not.to.be.empty;
-            expect(nodes.length).to.equal(4);
-            const root = nodes[0] as TylasuNodeWrapper;
-            expect(root.node).to.be.instanceof(LionwebNode);
-            const dir = new TraceNode(root.node as LionwebNode);
+            expect(nodes.length).to.equal(1);
+            const dir = nodes[0];
             expect(dir.nodeDefinition).not.to.be.undefined;
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("EglCompilationUnit");
             expect(dir.containment("position")).to.be.undefined;
             expect(dir.position).not.to.be.undefined;
+            expect(dir.children.length).to.equal(0);
         });
 });
