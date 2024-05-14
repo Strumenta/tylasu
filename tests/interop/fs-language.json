@@ -147,12 +147,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -287,12 +282,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -630,12 +620,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -766,12 +751,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -1096,12 +1076,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -1224,12 +1199,7 @@
             "version": "2023.1",
             "key": "Link-type"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         }
       ],
       "annotations": [],
@@ -1357,12 +1327,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -1604,12 +1569,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -1943,12 +1903,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -2083,12 +2038,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -2275,12 +2225,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -2467,12 +2412,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
@@ -2667,12 +2607,7 @@
             "version": "2023.1",
             "key": "Concept-extends"
           },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
+          "targets": []
         },
         {
           "reference": {
