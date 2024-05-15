@@ -11,6 +11,6 @@
 		"rootDirs": ["src"],
 		"declarationDir": "dist/types"
 	},
-	"include": ["src/index.ts", "src/parsing/index.ts", "src/interop", "src/cli.ts"],
+	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules"]
 }
