@@ -184,12 +184,12 @@ export abstract class Node extends Origin implements Destination {
         return props[name]?.child ? props[name] : undefined;
     }
 
-    setChild(name: string, child: Node): void {
+    setChild(name: string | symbol, child: Node): void {
         const containment = this.containment(name);
         if(!containment) {
-            throw new Error("Not a containment: " + name);
+            throw this.notAContainment(name);
         } else if (containment.multiple) {
-            throw new Error(name + " is a collection, use addChild");
+            throw new Error(name.toString() + " is a collection, use addChild");
         }
         if(child.parent && child.parent != this) {
             throw new Error("Child already has a different parent");
@@ -200,12 +200,12 @@ export abstract class Node extends Origin implements Destination {
         this[name] = child.withParent(this);
     }
 
-    addChild(name: string, child: Node): void {
+    addChild(name: string | symbol, child: Node): void {
         const containment = this.containment(name);
         if(!containment) {
-            throw new Error("Not a containment: " + name);
+            throw this.notAContainment(name);
         } else if (!containment.multiple) {
-            throw new Error(name + " is not a collection, use setChild");
+            throw new Error(name.toString() + " is not a collection, use setChild");
         }
         if(child.parent && child.parent != this) {
             throw new Error("Child already has a different parent");
@@ -216,10 +216,14 @@ export abstract class Node extends Origin implements Destination {
         this[name].push(child.withParent(this));
     }
 
+    private notAContainment(name: string | symbol) {
+        return new Error(`Not a containment: ${name.toString()} of ${this.nodeDefinition?.name || "<unknown>"}`);
+    }
+
     getChild(name: string | symbol, index?: number): Node | undefined {
         const containment = this.containment(name);
         if(!containment) {
-            throw new Error("Not a containment: " + name.toString());
+            throw this.notAContainment(name);
         }
         const raw = this.doGetChildOrChildren(name);
         if (containment.multiple) {
@@ -271,7 +275,7 @@ export abstract class Node extends Origin implements Destination {
     getChildrenWithRole(name: string | symbol) {
         const containment = this.containment(name);
         if (!containment) {
-            throw new Error("Not a containment: " + name.toString());
+            throw this.notAContainment(name);
         }
         const raw = this.doGetChildOrChildren(name);
         if (containment.multiple) {

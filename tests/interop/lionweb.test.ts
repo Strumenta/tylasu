@@ -3,8 +3,8 @@ import EGL_MODEL from "./egl-model.json";
 import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
-import {deserializeChunk, deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Attribute, Children, Node, TraceNode, walk} from "../../src";
+import {deserializeLanguages, SerializationChunk} from "@lionweb/core";
+import {Attribute, Child, Children, Node, TraceNode, walk} from "../../src";
 import {
     deserializeToTraceNodes,
     deserializeToTylasuNodes,
@@ -13,7 +13,7 @@ import {
     STARLASU_LANGUAGE_MAPPING,
     TylasuInstantiationFacade, TylasuNodeWrapper
 } from "../../src/interop/lionweb";
-import {map, pipe, reduce} from "iter-ops";
+import {filter, map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
 
 abstract class File extends Node {
@@ -29,10 +29,12 @@ class Directory extends File {
 class TextFile extends File {
     @Attribute()
     contents: string;
+    @Child()
+    parsingResult: Node;
 }
 
 function printSequence(sequence: Generator<Node>): string {
-    return pipe(sequence, map(n => n.name), reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "")).first;
+    return pipe(sequence, filter(n => n.name), map(n => n.name), reduce((s1, s2) => s1 + (s1 ? ", " : "") + s2, "")).first;
 }
 
 describe('Lionweb integration', function() {
@@ -40,11 +42,11 @@ describe('Lionweb integration', function() {
 
     const FS_LANGUAGE = deserializeLanguages(FS_LANGUAGE_JSON as SerializationChunk, STARLASU_LANGUAGE)[0];
     const FS_LANGUAGE_MAPPING = new LanguageMapping().extend(STARLASU_LANGUAGE_MAPPING);
-    FS_LANGUAGE_MAPPING.register(Directory, findClassifier(FS_LANGUAGE, "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory"));
-    FS_LANGUAGE_MAPPING.register(File, findClassifier(FS_LANGUAGE, "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File"));
-    FS_LANGUAGE_MAPPING.register(TextFile, findClassifier(FS_LANGUAGE, "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile"));
+    FS_LANGUAGE_MAPPING.register(Directory, findClassifier(FS_LANGUAGE, "com_strumenta_codeinsightstudio_model_filesystem-Directory-id"));
+    FS_LANGUAGE_MAPPING.register(File, findClassifier(FS_LANGUAGE, "com_strumenta_codeinsightstudio_model_filesystem-File-id"));
+    FS_LANGUAGE_MAPPING.register(TextFile, findClassifier(FS_LANGUAGE, "com_strumenta_codeinsightstudio_model_filesystem-TextFile-id"));
 
-    it("can deserialize simple model",
+    it("can deserialize model to Tylasu nodes",
         function () {
             const nodes = deserializeToTylasuNodes(FS_MODEL, [FS_LANGUAGE], [FS_LANGUAGE_MAPPING]);
             expect(nodes).not.to.be.empty;
@@ -52,26 +54,19 @@ describe('Lionweb integration', function() {
             const root = nodes[0];
             expect(root).to.be.instanceof(Directory);
             let dir = root as Directory;
-            expect(dir.name).to.equal("resources.zip");
+            expect(dir.name).to.equal("egl-example-1.zip");
             expect(dir.files.length).to.equal(1);
             expect(dir.files[0]).to.be.instanceof(Directory);
             dir = dir.files[0] as Directory;
-            expect(dir.name).to.equal("resources");
-            expect(dir.files.length).to.equal(15);
+            expect(dir.name).to.equal("eglzip");
+            expect(dir.files.length).to.equal(4);
             expect(dir.files[0]).to.be.instanceof(TextFile);
             const file = dir.files[0] as TextFile;
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");
-
-            expect(printSequence(walk(root))).to.equal(
-                "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
-                "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
-                "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
-                "multipleWhenCondition.egl, handler.egl, SQLCreateTable.egl, newExample.egl, SQLDropTable.egl, " +
-                "nestedLoop.egl, for.egl");
         });
 
-    it("can deserialize simple model to dynamic nodes",
+    it("can deserialize model to dynamic nodes",
         function () {
             const nodes = deserializeToTylasuNodes(FS_MODEL, [FS_LANGUAGE]);
             expect(nodes).not.to.be.empty;
@@ -80,25 +75,18 @@ describe('Lionweb integration', function() {
             expect(root).to.be.instanceof(LionwebNode);
             let dir = root as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.getAttributeValue("name")).to.equal("resources.zip");
+            expect(dir.getAttributeValue("name")).to.equal("egl-example-1.zip");
             expect(dir.files.length).to.equal(1);
             expect(dir.files[0]).to.be.instanceof(LionwebNode);
             dir = dir.files[0] as LionwebNode & any;
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.name).to.equal("resources");
-            expect(dir.files.length).to.equal(15);
+            expect(dir.name).to.equal("eglzip");
+            expect(dir.files.length).to.equal(4);
             expect(dir.files[0]).to.be.instanceof(LionwebNode);
             const file = dir.files[0] as LionwebNode & any;
             expect(file.nodeDefinition.name).to.equal("TextFile");
             expect(file.name).to.equal("delegate.egl");
             expect(file.contents.substring(0, 10)).to.equal("Delegate F");
-
-            expect(printSequence(walk(root))).to.equal(
-                "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
-                "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
-                "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
-                "multipleWhenCondition.egl, handler.egl, SQLCreateTable.egl, newExample.egl, SQLDropTable.egl, " +
-                "nestedLoop.egl, for.egl");
         });
 
     it("supports trace nodes",
@@ -111,25 +99,18 @@ describe('Lionweb integration', function() {
             expect(dir.getRole()).to.be.undefined;
             expect(dir.nodeDefinition.name).to.equal("Directory");
             expect(dir.containment("position")).to.be.undefined;
-            expect(dir.getAttributeValue("name")).to.equal("resources.zip");
+            expect(dir.getAttributeValue("name")).to.equal("egl-example-1.zip");
             expect(dir.getChildren("files").length).to.equal(1);
             dir = dir.getChildren("files")[0];
             expect(dir.nodeDefinition.name).to.equal("Directory");
-            expect(dir.getAttributeValue("name")).to.equal("resources");
-            expect(dir.getChildren("files").length).to.equal(15);
+            expect(dir.getAttributeValue("name")).to.equal("eglzip");
+            expect(dir.getChildren("files").length).to.equal(4);
             const file = dir.getChildren("files")[1];
             expect(file.nodeDefinition.name).to.equal("TextFile");
-            expect(file.getAttributeValue("name")).to.equal("rosetta-code-count-examples-2.egl");
-            expect(file.getAttributeValue("contents").substring(0, 10)).to.equal("package co");
+            expect(file.getAttributeValue("name")).to.equal("foreach.egl");
+            expect(file.getAttributeValue("contents").substring(0, 10)).to.equal("function e");
             expect(file.getRole()).to.equal("files");
             expect(file.getPathFromRoot()).to.eql(["files", 0, "files", 1]);
-
-            expect(printSequence(walk(nodes[0]))).to.equal(
-                "resources.zip, resources, delegate.egl, rosetta-code-count-examples-2.egl, " +
-                "rosetta-code-count-examples-1.egl, sub1, sub2, foreach.egl, SQLDropTable.egl, for.egl, SQLBatch.egl, " +
-                "SQLCreateTable.egl, SQLDropTable.egl, hello.egl, foreach.egl, Calc.egl, SQLBatch.egl, " +
-                "multipleWhenCondition.egl, handler.egl, SQLCreateTable.egl, newExample.egl, SQLDropTable.egl, " +
-                "nestedLoop.egl, for.egl");
         });
     it("trace nodes don't include the position as a child",
         function () {

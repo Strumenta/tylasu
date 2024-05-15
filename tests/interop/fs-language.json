@@ -12,7 +12,7 @@
   ],
   "nodes": [
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem",
+      "id": "language-com_strumenta_codeinsightstudio_model_filesystem-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -33,7 +33,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem"
+          "value": "language-com_strumenta_codeinsightstudio_model_filesystem-key"
         },
         {
           "property": {
@@ -52,20 +52,19 @@
             "key": "Language-entities"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Root",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute"
+            "com_strumenta_codeinsightstudio_model_filesystem-Tenant-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSUser-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-File-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-Directory-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-TextFile-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
           ]
         }
       ],
@@ -76,153 +75,14 @@
             "version": "2023.1",
             "key": "Language-dependsOn"
           },
-          "targets": [
-            {
-              "resolveInfo": "com.strumenta.StarLasu",
-              "reference": "com-strumenta-StarLasu"
-            }
-          ]
+          "targets": []
         }
       ],
       "annotations": [],
       "parent": null
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Root",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Root"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "Root"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Root_tenants"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": []
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Root_tenants",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Root_tenants"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "tenants"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Tenant",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Root"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -251,7 +111,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Tenant"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-key"
         },
         {
           "property": {
@@ -270,8 +130,9 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant_directories",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant_users"
+            "com_strumenta_codeinsightstudio_model_filesystem-Tenant-directories-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-Tenant-name-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-Tenant-users-id"
           ]
         }
       ],
@@ -290,19 +151,14 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": [
-            {
-              "resolveInfo": "INamed",
-              "reference": "LionCore-builtins-INamed"
-            }
-          ]
+          "targets": []
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant_directories",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-directories-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -331,7 +187,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Tenant_directories"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-directories-key"
         },
         {
           "property": {
@@ -353,16 +209,68 @@
           "targets": [
             {
               "resolveInfo": "Directory",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-Directory-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant_users",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-name-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-name-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "name"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "String",
+              "reference": "LionCore-builtins-String"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-users-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -391,7 +299,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Tenant_users"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-users-key"
         },
         {
           "property": {
@@ -413,16 +321,16 @@
           "targets": [
             {
               "resolveInfo": "FSUser",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Tenant"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-Tenant-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -451,7 +359,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Directory"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-key"
         },
         {
           "property": {
@@ -459,7 +367,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "Directory"
+          "value": "FSUser"
         }
       ],
       "containments": [
@@ -470,146 +378,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "File",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory_files",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_Directory_files"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "files"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "File",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_Directory"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_File"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "File"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File_path"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSUser-name-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSUser-password-id"
           ]
         }
       ],
@@ -628,19 +398,14 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": [
-            {
-              "resolveInfo": "INamed",
-              "reference": "LionCore-builtins-INamed"
-            }
-          ]
+          "targets": []
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File_path",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-name-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -661,7 +426,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_File_path"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-name-key"
         },
         {
           "property": {
@@ -669,7 +434,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "path"
+          "value": "name"
         }
       ],
       "containments": [],
@@ -689,89 +454,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSUser"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "FSUser"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser_password"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": []
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": [
-            {
-              "resolveInfo": "INamed",
-              "reference": "LionCore-builtins-INamed"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser_password",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-password-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -792,7 +478,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSUser_password"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-password-key"
         },
         {
           "property": {
@@ -820,10 +506,136 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSUser"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSUser-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-File-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-File-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "File"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "com_strumenta_codeinsightstudio_model_filesystem-File-name-id"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": []
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-File-name-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-File-name-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "name"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "String",
+              "reference": "LionCore-builtins-String"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-File-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Directory-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -852,7 +664,146 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Directory-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "Directory"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "com_strumenta_codeinsightstudio_model_filesystem-Directory-files-id"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "File",
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-File-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-Directory-files-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-Directory-files-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "files"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "File",
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-File-id"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-Directory-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-key"
         },
         {
           "property": {
@@ -871,8 +822,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile_parsingResult"
+            "com_strumenta_codeinsightstudio_model_filesystem-TextFile-contents-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-TextFile-parsingResult-id"
           ]
         }
       ],
@@ -886,7 +837,7 @@
           "targets": [
             {
               "resolveInfo": "File",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_File"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-File-id"
             }
           ]
         },
@@ -900,10 +851,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-contents-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -924,7 +875,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_contents"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-contents-key"
         },
         {
           "property": {
@@ -952,10 +903,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile_parsingResult",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-parsingResult-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -976,7 +927,7 @@
             "version": "2023.1",
             "key": "Feature-optional"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -984,7 +935,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_TextFile_parsingResult"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-parsingResult-key"
         },
         {
           "property": {
@@ -1006,16 +957,16 @@
           "targets": [
             {
               "resolveInfo": "FSParsingResult",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_TextFile"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-TextFile-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1044,7 +995,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-key"
         },
         {
           "property": {
@@ -1063,9 +1014,9 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_issues",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_root",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_statistics"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-ast-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-issues-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-statistics-id"
           ]
         }
       ],
@@ -1088,10 +1039,70 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_issues",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-ast-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-ast-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ast"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Node",
+              "reference": "LionCore-builtins-Node"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-issues-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1120,7 +1131,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_issues"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-issues-key"
         },
         {
           "property": {
@@ -1142,16 +1153,16 @@
           "targets": [
             {
               "resolveInfo": "FSIssue",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_root",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-statistics-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1172,70 +1183,15 @@
             "version": "2023.1",
             "key": "Feature-optional"
           },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_root"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "root"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_statistics",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
           "value": "false"
         },
         {
           "property": {
             "language": "LionCore-M3",
             "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult_statistics"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-statistics-key"
         },
         {
           "property": {
@@ -1257,16 +1213,16 @@
           "targets": [
             {
               "resolveInfo": "FSStatistics",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSParsingResult"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSParsingResult-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1295,7 +1251,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSIssue"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-key"
         },
         {
           "property": {
@@ -1314,9 +1270,9 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_fsPosition",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_message",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_severity"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-fsPosition-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-message-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-severity-id"
           ]
         }
       ],
@@ -1339,10 +1295,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_fsPosition",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-fsPosition-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1363,7 +1319,7 @@
             "version": "2023.1",
             "key": "Feature-optional"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -1371,7 +1327,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSIssue_fsPosition"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-fsPosition-key"
         },
         {
           "property": {
@@ -1393,16 +1349,16 @@
           "targets": [
             {
               "resolveInfo": "FSPosition",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_message",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-message-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1423,7 +1379,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSIssue_message"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-message-key"
         },
         {
           "property": {
@@ -1451,10 +1407,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue_severity",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-severity-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1475,7 +1431,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSIssue_severity"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-severity-key"
         },
         {
           "property": {
@@ -1503,10 +1459,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSIssue"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSIssue-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1535,345 +1491,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "FSPosition"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endColumn",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endLine",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_fsSource",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startColumn",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startLine"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": []
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endColumn",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endColumn"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "endColumn"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Integer",
-              "reference": "LionCore-builtins-Integer"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endLine",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition_endLine"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "endLine"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Integer",
-              "reference": "LionCore-builtins-Integer"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_fsSource",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition_fsSource"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "fsSource"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "String",
-              "reference": "LionCore-builtins-String"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startColumn",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startColumn"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "startColumn"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Integer",
-              "reference": "LionCore-builtins-Integer"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startLine",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSPosition_startLine"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "startLine"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Integer",
-              "reference": "LionCore-builtins-Integer"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatistics"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-key"
         },
         {
           "property": {
@@ -1892,7 +1510,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics_categories"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-categories-id"
           ]
         }
       ],
@@ -1915,10 +1533,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics_categories",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-categories-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -1947,7 +1565,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatistics_categories"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-categories-key"
         },
         {
           "property": {
@@ -1969,16 +1587,16 @@
           "targets": [
             {
               "resolveInfo": "FSStatisticsCategory",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatistics"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatistics-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2007,7 +1625,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-key"
         },
         {
           "property": {
@@ -2026,8 +1644,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_entries",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_name"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-entries-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-name-id"
           ]
         }
       ],
@@ -2050,10 +1668,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_entries",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-entries-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2082,7 +1700,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_entries"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-entries-key"
         },
         {
           "property": {
@@ -2104,16 +1722,16 @@
           "targets": [
             {
               "resolveInfo": "FSStatisticEntry",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_name",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-name-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2134,7 +1752,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory_name"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-name-key"
         },
         {
           "property": {
@@ -2162,10 +1780,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticsCategory"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticsCategory-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2194,7 +1812,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-key"
         },
         {
           "property": {
@@ -2213,8 +1831,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_instances",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_name"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-instances-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-name-id"
           ]
         }
       ],
@@ -2237,10 +1855,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_instances",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-instances-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2269,7 +1887,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_instances"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-instances-key"
         },
         {
           "property": {
@@ -2291,16 +1909,16 @@
           "targets": [
             {
               "resolveInfo": "FSStatisticInstance",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_name",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-name-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2321,7 +1939,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry_name"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-name-key"
         },
         {
           "property": {
@@ -2349,10 +1967,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticEntry"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticEntry-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2381,7 +1999,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-key"
         },
         {
           "property": {
@@ -2400,8 +2018,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_attributes",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_fsPosition"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-attributes-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-fsPosition-id"
           ]
         }
       ],
@@ -2424,10 +2042,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_attributes",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-attributes-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2456,7 +2074,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_attributes"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-attributes-key"
         },
         {
           "property": {
@@ -2478,16 +2096,16 @@
           "targets": [
             {
               "resolveInfo": "FSAttribute",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_fsPosition",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-fsPosition-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2508,7 +2126,7 @@
             "version": "2023.1",
             "key": "Feature-optional"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -2516,7 +2134,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance_fsPosition"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-fsPosition-key"
         },
         {
           "property": {
@@ -2538,16 +2156,16 @@
           "targets": [
             {
               "resolveInfo": "FSPosition",
-              "reference": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSPosition"
+              "reference": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSStatisticInstance"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSStatisticInstance-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2576,7 +2194,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSAttribute"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-key"
         },
         {
           "property": {
@@ -2595,8 +2213,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_name",
-            "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_value"
+            "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-name-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-value-id"
           ]
         }
       ],
@@ -2619,10 +2237,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem"
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_name",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-name-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2643,7 +2261,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_name"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-name-key"
         },
         {
           "property": {
@@ -2671,10 +2289,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-id"
     },
     {
-      "id": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_value",
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-value-id",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -2695,7 +2313,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-codeinsightstudio-model-filesystem_FSAttribute_value"
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-value-key"
         },
         {
           "property": {
@@ -2723,7 +2341,345 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-codeinsightstudio-model-filesystem_FSAttribute"
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSAttribute-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "FSPosition"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endColumn-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endLine-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-fsSource-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startColumn-id",
+            "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startLine-id"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": []
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "language-com_strumenta_codeinsightstudio_model_filesystem-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endColumn-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endColumn-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "endColumn"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Integer",
+              "reference": "LionCore-builtins-Integer"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endLine-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-endLine-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "endLine"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Integer",
+              "reference": "LionCore-builtins-Integer"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-fsSource-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-fsSource-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "fsSource"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "String",
+              "reference": "LionCore-builtins-String"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startColumn-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startColumn-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "startColumn"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Integer",
+              "reference": "LionCore-builtins-Integer"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
+    },
+    {
+      "id": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startLine-id",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-startLine-key"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "startLine"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Integer",
+              "reference": "LionCore-builtins-Integer"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "com_strumenta_codeinsightstudio_model_filesystem-FSPosition-id"
     }
   ]
 }

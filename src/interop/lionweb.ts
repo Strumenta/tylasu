@@ -14,7 +14,18 @@ import {
     Node as LWNodeInterface,
     SerializationChunk
 } from "@lionweb/core";
-import {NodeAdapter, Issue, Node, NodeDefinition, Position, Feature, Point, pos, TraceNode} from "..";
+import {
+    NodeAdapter,
+    Issue,
+    Node,
+    NodeDefinition,
+    Position,
+    Feature,
+    Point,
+    pos,
+    TraceNode,
+    getNodeDefinition
+} from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
@@ -64,6 +75,9 @@ export class LanguageMapping {
     readonly classifiers = new Map<Classifier, any>();
 
     register(nodeType: any, classifier: Classifier) {
+        if (!classifier) {
+            throw new Error(`Can't register ${getNodeDefinition(nodeType)?.name}: not a classifier: ${classifier}`);
+        }
         this.nodeTypes.set(nodeType, classifier);
         this.classifiers.set(classifier, nodeType);
     }
@@ -190,8 +204,8 @@ export function findClassifier(language: Language, id: string) {
     return language.entities.find(e => e.id == id) as Classifier;
 }
 
-export const AST_NODE_CLASSIFIER = findClassifier(STARLASU_LANGUAGE, "com_strumenta_starlasu_ASTNode");
-STARLASU_LANGUAGE_MAPPING.register(Node, AST_NODE_CLASSIFIER)
+export const AST_NODE_CLASSIFIER = findClassifier(STARLASU_LANGUAGE, "com-strumenta-StarLasu-ASTNode-id");
+STARLASU_LANGUAGE_MAPPING.register(Node, AST_NODE_CLASSIFIER);
 
 function allFeatures(classifier: Classifier) {
     const features = [...classifier.features];
