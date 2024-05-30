@@ -79,25 +79,9 @@ export const STARLASU_LANGUAGE = deserializeLanguages({
             "classifier": {
                 "language": "LionCore-M3",
                 "version": "2023.1",
-                "key": "Concept"
+                "key": "PrimitiveType"
             },
             "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-abstract"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-partition"
-                    },
-                    "value": "false"
-                },
                 {
                     "property": {
                         "language": "LionCore-M3",
@@ -115,168 +99,19 @@ export const STARLASU_LANGUAGE = deserializeLanguages({
                     "value": "Point"
                 }
             ],
-            "containments": [
-                {
-                    "containment": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Classifier-features"
-                    },
-                    "children": [
-                        "com-strumenta-StarLasu-Point-line-id",
-                        "com-strumenta-StarLasu-Point-column-id"
-                    ]
-                }
-            ],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-extends"
-                    },
-                    "targets": []
-                },
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-implements"
-                    },
-                    "targets": []
-                }
-            ],
+            "containments": [],
+            "references": [],
             "annotations": [],
             "parent": "com-strumenta-StarLasu"
-        },
-        {
-            "id": "com-strumenta-StarLasu-Point-line-id",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Property"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Feature-optional"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu-Point-line-key"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "line"
-                }
-            ],
-            "containments": [],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Property-type"
-                    },
-                    "targets": [
-                        {
-                            "resolveInfo": "Integer",
-                            "reference": "LionCore-builtins-Integer"
-                        }
-                    ]
-                }
-            ],
-            "annotations": [],
-            "parent": "com-strumenta-StarLasu-Point-id"
-        },
-        {
-            "id": "com-strumenta-StarLasu-Point-column-id",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Property"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Feature-optional"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu-Point-column-key"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "column"
-                }
-            ],
-            "containments": [],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Property-type"
-                    },
-                    "targets": [
-                        {
-                            "resolveInfo": "Integer",
-                            "reference": "LionCore-builtins-Integer"
-                        }
-                    ]
-                }
-            ],
-            "annotations": [],
-            "parent": "com-strumenta-StarLasu-Point-id"
         },
         {
             "id": "com-strumenta-StarLasu-Position-id",
             "classifier": {
                 "language": "LionCore-M3",
                 "version": "2023.1",
-                "key": "Concept"
+                "key": "PrimitiveType"
             },
             "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-abstract"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-partition"
-                    },
-                    "value": "false"
-                },
                 {
                     "property": {
                         "language": "LionCore-M3",
@@ -294,159 +129,10 @@ export const STARLASU_LANGUAGE = deserializeLanguages({
                     "value": "Position"
                 }
             ],
-            "containments": [
-                {
-                    "containment": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Classifier-features"
-                    },
-                    "children": [
-                        "com-strumenta-StarLasu-Position-start-id",
-                        "com-strumenta-StarLasu-Position-end-id"
-                    ]
-                }
-            ],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-extends"
-                    },
-                    "targets": []
-                },
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Concept-implements"
-                    },
-                    "targets": []
-                }
-            ],
+            "containments": [],
+            "references": [],
             "annotations": [],
             "parent": "com-strumenta-StarLasu"
-        },
-        {
-            "id": "com-strumenta-StarLasu-Position-start-id",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Containment"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Link-multiple"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Feature-optional"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu-Position-start-key"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "start"
-                }
-            ],
-            "containments": [],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Link-type"
-                    },
-                    "targets": [
-                        {
-                            "resolveInfo": "Point",
-                            "reference": "com-strumenta-StarLasu-Point-id"
-                        }
-                    ]
-                }
-            ],
-            "annotations": [],
-            "parent": "com-strumenta-StarLasu-Position-id"
-        },
-        {
-            "id": "com-strumenta-StarLasu-Position-end-id",
-            "classifier": {
-                "language": "LionCore-M3",
-                "version": "2023.1",
-                "key": "Containment"
-            },
-            "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Link-multiple"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Feature-optional"
-                    },
-                    "value": "false"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "IKeyed-key"
-                    },
-                    "value": "com_strumenta_starlasu-Position-end-key"
-                },
-                {
-                    "property": {
-                        "language": "LionCore-builtins",
-                        "version": "2023.1",
-                        "key": "LionCore-builtins-INamed-name"
-                    },
-                    "value": "end"
-                }
-            ],
-            "containments": [],
-            "references": [
-                {
-                    "reference": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Link-type"
-                    },
-                    "targets": [
-                        {
-                            "resolveInfo": "Point",
-                            "reference": "com-strumenta-StarLasu-Point-id"
-                        }
-                    ]
-                }
-            ],
-            "annotations": [],
-            "parent": "com-strumenta-StarLasu-Position-id"
         },
         {
             "id": "com-strumenta-StarLasu-ASTNode-id",
@@ -527,17 +213,9 @@ export const STARLASU_LANGUAGE = deserializeLanguages({
             "classifier": {
                 "language": "LionCore-M3",
                 "version": "2023.1",
-                "key": "Containment"
+                "key": "Property"
             },
             "properties": [
-                {
-                    "property": {
-                        "language": "LionCore-M3",
-                        "version": "2023.1",
-                        "key": "Link-multiple"
-                    },
-                    "value": "false"
-                },
                 {
                     "property": {
                         "language": "LionCore-M3",
@@ -569,7 +247,7 @@ export const STARLASU_LANGUAGE = deserializeLanguages({
                     "reference": {
                         "language": "LionCore-M3",
                         "version": "2023.1",
-                        "key": "Link-type"
+                        "key": "Property-type"
                     },
                     "targets": [
                         {

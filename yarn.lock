@@ -613,10 +613,19 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lionweb/core@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.4.tgz#2a2ae32c9e3de748ae30192defeddf80214630a9"
-  integrity sha512-hCPky0F5XCvzUKUpaKJaCU6ZmaunV1NgkfR57dRoqzkHPSkGKrYQHJyMBbGv6T+YfCAdd+sSbHGpZexxY0GnFg==
+"@lionweb/core@0.6.5", "@lionweb/core@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.5.tgz#744c47236758695ec1204ff8a17b4ac97089f967"
+  integrity sha512-oKdRh2Sv+4V4OOULohCbv944vyDmXU4eYduW9XOaJDUMe8FK16/WMOmdcMQUcmt2uWqfrD+6SxZ/mxXDDNIDaA==
+
+"@lionweb/utilities@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@lionweb/utilities/-/utilities-0.6.5.tgz#8723b0b4e3525ed14ade931fee5d1aba284e3f43"
+  integrity sha512-AZjRQ2T0gmzP2MwbUxvH/AOJnnIaSgAye0XT73cafvwEhZpwnPOpHIWVUd+qAv0QNoieBw9q2dFDM82rVlN0Bw==
+  dependencies:
+    "@lionweb/core" "0.6.5"
+    littoral-templates "0.2.2"
+    nanoid "4.0.2"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -2365,6 +2374,11 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
+littoral-templates@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/littoral-templates/-/littoral-templates-0.2.2.tgz#84f46285ad9868fc560aad765c1315bd65188f38"
+  integrity sha512-zap1WAedVwSaQh8Ak1al3BBByvR1XmZ5QSQrpVq5XKvMw113ng36SlYX3KRRChaccDCbLM5BugDu7DNaUuBgtg==
+
 locate-path@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-5.0.0.tgz#1afba396afd676a6d42504d0a67a3a7eb9f62aa0"
@@ -2487,6 +2501,11 @@ ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+
+nanoid@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-4.0.2.tgz#140b3c5003959adbebf521c170f282c5e7f9fb9e"
+  integrity sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"

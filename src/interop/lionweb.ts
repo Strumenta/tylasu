@@ -5,7 +5,7 @@
 import {
     Classifier,
     Concept,
-    Containment, deserializeChunk,
+    Containment, Datatype, DefaultPrimitiveTypeDeserializer, deserializeSerializationChunk,
     Feature as LWFeature,
     Id,
     InstantiationFacade,
@@ -22,7 +22,6 @@ import {
     Position,
     Feature,
     Point,
-    pos,
     TraceNode,
     getNodeDefinition
 } from "..";
@@ -32,11 +31,7 @@ export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as Concept;
 export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Containment;
 export const PositionClassifier = PositionFeature.type!;
-export const PositionStartFeature = PositionClassifier.features.find(f => f.name == "start")! as Containment;
-export const PositionEndFeature = PositionClassifier.features.find(f => f.name == "end")! as Containment;
-export const PointClassifier = PositionStartFeature.type!;
-export const PointLineFeature = PointClassifier.features.find(f => f.name == "line")! as Containment;
-export const PointColumnFeature = PointClassifier.features.find(f => f.name == "column")! as Containment;
+export const PointClassifier = STARLASU_LANGUAGE.entities.find(e => e.name == "Point")! as Datatype;
 
 export class TylasuWrapper implements LWNodeInterface {
     constructor(
@@ -50,23 +45,6 @@ export class TylasuNodeWrapper extends TylasuWrapper {
     constructor(public readonly node: Node, id: Id, parent: LWNodeInterface | undefined, annotations: LWNodeInterface[]) {
         super(id, parent, annotations);
         node.withParent((parent instanceof TylasuNodeWrapper) ? parent.node : undefined)
-    }
-}
-
-export class TylasuPointWrapper extends TylasuWrapper {
-
-    point = new Point(1, 0);
-    constructor(id: Id, parent?: LWNodeInterface) {
-        super(id, parent, []);
-    }
-}
-
-export class TylasuPositionWrapper extends TylasuWrapper {
-
-    position = pos(1, 0, 1, 0);
-
-    constructor(id: Id, parent?: LWNodeInterface) {
-        super(id, parent, []);
     }
 }
 
@@ -135,13 +113,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
         return undefined;
     }
     nodeFor(parent: TylasuWrapper | undefined, classifier: Classifier, id: string): TylasuWrapper {
-        if (classifier.key == PositionClassifier.key) {
-            return new TylasuPositionWrapper(id, parent);
-        } else if (classifier.key == PointClassifier.key) {
-            return new TylasuPointWrapper(id, parent);
-        } else {
-            return this.instantiateNode(classifier, id, parent);
-        }
+        return this.instantiateNode(classifier, id, parent);
     }
 
     private instantiateNode(classifier: Classifier, id: string, parent: TylasuWrapper | undefined | TylasuNodeWrapper) {
@@ -170,27 +142,13 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
     setFeatureValue(node: TylasuWrapper, feature: LWFeature, value: unknown): void {
         if (node instanceof TylasuNodeWrapper) {
             if (feature instanceof Containment) {
-                if (feature.key == PositionFeature.key) {
-                    node.node.position = (value as TylasuPositionWrapper)?.position;
-                } else if (feature.multiple) {
+                if (feature.multiple) {
                     node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
                 } else {
                     node.node.setChild(feature.name, (value as TylasuNodeWrapper)?.node);
                 }
             } else {
                 node.node.setAttributeValue(feature.name, value);
-            }
-        } else if (node instanceof TylasuPositionWrapper) {
-            if (feature.key == PositionStartFeature.key) {
-                node.position = new Position((value as TylasuPointWrapper).point, node.position.end);
-            } else if (feature.key == PositionEndFeature.key) {
-                node.position = new Position(node.position.start, (value as TylasuPointWrapper).point);
-            }
-        }  else if (node instanceof TylasuPointWrapper) {
-            if (feature.key == PointLineFeature.key) {
-                node.point = new Point(value as number, node.point.column);
-            } else if (feature.key == PositionEndFeature.key) {
-                node.point = new Point(node.point.line, value as number);
             }
         } else {
             throw new Error("Unsupported node: " + node);
@@ -299,14 +257,27 @@ export class LionwebNode extends NodeAdapter {
     }
 }
 
+function deserializePoint(value: string) {
+    const parts = value.split(":");
+    return new Point(Number(parts[0].substring(1)), Number(parts[1]));
+}
+
 export function deserializeToTylasuNodes(
     chunk: SerializationChunk,
     languages: Language[],
     languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING],
     dependentNodes: LWNodeInterface[] = []
 ): Node[] {
-    return deserializeChunk(
-        chunk, new TylasuInstantiationFacade(languageMappings), [STARLASU_LANGUAGE, ...languages], dependentNodes
+    const primitiveTypeDeserializer = new DefaultPrimitiveTypeDeserializer();
+    primitiveTypeDeserializer.registerDeserializer(PointClassifier, deserializePoint);
+    primitiveTypeDeserializer.registerDeserializer(PositionClassifier, (value) => {
+        const parts = value.split("to");
+        return new Position(deserializePoint(parts[0].trim()), deserializePoint(parts[1].trim()));
+    });
+
+    return deserializeSerializationChunk(
+        chunk, new TylasuInstantiationFacade(languageMappings), [STARLASU_LANGUAGE, ...languages],
+        dependentNodes, primitiveTypeDeserializer
     )
         .filter(n => n instanceof TylasuNodeWrapper)
         .map(n => (n as TylasuNodeWrapper).node);

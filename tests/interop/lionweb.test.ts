@@ -112,7 +112,7 @@ describe('Lionweb integration', function() {
             expect(file.getRole()).to.equal("files");
             expect(file.getPathFromRoot()).to.eql(["files", 0, "files", 1]);
         });
-    it("trace nodes don't include the position as a child",
+    it("trace nodes with position as an attribute",
         function () {
             const nodes = deserializeToTraceNodes(EGL_MODEL, [EGL_LANGUAGE]);
             expect(nodes).not.to.be.empty;
@@ -123,6 +123,10 @@ describe('Lionweb integration', function() {
             expect(dir.nodeDefinition.name).to.equal("EglCompilationUnit");
             expect(dir.containment("position")).to.be.undefined;
             expect(dir.position).not.to.be.undefined;
+            expect(dir.position?.start.line).to.equal(1);
+            expect(dir.position?.start.column).to.equal(0);
+            expect(dir.position?.end.line).to.equal(17);
+            expect(dir.position?.end.column).to.equal(3);
             expect(dir.children.length).to.equal(0);
         });
 });
