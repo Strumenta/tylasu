@@ -1,17 +1,17 @@
 import EGL_LANGUAGE_JSON from "./egl-language.json";
 import EGL_MODEL from "./egl-model.json";
+import COMPLEX_EGL_MODEL from "./egl-model-2.json";
 import FS_LANGUAGE_JSON from "./fs-language.json";
 import FS_MODEL from "./fs-model.json";
 import {expect} from "chai";
 import {deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Attribute, Child, Children, Node, TraceNode, walk} from "../../src";
+import {Attribute, Child, Children, Node} from "../../src";
 import {
     deserializeToTraceNodes,
     deserializeToTylasuNodes,
     findClassifier,
     LanguageMapping, LionwebNode,
-    STARLASU_LANGUAGE_MAPPING,
-    TylasuInstantiationFacade, TylasuNodeWrapper
+    STARLASU_LANGUAGE_MAPPING
 } from "../../src/interop/lionweb";
 import {filter, map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
@@ -117,16 +117,45 @@ describe('Lionweb integration', function() {
             const nodes = deserializeToTraceNodes(EGL_MODEL, [EGL_LANGUAGE]);
             expect(nodes).not.to.be.empty;
             expect(nodes.length).to.equal(1);
-            const dir = nodes[0];
-            expect(dir.nodeDefinition).not.to.be.undefined;
-            expect(dir.getRole()).to.be.undefined;
-            expect(dir.nodeDefinition.name).to.equal("EglCompilationUnit");
-            expect(dir.containment("position")).to.be.undefined;
-            expect(dir.position).not.to.be.undefined;
-            expect(dir.position?.start.line).to.equal(1);
-            expect(dir.position?.start.column).to.equal(0);
-            expect(dir.position?.end.line).to.equal(17);
-            expect(dir.position?.end.column).to.equal(3);
-            expect(dir.children.length).to.equal(0);
+            const root = nodes[0];
+            expect(root.nodeDefinition).not.to.be.undefined;
+            expect(root.getRole()).to.be.undefined;
+            expect(root.nodeDefinition.name).to.equal("EglCompilationUnit");
+            expect(root.containment("position")).to.be.undefined;
+            expect(root.position).not.to.be.undefined;
+            expect(root.position?.start.line).to.equal(1);
+            expect(root.position?.start.column).to.equal(0);
+            expect(root.position?.end.line).to.equal(17);
+            expect(root.position?.end.column).to.equal(3);
+            expect(root.children.length).to.equal(0);
+        });
+    it("Complex trace nodes",
+        function () {
+            const nodes = deserializeToTraceNodes(COMPLEX_EGL_MODEL as any, [EGL_LANGUAGE]);
+            expect(nodes).not.to.be.empty;
+            expect(nodes.length).to.equal(1);
+            const root = nodes[0];
+            expect(root.nodeDefinition).not.to.be.undefined;
+            expect(root.getRole()).to.be.undefined;
+            expect(root.nodeDefinition.name).to.equal("EglCompilationUnit");
+            expect(root.containment("position")).to.be.undefined;
+            expect(root.position).not.to.be.undefined;
+            expect(root.position?.start.line).to.equal(1);
+            expect(root.position?.start.column).to.equal(0);
+            expect(root.position?.end.line).to.equal(19);
+            expect(root.position?.end.column).to.equal(3);
+            expect(root.children.length).to.equal(2);
+            let child = root.getChildren()[0];
+            expect(child.position).not.to.be.undefined;
+            expect(child.position?.start.line).to.equal(1);
+            expect(child.position?.start.column).to.equal(0);
+            expect(child.position?.end.line).to.equal(3);
+            expect(child.position?.end.column).to.equal(3);
+            child = root.getChildren()[1];
+            expect(child.position).not.to.be.undefined;
+            expect(child.position?.start.line).to.equal(5);
+            expect(child.position?.start.column).to.equal(0);
+            expect(child.position?.end.line).to.equal(19);
+            expect(child.position?.end.column).to.equal(3);
         });
 });

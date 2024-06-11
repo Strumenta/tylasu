@@ -1,0 +1,1463 @@
+{
+  "serializationFormatVersion": "2023.1",
+  "languages": [
+    {
+      "key": "com-strumenta-egl",
+      "version": "1"
+    },
+    {
+      "key": "com_strumenta_starlasu",
+      "version": "1"
+    },
+    {
+      "key": "LionCore-builtins",
+      "version": "2023.1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglCompilationUnit"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L1:0 to L19:3"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_comments"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglDataItems"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglDataTables"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglDelegates"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglEnumerations"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglExternalTypes"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglFormGroups"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglFunctions"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglHandlers"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglImports"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglInterfaces"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglLibraries"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglPackage"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglProgram"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglRecords"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglCompilationUnit_eglServices"
+          },
+          "children": []
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_Delegate"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L1:0 to L3:3"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "FunctionInvoker"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_parameters"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_returnType"
+          },
+          "children": []
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_Parameter"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_inOut"
+          },
+          "value": "ParamModifier-INOUT"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_isConst"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_isField"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L2:3 to L2:20"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "displayStr"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_type"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters_type"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters_type",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglBaseType"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_nullable"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L2:14 to L2:20"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_args"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_name"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters_type_name"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters_type_name",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceTypeExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L2:14 to L2:20"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceTypeExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "STRING",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglDelegates_parameters_type"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglProgram"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_private"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L5:0 to L19:3"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "greetings"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_functions"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions",
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_initializations"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_parameters"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_records"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_stereotype"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_stereotype"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_uses"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglProgram_variables"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglFunction"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_private"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L9:2 to L14:5"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "main"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_initializations"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_statements"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements",
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_parameters"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_returnType"
+          },
+          "children": []
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_Assignment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Assignment_assignmentType"
+          },
+          "value": "AssignmentOp-ASSIGNMENT"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L11:4 to L11:28"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Assignment_target"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_target"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Assignment_value"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_value"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_target",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L11:4 to L11:11"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "invoker",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_value",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L11:14 to L11:27"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "writeToScreen",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ExpressionStatement"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L13:4 to L13:27"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ExpressionStatement_expression"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_FunctionCall"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L13:4 to L13:27"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionCall_args"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression_args"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionCall_name"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression_name"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression_args",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_StringLiteral"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_StringLiteral_text"
+          },
+          "value": "Hello world"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L13:12 to L13:25"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression_name",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceFunctionExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L13:4 to L13:11"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceFunctionExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "invoker",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_statements_1_expression"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglFunction"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_private"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L16:2 to L18:5"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "writeToScreen"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_initializations"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglFunction_statements"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_parameters"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionModel_returnType"
+          },
+          "children": []
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ExpressionStatement"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:4 to L17:31"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ExpressionStatement_expression"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_FunctionCall"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:4 to L17:31"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionCall_args"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_args"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_FunctionCall_name"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_args",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:24 to L17:29"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "myMsg",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_MemberAccessExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:4 to L17:22"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_MemberAccessExpr_container"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name_container"
+          ]
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_MemberAccessExpr_member"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name_member"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name_container",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:4 to L17:10"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "sysLib",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name_member",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceFunctionExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L17:11 to L17:22"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceFunctionExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "WriteStdOut",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_statements_expression_name"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_Parameter"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_inOut"
+          },
+          "value": "ParamModifier-INOUT"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_isConst"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_isField"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L16:25 to L16:37"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "myMsg"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_Parameter_type"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters_type"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters_type",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglBaseType"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_nullable"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L16:31 to L16:37"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_args"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_name"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters_type_name"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters_type_name",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceTypeExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L16:31 to L16:37"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceTypeExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "STRING",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_functions_1_parameters_type"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_stereotype",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_BasicProgram"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ProgramType_name"
+          },
+          "value": "BasicProgram"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L5:8 to L5:17"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ProgramType_params"
+          },
+          "children": []
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglVariable"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglVariable_private"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglVariable_static"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_PossiblyNamed_name"
+          },
+          "value": "invoker"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L7:0 to L7:23"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglVariable_initializations"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglVariable_initializedValue"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglVariable_type"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables_type"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables_type",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_EglBaseType"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_nullable"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L7:8 to L7:23"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_args"
+          },
+          "children": []
+        },
+        {
+          "containment": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_EglBaseType_name"
+          },
+          "children": [
+            "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables_type_name"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables"
+    },
+    {
+      "id": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables_type_name",
+      "classifier": {
+        "language": "com-strumenta-egl",
+        "version": "1",
+        "key": "com-strumenta-egl_ReferenceTypeExpr"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "com_strumenta_starlasu",
+            "version": "1",
+            "key": "com_strumenta_starlasu-ASTNode-position-key"
+          },
+          "value": "L7:8 to L7:23"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "com-strumenta-egl",
+            "version": "1",
+            "key": "com-strumenta-egl_ReferenceTypeExpr_name"
+          },
+          "targets": [
+            {
+              "resolveInfo": "FunctionInvoker",
+              "reference": null
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "synthetic_pr_for_parsing_result_for_tenant-strumenta___egl-example-1_zip___eglzip___delegate_egl_eglProgram_variables_type"
+    }
+  ]
+}
