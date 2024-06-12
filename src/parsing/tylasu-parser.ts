@@ -67,6 +67,10 @@ export class ANTLRTokenFactory extends TokenFactory<TylasuANTLRToken> {
     }
 }
 
+export const SYNTAX_ERROR = "parser.syntaxError";
+export const INPUT_NOT_FULLY_CONSUMED = "parser.inputNotFullyConsumed";
+export const ERROR_NODE_FOUND = "parser.errorNodeFound";
+
 export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuLexer<T> {
 
     constructor(public readonly tokenFactory: TokenFactory<T>) {}
@@ -99,7 +103,8 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
 
         if (t && (t.type != Token.EOF)) {
             const message = "The lexer didn't consume the entire input";
-            issues.push(Issue.syntactic(message, IssueSeverity.WARNING, Position.ofTokenEnd(t)))
+            issues.push(Issue.lexical(message, IssueSeverity.WARNING, Position.ofTokenEnd(t), undefined,
+                INPUT_NOT_FULLY_CONSUMED))
         }
 
         const code = inputStream.getTextFromRange(0, inputStream.size - 1);
@@ -117,7 +122,9 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
                     Issue.lexical(
                         msg || "unspecified",
                         IssueSeverity.ERROR,
-                        Position.ofPoint(new Point(line, charPositionInLine))));
+                        Position.ofPoint(new Point(line, charPositionInLine)),
+                        undefined,
+                        SYNTAX_ERROR));
             }
         });
     }
@@ -177,15 +184,23 @@ export abstract class TylasuParser<
                 Issue.syntactic(
                     "The whole input was not consumed",
                     IssueSeverity.ERROR,
-                    Position.ofTokenEnd(lastToken)));
+                    Position.ofTokenEnd(lastToken),
+                    undefined,
+                    INPUT_NOT_FULLY_CONSUMED));
         }
 
         processDescendantsAndErrors(
             root,
             () => {},
             it => {
-                const message = `Error node found (token: ${it.symbol?.text})`;
-                issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it)));
+                const message = `Error node found (token: ${it.symbol?.type} – ${it.symbol?.text})`;
+                issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it),
+                    undefined,
+                    ERROR_NODE_FOUND,
+                    [
+                        { name: "type", value: it.symbol?.type?.toString() || "" },
+                        { name: "text", value: it.symbol?.text || "" },
+                    ]));
             });
     }
 
@@ -270,7 +285,9 @@ export abstract class TylasuParser<
                     Issue.syntactic(
                         msg || "unspecified",
                         IssueSeverity.ERROR,
-                        Position.ofPoint(new Point(line, charPositionInLine))));
+                        Position.ofPoint(new Point(line, charPositionInLine)),
+                        undefined,
+                        SYNTAX_ERROR));
             }
         });
     }

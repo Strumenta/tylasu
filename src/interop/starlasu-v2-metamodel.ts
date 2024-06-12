@@ -243,6 +243,22 @@ THE_ISSUE_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
     eType: THE_POSITION_ECLASS,
     containment: true
 }));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(ECore.EReference.create({
+    name: "node",
+    eType: THE_NODE_ECLASS,
+    containment: false
+}));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(ECore.EAttribute.create({
+    name: "code",
+    eType: ECore.EString,
+    lowerBound: 1
+}));
+THE_ISSUE_ECLASS.get("eStructuralFeatures").add(ECore.EAttribute.create({
+    name: "args",
+    eType: ECore.EString,
+    lowerBound: 0,
+    upperBound: -1
+}));
 
 export const THE_RESULT_ECLASS = ECore.EClass.create({
     name: "Result"

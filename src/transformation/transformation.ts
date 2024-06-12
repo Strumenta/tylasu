@@ -188,6 +188,8 @@ export class ChildNodeFactory<Source, Target, Child> {
  */
 const NO_CHILD_NODE = new ChildNodeFactory<any, any, any>("", (node) => node);
 
+export const SOURCE_NODE_NOT_MAPPED = "ast.transform.sourceNotMapped";
+
 /**
  * Implementation of a tree-to-tree transformation. For each source node type, we can register a factory that knows how
  * to create a transformed node. Then, this transformer can read metadata in the transformed node to recursively
@@ -264,15 +266,18 @@ export class ASTTransformer {
             if (this.allowGenericNode) {
                 const origin : Origin | undefined = this.asOrigin(source);
                 nodes = [new GenericNode(parent).withOrigin(origin)];
+                const nodeType = getNodeDefinition(source)?.name || source?.constructor.name || "–";
                 this.issues.push(
                     Issue.semantic(
-                        `Source node not mapped: ${getNodeDefinition(source)?.name}`,
+                        `Source node not mapped: ${nodeType}`,
                         IssueSeverity.INFO,
-                        origin?.position
+                        origin?.position,
+                        origin instanceof Node ? origin : undefined,
+                        SOURCE_NODE_NOT_MAPPED,
+                        [{ name: "nodeType", value: nodeType }]
                     )
                 );
-            }
-            else {
+            } else {
                 throw new Error(`Unable to translate node ${source} (class ${getNodeDefinition(source)?.name})`)
             }
         }

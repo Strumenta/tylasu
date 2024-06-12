@@ -23,7 +23,8 @@
         "eClass": "https://strumenta.com/starlasu/v2#//Issue",
         "type": "SEMANTIC",
         "message": "Something's wrong",
-        "severity": "ERROR"
+        "severity": "ERROR",
+        "args": []
       }
     ]
   },
