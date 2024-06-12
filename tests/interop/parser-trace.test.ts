@@ -32,6 +32,9 @@ describe('Parser traces – Kolasu metamodel V1', function() {
             expect(trace.issues[0].message).to.eql("Physical line of type FileDescription are currently ignored");
             expect(trace.issues[0].severity).to.eql(IssueSeverity.WARNING);
             expect(trace.issues[0].position).to.eql(new Position(new Point(18, 0), new Point(18, 42)));
+            expect(trace.issues[0].node).to.be.undefined;
+            expect(trace.issues[0].code).to.be.undefined;
+            expect(trace.issues[0].args).to.be.eql([]);
 
             const updateStmt = trace.rootNode.findByPosition(pos(258, 30, 258, 30));
             expect(updateStmt).not.to.be.undefined;
