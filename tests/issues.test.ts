@@ -26,7 +26,8 @@ describe('Issues', function() {
             });
             let issue = Issue.syntactic("Unexpected token: foo", IssueSeverity.ERROR, undefined, undefined, SYNTAX_ERROR);
             expect(i18next.t(issue.code!)).to.equal("A syntax error occurred!");
-            issue = Issue.syntactic("Unexpected token: foo", IssueSeverity.ERROR, undefined, undefined, SOURCE_NODE_NOT_MAPPED, ["SomeNode"]);
-            expect(i18next.t(issue.code!, { type: issue.args[0] })).to.equal("Source node not mapped: SomeNode");
+            issue = Issue.semantic("Node not mapped: SomeNode", IssueSeverity.ERROR, undefined, undefined,
+                SOURCE_NODE_NOT_MAPPED,  { nodeType: "SomeNode" });
+            expect(i18next.t(issue.code!, { type: issue.args.nodeType })).to.equal("Source node not mapped: SomeNode");
         });
 });

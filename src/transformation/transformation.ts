@@ -266,15 +266,15 @@ export class ASTTransformer {
             if (this.allowGenericNode) {
                 const origin : Origin | undefined = this.asOrigin(source);
                 nodes = [new GenericNode(parent).withOrigin(origin)];
-                const nodeName = getNodeDefinition(source)?.name || source?.constructor.name || "–";
+                const nodeType = getNodeDefinition(source)?.name || source?.constructor.name || "–";
                 this.issues.push(
                     Issue.semantic(
-                        `Source node not mapped: ${nodeName}`,
+                        `Source node not mapped: ${nodeType}`,
                         IssueSeverity.INFO,
                         origin?.position,
                         origin instanceof Node ? origin : undefined,
                         SOURCE_NODE_NOT_MAPPED,
-                        [nodeName]
+                        { nodeType }
                     )
                 );
             } else {

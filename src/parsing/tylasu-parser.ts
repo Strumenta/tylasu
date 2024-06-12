@@ -197,7 +197,10 @@ export abstract class TylasuParser<
                 issues.push(Issue.syntactic(message, IssueSeverity.ERROR, Position.ofParseTree(it),
                     undefined,
                     ERROR_NODE_FOUND,
-                    [it.symbol?.type?.toString() || "", it.symbol?.text || ""]));
+                    {
+                        type: it.symbol?.type?.toString() || "",
+                        text: it.symbol?.text || ""
+                    }));
             });
     }
 
