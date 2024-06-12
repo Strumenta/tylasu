@@ -274,7 +274,7 @@ export class ASTTransformer {
                         origin?.position,
                         origin instanceof Node ? origin : undefined,
                         SOURCE_NODE_NOT_MAPPED,
-                        { nodeType }
+                        [{ name: "nodeType", value: nodeType }]
                     )
                 );
             } else {
