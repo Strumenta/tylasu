@@ -68,6 +68,8 @@ export class ANTLRTokenFactory extends TokenFactory<TylasuANTLRToken> {
 }
 
 export const SYNTAX_ERROR = "parser.syntaxError";
+export const MISMATCHED_INPUT = "parser.mismatchedinput";
+export const TOKEN_RECOGNITION_ERROR = "lexer.tokenrecognitionerror"
 export const INPUT_NOT_FULLY_CONSUMED = "parser.inputNotFullyConsumed";
 export const ERROR_NODE_FOUND = "parser.errorNodeFound";
 
@@ -118,13 +120,31 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
             reportAttemptingFullContext() {},
             reportContextSensitivity() {},
             syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
-                issues.push(
-                    Issue.lexical(
-                        msg || "unspecified",
-                        IssueSeverity.ERROR,
-                        Position.ofPoint(new Point(line, charPositionInLine)),
-                        undefined,
-                        SYNTAX_ERROR));
+                const regex = /token recognition error at: '(.+)'/
+                if (regex.test(msg)){
+                    const match = msg.match(regex) as string[];
+                    issues.push(
+                        Issue.lexical(
+                            msg || "unspecified",
+                            IssueSeverity.ERROR,
+                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            undefined,
+                            TOKEN_RECOGNITION_ERROR,
+                            [
+                                {
+                                    name: "token",
+                                    value: match[1]
+                                }
+                            ]));
+                } else {
+                    issues.push(
+                        Issue.lexical(
+                            msg || "unspecified",
+                            IssueSeverity.ERROR,
+                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            undefined,
+                            SYNTAX_ERROR));
+                }
             }
         });
     }
@@ -281,13 +301,34 @@ export abstract class TylasuParser<
             reportAttemptingFullContext() {},
             reportContextSensitivity() {},
             syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
-                issues.push(
-                    Issue.syntactic(
-                        msg || "unspecified",
-                        IssueSeverity.ERROR,
-                        Position.ofPoint(new Point(line, charPositionInLine)),
-                        undefined,
-                        SYNTAX_ERROR));
+                const mismatchedRegex = /^mismatched input '(<EOF>|.+)' expecting {([a-zA-Z_]+(, [a-zA-Z_]+)*)}$/
+                if (mismatchedRegex.test(msg)) {
+                    const match = msg.match(mismatchedRegex) as string[];
+                    const args = [{
+                        name: "mismatched",
+                        value: match[1]
+                    }];
+                    match[2].split(", ").forEach((expected)=>args.push({
+                        name: "expected",
+                        value: expected
+                    }))
+                    issues.push(
+                        Issue.syntactic(
+                            msg,
+                            IssueSeverity.ERROR,
+                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            undefined,
+                            MISMATCHED_INPUT,
+                            args));
+                } else {
+                    issues.push(
+                        Issue.syntactic(
+                            msg || "unspecified",
+                            IssueSeverity.ERROR,
+                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            undefined,
+                            SYNTAX_ERROR));
+                }
             }
         });
     }

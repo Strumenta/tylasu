@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Issue, Node} from "../src";
+import {Issue, IssueSeverity, IssueType, Node, Point, Position} from "../src";
 import {SimpleLangLexer} from "./parser/SimpleLangLexer";
 import {CharStream, Lexer, TokenStream} from "antlr4ng";
 import {CompilationUnitContext, SimpleLangParser} from "./parser/SimpleLangParser";
@@ -36,4 +36,193 @@ describe('Parsing', function() {
             expect(result.root!.parseTree).to.equal(result.firstStage!.root);
             expect(result.code).to.equal(code);
         });
+    it("produce correct issues for: display 1 +",
+        function () {
+            const code = "display 1 +";
+            const parser = new SLParser(new ANTLRTokenFactory());
+            const result = parser.parse(code);
+            expect(result.issues).to.eql([new Issue(
+                IssueType.SYNTACTIC,
+                "mismatched input '<EOF>' expecting {INT_LIT, DEC_LIT, STRING_LIT, BOOLEAN_LIT}",
+                IssueSeverity.ERROR,
+                new Position(new Point(1, 11), new Point(1, 11)),
+                undefined,
+                "parser.mismatchedinput",
+                [
+                    {
+                        name: "mismatched",
+                        value: "<EOF>"
+                    },
+                    {
+                    name: "expected",
+                    value: "INT_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "DEC_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "STRING_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "BOOLEAN_LIT"
+                    }
+                ]
+            )])
+        });
+    it("produce correct issues for: display 1 ++",
+        function () {
+            const code = "display 1 ++";
+            const parser = new SLParser(new ANTLRTokenFactory());
+            const result = parser.parse(code);
+            expect(result.issues).to.eql([
+                new Issue(
+                    IssueType.SYNTACTIC,
+                    "mismatched input '+' expecting {INT_LIT, DEC_LIT, STRING_LIT, BOOLEAN_LIT}",
+                    IssueSeverity.ERROR,
+                    new Position(new Point(1, 11), new Point(1, 11)),
+                    undefined,
+                    "parser.mismatchedinput",
+                    [
+                        {
+                            name: "mismatched",
+                            value: "+"
+                        },
+                        {
+                            name: "expected",
+                            value: "INT_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "DEC_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "STRING_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "BOOLEAN_LIT"
+                        }
+                    ]
+                ),
+                new Issue(
+                IssueType.SYNTACTIC,
+                "mismatched input '<EOF>' expecting {INT_LIT, DEC_LIT, STRING_LIT, BOOLEAN_LIT}",
+                IssueSeverity.ERROR,
+                new Position(new Point(1, 12), new Point(1, 12)),
+                undefined,
+                "parser.mismatchedinput",
+                [
+                    {
+                        name: "mismatched",
+                        value: "<EOF>"
+                    },
+                    {
+                        name: "expected",
+                        value: "INT_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "DEC_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "STRING_LIT"
+                    },
+                    {
+                        name: "expected",
+                        value: "BOOLEAN_LIT"
+                    }
+                ]
+            )])
+        });
+    it("produce correct issues for: display",
+        function () {
+            const code = "display";
+            const parser = new SLParser(new ANTLRTokenFactory());
+            const result = parser.parse(code);
+            expect(result.issues).to.eql([
+                new Issue(
+                    IssueType.SYNTACTIC,
+                    "mismatched input '<EOF>' expecting {INT_LIT, DEC_LIT, STRING_LIT, BOOLEAN_LIT}",
+                    IssueSeverity.ERROR,
+                    new Position(new Point(1, 7), new Point(1, 7)),
+                    undefined,
+                    "parser.mismatchedinput",
+                    [
+                        {
+                            name: "mismatched",
+                            value: "<EOF>"
+                        },
+                        {
+                            name: "expected",
+                            value: "INT_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "DEC_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "STRING_LIT"
+                        },
+                        {
+                            name: "expected",
+                            value: "BOOLEAN_LIT"
+                        }
+                    ]
+                )])
+        });
+    it("produce correct issues for: ###",
+        function () {
+            const code = "###";
+            const parser = new SLParser(new ANTLRTokenFactory());
+            const result = parser.parse(code);
+            expect(result.issues).to.eql([
+                new Issue(
+                    IssueType.LEXICAL,
+                    "token recognition error at: '#'",
+                    IssueSeverity.ERROR,
+                    new Position(new Point(1, 0), new Point(1, 0)),
+                    undefined,
+                    "lexer.tokenrecognitionerror",
+                    [
+                        {
+                            name: "token",
+                            value: "#"
+                        }
+                    ]
+                ),
+                new Issue(
+                    IssueType.LEXICAL,
+                    "token recognition error at: '#'",
+                    IssueSeverity.ERROR,
+                    new Position(new Point(1, 1), new Point(1, 1)),
+                    undefined,
+                    "lexer.tokenrecognitionerror",
+                    [
+                        {
+                            name: "token",
+                            value: "#"
+                        }
+                    ]
+                ),
+                new Issue(
+                    IssueType.LEXICAL,
+                    "token recognition error at: '#'",
+                    IssueSeverity.ERROR,
+                    new Position(new Point(1, 2), new Point(1, 2)),
+                    undefined,
+                    "lexer.tokenrecognitionerror",
+                    [
+                        {
+                            name: "token",
+                            value: "#"
+                        }
+                    ]
+                )])
+        })
 });
