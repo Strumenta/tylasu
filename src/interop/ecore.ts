@@ -977,6 +977,12 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
             .filter((c) => c.eContainingFeature.get("name") != "destination");
     }
 
+    isOfKnownType(name: string) {
+        const intf = THE_NODE_ECLASS_V2.eContainer.get("eClassifiers").find((c: ECore.EClassifier) =>
+            c.get("interface") && c.get("name") == name);
+        return intf && this.eo.isKindOf(intf);
+    }
+
     isDeclaration(): boolean {
         return this.eo.isKindOf(THE_ENTITY_DECLARATION_INTERFACE);
     }

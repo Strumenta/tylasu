@@ -41,6 +41,9 @@ export abstract class NodeAdapter extends Node {
         }
     }
 
+    /**
+     * @deprecated replaced by `isOfKnownType("EntityDeclaration")`
+     */
     abstract isDeclaration(): boolean;
 
     abstract isExpression(): boolean;
@@ -50,6 +53,8 @@ export abstract class NodeAdapter extends Node {
     equals(other: NodeAdapter | undefined) {
         return other == this;
     }
+
+    abstract isOfKnownType(name: string);
 }
 
 export class AugmentedNode extends NodeAdapter {
@@ -117,6 +122,10 @@ export class AugmentedNode extends NodeAdapter {
 
     equals(other: NodeAdapter | undefined): boolean {
         return other instanceof AugmentedNode && this.node == other.node;
+    }
+
+    isOfKnownType() {
+        return false;
     }
 }
 
@@ -277,6 +286,13 @@ export class TraceNode extends Node implements PossiblyNamed {
         return node === this || node.nodeAdapter.equals(this.nodeAdapter);
     }
 
+    isOfKnownType(name: string): boolean {
+        return this.nodeAdapter.isOfKnownType(name);
+    }
+
+    /**
+     * @deprecated replaced by `isOfKnownType("EntityDeclaration")`
+     */
     isDeclaration(): boolean {
         return this.nodeAdapter.isDeclaration();
     }

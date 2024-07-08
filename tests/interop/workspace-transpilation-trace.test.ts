@@ -77,9 +77,9 @@ describe('Workspace Transpilation traces', function() {
                 f => f.path == "qrpglesrc/CUS200.rpgle"
             )!;
             const firstStatement = cus200File.node.getChildren("mainStatements")[0];
-            expect(firstStatement.isDeclaration()).to.be.false;
-            expect(firstStatement.isExpression()).to.be.false;
-            expect(firstStatement.isStatement()).to.be.true;
+            expect(firstStatement.isOfKnownType("EntityDeclaration")).to.be.false;
+            expect(firstStatement.isOfKnownType("Expression")).to.be.false;
+            expect(firstStatement.isOfKnownType("Statement")).to.be.true;
             destinationNodes = firstStatement.getDestinationNodes();
             expect(destinationNodes.length).to.equal(1);
             expect(destinationNodes[0].file?.path).to.equal(
@@ -148,9 +148,9 @@ describe('Workspace Transpilation traces', function() {
             // TODO broken expect(cus300File.node.getChildren("dataDefinition").length).to.eql(4)
             expect(sourceRoot.getChildren("mainStatements").length).to.eql(9)
             const firstStatement = sourceRoot.getChildren("mainStatements")[0];
-            expect(firstStatement.isDeclaration()).to.be.false;
-            expect(firstStatement.isExpression()).to.be.false;
-            expect(firstStatement.isStatement()).to.be.true;
+            expect(firstStatement.isOfKnownType("EntityDeclaration")).to.be.false;
+            expect(firstStatement.isOfKnownType("Expression")).to.be.false;
+            expect(firstStatement.isOfKnownType("Statement")).to.be.true;
             const destinationNodes = firstStatement.getDestinationNodes();
             expect(destinationNodes.length).to.equal(1);
             expect(destinationNodes[0].file?.path).to.equal("Cus300.java");

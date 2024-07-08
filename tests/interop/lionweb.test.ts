@@ -1,11 +1,11 @@
-import EGL_LANGUAGE_JSON from "./egl-language.json";
-import EGL_MODEL from "./egl-model.json";
-import COMPLEX_EGL_MODEL from "./egl-model-2.json";
-import FS_LANGUAGE_JSON from "./fs-language.json";
-import FS_MODEL from "./fs-model.json";
+import EGL_LANGUAGE_JSON from "../data/lionweb/egl-language.json";
+import EGL_MODEL from "../data/lionweb/egl-model.json";
+import COMPLEX_EGL_MODEL from "../data/lionweb/egl-model-2.json";
+import FS_LANGUAGE_JSON from "../data/lionweb/fs-language.json";
+import FS_MODEL from "../data/lionweb/fs-model.json";
 import {expect} from "chai";
 import {deserializeLanguages, SerializationChunk} from "@lionweb/core";
-import {Attribute, Child, Children, Node} from "../../src";
+import {Attribute, Child, Children, Node, TraceNode, walkDescendants} from "../../src";
 import {
     deserializeToTraceNodes,
     deserializeToTylasuNodes,
@@ -13,7 +13,7 @@ import {
     LanguageMapping, LionwebNode,
     STARLASU_LANGUAGE_MAPPING
 } from "../../src/interop/lionweb";
-import {filter, map, pipe, reduce} from "iter-ops";
+import {filter, first, map, pipe, reduce} from "iter-ops";
 import {STARLASU_LANGUAGE} from "../../src/interop/lionweb-starlasu-language";
 
 abstract class File extends Node {
@@ -129,7 +129,7 @@ describe('Lionweb integration', function() {
             expect(root.position?.end.column).to.equal(3);
             expect(root.children.length).to.equal(0);
         });
-    it("Complex trace nodes",
+    it("supports complex trace nodes",
         function () {
             const nodes = deserializeToTraceNodes(COMPLEX_EGL_MODEL as any, [EGL_LANGUAGE]);
             expect(nodes).not.to.be.empty;
@@ -157,5 +157,18 @@ describe('Lionweb integration', function() {
             expect(child.position?.start.column).to.equal(0);
             expect(child.position?.end.line).to.equal(19);
             expect(child.position?.end.column).to.equal(3);
+        });
+    it("supports marker interfaces",
+        function () {
+            const nodes = deserializeToTraceNodes(COMPLEX_EGL_MODEL as any, [EGL_LANGUAGE]);
+            expect(nodes).not.to.be.empty;
+            expect(nodes.length).to.equal(1);
+            const expressionStatement = pipe(nodes[0].walkDescendants(),
+                filter((node: TraceNode) => node.getType() == "ExpressionStatement"),
+                first()).first as TraceNode;
+            expect(expressionStatement).not.to.be.undefined;
+            expect(expressionStatement.isOfKnownType("EntityDeclaration")).to.be.false;
+            expect(expressionStatement.isOfKnownType("Expression")).to.be.false;
+            expect(expressionStatement.isOfKnownType("Statement")).to.be.true;
         });
 });

@@ -620,17 +620,17 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lionweb/core@0.6.5", "@lionweb/core@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.5.tgz#744c47236758695ec1204ff8a17b4ac97089f967"
-  integrity sha512-oKdRh2Sv+4V4OOULohCbv944vyDmXU4eYduW9XOaJDUMe8FK16/WMOmdcMQUcmt2uWqfrD+6SxZ/mxXDDNIDaA==
+"@lionweb/core@0.6.7", "@lionweb/core@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@lionweb/core/-/core-0.6.7.tgz#ac38682000987694c0118e0f48999467ace686d8"
+  integrity sha512-p8wne7/QJm5vE5DltjBb8+ik8RvUjSY4tQjqGljgmRRv5fV45ymslB3Ztrych01FCvaYMw6JiITZzOtPmILE2Q==
 
-"@lionweb/utilities@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@lionweb/utilities/-/utilities-0.6.5.tgz#8723b0b4e3525ed14ade931fee5d1aba284e3f43"
-  integrity sha512-AZjRQ2T0gmzP2MwbUxvH/AOJnnIaSgAye0XT73cafvwEhZpwnPOpHIWVUd+qAv0QNoieBw9q2dFDM82rVlN0Bw==
+"@lionweb/utilities@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@lionweb/utilities/-/utilities-0.6.7.tgz#6828ed9b993d74aad2f7c77f64aaf45b4fd73b65"
+  integrity sha512-prUn12LS8AnyqP/iwVd3s8pW0KyTEGTMJO8MyP6kuhcI8kxMVMbx1Dyh0G8LK+sH/SMFc0M5l8fmlY7+mJVYwg==
   dependencies:
-    "@lionweb/core" "0.6.5"
+    "@lionweb/core" "0.6.7"
     littoral-templates "0.2.2"
     nanoid "4.0.2"
 

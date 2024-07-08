@@ -130,7 +130,7 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
                 concept = importConcept(concept, classifier);
                 this.concepts.set(classifier, concept);
             }
-            node = new LionwebNode(concept, {
+            node = new LionwebNode(concept, classifier, {
                 id,
                 parent,
                 annotations: []
@@ -194,6 +194,7 @@ export class LionwebNode extends NodeAdapter {
 
     constructor(
         protected readonly _nodeDefinition: NodeDefinition,
+        protected readonly classifier: Classifier,
         protected lwnode: LWNodeInterface
     ) {
         super();
@@ -241,20 +242,29 @@ export class LionwebNode extends NodeAdapter {
     }
 
     isDeclaration(): boolean {
-        return false;
+        return this.isOfKnownType("EntityDeclaration");
     }
 
     isExpression(): boolean {
-        return false;
+        return this.isOfKnownType("Expression");
     }
 
     isStatement(): boolean {
-        return false;
+        return this.isOfKnownType("Statement");
+    }
+
+    isOfKnownType(name: string): boolean {
+        return this.classifier instanceof Concept && conceptImplements(this.classifier, name);
     }
 
     equals(other: NodeAdapter | undefined): boolean {
         return other instanceof LionwebNode && other.lwnode == this.lwnode;
     }
+}
+
+function conceptImplements(concept: Concept, interfaceName: string) {
+    const directlyImplements = !!concept.implements.find(intf => intf.name == interfaceName);
+    return directlyImplements || !!(concept.extends && conceptImplements(concept.extends, interfaceName));
 }
 
 function deserializePoint(value: string) {

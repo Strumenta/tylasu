@@ -118,4 +118,26 @@ describe('Parser traces – Starlasu metamodel V2', function() {
             expect(trace.rootNode.position).to.eql(pos(15, 0, 10161, 0));
             expect(trace.issues).to.eql([]);
         });
+
+    it("Knows about marker interfaces",
+        function () {
+            const metamodel =
+                JSON.parse(fs.readFileSync("tests/data/playground/java/metamodel.json").toString());
+            const loader = new ParserTraceLoader({
+                name: "java",
+                uri: "file://tests/data/playground/java/metamodel.json",
+                metamodel: metamodel
+            });
+            const code = fs.readFileSync(
+                "tests/data/playground/java/example-1.json").toString();
+            const trace = loader.loadParserTrace(code, "java");
+
+            const rootNode = trace.rootNode;
+            expect(rootNode.getType()).to.eql("com.strumenta.javalangmodule.ast.JCompilationUnit");
+            expect(rootNode.getSimpleType()).to.eql("JCompilationUnit");
+            expect(rootNode.getPosition()).to.eql(pos(3, 0,7, 1));
+            const classDeclaration = rootNode.getChild("declarations", 0) as TraceNode;
+            expect(classDeclaration.isDeclaration()).to.be.true;
+            expect(classDeclaration.isOfKnownType("EntityDeclaration")).to.be.true;
+        });
 });

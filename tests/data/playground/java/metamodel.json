@@ -1,0 +1,4817 @@
+{
+  "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EPackage",
+  "name" : "com.strumenta.javalangmodule.ast",
+  "nsURI" : "https://strumenta.com/java/model",
+  "nsPrefix" : "java-model",
+  "eClassifiers" : [ {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JModifier",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVolatile",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTransitive",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTransient",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSynchronized",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JStatic",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSealed",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPublic",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JProtected",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPrivate",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JNative",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFinal",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDefault",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotationDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotation",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeName",
+      "eGenericType" : {
+        "eTypeArguments" : [ {
+          "eClassifier" : {
+            "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref" : "//JAnnotationDeclaration"
+          }
+        } ],
+        "eClassifier" : {
+          "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+          "$ref" : "https://strumenta.com/starlasu/v2#//ReferenceByName"
+        }
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpression",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Expression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUnaryOperatorExpression",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "base",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPrefixExpression",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JUnaryOperatorExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPreIncrementExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrefixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPreDecrementExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrefixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPlusExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrefixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMinusExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrefixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBitwiseComplementExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrefixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPostfixExpression",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JUnaryOperatorExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPostIncrementExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPostfixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPostDecrementExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPostfixExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JType",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeBound",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "baseType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUpperTypeBound",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeBound"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLowerTypeBound",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeBound"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JWildcardType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "bound",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeBound"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVoidType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUnionType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "elements",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JShortType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLongType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIntersectionType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "elements",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInternalType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "container",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "internal",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIntType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFloatType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeArguments",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInferredTypeArguments",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeArguments"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExplicitTypeArguments",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeArguments"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEntityType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "entity",
+      "eGenericType" : {
+        "eTypeArguments" : [ {
+          "eClassifier" : {
+            "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref" : "//JTypeDeclaration"
+          }
+        } ],
+        "eClassifier" : {
+          "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+          "$ref" : "https://strumenta.com/starlasu/v2#//ReferenceByName"
+        }
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDoubleType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCharType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JByteType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBooleanType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JType"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "baseType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCastExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JUnaryOperatorExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JThisConstructorCall",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JStatement",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Statement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "label",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JYieldStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JYieldStatment",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JWhileStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JParExpression",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JWhileStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayDimension",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "size",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCatchClauseParameter",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dimensions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimension"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCatchClause",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parameter",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JCatchClauseParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFinallyBlock",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTryStmt",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "catchClauses",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JCatchClause"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "finallyBlock",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JFinallyBlock"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JResourceSpecification",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "access",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalVariableDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTryWithResourceStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTryStmt"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "resources",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JResourceSpecification"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTryCatchStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTryStmt"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExtendsClause",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeParameter",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "extendsClause",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExtendsClause"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "extended",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "implemented",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "permittedSubclasses",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeParameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassOrInterfaceModifier",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInterfaceDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "extended",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "permittedExtendingClasses",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeParameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JRecordComponent",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "variadic",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variadicAnnotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JRecordDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "components",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JRecordComponent"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "implemented",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeParameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLocalTypeDeclarationNotEmpty",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "classDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JClassDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "classOrInterfaceModifier",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JClassOrInterfaceModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "interfaceDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JInterfaceDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "recordDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JRecordDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBlockStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "localTypeDeclarationNotEmpty",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalTypeDeclarationNotEmpty"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "localVariableDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalVariableDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBlock",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "blockStatement",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIdentifier",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JContextType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeIdentifier",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassOrInterfaceType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "contextType",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JContextType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeIdentifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeIdentifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVariableDeclaratorId",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVariableModifier",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JResource",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "classOrInterfaceType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JClassOrInterfaceType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variableDeclaratorId",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclaratorId"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variableModifier",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableModifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTryResourceStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "block",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlock"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "catchClause",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JCatchClause"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "finallyBlock",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JFinallyBlock"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "resource",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JResource"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTryExceptStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "block",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlock"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "catchClause",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JCatchClause"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "finallyBlock",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JFinallyBlock"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JThrowStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JThrowStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSynchronizedStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSynchronizedStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "block",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlock"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchStmtLabel",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVarDeclSwitchStmtLabel",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JSwitchStmtLabel"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variable",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalVariableDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpressionSwitchStmtLabel",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JSwitchStmtLabel"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDefaultSwitchStmtLabel",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JSwitchStmtLabel"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchStmtAlternative",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "labels",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchStmtLabel"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "alternatives",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchStmtAlternative"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotableArrayModifiers",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPrimitiveType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeType",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotableArrayModifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotableArrayModifiers"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "classOrInterfaceType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JClassOrInterfaceType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "primitiveType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JPrimitiveType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchLabel",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "constantExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "enumConstantName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "varName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchBlockStatementGroup",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "blockStatement",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchLabel",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchLabel"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchBlockStatementGroup",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchBlockStatementGroup"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchLabel",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchLabel"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JReturnStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JQuotedMultiStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPlaceholderMultiStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//PlaceholderElement"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JValueDeclaration",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JVariableDeclarator",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JValueDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arrayDimensions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimension"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "initializer",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLocalVariableDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declarators",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclarator"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLocalTypeDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "localDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLabelledStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifierLabel",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIfStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "elseBody",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "thenBody",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIfStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JForStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "check",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "initializers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "postOp",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEnhancedForControl",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variableDeclaratorId",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclaratorId"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variableModifier",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableModifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpressionList",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JForInit",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expressionList",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpressionList"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "localVariableDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalVariableDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JForControl",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "enhancedForControl",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEnhancedForControl"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "forInit",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JForInit"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "forUpdate",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpressionList"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JForStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "forControl",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JForControl"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JForEachStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "collection",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpressionStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JGuardedPattern",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "guardedPattern",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JGuardedPattern"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "variableModifier",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableModifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchRuleOutcome",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "block",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlock"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "blockStatement",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchLabeledRule",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expressionList",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpressionList"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "guardedPattern",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JGuardedPattern"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchRuleOutcome",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchRuleOutcome"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchExpression",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchLabeledRule",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchLabeledRule"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpressionStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statementExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "switchExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEmptyStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEmptyStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDoStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDoStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parExpression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statement",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JContinueStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JContinueStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBreakStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBreakStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "identifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JIdentifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBlockStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statements",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBlockStatementWrapper",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "blockLabel",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlock"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAssertStmt",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "test",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "voidTest",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAssertStatement",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JStatement"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchExprAlternative",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDefaultSwitchExprAlternative",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JSwitchExprAlternative"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCaseSwitchExprAlternative",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JSwitchExprAlternative"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSwitchExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "alternatives",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JSwitchExprAlternative"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JQualifiedName",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "qualifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSuperMethodReferenceExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "methodName",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSuperConstructorCall",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JReferenceExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eGenericType" : {
+        "eTypeArguments" : [ {
+          "eClassifier" : {
+            "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref" : "//JValueDeclaration"
+          }
+        } ],
+        "eClassifier" : {
+          "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+          "$ref" : "https://strumenta.com/starlasu/v2#//ReferenceByName"
+        }
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPrimaryExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JThisExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSuperExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JQualifiedThisExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JParenthesized",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "base",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMethodBody",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "statements",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JStatement"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExceptionThrown",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "exception",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JParameterDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JValueDeclaration"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "variadic",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMethodDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JMethodBody"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "exceptions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExceptionThrown"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "isStatic",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParameterDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "returnType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeParameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMethodInvocationExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "method",
+      "eGenericType" : {
+        "eTypeArguments" : [ {
+          "eClassifier" : {
+            "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref" : "//JMethodDeclaration"
+          }
+        } ],
+        "eClassifier" : {
+          "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+          "$ref" : "https://strumenta.com/starlasu/v2#//ReferenceByName"
+        }
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUnqualifiedMethodInvocationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMethodInvocationExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeQualifiedMethodInvocationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMethodInvocationExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSuperQualifiedMethodInvocationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMethodInvocationExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "qualifiedName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExpressionQualifiedMethodInvocationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMethodInvocationExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "container",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLexicalLiteralExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTextBlockExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "value",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JStringLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "value",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JNullLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EEnum",
+    "name" : "JIntegerFormat",
+    "eLiterals" : [ {
+      "name" : "DECIMAL"
+    }, {
+      "name" : "BINARY",
+      "value" : 1
+    }, {
+      "name" : "HEXADECIMAL",
+      "value" : 2
+    }, {
+      "name" : "OCTAL",
+      "value" : 3
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JIntegerLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "format",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EEnum",
+        "$ref" : "//JIntegerFormat"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "value",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFloatingPointLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "value",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCharacterLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "value",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBooleanLiteralExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLexicalLiteralExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFieldAccessExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "container",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "field",
+      "eGenericType" : {
+        "eTypeArguments" : [ {
+          "eClassifier" : {
+            "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+            "$ref" : "//JVariableDeclarator"
+          }
+        } ],
+        "eClassifier" : {
+          "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+          "$ref" : "https://strumenta.com/starlasu/v2#//ReferenceByName"
+        }
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassInstanceCreationBody",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassInstanceCreationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JClassInstanceCreationBody"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "classTypeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExplicitTypeArguments"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "constructorTypeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "container",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "qualifier",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "https://strumenta.com/starlasu/v2#//Expression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayDimensions",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dims",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimension"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayCreationExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dimensions",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimensions"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayDimensionExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expr",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayDimensionExprs",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dims",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimensionExpr"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayCreationExpressionWithoutInitializer",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JArrayCreationExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dimensionExpressions",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimensionExprs"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayCreationExpressionWithInitializer",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JArrayCreationExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "initializers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayAccess",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JPrimaryExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "array",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "index",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPlaceholderExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//PlaceholderElement"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JNegatedExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "base",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMethodStaticReferenceExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "context",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "methodName",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMethodReferenceExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "context",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "methodName",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLambdaParameter",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSimpleLambdaParameter",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLambdaParameter"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAdvancedLambdaParameter",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLambdaParameter"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "dimensions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JArrayDimension"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "variableArity",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLambdaExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expressionBlock",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expressionBody",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "params",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLambdaParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInstanceOfExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "expression",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInstanceOfTypeExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JInstanceOfExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInstanceOfPatternExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JInstanceOfExpr"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "varDecl",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JLocalVariableDeclaration"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JConstructorReferenceExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeArguments",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeArguments"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JConditionalExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "condition",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "falseBranch",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "trueBranch",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JClassReference",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "className",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBinaryExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "left",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "right",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JShiftExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUnsignedRightShiftExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JShiftExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSignedRightShiftExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JShiftExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSignedLeftShiftExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JShiftExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JRelationalExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLessThanExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JRelationalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLessOrEqualToExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JRelationalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JGreaterThanExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JRelationalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JGreaterOrEqualToExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JRelationalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMultiplicativeExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMultiplicationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMultiplicativeExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JModuleExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMultiplicativeExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDivisionExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JMultiplicativeExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLogicalExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLogicalOrExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLogicalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JLogicalAndExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JLogicalExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEqualityExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JNotEqualToExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEqualityExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEqualToExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEqualityExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBitwiseExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBitwiseXorExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBitwiseExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBitwiseOrExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBitwiseExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JBitwiseAndExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBitwiseExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAdditiveExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSumExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAdditiveExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSubtractionExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAdditiveExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAbstractAssignmentExpr",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JBinaryExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JXorAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUnsignedRightShiftAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSubAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSignedRightShiftAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSignedLeftShiftAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JOrAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMulAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JModAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JDivAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAndAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAddAssignmentExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAbstractAssignmentExpr"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JArrayLiteralExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "elements",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotationExpr",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JExpression"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotation",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSingleElementAnnotation",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAnnotation"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotationValueAssignment",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "parameterName",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "value",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JNormalAnnotation",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAnnotation"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "values",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotationValueAssignment"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JMarkerAnnotation",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JAnnotation"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAbstract",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModifier"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEntityMember",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JStaticInitializer",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "block",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInterfaceMethod",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "exceptions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExceptionThrown"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "name",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParameterDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "returnType",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JInterfaceConstant",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declarators",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclarator"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JFieldDecl",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declarators",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclarator"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JConstructor",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "body",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JBlockStmt"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "className",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EString"
+      }
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "exceptions",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExceptionThrown"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "parameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JParameterDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "typeParameters",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeParameter"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotationMethod",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "defaultValue",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JAnnotationConstant",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declarators",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JVariableDeclarator"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JTypeDeclaration",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JEntityMember"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//EntityDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEnumConstant",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//Named"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "arguments",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JExpression"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "members",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEntityMember"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JEnumDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JTypeDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "constants",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JEnumConstant"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "implemented",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JType"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JImportDeclaration",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "static",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JSpecificImportDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JImportDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "imported",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JOnDemandImportDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JImportDeclaration"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "imported",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JModuleDirective",
+    "abstract" : true,
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JUsesModuleDirective",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModuleDirective"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "type",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JRequiresModuleDirective",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModuleDirective"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "modifiers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModifier"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "module",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JProvidesModuleDirective",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModuleDirective"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "providers",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "service",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JOpensModuleDirective",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModuleDirective"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "packageName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "toModules",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JExportsModuleDirective",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "//JModuleDirective"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "packageName",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "toModules",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JModuleDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "directives",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModuleDirective"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "name",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EAttribute",
+      "name" : "open",
+      "lowerBound" : 1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EDataType",
+        "$ref" : "http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      }
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JPackageDeclaration",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "annotations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JAnnotation"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "name",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JQualifiedName"
+      },
+      "containment" : true
+    } ]
+  }, {
+    "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+    "name" : "JCompilationUnit",
+    "eSuperTypes" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+      "$ref" : "https://strumenta.com/starlasu/v2#//ASTNode"
+    } ],
+    "eStructuralFeatures" : [ {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "declarations",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JTypeDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "imports",
+      "upperBound" : -1,
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JImportDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "moduleDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JModuleDeclaration"
+      },
+      "containment" : true
+    }, {
+      "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EReference",
+      "name" : "packageDeclaration",
+      "eType" : {
+        "eClass" : "http://www.eclipse.org/emf/2002/Ecore#//EClass",
+        "$ref" : "//JPackageDeclaration"
+      },
+      "containment" : true
+    } ]
+  } ]
+}

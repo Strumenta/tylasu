@@ -63,8 +63,8 @@
             "starlasu_language_com-strumenta-egl_TransferKind",
             "starlasu_language_com-strumenta-egl_DataTableType",
             "starlasu_language_com-strumenta-egl_HandlerType",
+            "starlasu_language_com-strumenta-egl_ConcatOp",
             "starlasu_language_com-strumenta-egl_ExternalStereotype",
-            "starlasu_language_com-strumenta-egl_EglNode",
             "starlasu_language_com-strumenta-egl_EglPackage",
             "starlasu_language_com-strumenta-egl_EglId",
             "starlasu_language_com-strumenta-egl_AssignableExpression",
@@ -72,9 +72,6 @@
             "starlasu_language_com-strumenta-egl_AndExpr",
             "starlasu_language_com-strumenta-egl_ArrayLiteral",
             "starlasu_language_com-strumenta-egl_AtExpr",
-            "starlasu_language_com-strumenta-egl_ReferenceExpr",
-            "starlasu_language_com-strumenta-egl_Named",
-            "starlasu_language_com-strumenta-egl_PossiblyNamed",
             "starlasu_language_com-strumenta-egl_BitwiseExpr",
             "starlasu_language_com-strumenta-egl_BitwiseMulDivExpr",
             "starlasu_language_com-strumenta-egl_BoolLiteral",
@@ -143,6 +140,7 @@
             "starlasu_language_com-strumenta-egl_OtherwisePart",
             "starlasu_language_com-strumenta-egl_WhenPart",
             "starlasu_language_com-strumenta-egl_CloseStatement",
+            "starlasu_language_com-strumenta-egl_ReferenceExpr",
             "starlasu_language_com-strumenta-egl_ContinueStatement",
             "starlasu_language_com-strumenta-egl_DeleteStatement",
             "starlasu_language_com-strumenta-egl_DataOption",
@@ -150,6 +148,7 @@
             "starlasu_language_com-strumenta-egl_NoCursorDataOption",
             "starlasu_language_com-strumenta-egl_UsingKeysDataOption",
             "starlasu_language_com-strumenta-egl_WithSqlDataOption",
+            "starlasu_language_com-strumenta-egl_DisplayStatement",
             "starlasu_language_com-strumenta-egl_EglVariables",
             "starlasu_language_com-strumenta-egl_EglVariableName",
             "starlasu_language_com-strumenta-egl_ElseBranch",
@@ -166,9 +165,13 @@
             "starlasu_language_com-strumenta-egl_LabelExitStatement",
             "starlasu_language_com-strumenta-egl_ExpressionStatement",
             "starlasu_language_com-strumenta-egl_ForStatement",
+            "starlasu_language_com-strumenta-egl_ForStatementWithDeclaration",
+            "starlasu_language_com-strumenta-egl_ForStatementWithReference",
             "starlasu_language_com-strumenta-egl_ForeachStatement",
-            "starlasu_language_com-strumenta-egl_FromResultForeachStatement",
-            "starlasu_language_com-strumenta-egl_RecordVariableForeachStatement",
+            "starlasu_language_com-strumenta-egl_TypeableExpression",
+            "starlasu_language_com-strumenta-egl_ForeachStatements",
+            "starlasu_language_com-strumenta-egl_FromResultForeachStatements",
+            "starlasu_language_com-strumenta-egl_RecordVariableForeachStatements",
             "starlasu_language_com-strumenta-egl_ForwardStatement",
             "starlasu_language_com-strumenta-egl_FunctionCallStatement",
             "starlasu_language_com-strumenta-egl_GetStatement",
@@ -177,6 +180,8 @@
             "starlasu_language_com-strumenta-egl_SingleRowGetOption",
             "starlasu_language_com-strumenta-egl_GotoStatement",
             "starlasu_language_com-strumenta-egl_IfStatement",
+            "starlasu_language_com-strumenta-egl_IfElsePart",
+            "starlasu_language_com-strumenta-egl_IfStatements",
             "starlasu_language_com-strumenta-egl_LabelContinueStatement",
             "starlasu_language_com-strumenta-egl_LabelStatement",
             "starlasu_language_com-strumenta-egl_Library",
@@ -205,9 +210,13 @@
             "starlasu_language_com-strumenta-egl_WithPreparedStatement",
             "starlasu_language_com-strumenta-egl_WithSqlCodeExpr",
             "starlasu_language_com-strumenta-egl_PrepareStatement",
+            "starlasu_language_com-strumenta-egl_PrintStatement",
             "starlasu_language_com-strumenta-egl_ReplaceStatement",
             "starlasu_language_com-strumenta-egl_ReturnStatement",
             "starlasu_language_com-strumenta-egl_SetStatement",
+            "starlasu_language_com-strumenta-egl_SetValue",
+            "starlasu_language_com-strumenta-egl_EmptySetValue",
+            "starlasu_language_com-strumenta-egl_InitialSetValue",
             "starlasu_language_com-strumenta-egl_ThrowStatement",
             "starlasu_language_com-strumenta-egl_TransferStatement",
             "starlasu_language_com-strumenta-egl_TryStatement",
@@ -218,6 +227,7 @@
             "starlasu_language_com-strumenta-egl_ArrayDim",
             "starlasu_language_com-strumenta-egl_VariableValue",
             "starlasu_language_com-strumenta-egl_WhileStatement",
+            "starlasu_language_com-strumenta-egl_WhileStatements",
             "starlasu_language_com-strumenta-egl_Enumeration",
             "starlasu_language_com-strumenta-egl_EglEnumValue",
             "starlasu_language_com-strumenta-egl_ExternalType",
@@ -233,29 +243,32 @@
             "starlasu_language_com-strumenta-egl_Interface",
             "starlasu_language_com-strumenta-egl_EglProgram",
             "starlasu_language_com-strumenta-egl_Record",
+            "starlasu_language_com-strumenta-egl_ValidType",
+            "starlasu_language_com-strumenta-egl_ReferenceTypeExpr",
             "starlasu_language_com-strumenta-egl_RecordType",
             "starlasu_language_com-strumenta-egl_BasicRecord",
             "starlasu_language_com-strumenta-egl_CustomRecord",
             "starlasu_language_com-strumenta-egl_IndexedRecord",
             "starlasu_language_com-strumenta-egl_MQRecord",
             "starlasu_language_com-strumenta-egl_RelativeRecord",
+            "starlasu_language_com-strumenta-egl_SQLRecord",
             "starlasu_language_com-strumenta-egl_SerialRecord",
             "starlasu_language_com-strumenta-egl_ProgramType",
             "starlasu_language_com-strumenta-egl_BasicProgram",
             "starlasu_language_com-strumenta-egl_CustomProgram",
             "starlasu_language_com-strumenta-egl_Service",
+            "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector",
             "starlasu_language_com-strumenta-egl_ParamModifierWrapper",
             "starlasu_language_com-strumenta-egl_SubstringExpr",
             "starlasu_language_com-strumenta-egl_ReferenceFunctionExpr",
-            "starlasu_language_com-strumenta-egl_ReferenceTypeExpr",
             "starlasu_language_com-strumenta-egl_ArrayAccessExpr",
+            "starlasu_language_com-strumenta-egl_Param",
             "starlasu_language_com-strumenta-egl_EglElements",
             "starlasu_language_com-strumenta-egl_DataItemElem",
             "starlasu_language_com-strumenta-egl_DataTableElem",
             "starlasu_language_com-strumenta-egl_DelegateElem",
             "starlasu_language_com-strumenta-egl_EglDelegateDefinition",
             "starlasu_language_com-strumenta-egl_Params",
-            "starlasu_language_com-strumenta-egl_Param",
             "starlasu_language_com-strumenta-egl_EnumerationElem",
             "starlasu_language_com-strumenta-egl_ExternalTypeElem",
             "starlasu_language_com-strumenta-egl_FormGroupElem",
@@ -278,11 +291,11 @@
             "starlasu_language_com-strumenta-egl_DataOptions",
             "starlasu_language_com-strumenta-egl_CaseWhenPart",
             "starlasu_language_com-strumenta-egl_CaseOtherwisePart",
-            "starlasu_language_com-strumenta-egl_IfElsePart",
             "starlasu_language_com-strumenta-egl_OnExceptionPart",
             "starlasu_language_com-strumenta-egl_UseVariable",
             "starlasu_language_com-strumenta-egl_CallName",
             "starlasu_language_com-strumenta-egl_ExecuteSqlOption",
+            "starlasu_language_com-strumenta-egl_SetStatementValue",
             "starlasu_language_com-strumenta-egl_ArgumentsValue",
             "starlasu_language_com-strumenta-egl_NamesValue"
           ]
@@ -2390,6 +2403,139 @@
       "parent": "starlasu_language_com-strumenta-egl_HandlerType"
     },
     {
+      "id": "starlasu_language_com-strumenta-egl_ConcatOp",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Enumeration"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "ConcatOp"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ConcatOp"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Enumeration-literals"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ConcatOp-CONCAT_OP",
+            "starlasu_language_com-strumenta-egl_ConcatOp-CONCAT_NULL_OP",
+            "starlasu_language_com-strumenta-egl_ConcatOp-PLUS"
+          ]
+        }
+      ],
+      "references": [],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ConcatOp-CONCAT_OP",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "EnumerationLiteral"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "ConcatOp-CONCAT_OP"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "CONCAT_OP"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ConcatOp"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ConcatOp-CONCAT_NULL_OP",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "EnumerationLiteral"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "ConcatOp-CONCAT_NULL_OP"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "CONCAT_NULL_OP"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ConcatOp"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ConcatOp-PLUS",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "EnumerationLiteral"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "ConcatOp-PLUS"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "PLUS"
+        }
+      ],
+      "containments": [],
+      "references": [],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ConcatOp"
+    },
+    {
       "id": "starlasu_language_com-strumenta-egl_ExternalStereotype",
       "classifier": {
         "language": "LionCore-M3",
@@ -2416,83 +2562,6 @@
       ],
       "containments": [],
       "references": [],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_EglNode",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_EglNode"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "EglNode"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": []
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
     },
@@ -2569,7 +2638,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "EntityGroupDeclaration",
+              "reference": "com-strumenta-StarLasu-EntityGroupDeclaration-id"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -2710,8 +2784,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -2927,7 +3001,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "com-strumenta-StarLasu-Expression-id"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -3321,7 +3400,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_AtExpr_reference"
+            "starlasu_language_com-strumenta-egl_AtExpr_property"
           ]
         }
       ],
@@ -3352,309 +3431,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_AtExpr_reference",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_AtExpr_reference"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "reference"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "ReferenceExpr",
-              "reference": "starlasu_language_com-strumenta-egl_ReferenceExpr"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_AtExpr"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_ReferenceExpr",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ReferenceExpr"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "ReferenceExpr"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-egl_ReferenceExpr_name"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "AssignableExpression",
-              "reference": "starlasu_language_com-strumenta-egl_AssignableExpression"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_ReferenceExpr_name",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Reference"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ReferenceExpr_name"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "name"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ReferenceExpr"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_Named",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Interface"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_Named"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "Named"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": []
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Interface-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "PossiblyNamed",
-              "reference": "starlasu_language_com-strumenta-egl_PossiblyNamed"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_PossiblyNamed",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Interface"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_PossiblyNamed"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "PossiblyNamed"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-egl_PossiblyNamed_name"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Interface-extends"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_PossiblyNamed_name",
+      "id": "starlasu_language_com-strumenta-egl_AtExpr_property",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -3667,7 +3444,7 @@
             "version": "2023.1",
             "key": "Feature-optional"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -3675,7 +3452,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_PossiblyNamed_name"
+          "value": "com-strumenta-egl_AtExpr_property"
         },
         {
           "property": {
@@ -3683,7 +3460,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "name"
+          "value": "property"
         }
       ],
       "containments": [],
@@ -3703,7 +3480,7 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_PossiblyNamed"
+      "parent": "starlasu_language_com-strumenta-egl_AtExpr"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_BitwiseExpr",
@@ -4613,7 +4390,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "TypeAnnotation",
+              "reference": "com-strumenta-StarLasu-TypeAnnotation-id"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -15131,8 +14913,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -15338,8 +15120,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -15850,8 +15632,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -16214,7 +15996,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "com-strumenta-StarLasu-Statement-id"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -16269,7 +16056,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_AddStatement_identifier",
+            "starlasu_language_com-strumenta-egl_AddStatement_recordVariable",
             "starlasu_language_com-strumenta-egl_AddStatement_sqlStatementCode"
           ]
         }
@@ -16301,7 +16088,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_AddStatement_identifier",
+      "id": "starlasu_language_com-strumenta-egl_AddStatement_recordVariable",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -16330,7 +16117,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_AddStatement_identifier"
+          "value": "com-strumenta-egl_AddStatement_recordVariable"
         },
         {
           "property": {
@@ -16338,7 +16125,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "identifier"
+          "value": "recordVariable"
         }
       ],
       "containments": [],
@@ -16351,8 +16138,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "ReferenceExpr",
-              "reference": "starlasu_language_com-strumenta-egl_ReferenceExpr"
+              "resolveInfo": "EglId",
+              "reference": "starlasu_language_com-strumenta-egl_EglId"
             }
           ]
         }
@@ -17910,6 +17697,145 @@
       "parent": "starlasu_language_com-strumenta-egl_CloseStatement"
     },
     {
+      "id": "starlasu_language_com-strumenta-egl_ReferenceExpr",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ReferenceExpr"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ReferenceExpr"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ReferenceExpr_name"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "AssignableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_AssignableExpression"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ReferenceExpr_name",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Reference"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ReferenceExpr_name"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "name"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ReferenceExpr"
+    },
+    {
       "id": "starlasu_language_com-strumenta-egl_ContinueStatement",
       "classifier": {
         "language": "LionCore-M3",
@@ -18687,6 +18613,145 @@
       "parent": "starlasu_language_com-strumenta-egl_WithSqlDataOption"
     },
     {
+      "id": "starlasu_language_com-strumenta-egl_DisplayStatement",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_DisplayStatement"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "DisplayStatement"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_DisplayStatement_textForm"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_DisplayStatement_textForm",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_DisplayStatement_textForm"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "textForm"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ReferenceExpr",
+              "reference": "starlasu_language_com-strumenta-egl_ReferenceExpr"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_DisplayStatement"
+    },
+    {
       "id": "starlasu_language_com-strumenta-egl_EglVariables",
       "classifier": {
         "language": "LionCore-M3",
@@ -19109,9 +19174,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_EglVariableName_value"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -19134,63 +19197,16 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_EglVariableName_value",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_EglVariableName_value"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "value"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
           "targets": [
             {
-              "resolveInfo": "String",
-              "reference": "LionCore-builtins-String"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_EglVariableName"
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ElseBranch",
@@ -19539,8 +19555,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
@@ -19961,8 +19977,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
@@ -20862,7 +20878,7 @@
             "version": "2023.1",
             "key": "Concept-abstract"
           },
-          "value": "false"
+          "value": "true"
         },
         {
           "property": {
@@ -20897,12 +20913,10 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_ForStatement_counter",
             "starlasu_language_com-strumenta-egl_ForStatement_delta",
             "starlasu_language_com-strumenta-egl_ForStatement_finish",
             "starlasu_language_com-strumenta-egl_ForStatement_start",
-            "starlasu_language_com-strumenta-egl_ForStatement_statements",
-            "starlasu_language_com-strumenta-egl_ForStatement_type"
+            "starlasu_language_com-strumenta-egl_ForStatement_statements"
           ]
         }
       ],
@@ -20931,66 +20945,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_ForStatement_counter",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ForStatement_counter"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "counter"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ForStatement"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ForStatement_delta",
@@ -21233,7 +21187,86 @@
       "parent": "starlasu_language_com-strumenta-egl_ForStatement"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_ForStatement_type",
+      "id": "starlasu_language_com-strumenta-egl_ForStatementWithDeclaration",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForStatementWithDeclaration"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ForStatementWithDeclaration"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ForStatementWithDeclaration_counter"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ForStatement",
+              "reference": "starlasu_language_com-strumenta-egl_ForStatement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForStatementWithDeclaration_counter",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21262,7 +21295,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_ForStatement_type"
+          "value": "com-strumenta-egl_ForStatementWithDeclaration_counter"
         },
         {
           "property": {
@@ -21270,7 +21303,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "type"
+          "value": "counter"
         }
       ],
       "containments": [],
@@ -21283,14 +21316,153 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglType",
-              "reference": "starlasu_language_com-strumenta-egl_EglType"
+              "resolveInfo": "EglVariable",
+              "reference": "starlasu_language_com-strumenta-egl_EglVariable"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ForStatement"
+      "parent": "starlasu_language_com-strumenta-egl_ForStatementWithDeclaration"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForStatementWithReference",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForStatementWithReference"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ForStatementWithReference"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ForStatementWithReference_counter"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ForStatement",
+              "reference": "starlasu_language_com-strumenta-egl_ForStatement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForStatementWithReference_counter",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForStatementWithReference_counter"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "counter"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ForStatementWithReference"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ForeachStatement",
@@ -21306,7 +21478,7 @@
             "version": "2023.1",
             "key": "Concept-abstract"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -21341,8 +21513,10 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_ForeachStatement_into",
-            "starlasu_language_com-strumenta-egl_ForeachStatement_statements"
+            "starlasu_language_com-strumenta-egl_ForeachStatement_recordVariable",
+            "starlasu_language_com-strumenta-egl_ForeachStatement_resultSet",
+            "starlasu_language_com-strumenta-egl_ForeachStatement_statement",
+            "starlasu_language_com-strumenta-egl_ForeachStatement_target"
           ]
         }
       ],
@@ -21373,7 +21547,127 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_into",
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_recordVariable",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForeachStatement_recordVariable"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "recordVariable"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "TypeableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_TypeableExpression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_resultSet",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForeachStatement_resultSet"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "resultSet"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "TypeableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_TypeableExpression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_statement",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21402,7 +21696,460 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_ForeachStatement_into"
+          "value": "com-strumenta-egl_ForeachStatement_statement"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "statement"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_target",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForeachStatement_target"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "target"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_TypeableExpression",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_TypeableExpression"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "TypeableExpression"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_TypeableExpression_container",
+            "starlasu_language_com-strumenta-egl_TypeableExpression_identifier",
+            "starlasu_language_com-strumenta-egl_TypeableExpression_member"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_TypeableExpression_container",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_TypeableExpression_container"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "container"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "TypeableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_TypeableExpression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_TypeableExpression"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_TypeableExpression_identifier",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_TypeableExpression_identifier"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "identifier"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "String",
+              "reference": "LionCore-builtins-String"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_TypeableExpression"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_TypeableExpression_member",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_TypeableExpression_member"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "member"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "TypeableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_TypeableExpression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_TypeableExpression"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatements",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForeachStatements"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ForeachStatements"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ForeachStatements_into",
+            "starlasu_language_com-strumenta-egl_ForeachStatements_statements"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatements_into",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ForeachStatements_into"
         },
         {
           "property": {
@@ -21430,10 +22177,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatements"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_ForeachStatement_statements",
+      "id": "starlasu_language_com-strumenta-egl_ForeachStatements_statements",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21462,7 +22209,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_ForeachStatement_statements"
+          "value": "com-strumenta-egl_ForeachStatements_statements"
         },
         {
           "property": {
@@ -21490,10 +22237,10 @@
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ForeachStatement"
+      "parent": "starlasu_language_com-strumenta-egl_ForeachStatements"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_FromResultForeachStatement",
+      "id": "starlasu_language_com-strumenta-egl_FromResultForeachStatements",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21522,7 +22269,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_FromResultForeachStatement"
+          "value": "com-strumenta-egl_FromResultForeachStatements"
         },
         {
           "property": {
@@ -21530,7 +22277,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "FromResultForeachStatement"
+          "value": "FromResultForeachStatements"
         }
       ],
       "containments": [
@@ -21541,7 +22288,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_FromResultForeachStatement_resultSet"
+            "starlasu_language_com-strumenta-egl_FromResultForeachStatements_resultSet"
           ]
         }
       ],
@@ -21554,8 +22301,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "ForeachStatement",
-              "reference": "starlasu_language_com-strumenta-egl_ForeachStatement"
+              "resolveInfo": "ForeachStatements",
+              "reference": "starlasu_language_com-strumenta-egl_ForeachStatements"
             }
           ]
         },
@@ -21572,7 +22319,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_FromResultForeachStatement_resultSet",
+      "id": "starlasu_language_com-strumenta-egl_FromResultForeachStatements_resultSet",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21601,7 +22348,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_FromResultForeachStatement_resultSet"
+          "value": "com-strumenta-egl_FromResultForeachStatements_resultSet"
         },
         {
           "property": {
@@ -21622,17 +22369,17 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_FromResultForeachStatement"
+      "parent": "starlasu_language_com-strumenta-egl_FromResultForeachStatements"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatement",
+      "id": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatements",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21661,7 +22408,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_RecordVariableForeachStatement"
+          "value": "com-strumenta-egl_RecordVariableForeachStatements"
         },
         {
           "property": {
@@ -21669,7 +22416,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "RecordVariableForeachStatement"
+          "value": "RecordVariableForeachStatements"
         }
       ],
       "containments": [
@@ -21680,7 +22427,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_RecordVariableForeachStatement_recordVariable"
+            "starlasu_language_com-strumenta-egl_RecordVariableForeachStatements_recordVariable"
           ]
         }
       ],
@@ -21693,8 +22440,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "ForeachStatement",
-              "reference": "starlasu_language_com-strumenta-egl_ForeachStatement"
+              "resolveInfo": "ForeachStatements",
+              "reference": "starlasu_language_com-strumenta-egl_ForeachStatements"
             }
           ]
         },
@@ -21711,7 +22458,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatement_recordVariable",
+      "id": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatements_recordVariable",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -21740,7 +22487,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_RecordVariableForeachStatement_recordVariable"
+          "value": "com-strumenta-egl_RecordVariableForeachStatements_recordVariable"
         },
         {
           "property": {
@@ -21761,14 +22508,14 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatement"
+      "parent": "starlasu_language_com-strumenta-egl_RecordVariableForeachStatements"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ForwardStatement",
@@ -22662,9 +23409,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_ForUpdateGetOption_resultSetId"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -22687,71 +23432,16 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_ForUpdateGetOption_resultSetId",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ForUpdateGetOption_resultSetId"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "resultSetId"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
           "targets": [
             {
-              "resolveInfo": "ReferenceExpr",
-              "reference": "starlasu_language_com-strumenta-egl_ReferenceExpr"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ForUpdateGetOption"
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_SingleRowGetOption",
@@ -23018,8 +23708,8 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_IfStatement_elseBranch",
-            "starlasu_language_com-strumenta-egl_IfStatement_statements",
+            "starlasu_language_com-strumenta-egl_IfStatement_ifElsePart",
+            "starlasu_language_com-strumenta-egl_IfStatement_statement",
             "starlasu_language_com-strumenta-egl_IfStatement_test"
           ]
         }
@@ -23051,7 +23741,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_IfStatement_elseBranch",
+      "id": "starlasu_language_com-strumenta-egl_IfStatement_ifElsePart",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -23080,7 +23770,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_IfStatement_elseBranch"
+          "value": "com-strumenta-egl_IfStatement_ifElsePart"
         },
         {
           "property": {
@@ -23088,7 +23778,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "elseBranch"
+          "value": "ifElsePart"
         }
       ],
       "containments": [],
@@ -23101,8 +23791,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "ElseBranch",
-              "reference": "starlasu_language_com-strumenta-egl_ElseBranch"
+              "resolveInfo": "IfElsePart",
+              "reference": "starlasu_language_com-strumenta-egl_IfElsePart"
             }
           ]
         }
@@ -23111,7 +23801,7 @@
       "parent": "starlasu_language_com-strumenta-egl_IfStatement"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_IfStatement_statements",
+      "id": "starlasu_language_com-strumenta-egl_IfStatement_statement",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -23140,7 +23830,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_IfStatement_statements"
+          "value": "com-strumenta-egl_IfStatement_statement"
         },
         {
           "property": {
@@ -23148,7 +23838,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "statements"
+          "value": "statement"
         }
       ],
       "containments": [],
@@ -23229,6 +23919,406 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_IfStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfElsePart",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfElsePart"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "IfElsePart"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_IfElsePart_statement"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfElsePart_statement",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfElsePart_statement"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "statement"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_IfElsePart"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfStatements",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfStatements"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "IfStatements"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_IfStatements_elseBranch",
+            "starlasu_language_com-strumenta-egl_IfStatements_statements",
+            "starlasu_language_com-strumenta-egl_IfStatements_test"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfStatements_elseBranch",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfStatements_elseBranch"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "elseBranch"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ElseBranch",
+              "reference": "starlasu_language_com-strumenta-egl_ElseBranch"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_IfStatements"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfStatements_statements",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfStatements_statements"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "statements"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_IfStatements"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_IfStatements_test",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_IfStatements_test"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "test"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_IfStatements"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_LabelContinueStatement",
@@ -23418,7 +24508,6 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_LabelStatement_label",
             "starlasu_language_com-strumenta-egl_LabelStatement_statement"
           ]
         }
@@ -23443,63 +24532,16 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_LabelStatement_label",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_LabelStatement_label"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "label"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
           "targets": [
             {
-              "resolveInfo": "String",
-              "reference": "LionCore-builtins-String"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_LabelStatement"
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_LabelStatement_statement",
@@ -23640,8 +24682,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -24262,8 +25304,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -24546,8 +25588,12 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            },
+            {
+              "resolveInfo": "Parameter",
+              "reference": "com-strumenta-StarLasu-Parameter-id"
             }
           ]
         }
@@ -26377,8 +27423,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglNode",
-              "reference": "starlasu_language_com-strumenta-egl_EglNode"
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
             }
           ]
         },
@@ -26738,8 +27784,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
@@ -27498,8 +28544,7 @@
           },
           "children": [
             "starlasu_language_com-strumenta-egl_PrepareStatement_forSqlRecordVariable",
-            "starlasu_language_com-strumenta-egl_PrepareStatement_prepareExpr",
-            "starlasu_language_com-strumenta-egl_PrepareStatement_statementId"
+            "starlasu_language_com-strumenta-egl_PrepareStatement_prepareExpr"
           ]
         }
       ],
@@ -27523,7 +28568,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -27580,8 +28630,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
             }
           ]
         }
@@ -27650,7 +28700,86 @@
       "parent": "starlasu_language_com-strumenta-egl_PrepareStatement"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_PrepareStatement_statementId",
+      "id": "starlasu_language_com-strumenta-egl_PrintStatement",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_PrintStatement"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "PrintStatement"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_PrintStatement_printForm"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_PrintStatement_printForm",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -27679,7 +28808,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_PrepareStatement_statementId"
+          "value": "com-strumenta-egl_PrintStatement_printForm"
         },
         {
           "property": {
@@ -27687,7 +28816,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "statementId"
+          "value": "printForm"
         }
       ],
       "containments": [],
@@ -27700,14 +28829,14 @@
           },
           "targets": [
             {
-              "resolveInfo": "EglId",
-              "reference": "starlasu_language_com-strumenta-egl_EglId"
+              "resolveInfo": "ReferenceExpr",
+              "reference": "starlasu_language_com-strumenta-egl_ReferenceExpr"
             }
           ]
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_PrepareStatement"
+      "parent": "starlasu_language_com-strumenta-egl_PrintStatement"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ReplaceStatement",
@@ -28300,14 +29429,245 @@
           },
           "targets": [
             {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
+              "resolveInfo": "SetValue",
+              "reference": "starlasu_language_com-strumenta-egl_SetValue"
             }
           ]
         }
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_SetStatement"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_SetValue",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_SetValue"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SetValue"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EmptySetValue",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EmptySetValue"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "EmptySetValue"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "SetValue",
+              "reference": "starlasu_language_com-strumenta-egl_SetValue"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_InitialSetValue",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_InitialSetValue"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "InitialSetValue"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "SetValue",
+              "reference": "starlasu_language_com-strumenta-egl_SetValue"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ThrowStatement",
@@ -29674,7 +31034,7 @@
           "children": [
             "starlasu_language_com-strumenta-egl_Type_args",
             "starlasu_language_com-strumenta-egl_Type_arrayDim",
-            "starlasu_language_com-strumenta-egl_Type_assignableExpression"
+            "starlasu_language_com-strumenta-egl_Type_typeableExpression"
           ]
         }
       ],
@@ -29698,7 +31058,12 @@
             "version": "2023.1",
             "key": "Concept-implements"
           },
-          "targets": []
+          "targets": [
+            {
+              "resolveInfo": "TypeAnnotation",
+              "reference": "com-strumenta-StarLasu-TypeAnnotation-id"
+            }
+          ]
         }
       ],
       "annotations": [],
@@ -29825,7 +31190,7 @@
       "parent": "starlasu_language_com-strumenta-egl_Type"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_Type_assignableExpression",
+      "id": "starlasu_language_com-strumenta-egl_Type_typeableExpression",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -29854,7 +31219,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_Type_assignableExpression"
+          "value": "com-strumenta-egl_Type_typeableExpression"
         },
         {
           "property": {
@@ -29862,7 +31227,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "assignableExpression"
+          "value": "typeableExpression"
         }
       ],
       "containments": [],
@@ -29875,8 +31240,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "AssignableExpression",
-              "reference": "starlasu_language_com-strumenta-egl_AssignableExpression"
+              "resolveInfo": "TypeableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_TypeableExpression"
             }
           ]
         }
@@ -30195,7 +31560,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_WhileStatement_statements",
+            "starlasu_language_com-strumenta-egl_WhileStatement_statement",
             "starlasu_language_com-strumenta-egl_WhileStatement_test"
           ]
         }
@@ -30227,7 +31592,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_WhileStatement_statements",
+      "id": "starlasu_language_com-strumenta-egl_WhileStatement_statement",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -30256,7 +31621,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_WhileStatement_statements"
+          "value": "com-strumenta-egl_WhileStatement_statement"
         },
         {
           "property": {
@@ -30264,7 +31629,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "statements"
+          "value": "statement"
         }
       ],
       "containments": [],
@@ -30347,6 +31712,206 @@
       "parent": "starlasu_language_com-strumenta-egl_WhileStatement"
     },
     {
+      "id": "starlasu_language_com-strumenta-egl_WhileStatements",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_WhileStatements"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "WhileStatements"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_WhileStatements_statements",
+            "starlasu_language_com-strumenta-egl_WhileStatements_test"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_WhileStatements_statements",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_WhileStatements_statements"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "statements"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Statement",
+              "reference": "starlasu_language_com-strumenta-egl_Statement"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_WhileStatements"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_WhileStatements_test",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_WhileStatements_test"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "test"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_WhileStatements"
+    },
+    {
       "id": "starlasu_language_com-strumenta-egl_Enumeration",
       "classifier": {
         "language": "LionCore-M3",
@@ -30422,8 +31987,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -30626,8 +32191,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -30776,8 +32341,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -31266,8 +32831,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -31532,8 +33097,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -32442,8 +34007,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -33129,8 +34694,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -33659,7 +35224,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_Record_eglProperties",
+            "starlasu_language_com-strumenta-egl_Record_embed",
             "starlasu_language_com-strumenta-egl_Record_fields",
             "starlasu_language_com-strumenta-egl_Record_type"
           ]
@@ -33687,8 +35252,12 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "ValidType",
+              "reference": "starlasu_language_com-strumenta-egl_ValidType"
+            },
+            {
+              "resolveInfo": "EntityDeclaration",
+              "reference": "com-strumenta-StarLasu-EntityDeclaration-id"
             }
           ]
         }
@@ -33697,7 +35266,7 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_Record_eglProperties",
+      "id": "starlasu_language_com-strumenta-egl_Record_embed",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
@@ -33710,7 +35279,7 @@
             "version": "2023.1",
             "key": "Link-multiple"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -33726,7 +35295,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_Record_eglProperties"
+          "value": "com-strumenta-egl_Record_embed"
         },
         {
           "property": {
@@ -33734,7 +35303,7 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "eglProperties"
+          "value": "embed"
         }
       ],
       "containments": [],
@@ -33747,8 +35316,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
+              "resolveInfo": "ReferenceTypeExpr",
+              "reference": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr"
             }
           ]
         }
@@ -33877,6 +35446,198 @@
       "parent": "starlasu_language_com-strumenta-egl_Record"
     },
     {
+      "id": "starlasu_language_com-strumenta-egl_ValidType",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Interface"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ValidType"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ValidType"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Interface-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ReferenceTypeExpr"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "ReferenceTypeExpr"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_ReferenceTypeExpr_name"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "AssignableExpression",
+              "reference": "starlasu_language_com-strumenta-egl_AssignableExpression"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr_name",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Reference"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_ReferenceTypeExpr_name"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "name"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr"
+    },
+    {
       "id": "starlasu_language_com-strumenta-egl_RecordType",
       "classifier": {
         "language": "LionCore-M3",
@@ -33925,6 +35686,7 @@
             "key": "Classifier-features"
           },
           "children": [
+            "starlasu_language_com-strumenta-egl_RecordType_initializations",
             "starlasu_language_com-strumenta-egl_RecordType_name"
           ]
         }
@@ -33954,6 +35716,66 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_RecordType_initializations",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_RecordType_initializations"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "initializations"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Expression",
+              "reference": "starlasu_language_com-strumenta-egl_Expression"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_RecordType"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_RecordType_name",
@@ -34133,8 +35955,7 @@
             "key": "Classifier-features"
           },
           "children": [
-            "starlasu_language_com-strumenta-egl_CustomRecord_id",
-            "starlasu_language_com-strumenta-egl_CustomRecord_initializations"
+            "starlasu_language_com-strumenta-egl_CustomRecord_id"
           ]
         }
       ],
@@ -34225,66 +36046,6 @@
       "parent": "starlasu_language_com-strumenta-egl_CustomRecord"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_CustomRecord_initializations",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_CustomRecord_initializations"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "initializations"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_CustomRecord"
-    },
-    {
       "id": "starlasu_language_com-strumenta-egl_IndexedRecord",
       "classifier": {
         "language": "LionCore-M3",
@@ -34332,9 +36093,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_IndexedRecord_initializations"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -34362,66 +36121,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_IndexedRecord_initializations",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_IndexedRecord_initializations"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "initializations"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_IndexedRecord"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_MQRecord",
@@ -34471,9 +36170,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_MQRecord_initializations"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -34501,66 +36198,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_MQRecord_initializations",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_MQRecord_initializations"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "initializations"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_MQRecord"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_RelativeRecord",
@@ -34610,9 +36247,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_RelativeRecord_initializations"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -34642,28 +36277,28 @@
       "parent": "starlasu_language_com-strumenta-egl"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_RelativeRecord_initializations",
+      "id": "starlasu_language_com-strumenta-egl_SQLRecord",
       "classifier": {
         "language": "LionCore-M3",
         "version": "2023.1",
-        "key": "Containment"
+        "key": "Concept"
       },
       "properties": [
         {
           "property": {
             "language": "LionCore-M3",
             "version": "2023.1",
-            "key": "Link-multiple"
+            "key": "Concept-abstract"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
             "language": "LionCore-M3",
             "version": "2023.1",
-            "key": "Feature-optional"
+            "key": "Concept-partition"
           },
-          "value": "true"
+          "value": "false"
         },
         {
           "property": {
@@ -34671,7 +36306,7 @@
             "version": "2023.1",
             "key": "IKeyed-key"
           },
-          "value": "com-strumenta-egl_RelativeRecord_initializations"
+          "value": "com-strumenta-egl_SQLRecord"
         },
         {
           "property": {
@@ -34679,27 +36314,44 @@
             "version": "2023.1",
             "key": "LionCore-builtins-INamed-name"
           },
-          "value": "initializations"
+          "value": "SQLRecord"
         }
       ],
-      "containments": [],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
       "references": [
         {
           "reference": {
             "language": "LionCore-M3",
             "version": "2023.1",
-            "key": "Link-type"
+            "key": "Concept-extends"
           },
           "targets": [
             {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
+              "resolveInfo": "RecordType",
+              "reference": "starlasu_language_com-strumenta-egl_RecordType"
             }
           ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
         }
       ],
       "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_RelativeRecord"
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_SerialRecord",
@@ -34749,9 +36401,7 @@
             "version": "2023.1",
             "key": "Classifier-features"
           },
-          "children": [
-            "starlasu_language_com-strumenta-egl_SerialRecord_initializations"
-          ]
+          "children": []
         }
       ],
       "references": [
@@ -34779,66 +36429,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_SerialRecord_initializations",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_SerialRecord_initializations"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "initializations"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Expression",
-              "reference": "starlasu_language_com-strumenta-egl_Expression"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_SerialRecord"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ProgramType",
@@ -35264,8 +36854,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -35512,6 +37102,328 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_Service"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EglGlobalVariablesCollector"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "EglGlobalVariablesCollector"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalLibraries",
+            "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalRecords",
+            "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalTypes",
+            "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalVariables"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalLibraries",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EglGlobalVariablesCollector_globalLibraries"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "globalLibraries"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Library",
+              "reference": "starlasu_language_com-strumenta-egl_Library"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalRecords",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EglGlobalVariablesCollector_globalRecords"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "globalRecords"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Record",
+              "reference": "starlasu_language_com-strumenta-egl_Record"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalTypes",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EglGlobalVariablesCollector_globalTypes"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "globalTypes"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ExternalType",
+              "reference": "starlasu_language_com-strumenta-egl_ExternalType"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector_globalVariables",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_EglGlobalVariablesCollector_globalVariables"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "globalVariables"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "EglVariable",
+              "reference": "starlasu_language_com-strumenta-egl_EglVariable"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_EglGlobalVariablesCollector"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ParamModifierWrapper",
@@ -36045,145 +37957,6 @@
       "parent": "starlasu_language_com-strumenta-egl_ReferenceFunctionExpr"
     },
     {
-      "id": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ReferenceTypeExpr"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "ReferenceTypeExpr"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-egl_ReferenceTypeExpr_name"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "AssignableExpression",
-              "reference": "starlasu_language_com-strumenta-egl_AssignableExpression"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr_name",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Reference"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_ReferenceTypeExpr_name"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "name"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_ReferenceTypeExpr"
-    },
-    {
       "id": "starlasu_language_com-strumenta-egl_ArrayAccessExpr",
       "classifier": {
         "language": "LionCore-M3",
@@ -36382,6 +38155,207 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_ArrayAccessExpr"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_Param",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_Param"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "Param"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": [
+            "starlasu_language_com-strumenta-egl_Param_inOutModifier",
+            "starlasu_language_com-strumenta-egl_Param_type"
+          ]
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": [
+            {
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
+            },
+            {
+              "resolveInfo": "Parameter",
+              "reference": "com-strumenta-StarLasu-Parameter-id"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_Param_inOutModifier",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Property"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_Param_inOutModifier"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "inOutModifier"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Property-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "String",
+              "reference": "LionCore-builtins-String"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_Param"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_Param_type",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Containment"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-multiple"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Feature-optional"
+          },
+          "value": "true"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_Param_type"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "type"
+        }
+      ],
+      "containments": [],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Link-type"
+          },
+          "targets": [
+            {
+              "resolveInfo": "Type",
+              "reference": "starlasu_language_com-strumenta-egl_Type"
+            }
+          ]
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl_Param"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_EglElements",
@@ -37268,203 +39242,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_Params"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_Param",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_Param"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "Param"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-egl_Param_inOutModifier",
-            "starlasu_language_com-strumenta-egl_Param_type"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_Param_inOutModifier",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Property"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_Param_inOutModifier"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "inOutModifier"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Property-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "String",
-              "reference": "LionCore-builtins-String"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_Param"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_Param_type",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_Param_type"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "type"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Type",
-              "reference": "starlasu_language_com-strumenta-egl_Type"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_Param"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_EnumerationElem",
@@ -38616,8 +40393,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -39399,8 +41176,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -40874,8 +42651,8 @@
           },
           "targets": [
             {
-              "resolveInfo": "Named",
-              "reference": "starlasu_language_com-strumenta-egl_Named"
+              "resolveInfo": "INamed",
+              "reference": "LionCore-builtins-INamed"
             }
           ]
         }
@@ -41535,145 +43312,6 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_CaseOtherwisePart"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_IfElsePart",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Concept"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-abstract"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-partition"
-          },
-          "value": "false"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_IfElsePart"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "IfElsePart"
-        }
-      ],
-      "containments": [
-        {
-          "containment": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Classifier-features"
-          },
-          "children": [
-            "starlasu_language_com-strumenta-egl_IfElsePart_statement"
-          ]
-        }
-      ],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-extends"
-          },
-          "targets": [
-            {
-              "resolveInfo": "ASTNode",
-              "reference": "com-strumenta-StarLasu-ASTNode-id"
-            }
-          ]
-        },
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Concept-implements"
-          },
-          "targets": []
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl"
-    },
-    {
-      "id": "starlasu_language_com-strumenta-egl_IfElsePart_statement",
-      "classifier": {
-        "language": "LionCore-M3",
-        "version": "2023.1",
-        "key": "Containment"
-      },
-      "properties": [
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-multiple"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Feature-optional"
-          },
-          "value": "true"
-        },
-        {
-          "property": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "IKeyed-key"
-          },
-          "value": "com-strumenta-egl_IfElsePart_statement"
-        },
-        {
-          "property": {
-            "language": "LionCore-builtins",
-            "version": "2023.1",
-            "key": "LionCore-builtins-INamed-name"
-          },
-          "value": "statement"
-        }
-      ],
-      "containments": [],
-      "references": [
-        {
-          "reference": {
-            "language": "LionCore-M3",
-            "version": "2023.1",
-            "key": "Link-type"
-          },
-          "targets": [
-            {
-              "resolveInfo": "Statement",
-              "reference": "starlasu_language_com-strumenta-egl_Statement"
-            }
-          ]
-        }
-      ],
-      "annotations": [],
-      "parent": "starlasu_language_com-strumenta-egl_IfElsePart"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_OnExceptionPart",
@@ -42572,6 +44210,83 @@
       ],
       "annotations": [],
       "parent": "starlasu_language_com-strumenta-egl_ExecuteSqlOption"
+    },
+    {
+      "id": "starlasu_language_com-strumenta-egl_SetStatementValue",
+      "classifier": {
+        "language": "LionCore-M3",
+        "version": "2023.1",
+        "key": "Concept"
+      },
+      "properties": [
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-abstract"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-partition"
+          },
+          "value": "false"
+        },
+        {
+          "property": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "IKeyed-key"
+          },
+          "value": "com-strumenta-egl_SetStatementValue"
+        },
+        {
+          "property": {
+            "language": "LionCore-builtins",
+            "version": "2023.1",
+            "key": "LionCore-builtins-INamed-name"
+          },
+          "value": "SetStatementValue"
+        }
+      ],
+      "containments": [
+        {
+          "containment": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Classifier-features"
+          },
+          "children": []
+        }
+      ],
+      "references": [
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-extends"
+          },
+          "targets": [
+            {
+              "resolveInfo": "ASTNode",
+              "reference": "com-strumenta-StarLasu-ASTNode-id"
+            }
+          ]
+        },
+        {
+          "reference": {
+            "language": "LionCore-M3",
+            "version": "2023.1",
+            "key": "Concept-implements"
+          },
+          "targets": []
+        }
+      ],
+      "annotations": [],
+      "parent": "starlasu_language_com-strumenta-egl"
     },
     {
       "id": "starlasu_language_com-strumenta-egl_ArgumentsValue",
