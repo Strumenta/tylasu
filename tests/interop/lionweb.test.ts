@@ -122,6 +122,10 @@ describe('Lionweb integration', function() {
             expect(root.getRole()).to.be.undefined;
             expect(root.nodeDefinition.name).to.equal("EglCompilationUnit");
             expect(root.containment("position")).to.be.undefined;
+            expect(() => root.getAttributeValue("position")).to.throw();
+            expect(root.nodeDefinition.features.position).to.be.undefined;
+            expect(root.nodeDefinition.features.originalNode).to.be.undefined;
+            expect(root.nodeDefinition.features.transpiledNode).to.be.undefined;
             expect(root.position).not.to.be.undefined;
             expect(root.position?.start.line).to.equal(1);
             expect(root.position?.start.column).to.equal(0);

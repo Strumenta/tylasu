@@ -70,20 +70,14 @@ export class LanguageMapping {
     }
 }
 
-function isSpecialConcept(classifier: Classifier | null) {
-    return classifier?.key == PositionClassifier.key;
-}
-
 function importFeature(feature: LWFeature): Feature | undefined {
+    if (feature.parent == AST_NODE_CLASSIFIER) {
+        return undefined;
+    }
     const def: Feature = { name: feature.name };
     if (feature instanceof Containment) {
-        if (!isSpecialConcept(feature.type)) {
-            def.child = true;
-            def.multiple = feature.multiple;
-        } else {
-            // We don't import the containment because we handle it specially
-            return undefined;
-        }
+        def.child = true;
+        def.multiple = feature.multiple;
     }
     return def;
 }
@@ -141,7 +135,11 @@ export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrap
 
     setFeatureValue(node: TylasuWrapper, feature: LWFeature, value: unknown): void {
         if (node instanceof TylasuNodeWrapper) {
-            if (feature instanceof Containment) {
+            if (feature.parent == AST_NODE_CLASSIFIER) {
+                if (feature.name == "position") {
+                    node.node.position = value as Position;
+                }
+            } else if (feature instanceof Containment) {
                 if (feature.multiple) {
                     node.node.addChild(feature.name, (value as TylasuNodeWrapper)?.node);
                 } else {
