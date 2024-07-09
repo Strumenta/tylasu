@@ -13,7 +13,6 @@ import {
 
 export class Box extends Node {
     @Children()
-    @Reflect.metadata("design:arrayElementType", Node)
     contents: Node[];
 
     constructor(public name: string, contents: Node[], positionOverride?: Position) {
@@ -23,8 +22,15 @@ export class Box extends Node {
 }
 
 export class Item extends Node {
+    @Child()
+    nested?: Item;
     constructor(public name: string, positionOverride?: Position) {
         super(positionOverride);
+    }
+
+    withNested(nested: Item) {
+        this.nested = nested;
+        return this;
     }
 }
 

@@ -26,7 +26,7 @@ export const testCase = new Box(
         new Box(
             "first",[new Item("1", pos(3, 6, 3, 12))],
             pos(2, 3, 4, 3)),
-        new Item("2", pos(5, 3, 5, 9)),
+        new Item("2", pos(5, 3, 5, 9)).withNested(new Item("nested")),
         new Box("big",[
             new Box("small",[
                 new Item("3", pos(8, 7, 8, 13)),
