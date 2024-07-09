@@ -126,6 +126,7 @@ describe('Lionweb integration', function() {
             expect(root.nodeDefinition.features.position).to.be.undefined;
             expect(root.nodeDefinition.features.originalNode).to.be.undefined;
             expect(root.nodeDefinition.features.transpiledNode).to.be.undefined;
+            expect(root.nodeDefinition.features.transpiledNodes).to.be.undefined;
             expect(root.position).not.to.be.undefined;
             expect(root.position?.start.line).to.equal(1);
             expect(root.position?.start.column).to.equal(0);
