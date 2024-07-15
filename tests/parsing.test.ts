@@ -82,7 +82,7 @@ describe('Parsing', function() {
                     IssueType.SYNTACTIC,
                     "mismatched input '+' expecting {INT_LIT, DEC_LIT, STRING_LIT, BOOLEAN_LIT}",
                     IssueSeverity.ERROR,
-                    new Position(new Point(1, 11), new Point(1, 11)),
+                    new Position(new Point(1, 11), new Point(1, 12)),
                     undefined,
                     "parser.mismatchedinput",
                     [
@@ -224,5 +224,23 @@ describe('Parsing', function() {
                         }
                     ]
                 )])
+        })
+    it("produces issues with non-flat positions",
+        function() {
+            const code =
+                "set set a = 10\n" +
+                "|display c\n";
+            const parser = new SLParser(new ANTLRTokenFactory());
+            const result = parser.parse(code);
+
+            expect(result.issues.length).to.not.eq(0)
+
+            const extraneousInput = result.issues.find(issue => issue.message.startsWith("Extraneous input 'set'"))
+            expect(!(extraneousInput?.position?.isFlat()))
+            expect(extraneousInput?.position).to.eql(new Position(new Point(1, 4), new Point(1, 7)))
+
+            const mismatchedInput = result.issues.find(issue => issue.message.startsWith("Mismatched input 'c'"))
+            expect(!(mismatchedInput?.position?.isFlat()))
+            expect(mismatchedInput?.position).to.eql(new Position(new Point(2, 9), new Point(2, 10)))
         })
 });
