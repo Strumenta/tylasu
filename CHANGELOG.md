@@ -2,6 +2,11 @@
 All notable changes to this project from version 1.2.0 upwards are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+- Added support for `prettier` and `git-hooks` with `husky`; code is formatted, linted and tested before each commit.
+
 ## [1.6.29] – 2024-07-09
 
 ### Fixed
@@ -20,7 +25,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.6.26] – 2024-06-12
 
 ### Added
-
 - Support for I18n in Issue messages
 
 ### Changed
