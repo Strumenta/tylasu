@@ -1,149 +1,176 @@
 {
-	"name": "@strumenta/tylasu",
-	"description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
-	"author": "Strumenta s.r.l.",
-	"publisher": "strumenta",
-	"version": "1.6.29",
-	"license": "Apache-2.0",
-	"keywords": [
-		"antlr",
-		"ast",
-		"starlasu",
-		"traversal",
-		"transformation"
-	],
-	"private": false,
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/strumenta/tylasu"
-	},
-	"files": [
-		"dist",
-		"src",
-		"package.json",
-		"tsconfig.base.json"
-	],
-	"exports": {
-		".": {
-			"import": "./dist/esm/index.js",
-			"require": "./dist/cjs/index.js",
-			"types": "./dist/types/index.d.ts"
-		},
-		"./parsing": {
-			"import": "./dist/esm/parsing/index.js",
-			"require": "./dist/cjs/parsing/index.js",
-			"types": "./dist/types/parsing/index.d.ts"
-		},
-		"./mapping": {
-			"import": "./dist/esm/mapping/mapping.js",
-			"require": "./dist/cjs/mapping/mapping.js",
-			"types": "./dist/types/mapping/mapping.d.ts"
-		},
-		"./testing": {
-			"import": "./dist/esm/testing/testing.js",
-			"require": "./dist/cjs/testing/testing.js",
-			"types": "./dist/types/testing/testing.d.ts"
-		},
-		"./interop/ecore": {
-			"import": "./dist/esm/interop/ecore.js",
-			"require": "./dist/cjs/interop/ecore.js",
-			"types": "./dist/types/interop/ecore.d.ts"
-		},
-		"./interop/ecore-enabled-parser": {
-			"import": "./dist/esm/interop/ecore-enabled-parser.js",
-			"require": "./dist/cjs/interop/ecore-enabled-parser.js",
-			"types": "./dist/types/interop/ecore-enabled-parser.d.ts"
-		},
-		"./interop/lionweb": {
-			"import": "./dist/esm/interop/lionweb.js",
-			"require": "./dist/cjs/interop/lionweb.js",
-			"types": "./dist/types/interop/lionweb.d.ts"
-		},
-		"./interop/strumenta-playground": {
-			"import": "./dist/esm/interop/strumenta-playground.js",
-			"require": "./dist/cjs/interop/strumenta-playground.js",
-			"types": "./dist/types/interop/strumenta-playground.d.ts"
-		}
-	},
-	"typesVersions": {
-		"*": {
-			"parsing": ["dist/types/parsing/index.d.ts"],
-			"mapping": ["dist/types/mapping/mapping.d.ts"],
-			"testing": ["dist/types/testing/testing.d.ts"],
-			"interop/ecore": ["dist/types/interop/ecore.d.ts"],
-			"interop/lionweb": ["dist/types/interop/lionweb.d.ts"],
-			"interop/ecore-enabled-parser": ["dist/types/interop/ecore-enabled-parser.d.ts"],
-			"interop/strumenta-playground": ["dist/types/interop/strumenta-playground.d.ts"]
-		}
-	},
-	"browser": "dist/esm/index.js",
-	"main": "dist/cjs/index.js",
-	"module": "dist/esm/index.js",
-	"types": "dist/types/index.d.ts",
-	"bin": {
-		"generate-classes": "dist/cjs/cli.js"
-	},
-	"dependencies": {
-		"iter-ops": "^1.5.0",
-		"reflect-metadata": "^0.1.13"
-	},
-	"peerDependencies": {
-		"@lionweb/core": "^0.6.7",
-		"@lionweb/utilities": "^0.6.7",
-		"antlr4ng": "^3.0.4",
-		"cmd-ts": "^0.13.0",
-		"ecore": "^0.12.0"
-	},
-	"peerDependenciesMeta": {
-		"@lionweb/core": {
-			"optional": true
-		},
-		"antlr4ng": {
-			"optional": true
-		},
-		"cmd-ts": {
-			"optional": true
-		},
-		"ecore": {
-			"optional": true
-		}
-	},
-	"scripts": {
-		"clean": "rimraf dist && rimraf strumenta-ast-v*.tgz",
-		"build": "yarn run build:esm && yarn run build:cjs",
-		"build:esm": "tsc --module es6 --outDir dist/esm",
-		"build:cjs": "tsc --module commonjs --outDir dist/cjs",
-		"extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping/mapping.ts src/testing/testing.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts src/interop/lionweb.ts",
-		"lint": "eslint src tests",
-		"build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
-		"test": "yarn run build-test-parser && node --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn run extract-docs && yarn pack",
-		"publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish"
-	},
-	"devDependencies": {
-		"@lionweb/core": "^0.6.7",
-		"@lionweb/utilities": "^0.6.7",
-		"@tsconfig/recommended": "^1.0.3",
-		"@types/chai": "^4.3.11",
-		"@types/ecore": "^0.12.5",
-		"@types/jest": "^29.5.10",
-		"@types/node": "^18.19.2",
-		"@typescript-eslint/eslint-plugin": "^6.13.2",
-		"@typescript-eslint/parser": "^6.13.2",
-		"antlr4ng": "^3.0.4",
-		"antlr4ng-cli": "^2.0.0",
-		"chai": "^4.3.10",
-		"cmd-ts": "^0.13.0",
-		"cross-env": "^7.0.3",
-		"ecore": "^0.12.0",
-		"eslint": "^8.55.0",
-		"i18next": "^23.11.5",
-		"jest": "^29.7.0",
-		"merge-options": "^2.0.0",
-		"rimraf": "^3.0.0",
-		"ts-jest": "^29.1.1",
-		"ts-node": "^10.9.1",
-		"typedoc": "^0.25.7",
-		"typescript": "^5.3.2"
-	}
+    "name": "@strumenta/tylasu",
+    "description": "AST building blocks for TypeScript/JavaScript, part of the *lasu family, with optional integrations with ANTLR4 and Ecore.",
+    "author": "Strumenta s.r.l.",
+    "publisher": "strumenta",
+    "version": "1.6.29",
+    "license": "Apache-2.0",
+    "keywords": [
+        "antlr",
+        "ast",
+        "starlasu",
+        "traversal",
+        "transformation"
+    ],
+    "private": false,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/strumenta/tylasu"
+    },
+    "files": [
+        "dist",
+        "src",
+        "package.json",
+        "tsconfig.base.json"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js",
+            "types": "./dist/types/index.d.ts"
+        },
+        "./parsing": {
+            "import": "./dist/esm/parsing/index.js",
+            "require": "./dist/cjs/parsing/index.js",
+            "types": "./dist/types/parsing/index.d.ts"
+        },
+        "./mapping": {
+            "import": "./dist/esm/mapping/mapping.js",
+            "require": "./dist/cjs/mapping/mapping.js",
+            "types": "./dist/types/mapping/mapping.d.ts"
+        },
+        "./testing": {
+            "import": "./dist/esm/testing/testing.js",
+            "require": "./dist/cjs/testing/testing.js",
+            "types": "./dist/types/testing/testing.d.ts"
+        },
+        "./interop/ecore": {
+            "import": "./dist/esm/interop/ecore.js",
+            "require": "./dist/cjs/interop/ecore.js",
+            "types": "./dist/types/interop/ecore.d.ts"
+        },
+        "./interop/ecore-enabled-parser": {
+            "import": "./dist/esm/interop/ecore-enabled-parser.js",
+            "require": "./dist/cjs/interop/ecore-enabled-parser.js",
+            "types": "./dist/types/interop/ecore-enabled-parser.d.ts"
+        },
+        "./interop/lionweb": {
+            "import": "./dist/esm/interop/lionweb.js",
+            "require": "./dist/cjs/interop/lionweb.js",
+            "types": "./dist/types/interop/lionweb.d.ts"
+        },
+        "./interop/strumenta-playground": {
+            "import": "./dist/esm/interop/strumenta-playground.js",
+            "require": "./dist/cjs/interop/strumenta-playground.js",
+            "types": "./dist/types/interop/strumenta-playground.d.ts"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "parsing": [
+                "dist/types/parsing/index.d.ts"
+            ],
+            "mapping": [
+                "dist/types/mapping/mapping.d.ts"
+            ],
+            "testing": [
+                "dist/types/testing/testing.d.ts"
+            ],
+            "interop/ecore": [
+                "dist/types/interop/ecore.d.ts"
+            ],
+            "interop/lionweb": [
+                "dist/types/interop/lionweb.d.ts"
+            ],
+            "interop/ecore-enabled-parser": [
+                "dist/types/interop/ecore-enabled-parser.d.ts"
+            ],
+            "interop/strumenta-playground": [
+                "dist/types/interop/strumenta-playground.d.ts"
+            ]
+        }
+    },
+    "browser": "dist/esm/index.js",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/types/index.d.ts",
+    "bin": {
+        "generate-classes": "dist/cjs/cli.js"
+    },
+    "dependencies": {
+        "eslint-config-prettier": "^9.1.0",
+        "husky": "^9.0.11",
+        "iter-ops": "^1.5.0",
+        "lint-staged": "^15.2.7",
+        "prettier": "^3.3.3",
+        "reflect-metadata": "^0.1.13"
+    },
+    "peerDependencies": {
+        "@lionweb/core": "^0.6.7",
+        "@lionweb/utilities": "^0.6.7",
+        "antlr4ng": "^3.0.4",
+        "cmd-ts": "^0.13.0",
+        "ecore": "^0.12.0"
+    },
+    "peerDependenciesMeta": {
+        "@lionweb/core": {
+            "optional": true
+        },
+        "antlr4ng": {
+            "optional": true
+        },
+        "cmd-ts": {
+            "optional": true
+        },
+        "ecore": {
+            "optional": true
+        }
+    },
+    "scripts": {
+        "clean": "rimraf dist && rimraf strumenta-ast-v*.tgz",
+        "build": "yarn run build:esm && yarn run build:cjs",
+        "build:esm": "tsc --module es6 --outDir dist/esm",
+        "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+        "extract-docs": "typedoc --out dist/docs src/index.ts src/parsing/index.ts src/mapping/mapping.ts src/testing/testing.ts src/interop/ecore.ts src/interop/ecore-enabled-parser.ts src/interop/lionweb.ts",
+        "lint": "eslint src tests",
+        "format": "yarn run lint --fix && yarn run prettier . --write",
+        "build-test-parser": "antlr4ng -Dlanguage=TypeScript -o tests/parser -Xexact-output-dir -visitor tests/grammar/SimpleLangLexer.g4 tests/grammar/SimpleLangParser.g4",
+        "test": "yarn run build-test-parser && node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "dist": "yarn run clean && yarn run lint && yarn run build && yarn run test && yarn run extract-docs && yarn pack",
+        "publish-lib": "yarn dist && yarn publish --access public && yarn --use-yarnrc .yarnrc-github-packages publish",
+        "prepare": "husky"
+    },
+    "devDependencies": {
+        "@lionweb/core": "^0.6.7",
+        "@lionweb/utilities": "^0.6.7",
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+        "@tsconfig/recommended": "^1.0.3",
+        "@types/chai": "^4.3.11",
+        "@types/ecore": "^0.12.5",
+        "@types/jest": "^29.5.10",
+        "@types/node": "^18.19.2",
+        "@typescript-eslint/eslint-plugin": "^6.13.2",
+        "@typescript-eslint/parser": "^6.13.2",
+        "antlr4ng": "^3.0.4",
+        "antlr4ng-cli": "^2.0.0",
+        "chai": "^4.3.10",
+        "cmd-ts": "^0.13.0",
+        "cross-env": "^7.0.3",
+        "ecore": "^0.12.0",
+        "eslint": "^8.55.0",
+        "i18next": "^23.11.5",
+        "jest": "^29.7.0",
+        "merge-options": "^2.0.0",
+        "rimraf": "^3.0.0",
+        "ts-jest": "^29.1.1",
+        "ts-node": "^10.9.1",
+        "typedoc": "^0.25.7",
+        "typescript": "^5.3.2"
+    },
+    "lint-staged": {
+        "**/*": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    }
 }
