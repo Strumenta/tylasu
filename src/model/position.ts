@@ -131,10 +131,18 @@ export class Position {
 
     /**
      * If start and end are the same,
-     * then this Position is considered empty.
+     * then this Position is considered flat.
+     */
+    isFlat(): boolean {
+        return this.start.equals(this.end);
+    }
+
+    /**
+     * @deprecated
+     * Use `this.isFlat()` instead.
      */
     isEmpty(): boolean {
-        return this.start.equals(this.end)
+        return this.isFlat();
     }
 
     /**

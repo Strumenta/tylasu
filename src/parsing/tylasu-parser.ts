@@ -11,7 +11,8 @@ import {
     Recognizer,
     TerminalNode,
     Token,
-    TokenStream
+    TokenStream,
+    CommonToken
 } from "antlr4ng";
 import {Issue, IssueSeverity} from "../validation";
 import {Point, Position, Source, StringSource} from "../model/position";
@@ -120,6 +121,12 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
             reportAttemptingFullContext() {},
             reportContextSensitivity() {},
             syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
+                const startPoint = new Point(line, charPositionInLine);
+                let endPoint = new Point(line, charPositionInLine);
+                if (offendingSymbol instanceof CommonToken) {
+                    const tokenLength = offendingSymbol.stop - offendingSymbol.start + 1;
+                    endPoint = new Point(offendingSymbol.line, offendingSymbol.column + tokenLength);
+                };
                 const regex = /token recognition error at: '(.+)'/
                 if (regex.test(msg)){
                     const match = msg.match(regex) as string[];
@@ -127,7 +134,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
                         Issue.lexical(
                             msg || "unspecified",
                             IssueSeverity.ERROR,
-                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            new Position(startPoint, endPoint),
                             undefined,
                             TOKEN_RECOGNITION_ERROR,
                             [
@@ -141,7 +148,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
                         Issue.lexical(
                             msg || "unspecified",
                             IssueSeverity.ERROR,
-                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            new Position(startPoint, endPoint),
                             undefined,
                             SYNTAX_ERROR));
                 }
@@ -301,6 +308,12 @@ export abstract class TylasuParser<
             reportAttemptingFullContext() {},
             reportContextSensitivity() {},
             syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, offendingSymbol: S | null, line: number, charPositionInLine: number, msg: string) {
+                const startPoint = new Point(line, charPositionInLine);
+                let endPoint = new Point(line, charPositionInLine);
+                if (offendingSymbol instanceof CommonToken) {
+                    const tokenLength = offendingSymbol.stop - offendingSymbol.start + 1;
+                    endPoint = new Point(offendingSymbol.line, offendingSymbol.column + tokenLength);
+                };
                 const mismatchedRegex = /^mismatched input '(<EOF>|.+)' expecting {([a-zA-Z_]+(, [a-zA-Z_]+)*)}$/
                 if (mismatchedRegex.test(msg)) {
                     const match = msg.match(mismatchedRegex) as string[];
@@ -316,7 +329,7 @@ export abstract class TylasuParser<
                         Issue.syntactic(
                             msg,
                             IssueSeverity.ERROR,
-                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            new Position(startPoint, endPoint),
                             undefined,
                             MISMATCHED_INPUT,
                             args));
@@ -325,7 +338,7 @@ export abstract class TylasuParser<
                         Issue.syntactic(
                             msg || "unspecified",
                             IssueSeverity.ERROR,
-                            Position.ofPoint(new Point(line, charPositionInLine)),
+                            new Position(startPoint, endPoint),
                             undefined,
                             SYNTAX_ERROR));
                 }

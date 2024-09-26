@@ -30,4 +30,10 @@ describe('Issues', function() {
                 SOURCE_NODE_NOT_MAPPED,  [{ name: "nodeType", value: "SomeNode" }]);
             expect(i18next.t(issue.code!, { type: issue.args[0].value })).to.equal("Source node not mapped: SomeNode");
         });
+
+    it("has capitalized messages",
+        function () {
+            let issue = Issue.syntactic("unexpected token: foo", IssueSeverity.ERROR, undefined, undefined, SYNTAX_ERROR);
+            expect(issue.message).to.equal("Unexpected token: foo");
+        });
 });
