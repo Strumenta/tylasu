@@ -340,6 +340,57 @@ export abstract class Node extends Origin implements Destination {
         return this;
     }
 
+    /**
+     * Replace the current Node with another Node
+     *
+     * @throws Error - if this.parent === undefined
+     */
+    replaceWith(other: Node): void {
+        if (!this.parent) {
+            throw new Error("Cannot replace a Node that has no parent")
+        }
+
+        this.parent.transformChildren(node => node === this ? other : node);
+    }
+
+    /**
+     * Apply the given `operation` function to
+     * all of the Node's children.
+     *
+     * It's possible to use both pure functions,
+     * to replace the nodes, and functions that mutate
+     * the nodes in-place.
+     */
+    transformChildren(operation: (node: Node) => Node): void {
+        const nodesNames = this.getChildNames();
+
+        nodesNames.forEach(nodeName => {
+            const propertyValue = this[nodeName];
+            if (propertyValue instanceof Node) {
+                const newNode = operation(propertyValue);
+                /*
+                 * Identity check;
+                 * If the variable is pointing to the same object,
+                 * the operation changed the Node in-place.
+                 */
+                if (newNode !== propertyValue) {
+                    this.setChild(nodeName, newNode);
+                }
+
+            } else if (Array.isArray(propertyValue)) {
+                propertyValue.forEach((element, index) => {
+                    if (element instanceof Node) {
+                        const newNode = operation(element);
+                        // Another identity check
+                        if (newNode !== element) {
+                            (propertyValue as Node[])[index] = newNode;
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     withOrigin(origin?: Origin): this {
         this.origin = origin;
         return this;
