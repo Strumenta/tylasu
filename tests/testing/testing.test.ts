@@ -40,7 +40,7 @@ describe('AssertASTsAreEqual', function() {
         const simpleNode2 : Node = new SimpleNode("different node");
         expect(() =>
             assertASTsAreEqual(simpleNode1, simpleNode2)
-        ).to.throw("expected 'different node' to equal 'node'");
+        ).to.throw("<root>, property name is 'node', but found 'different node'");
     });
     it("two different node instances of two different types, but with same values must NOT pass", function () {
         const node1 : Node = new SimpleNode("node");
