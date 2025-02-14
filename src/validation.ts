@@ -1,5 +1,6 @@
 import {Node} from "./model/model";
 import {Position} from "./model/position";
+import { capitalize } from "./utils/capitalize";
 
 export enum IssueType { LEXICAL, SYNTACTIC, SEMANTIC}
 
@@ -21,6 +22,8 @@ export class Issue {
         public readonly code?: string,
         public readonly args: IssueArg[] = []
         ) {
+        this.message = capitalize(message);
+
         if (!position) {
             this.position = node?.position;
         }
