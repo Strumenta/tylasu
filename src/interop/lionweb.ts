@@ -12,6 +12,7 @@ import {
     Interface,
     Language,
     Node as LWNodeInterface,
+    Property,
     SerializationChunk
 } from "@lionweb/core";
 import {
@@ -29,7 +30,7 @@ import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
 export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as Concept;
-export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Containment;
+export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Property;
 export const PositionClassifier = PositionFeature.type!;
 export const PointClassifier = STARLASU_LANGUAGE.entities.find(e => e.name == "Point")! as Datatype;
 
@@ -277,8 +278,8 @@ export function deserializeToTylasuNodes(
     dependentNodes: LWNodeInterface[] = []
 ): Node[] {
     const primitiveTypeDeserializer = new DefaultPrimitiveTypeDeserializer();
-    primitiveTypeDeserializer.registerDeserializer(PointClassifier, deserializePoint);
-    primitiveTypeDeserializer.registerDeserializer(PositionClassifier, (value) => {
+    primitiveTypeDeserializer.register(PointClassifier, deserializePoint);
+    primitiveTypeDeserializer.register(PositionClassifier, (value) => {
         const parts = value.split("to");
         return new Position(deserializePoint(parts[0].trim()), deserializePoint(parts[1].trim()));
     });

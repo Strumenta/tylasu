@@ -126,7 +126,7 @@ export abstract class TylasuANTLRLexer<T extends TylasuToken> implements TylasuL
                 if (offendingSymbol instanceof CommonToken) {
                     const tokenLength = offendingSymbol.stop - offendingSymbol.start + 1;
                     endPoint = new Point(offendingSymbol.line, offendingSymbol.column + tokenLength);
-                };
+                }
                 const regex = /token recognition error at: '(.+)'/
                 if (regex.test(msg)){
                     const match = msg.match(regex) as string[];
@@ -313,7 +313,7 @@ export abstract class TylasuParser<
                 if (offendingSymbol instanceof CommonToken) {
                     const tokenLength = offendingSymbol.stop - offendingSymbol.start + 1;
                     endPoint = new Point(offendingSymbol.line, offendingSymbol.column + tokenLength);
-                };
+                }
                 const mismatchedRegex = /^mismatched input '(<EOF>|.+)' expecting {([a-zA-Z_]+(, [a-zA-Z_]+)*)}$/
                 if (mismatchedRegex.test(msg)) {
                     const match = msg.match(mismatchedRegex) as string[];

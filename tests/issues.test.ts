@@ -33,7 +33,7 @@ describe('Issues', function() {
 
     it("has capitalized messages",
         function () {
-            let issue = Issue.syntactic("unexpected token: foo", IssueSeverity.ERROR, undefined, undefined, SYNTAX_ERROR);
+            const issue = Issue.syntactic("unexpected token: foo", IssueSeverity.ERROR, undefined, undefined, SYNTAX_ERROR);
             expect(issue.message).to.equal("Unexpected token: foo");
         });
 });
