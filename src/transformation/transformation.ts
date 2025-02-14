@@ -330,7 +330,7 @@ export class ASTTransformer {
 
         try {
             childNodeFactory.set(node, child);
-        } catch (e) {
+        } catch {
             throw new Error(`Could not set child ${childNodeFactory}`);
         }
     }

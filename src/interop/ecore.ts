@@ -499,7 +499,6 @@ export function generateASTClasses(model: ECore.EPackage): PackageDescription {
     return pkg;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loadEPackages(data: any, resource: ECore.Resource): ECore.EPackage[] {
     if(typeof data === "string") {
         data = JSON.parse(data);
@@ -565,7 +564,7 @@ class ReferencesTracker {
         let eClass;
         try {
             eClass = findEClass(uri, this.resource);
-        } catch (e) {
+        } catch {
             //Not an eclass
         }
         if (eClass) {
@@ -735,7 +734,6 @@ function setChild(
  * @param strict if true (the default), unknown attributes are an error, otherwise they're ignored.
  * @param referencesTracker references tracker used to read references and solve them later (after loading all nodes)
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function importJsonObject(
     obj: any, resource: ECore.Resource, eClass?: ECore.EClass,
     strict = true, referencesTracker: ReferencesTracker = new ReferencesTracker(resource)): ECore.EObject {

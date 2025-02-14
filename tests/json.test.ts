@@ -96,6 +96,7 @@ describe('JSON generator', function() {
         });
     it("Wrongly configured node",
         function () {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             expect(() => require("./wrong-node")).to.throw;
         });
     it("Node with resolved reference by name",
