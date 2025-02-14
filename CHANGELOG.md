@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `Issue`'s messages are capitalized.
 - Parsing `Issue`s' position uses the token's length.
 
+## [1.6.30] – 2024-09-30
+
+### Added
+- `Node.transformChildren` to run a function on all the children of a Node
+- `Node.replaceWith` to replace a Node with another
+
+### Changed
+- Aligned Token Categories with Kolasu
+- Increased code coverage
+
 ## [1.6.29] – 2024-07-09
 
 ### Fixed

@@ -10,7 +10,12 @@ export enum TokenCategory {
     KEYWORD = "Keyword",
     NUMERIC_LITERAL = "Numeric literal",
     STRING_LITERAL = "String literal",
-    PLAIN_TEXT = "Plain text"
+    OTHER_LITERAL = "Other literal",
+    PLAIN_TEXT = "Plain text",
+    WHITESPACE = "Whitespace",
+    IDENTIFIER = "Identifier",
+    PUNCTUATION = "Punctuation",
+    OPERATOR = "Operator",
 }
 
 /**
