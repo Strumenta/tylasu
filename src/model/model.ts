@@ -17,6 +17,7 @@ export type NodeDefinition = {
     name?: string,
     features: { [name: string | symbol]: Feature },
     resolved?: boolean;
+    inheritsFrom?: NodeDefinition
 };
 
 export type Feature = {
@@ -489,6 +490,7 @@ export function registerNodeDefinition<T extends Node>(
             features: {}
         };
         if(existingDef) {
+            def.inheritsFrom = existingDef;
             for(const prop in existingDef.features) {
                 def.features[prop] = { inherited: true, ...existingDef.features[prop]};
             }
