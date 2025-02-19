@@ -31,8 +31,8 @@ export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
 export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as Concept;
 export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Property;
-export const PositionClassifier = PositionFeature.type!;
-export const PointClassifier = STARLASU_LANGUAGE.entities.find(e => e.name == "Point")! as Datatype;
+export const PositionType = PositionFeature.type!;
+export const PointType = STARLASU_LANGUAGE.entities.find(e => e.name == "Point")! as Datatype;
 
 export class TylasuWrapper implements LWNodeInterface {
     constructor(
@@ -278,8 +278,8 @@ export function deserializeToTylasuNodes(
     dependentNodes: LWNodeInterface[] = []
 ): Node[] {
     const primitiveTypeDeserializer = new DefaultPrimitiveTypeDeserializer();
-    primitiveTypeDeserializer.register(PointClassifier, deserializePoint);
-    primitiveTypeDeserializer.register(PositionClassifier, (value) => {
+    primitiveTypeDeserializer.register(PointType, deserializePoint);
+    primitiveTypeDeserializer.register(PositionType, (value) => {
         const parts = value.split("to");
         return new Position(deserializePoint(parts[0].trim()), deserializePoint(parts[1].trim()));
     });
