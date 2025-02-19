@@ -55,7 +55,7 @@ export function getNodeDefinition(node: Node | (abstract new (...args: any[]) =>
             let metadataHolder;
             try {
                 metadataHolder = new (node as any)();
-            } catch (_) {
+            } catch {
                 metadataHolder = node;
             }
             for(const p in definition.features) {
@@ -69,7 +69,7 @@ export function getNodeDefinition(node: Node | (abstract new (...args: any[]) =>
                 }
             }
             definition.resolved = true;
-        } catch (e) {
+        } catch {
             //Ignore
         }
     }
@@ -116,7 +116,7 @@ export class SimpleOrigin extends Origin {
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Destination {}
 
 

@@ -199,7 +199,6 @@ export class LionwebNode extends NodeAdapter {
         super();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     get(...path: string[]): LionwebNode | undefined {
         let result: LionwebNode | undefined = undefined;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
