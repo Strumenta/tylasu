@@ -88,8 +88,8 @@
 		"reflect-metadata": "^0.1.13"
 	},
 	"peerDependencies": {
-		"@lionweb/core": "^0.6.7",
-		"@lionweb/utilities": "^0.6.7",
+		"@lionweb/core": "^0.6.12",
+		"@lionweb/utilities": "^0.6.12",
 		"antlr4ng": "^3.0.4",
 		"cmd-ts": "^0.13.0",
 		"ecore": "^0.12.0"
@@ -123,8 +123,8 @@
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.2.0",
 		"@eslint/js": "^9.20.0",
-		"@lionweb/core": "^0.6.7",
-		"@lionweb/utilities": "^0.6.7",
+		"@lionweb/core": "^0.6.12",
+		"@lionweb/utilities": "^0.6.12",
 		"@tsconfig/recommended": "^1.0.3",
 		"@types/chai": "^4.3.11",
 		"@types/ecore": "^0.12.5",
