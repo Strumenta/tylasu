@@ -1,11 +1,11 @@
-import {Node, NodeDefinition} from "../model/model";
+import {Concept, Node} from "../model/model";
 import {Position} from "../model/position";
 import {Issue} from "../validation";
 import {PossiblyNamed, ReferenceByName} from "../model/naming";
 
 export abstract class NodeAdapter extends Node {
     abstract parent?: NodeAdapter;
-    abstract get nodeDefinition(): NodeDefinition;
+    abstract get concept(): Concept;
 
     abstract get(...path: string[]): NodeAdapter | undefined;
 
@@ -68,8 +68,8 @@ export class AugmentedNode extends NodeAdapter {
         }
     }
 
-    get nodeDefinition() {
-        return this.node.nodeDefinition;
+    get concept() {
+        return this.node.concept;
     }
 
     setChild(name: string, child: Node) {
@@ -165,8 +165,8 @@ export class TraceNode extends Node implements PossiblyNamed {
         return this.getPosition();
     }
 
-    get nodeDefinition(): NodeDefinition {
-        return this.nodeAdapter.nodeDefinition;
+    get nodeDefinition(): Concept {
+        return this.nodeAdapter.concept;
     }
 
     getAttributes(): { [name: string]: any } {

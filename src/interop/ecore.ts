@@ -5,13 +5,13 @@
 import {
     ensureNodeDefinition,
     ensurePackage,
-    getNodeDefinition,
+    getConcept,
     Node,
-    NODE_TYPES, NodeDefinition,
+    NODE_TYPES,
     PackageDescription,
     Feature,
     registerNodeDefinition,
-    registerNodeAttribute
+    registerNodeAttribute, Concept
 } from "../model/model";
 import ECore from "ecore/dist/ecore";
 import {Point, Position} from "../model/position";
@@ -101,7 +101,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     });
     constructor[ECLASS_SYMBOL] = eClass;
     const proto = Object.getPrototypeOf(constructor);
-    const parentNodeDef = getNodeDefinition(proto);
+    const parentNodeDef = getConcept(proto);
     if(parentNodeDef && parentNodeDef.package && parentNodeDef.name) {
         const {packageDef, ePackage} = registerEPackage(parentNodeDef.package, {});
         const superclass = registerEClass(parentNodeDef.name, packageDef, ePackage);
@@ -109,7 +109,7 @@ function registerEClass(nodeType: string, packageDef: PackageDescription, ePacka
     } else {
         eClass.get("eSuperTypes").add(THE_NODE_ECLASS);
     }
-    const nodeDef = getNodeDefinition(constructor);
+    const nodeDef = getConcept(constructor);
     if (nodeDef) {
         for (const prop in nodeDef.features) {
             const property = nodeDef.features[prop];
@@ -841,17 +841,17 @@ export class ECoreNode extends NodeAdapter implements PossiblyNamed {
         return this.getAttributeValue("name");
     }
 
-    private _nodeDefinition?: NodeDefinition;
+    private _concept?: Concept;
 
-    get nodeDefinition() {
-        if (!this._nodeDefinition) {
-            this._nodeDefinition = {
+    get concept() {
+        if (!this._concept) {
+            this._concept = {
                 package: this.eo.eClass.eContainer.get("name") as string,
                 name: this.eo.eClass.get("name") as string,
                 features: this.getFeatures()
             };
         }
-        return this._nodeDefinition;
+        return this._concept;
     }
 
     get(...path: string[]): NodeAdapter | undefined {

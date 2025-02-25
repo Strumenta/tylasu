@@ -4,7 +4,7 @@
  */
 import {
     Classifier,
-    Concept,
+    Concept as LWConcept,
     Containment, Datatype, DefaultPrimitiveTypeDeserializer, deserializeSerializationChunk,
     Feature as LWFeature,
     Id,
@@ -19,17 +19,17 @@ import {
     NodeAdapter,
     Issue,
     Node,
-    NodeDefinition,
+    Concept,
     Position,
     Feature,
     Point,
     TraceNode,
-    getNodeDefinition
+    getConcept
 } from "..";
 import {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 export {STARLASU_LANGUAGE} from "./lionweb-starlasu-language";
 
-export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as Concept;
+export const ASTNode = STARLASU_LANGUAGE.entities.find(e => e.name == "ASTNode")! as LWConcept;
 export const PositionFeature = ASTNode.features.find(f => f.name == "position")! as Property;
 export const PositionType = PositionFeature.type!;
 export const PointType = STARLASU_LANGUAGE.entities.find(e => e.name == "Point")! as Datatype;
@@ -55,7 +55,7 @@ export class LanguageMapping {
 
     register(nodeType: any, classifier: Classifier) {
         if (!classifier) {
-            throw new Error(`Can't register ${getNodeDefinition(nodeType)?.name}: not a classifier: ${classifier}`);
+            throw new Error(`Can't register ${getConcept(nodeType)?.name}: not a classifier: ${classifier}`);
         }
         this.nodeTypes.set(nodeType, classifier);
         this.classifiers.set(classifier, nodeType);
@@ -83,7 +83,7 @@ function importFeature(feature: LWFeature): Feature | undefined {
     return def;
 }
 
-function importConcept(concept: NodeDefinition | undefined, classifier: Classifier) {
+function importConcept(concept: Concept | undefined, classifier: Classifier) {
     concept = {
         name: classifier.name,
         features: {},
@@ -100,7 +100,7 @@ function importConcept(concept: NodeDefinition | undefined, classifier: Classifi
 
 export class TylasuInstantiationFacade implements InstantiationFacade<TylasuWrapper> {
 
-    protected readonly concepts = new Map<Classifier, NodeDefinition>();
+    protected readonly concepts = new Map<Classifier, Concept>();
 
     constructor(public languageMappings: LanguageMapping[] = [STARLASU_LANGUAGE_MAPPING]) {}
 
@@ -166,7 +166,7 @@ STARLASU_LANGUAGE_MAPPING.register(Node, AST_NODE_CLASSIFIER);
 
 function allFeatures(classifier: Classifier) {
     const features = [...classifier.features];
-    if (classifier instanceof Concept) {
+    if (classifier instanceof LWConcept) {
         const superConcept = classifier.extends;
         if (superConcept) {
             features.push(...allFeatures(superConcept));
@@ -187,12 +187,12 @@ export class LionwebNode extends NodeAdapter {
 
     parent: LionwebNode;
 
-    get nodeDefinition() {
-        return this._nodeDefinition;
+    get concept() {
+        return this._concept;
     }
 
     constructor(
-        protected readonly _nodeDefinition: NodeDefinition,
+        protected readonly _concept: Concept,
         protected readonly classifier: Classifier,
         protected lwnode: LWNodeInterface
     ) {
@@ -216,8 +216,8 @@ export class LionwebNode extends NodeAdapter {
 
     getAttributes(): { [p: string]: any } {
         const attributes = {};
-        for (const p in this.nodeDefinition.features) {
-            if (!this.nodeDefinition.features[p].child) {
+        for (const p in this.concept.features) {
+            if (!this.concept.features[p].child) {
                 attributes[p] = this.getAttributeValue(p);
             }
         }
@@ -252,7 +252,7 @@ export class LionwebNode extends NodeAdapter {
     }
 
     isOfKnownType(name: string): boolean {
-        return this.classifier instanceof Concept && conceptImplements(this.classifier, name);
+        return this.classifier instanceof LWConcept && conceptImplements(this.classifier, name);
     }
 
     equals(other: NodeAdapter | undefined): boolean {
@@ -260,7 +260,7 @@ export class LionwebNode extends NodeAdapter {
     }
 }
 
-function conceptImplements(concept: Concept, interfaceName: string) {
+function conceptImplements(concept: LWConcept, interfaceName: string) {
     const directlyImplements = !!concept.implements.find(intf => intf.name == interfaceName);
     return directlyImplements || !!(concept.extends && conceptImplements(concept.extends, interfaceName));
 }

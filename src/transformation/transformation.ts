@@ -1,8 +1,8 @@
 import {
     ASTNode,
-    getNodeDefinition,
+    getConcept,
     Node,
-    NodeDefinition,
+    Concept,
     Origin,
 } from "../model/model";
 import {Issue, IssueSeverity} from "../validation";
@@ -15,17 +15,17 @@ export class PropertyRef<Obj, Value> {
         public readonly get: (o: Obj) => Value | undefined,
         public readonly set: (o: Obj, v: Value) => void) {}
 
-    static get<Obj, Value>(name: string | symbol | number, nodeDefinition?: NodeDefinition): PropertyRef<Obj, Value> {
+    static get<Obj, Value>(name: string | symbol | number, concept?: Concept): PropertyRef<Obj, Value> {
         if (typeof name == "symbol") {
             name = name.toString();
         } else if (typeof name == "number") {
             name = name + "";
         }
 
-        if (nodeDefinition) {
-            const property = Object.keys(nodeDefinition.features).find(p => p == name);
+        if (concept) {
+            const property = Object.keys(concept.features).find(p => p == name);
             if (!property) {
-                throw new Error(`${name} is not a feature of ${nodeDefinition}`)
+                throw new Error(`${name} is not a feature of ${concept}`)
             }
         }
 
@@ -88,7 +88,7 @@ export class NodeFactory<Source, Output extends Node> {
      */
     withChild<Target, Child>(child: ChildDef<Source, Target, Child>) : NodeFactory<Source, Output> {
         const nodeDefinition =
-            child.scopedToType ? getNodeDefinition(child.scopedToType as any) : undefined;
+            child.scopedToType ? getConcept(child.scopedToType as any) : undefined;
         let prefix = nodeDefinition?.name ? nodeDefinition.name : (child.scopedToType?.name || "");
         if (prefix) {
             prefix += "#";
@@ -266,7 +266,7 @@ export class ASTTransformer {
             if (this.allowGenericNode) {
                 const origin : Origin | undefined = this.asOrigin(source);
                 nodes = [new GenericNode(parent).withOrigin(origin)];
-                const nodeType = getNodeDefinition(source)?.name || source?.constructor.name || "–";
+                const nodeType = getConcept(source)?.name || source?.constructor.name || "–";
                 this.issues.push(
                     Issue.semantic(
                         `Source node not mapped: ${nodeType}`,
@@ -278,7 +278,7 @@ export class ASTTransformer {
                     )
                 );
             } else {
-                throw new Error(`Unable to translate node ${source} (class ${getNodeDefinition(source)?.name})`)
+                throw new Error(`Unable to translate node ${source} (class ${getConcept(source)?.name})`)
             }
         }
         return nodes;
@@ -286,7 +286,7 @@ export class ASTTransformer {
 
     private setChildren(factory: NodeFactory<any, any>, source: any, node: Node) {
         const nodeClass = Object.getPrototypeOf(node).constructor;
-        const nodeDefinition = getNodeDefinition(node);
+        const nodeDefinition = getConcept(node);
         let prefix = nodeDefinition?.name || nodeClass?.name || "";
         if (prefix) {
             prefix += "#";

@@ -2,7 +2,7 @@ import {Position, Source} from "./position";
 import "reflect-metadata";
 import {PossiblyNamed, ReferenceByName} from "./naming";
 
-export const NODE_DEFINITION_SYMBOL = Symbol("nodeDefinition");
+export const CONCEPT_SYMBOL = Symbol("concept");
 
 export type PackageDescription = {
     name: string,
@@ -12,13 +12,18 @@ export const NODE_TYPES: { [name: string]: PackageDescription } = {
     "": { name: "", nodes: {} }
 };
 
-export type NodeDefinition = {
+export type Concept = {
     package?: string,
     name?: string,
     features: { [name: string | symbol]: Feature },
     resolved?: boolean;
-    inheritsFrom?: NodeDefinition
+    inheritsFrom?: Concept
 };
+
+/**
+ * @deprecated use Concept instead.
+ */
+export type NodeDefinition = Concept;
 
 export type Feature = {
     name: string | symbol,
@@ -35,22 +40,29 @@ export type Feature = {
  */
 export type PropertyDefinition = Feature;
 
+/**
+ * @deprecated in favor of getConcept
+ */
 export function getNodeDefinition(node: Node | (abstract new (...args: any[]) => Node)): NodeDefinition {
+    return getConcept(node);
+}
+
+export function getConcept(node: Node | (abstract new (...args: any[]) => Node)): Concept {
     const target = typeof node === "function" ? node : node.constructor;
-    let definition: NodeDefinition;
-    if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
-        definition = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
+    let concept: Concept;
+    if(Object.prototype.hasOwnProperty.call(target, CONCEPT_SYMBOL)) {
+        concept = target[CONCEPT_SYMBOL] as Concept;
     } else {
-        const inheritedFeatures = {...(target[NODE_DEFINITION_SYMBOL]?.features || {})};
+        const inheritedFeatures = {...(target[CONCEPT_SYMBOL]?.features || {})};
         for (const p in inheritedFeatures) {
             inheritedFeatures[p] = { inherited: true, ...inheritedFeatures[p] };
         }
-        target[NODE_DEFINITION_SYMBOL] = definition = {
+        target[CONCEPT_SYMBOL] = concept = {
             features: inheritedFeatures,
             resolved: false
         };
     }
-    if(definition && definition.features && !definition.resolved) {
+    if(concept && concept.features && !concept.resolved) {
         try {
             let metadataHolder;
             try {
@@ -58,22 +70,22 @@ export function getNodeDefinition(node: Node | (abstract new (...args: any[]) =>
             } catch {
                 metadataHolder = node;
             }
-            for(const p in definition.features) {
-                if (!definition.features[p].type) {
+            for(const p in concept.features) {
+                if (!concept.features[p].type) {
                     const type = Reflect.getMetadata("design:type", metadataHolder, p);
-                    definition.features[p].type = type;
+                    concept.features[p].type = type;
                     if(type === Array) {
-                        definition.features[p].arrayType =
+                        concept.features[p].arrayType =
                             Reflect.getMetadata("design:arrayElementType", metadataHolder, p);
                     }
                 }
             }
-            definition.resolved = true;
+            concept.resolved = true;
         } catch {
             //Ignore
         }
     }
-    return definition;
+    return concept;
 }
 
 export abstract class Origin {
@@ -166,8 +178,13 @@ export abstract class Node extends Origin implements Destination {
         return Object.getOwnPropertyNames(props).filter(p => props[p].child);
     }
 
+    get concept(): Concept {
+        return getConcept(this);
+    }
+
+    /** @deprecated use concept */
     get nodeDefinition(): NodeDefinition {
-        return getNodeDefinition(this);
+        return this.concept;
     }
 
     get features(): FeatureDescription[] {
@@ -461,8 +478,8 @@ export function setNodeRedefinitionStrategy(strategy: typeof errorOnRedefinition
 }
 
 export function registerNodeDefinition<T extends Node>(
-    target: abstract new (...args: any[]) => T, pkg?: string, name?: string): NodeDefinition {
-    let def: NodeDefinition;
+    target: abstract new (...args: any[]) => T, pkg?: string, name?: string): Concept {
+    let def: Concept;
     if(pkg !== undefined) {
         if (!name) {
             throw new Error("Package name without node name");
@@ -473,8 +490,8 @@ export function registerNodeDefinition<T extends Node>(
             nodeRedefinitionStrategy(name, target, existingTarget);
         }
     }
-    const existingDef = target[NODE_DEFINITION_SYMBOL] as NodeDefinition;
-    if(Object.prototype.hasOwnProperty.call(target, NODE_DEFINITION_SYMBOL)) {
+    const existingDef = target[CONCEPT_SYMBOL] as Concept;
+    if(Object.prototype.hasOwnProperty.call(target, CONCEPT_SYMBOL)) {
         if((existingDef.package !== undefined && existingDef.package != pkg) ||
             (existingDef.name !== undefined && existingDef.name != name)) {
             throw new Error(`Type ${pkg}.${name} (${target}) is already defined as ${JSON.stringify(existingDef)}`);
@@ -499,22 +516,27 @@ export function registerNodeDefinition<T extends Node>(
     if(pkg !== undefined && name !== undefined) {
         NODE_TYPES[pkg].nodes[name] = target;
     }
-    target[NODE_DEFINITION_SYMBOL] = def;
+    target[CONCEPT_SYMBOL] = def;
     return def;
 }
 
-export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }): NodeDefinition {
-    let definition = getNodeDefinition(node);
-    if (!definition) {
+export function ensureConcept(node: Node | { new (...args: any[]): Node }): Concept {
+    let concept = getConcept(node);
+    if (!concept) {
         if(typeof node === 'function') {
-            definition = registerNodeDefinition(node);
+            concept = registerNodeDefinition(node);
         } else if(typeof node.constructor === 'function') {
-            definition = registerNodeDefinition(node.constructor as any);
+            concept = registerNodeDefinition(node.constructor as any);
         } else {
             throw new Error("Not a valid node: " + node);
         }
     }
-    return definition;
+    return concept;
+}
+
+/** @deprecated use ensureConcept */
+export function ensureNodeDefinition(node: Node | { new (...args: any[]): Node }): Concept {
+    return ensureConcept(node);
 }
 
 export function registerNodeAttribute<T extends Node>(
@@ -523,7 +545,7 @@ export function registerNodeAttribute<T extends Node>(
     if (methodName == "parent" || methodName == "children" || methodName == "origin") {
         methodName = Symbol(methodName);
     }
-    const definition = ensureNodeDefinition(type);
+    const definition = ensureConcept(type);
     if (!definition.features[methodName]) {
         definition.features[methodName] = {
             name: methodName
